@@ -32,6 +32,10 @@
 
   [% IF report.used_map %]
     [% map_html | safe %]
+
+        <div class="mobile-map-banner">
+            <span>[% loc('Reposition if needed, then hit Continue') %]</span>
+        </div>
     </div>
     <div id="map_sidebar">
         <div id="side-form">
