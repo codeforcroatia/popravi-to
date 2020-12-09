@@ -259,6 +259,7 @@ fixmystreet.assets.add(fixmystreet.maps.banes_defaults, {
     non_interactive: true,
     always_visible: true,
     all_categories: true, // Not really, but we deal with that in the found action handler.
+    nearest_radius: 0.1,
     road: true,
     no_asset_msg_id: '#js-curo-group-restriction',
     actions: {
