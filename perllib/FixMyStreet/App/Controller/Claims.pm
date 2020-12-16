@@ -85,7 +85,7 @@ sub get_page : Private {
 }
 
 sub fields : Private {
-    my ($self, $what) = @_;
+    my ($self, $what, $fault_fixed) = @_;
 
 
     return [
@@ -131,7 +131,18 @@ sub fields : Private {
             title => "About the fault",
             fields => [
                 {
+                    desc => "Fixed",
+                    block => "yes_no",
+                    value => "fault_fixed",
+                },
+                {
+                    desc => "Fault reported?",
+                    hide => ($fault_fixed != 1),
+                    value => 'fault_reported'
+                },
+                {
                     desc => "Fault ID",
+                    hide => ($fault_fixed != 1),
                     value => 'report_id'
                 },
             ]
@@ -423,7 +434,7 @@ sub process_claim : Private {
 
     my $detail = "";
 
-    for my $stage ( @{ $self->fields( $data->{what} ) } ) {
+    for my $stage ( @{ $self->fields( $data->{what}, $data->{fault_fixed} ) } ) {
         next if $stage->{hide};
         for my $field ( @{ $stage->{fields} } ) {
             next if $field->{hide};

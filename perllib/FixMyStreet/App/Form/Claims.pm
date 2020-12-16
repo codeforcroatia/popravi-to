@@ -55,7 +55,7 @@ has_field what => (
 has_page about_you => (
     fields => ['name', 'phone', 'email', 'address', 'continue'],
     title => 'About you',
-    next => 'about_fault',
+    next => 'fault_fixed',
 );
 
 with 'FixMyStreet::App::Form::Claims::AboutYou';
@@ -67,9 +67,54 @@ has_field address => (
     label => 'Address',
 );
 
+has_page fault_fixed => (
+    fields => ['fault_fixed', 'continue'],
+    intro => 'fault_fixed.html',
+    title => 'About the fault',
+    next => sub {
+        $_[0]->{fault_fixed} == 1 ? 'where' :
+        'fault_reported'
+    }
+);
+
+has_field fault_fixed => (
+    type => 'Select',
+    widget => 'RadioGroup',
+    required => 1,
+    label => 'Has the fault been fixed?',
+    options => [
+        { label => 'Yes', value => '1' },
+        { label => 'No', value => '2' },
+        { label => 'Don\'t know', value => '3' },
+    ],
+);
+
+has_page fault_reported => (
+    fields => [ 'fault_reported', 'continue' ],
+    title => 'About the fault',
+    intro => 'fault_reported.html',
+    next => sub {
+        $_[0]->{fault_reported} == 1 ? 'about_fault' :
+        'where'
+    }
+);
+
+has_field fault_reported => (
+    type => 'Select',
+    widget => 'RadioGroup',
+    required => 1,
+    #label => 'All claims require that you have logged a fault with the Council. If you haven\'t done so you should make one now.',
+    label => 'Have you reported the fault to the Council?',
+    options => [
+        { label => 'Yes', value => '1' },
+        { label => 'No', value => '2' },
+    ],
+);
+
 
 has_page about_fault => (
     fields => ['report_id', 'continue'],
+    intro => 'fault_reported.html',
     title => 'About the fault',
     next => 'where',
 );

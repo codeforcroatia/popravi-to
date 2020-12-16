@@ -57,7 +57,19 @@
             title => "About the fault",
             fields => [
                 {
+                    desc => "Fault Fixed",
+                    block => 'yes_no',
+                    value => data.fault_fixed
+                },
+                {
+                    desc => "Fault Reported",
+                    block => 'yes_no',
+                    hide => data.fault_fixed != 1,
+                    value => data.fault_reported
+                },
+                {
                     desc => "Fault ID",
+                    hide => data.fault_fixed != 1,
                     value => data.report_id
                 },
             ]
