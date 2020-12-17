@@ -100,7 +100,7 @@ sub fields : Private {
                 {
                     block => 'yes_no',
                     desc => "Claimed before",
-                    value => 1 # XXX
+                    value => 'claimed_before'
                 }
             ]
         },

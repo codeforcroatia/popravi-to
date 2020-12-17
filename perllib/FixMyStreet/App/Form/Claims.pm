@@ -34,7 +34,7 @@ has_page intro => (
 );
 
 has_page what => (
-    fields => ['what', 'continue'],
+    fields => ['what', 'claimed_before', 'continue'],
     title => 'What are you claiming for',
     next => 'about_you',
 );
@@ -51,6 +51,16 @@ has_field what => (
     ]
 );
 
+has_field claimed_before => (
+    type => 'Select',
+    widget => 'RadioGroup',
+    required => 1,
+    label => 'Have you ever filed a Claim for damages with Buckinghamshire Council?',
+    options => [
+        { label => 'Yes', value => '1' },
+        { label => 'No', value => '0' },
+    ],
+);
 
 has_page about_you => (
     fields => ['name', 'phone', 'email', 'address', 'continue'],
