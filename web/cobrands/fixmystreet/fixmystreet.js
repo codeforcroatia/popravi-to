@@ -423,7 +423,7 @@ $.extend(fixmystreet.set_up, {
 
     // On the new report form, does this by asking for details from the server.
     // Delegation is necessary because #form_category may be replaced during the lifetime of the page
-    $("#problem_form").on("change.category", "select#form_category", function(){
+    $("#problem_form").on("change.category", "#form_category", function(){
 	// If we haven't got any reporting data (e.g. came straight to
 	// /report/new), fetch it first. That will then automatically call this
 	// function again, due to it calling change() on the category if set.
@@ -536,7 +536,7 @@ $.extend(fixmystreet.set_up, {
   // no_event makes sure no change event is fired (so we don't end up in an infinite loop)
   // and also only sets up the main group dropdown, assuming the subs are left alone
   category_groups: function(old_group, no_event) {
-    var $category_select = $("select#form_category");
+    var $category_select = $("#form_category");
     if (!$category_select.hasClass('js-grouped-select')) {
         if (!no_event && $category_select.val() !== '-- Pick a category --') {
             $category_select.change();
@@ -1347,12 +1347,12 @@ fixmystreet.update_pin = function(lonlat, savePushState) {
 (function() { // fetch_reporting_data closure
 
 function re_select(group, category) {
-    var cat_in_group = $("#form_category optgroup[label=\"" + group + "\"] option[value=\"" + category + "\"]");
+    var cat_in_group = $("#form_category ???[label=\"" + group + "\"] input[value=\"" + category + "\"]");
     if (cat_in_group.length) {
         cat_in_group.prop({selected:true});
         return true;
-    } else if ($("#form_category option[value=\"" + category + "\"]").length) {
-        $("#form_category").val(category);
+    } else if ($("#form_category input[value=\"" + category + "\"]").length) {
+        $("#form_category input[name=category]").val(category);
         return true;
     }
     return false;
@@ -1374,7 +1374,7 @@ fixmystreet.fetch_reporting_data = function() {
         }
         $('#side-form').show();
         var old_category_group = $('#category_group').val() || $('#filter_group').val(),
-            old_category = $("#form_category").val(),
+            old_category = $("input[name=category]:checked").val(),
             filter_category = $("#filter_categories").val();
 
         fixmystreet.reporting_data = data;

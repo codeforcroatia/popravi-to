@@ -107,7 +107,7 @@ var red_routes_layer = fixmystreet.assets.add(defaults, {
             if (fixmystreet.cobrand !== 'tfl') {
                 return;
             }
-            var category = $('#form_category').val();
+            var category = $('input[name=category]:checked').val();
             if (is_tlrn_category_only(category, fixmystreet.bodies)) {
                 fixmystreet.message_controller.road_not_found(layer);
             } else {

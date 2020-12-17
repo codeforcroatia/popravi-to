@@ -1,5 +1,5 @@
 fixmystreet.roadworks.filter = function(feature) {
-  var category = $('select#form_category').val(),
+  var category = $('input[name=category]:checked').val(),
       categories = [
         'Blocked drainage gully', 'Bollard', 'Bollard - lit', 'Column/lantern damaged/leaning',
         'Damaged or missing cover', 'Damaged or missing utility cover', 'Damaged structure',

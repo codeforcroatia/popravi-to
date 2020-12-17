@@ -220,7 +220,7 @@ fixmystreet.assets.add(fixmystreet.maps.banes_defaults, {
     actions: {
         found: fixmystreet.message_controller.road_found,
         not_found: function(layer) {
-            var cat = $('select#form_category').val();
+            var cat = $('input[name=category]:checked').val();
             var asset_item = layer.fixmystreet.cat_map[cat];
             if (asset_item) {
                 layer.fixmystreet.asset_item = asset_item;

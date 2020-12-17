@@ -206,7 +206,7 @@ var ex_district_categories = [
 ];
 
 function category_unselected_or_ex_district() {
-    var cat = $('select#form_category').val();
+    var cat = $('input[name=category]:checked').val();
     if (cat === "-- Pick a category --" || cat === "Loading..." || OpenLayers.Util.indexOf(ex_district_categories, cat) != -1) {
         return true;
     }

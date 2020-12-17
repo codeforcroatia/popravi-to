@@ -1,8 +1,11 @@
+[%# TODO NEEDS TO OUTPUT BOTH OPTGROUPS AND HEADINGS FOR DIFFERENT PLACES %]
 [% SET filter_group = c.get_param('filter_group') %]
 [%~ FOREACH group IN category_groups ~%]
-    [% IF group.name %]<optgroup label="[% group.name %]">[% END %]
+  [% IF group.name %]<h3>[% group.name %]</h3>[% END %]
+  <p class="segmented-control segmented-control--radio"
+     style="flex-direction: column">
     [%~ FOREACH cat IN group.categories ~%]
         [% INCLUDE category_option %]
     [%~ END ~%]
-    [% IF group.name %]</optgroup>[% END %]
+  </p>
 [%~ END =%]

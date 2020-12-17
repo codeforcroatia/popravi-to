@@ -10,29 +10,43 @@ END
 [% IF category_options.size OR category_groups.size ~%]
     [%~ BLOCK category_option ~%]
     [% cat_lc = cat.category | lower =%]
-    <option value='[% cat.category | html %]'[% ' selected' IF ( report.category == cat.category || category_lc == cat_lc ) AND ( NOT filter_group OR filter_group == group.name ) ~%]
-    >[% IF loop.first %][% cat.category_display %][% ELSE %][% cat.category_display | html %][% END %]
-    [%~ IF cat.get_extra_metadata('help_text') %] ([% cat.get_extra_metadata('help_text') %])[% END ~%]
-    </option>
+    <input required
+        style="position:static;"
+        type="radio"
+           name="category"
+           id="form_category_[% cat.category %]" [%# NOT UNIQUE %]
+           value='[% cat.category %]'
+           [% ' checked' IF ( report.category == cat.category || category_lc == cat_lc ) AND ( NOT filter_group OR filter_group == group.name ) ~%]
+           >
+       <label class="inline btn"
+           style="text-align: left; margin-top: -13px"
+           for="form_category_[% cat.category %]">
+           [% IF loop.first %][% cat.category_display %][% ELSE %][% cat.category_display | html %][% END %]
+[%~ IF cat.get_extra_metadata('help_text') %] ([% cat.get_extra_metadata('help_text') %])[% END ~%]
+        </label>
     [%~ END ~%]
 
     [% IF category;
         category_lc = category | lower;
        END; ~%]
-    <label for='form_category' id="form_category_label">
-        [%~ form_category_label OR loc('Category') ~%]
-    </label>[% =%]
-    <select required class="validCategory form-control[% IF category_groups.size %] js-grouped-select[% END %]" name="category" id="form_category"
+   <fieldset id="form_category"
+    class="[% IF category_groups.size %] js-grouped-select[% END %]"
     [%~ IF c.user.from_body =%]
       [%~ prefill_report = ( c.cobrand.prefill_report_fields_for_inspector && inspector ) || c.user.has_body_permission_to('report_prefill') %]
       data-body="[% c.user.from_body.name %]" data-prefill="[% prefill_report %]"
     [%~ END ~%]
-    >
+        >
+        <legend id="form_category_label">
+            <h2>[%~ form_category_label OR loc('Category') ~%]</h2>
+        </legend>[% =%]
+
         [%~ INCLUDE 'report/new/_category_select.html' ~%]
-    </select>
+    </fieldset>
+
     [%~ IF category_groups.size ~%]
-          <label id="form_subcategory_label" class="hidden">
+        <label id="form_subcategory_label" class="hidden">
             [%~ loc('Subcategory') ~%]
         </label>
     [%~ END ~%]
+
 [%~ END ~%]
