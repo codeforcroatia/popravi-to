@@ -139,21 +139,21 @@ has_field location => (
 );
 
 has_page when => (
-    fields => ['date', 'time', 'continue'],
+    fields => ['incident_date', 'incident_time', 'continue'],
     title => 'When did the incident happen',
     next => sub {
             $_[0]->{what} == 0 ? 'details_vehicle' : 'details_no_vehicle'
         },
 );
 
-has_field date => (
+has_field incident_date => (
     required => 1,
-    type => 'Text', # DateTime',
+    type => 'DateTime',
     hint => 'For example 27 09 2020',
     label => 'What day did the indident happen?',
 );
 
-has_field time => (
+has_field incident_time => (
     required => 1,
     type => 'Text',
     label => 'What time did the incident happen?',
