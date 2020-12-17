@@ -146,6 +146,7 @@ sub tweak_all_reports_map {
     # like a subcategory e.g. in the dashboard filter here.
     my %subcats = $self->subcategories;
     my $groups = $c->stash->{category_groups};
+    # TODO CHANGING ABOVE!
     foreach (@$groups) {
         my $filter = $_->{categories};
         my @new_contacts;

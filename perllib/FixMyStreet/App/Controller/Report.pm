@@ -712,19 +712,24 @@ sub fetch_permissions : Private {
 };
 
 sub stash_category_groups : Private {
-    my ( $self, $c, $contacts, $combine_multiple ) = @_;
+    my ( $self, $c, $contacts, $opts ) = @_;
 
     my %category_groups = ();
     for my $category (@$contacts) {
         my $group = $category->{group} // $category->groups;
         my @groups = @$group;
-        if (scalar @groups > 1 && $combine_multiple) {
+        if (scalar @groups > 1 && $opts->{combine_multiple}) {
             @groups = sort @groups;
             $category->{group} = \@groups;
             push( @{$category_groups{_('Multiple Groups')}}, $category );
         } else {
             push( @{$category_groups{$_}}, $category ) for @groups;
         }
+    }
+
+    # Change empty group to 'No Group' if multiple groups
+    if (!$opts->{mix_in} && scalar keys %category_groups > 1 && $category_groups{""}) {
+        $category_groups{_('No Group')} = delete $category_groups{""};
     }
 
     my @category_groups = ();
