@@ -153,6 +153,10 @@ has_field incident_date => (
     label => 'What day did the indident happen?',
 );
 
+has_field 'incident_date.year' => ( type => 'Year' );
+has_field 'incident_date.month' => ( type => 'Month' );
+has_field 'incident_date.day' => ( type => 'MonthDay' );
+
 has_field incident_time => (
     required => 1,
     type => 'Text',
@@ -478,10 +482,14 @@ has_page about_you_personal => (
 
 has_field dob => (
     required => 1,
-    type => 'Text', # DateTime',
+    type => 'DateTime',
     hint => 'For example 23 05 1983',
     label => 'Your date of birth',
 );
+
+has_field 'dob.year' => ( type => 'Year' );
+has_field 'dob.month' => ( type => 'Month' );
+has_field 'dob.day' => ( type => 'MonthDay' );
 
 has_field ni_number => (
     required => 1,
@@ -529,11 +537,15 @@ has_field medical_attention => (
 
 has_field attention_date => (
     required => 0,
-    type => 'Text', # DateTime',
+    type => 'DateTime',
     hint => 'For example 11 08 2020',
     label => 'Date you received medical attention',
     required_when => { 'medical_attention' => 1 },
 );
+
+has_field 'attention_date.year' => ( type => 'Year' );
+has_field 'attention_date.month' => ( type => 'Month' );
+has_field 'attention_date.day' => ( type => 'MonthDay' );
 
 has_field gp_contact => (
     required => 0,
