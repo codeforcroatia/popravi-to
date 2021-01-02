@@ -6,10 +6,10 @@ Please check the following:
 - [ ] Are the changes tested for accessibility?
 - [ ] Have you updated the changelog? If this is not necessary, put square brackets around this: skip changelog
 
-Please check the contributing docs, and describe your pull request here.
-Screenshots or GIF animations (using e.g. LICEcap) may be helpful.
+<!-- Please check the contributing docs, and describe your pull request here.
+Screenshots or GIF animations (using e.g. LICEcap) may be helpful. -->
 
-Please include any issues that are fixed, using "fixes" or "closes" so that
-they are auto-closed when the PR is merged.
+<!-- Please include any issues that are fixed, using "fixes" or "closes" so that
+they are auto-closed when the PR is merged. -->
 
-Thanks for contributing!
+<!-- Thanks for contributing! -->
