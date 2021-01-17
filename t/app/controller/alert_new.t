@@ -2,6 +2,10 @@ use utf8;
 use FixMyStreet::TestMech;
 use FixMyStreet::Script::Alerts;
 
+use t::Mock::Twilio;
+my $twilio = t::Mock::Twilio->new;
+LWP::Protocol::PSGI->register($twilio->to_psgi_app, host => 'api.twilio.com');
+
 my $mech = FixMyStreet::TestMech->new;
 
 my $user = FixMyStreet::App->model('DB::User')
@@ -540,6 +544,7 @@ subtest "Test no marked as confirmed added to alerts" => sub {
 
     my ($report) = $mech->create_problems_for_body(1, 1, 'Testing', {
         user => $user1,
+        state => 'investigating',
     });
     my $report_id = $report->id;
     ok $report, "created test report - $report_id";
@@ -552,6 +557,8 @@ subtest "Test no marked as confirmed added to alerts" => sub {
     ok $alert, 'created alert for other user';
 
     $mech->create_comment_for_problem($report, $user3, 'Staff User', 'this is update', 'f', 'confirmed', 'confirmed', { confirmed  => $dt->clone->add( hours => 9 ) });
+    $mech->create_comment_for_problem($report, $user3, 'Staff User', 'this is another update', 'f', 'confirmed', 'investigating', { confirmed  => $dt->clone->add( hours => 10 ) });
+    $mech->create_comment_for_problem($report, $user3, 'Staff User', 'this is a third update, same state', 'f', 'confirmed', 'investigating', { confirmed  => $dt->clone->add( hours => 11 ) });
 
     $mech->clear_emails_ok;
     FixMyStreet::override_config {
@@ -566,6 +573,8 @@ subtest "Test no marked as confirmed added to alerts" => sub {
     like $body, qr/The following updates have been left on this report:/, 'email is about updates to existing report';
     like $body, qr/Staff User/, 'Update comes from correct user';
     unlike $body, qr/State changed to: Open/s, 'no marked as confirmed text';
+    like $body, qr/State changed to: Investigating/, 'mention of state change';
+    unlike $body, qr/State changed to: Investigating.*State changed to: Investigating/s, 'only one mention of state change';
 
     $mech->delete_user($user1);
     $mech->delete_user($user2);
@@ -665,7 +674,7 @@ subtest "Test signature template is used from cobrand" => sub {
         MAPIT_URL => 'http://mapit.uk/',
         ALLOWED_COBRANDS => 'fixmystreet',
     }, sub {
-        FixMyStreet::DB->resultset('AlertType')->email_alerts();
+        FixMyStreet::Script::Alerts::send();
     };
 
     my $email = $mech->get_text_body_from_email;
@@ -682,7 +691,7 @@ subtest "Test signature template is used from cobrand" => sub {
         MAPIT_URL => 'http://mapit.uk/',
         ALLOWED_COBRANDS => 'fixmystreet',
     }, sub {
-        FixMyStreet::DB->resultset('AlertType')->email_alerts();
+        FixMyStreet::Script::Alerts::send();
     };
 
     $email = $mech->get_text_body_from_email;
@@ -755,7 +764,7 @@ for my $test (
         FixMyStreet::override_config {
             MAPIT_URL => 'http://mapit.uk/',
         }, sub {
-            FixMyStreet::DB->resultset('AlertType')->email_alerts();
+            FixMyStreet::Script::Alerts::send();
         };
         $mech->email_count_is(0);
 
@@ -763,7 +772,7 @@ for my $test (
         FixMyStreet::override_config {
             MAPIT_URL => 'http://mapit.uk/',
         }, sub {
-            FixMyStreet::DB->resultset('AlertType')->email_alerts();
+            FixMyStreet::Script::Alerts::send();
         };
         my $email = $mech->get_text_body_from_email;
         like $email, qr/Alert\s+test\s+for\s+non\s+public\s+reports/, 'alert contains public report';
@@ -798,7 +807,7 @@ subtest 'check new updates alerts for non public reports only go to report owner
     ok $alert_user1, "alert created";
 
     $mech->clear_emails_ok;
-    FixMyStreet::DB->resultset('AlertType')->email_alerts();
+    FixMyStreet::Script::Alerts::send();
     $mech->email_count_is(0);
 
     my $alert_user2 = FixMyStreet::DB->resultset('Alert')->create( {
@@ -810,13 +819,13 @@ subtest 'check new updates alerts for non public reports only go to report owner
     } );
     ok $alert_user2, "alert created";
 
-    FixMyStreet::DB->resultset('AlertType')->email_alerts();
+    FixMyStreet::Script::Alerts::send();
     my $email = $mech->get_text_body_from_email;
     like $email, qr/This is some more update text/, 'alert contains update text';
 
     $mech->clear_emails_ok;
     $report->update( { non_public => 0 } );
-    FixMyStreet::DB->resultset('AlertType')->email_alerts();
+    FixMyStreet::Script::Alerts::send();
     $email = $mech->get_text_body_from_email;
     like $email, qr/This is some more update text/, 'alert contains update text';
 
@@ -855,7 +864,7 @@ subtest 'check setting include dates in new updates cobrand option' => sub {
 
 
     $mech->clear_emails_ok;
-    FixMyStreet::DB->resultset('AlertType')->email_alerts();
+    FixMyStreet::Script::Alerts::send();
 
     my $date_in_alert = Utils::prettify_dt( $update->confirmed );
     my $email = $mech->get_text_body_from_email;
@@ -895,8 +904,9 @@ subtest 'check staff updates can include sanitized HTML' => sub {
     } );
     ok $alert_user1, "alert created";
 
-    FixMyStreet::DB->resultset('AlertType')->email_alerts();
+    FixMyStreet::Script::Alerts::send();
     my $email = $mech->get_email;
+    $mech->clear_emails_ok;
     my $plain = $mech->get_text_body_from_email($email);
     like $plain, qr/This is some update text with \*HTML\* and \*italics\*\.\r\n\r\n\* Even a list\r\n\r\n\* Which might work\r\n\r\n\* In the text \[https:\/\/www.fixmystreet.com\/\] part/, 'plain text part contains no HTML tags from staff update';
     like $plain, qr/Public users <i>cannot<\/i> use HTML\./, 'plain text part contains exactly what was entered';
@@ -910,5 +920,74 @@ subtest 'check staff updates can include sanitized HTML' => sub {
     $mech->delete_user( $user3 );
 };
 
+subtest 'test notification preferences' => sub {
+    # Create a user with both email and phone verified
+    my $user1 = $mech->create_user_ok('alerts@example.com',
+        name => 'Alert User',
+        phone => '01234',
+        email_verified => 1,
+        phone_verified => 1,
+    );
+    my $user2 = $mech->create_user_ok('reporter@example.com', name => 'Reporter User');
+    my $user3 = $mech->create_user_ok('updates@example.com', name => 'Update User');
+
+    my $dt = DateTime->now->add( minutes => -30 );
+    my $r_dt = $dt->clone->add( minutes => 20 );
+
+    my ($report) = $mech->create_problems_for_body(1, $body->id, 'Testing', {
+        user => $user2,
+    });
+
+    my $update = $mech->create_comment_for_problem($report, $user3, 'Anonymous User', 'This is some more update text', 't', 'confirmed', undef, { confirmed  => $r_dt });
+
+    my $alert_user1 = FixMyStreet::DB->resultset('Alert')->create({
+        user       => $user1,
+        alert_type => 'new_updates',
+        parameter  => $report->id,
+        confirmed  => 1,
+        whensubscribed => $dt,
+    });
+    ok $alert_user1, "alert created";
+
+    # Check they get a normal email alert by default
+    FixMyStreet::Script::Alerts::send();
+    $mech->email_count_is(1);
+    is @{$twilio->texts}, 0;
+    $mech->clear_emails_ok;
+
+    # Check they don't get any update when set to none
+    FixMyStreet::DB->resultset('AlertSent')->delete;
+    $user1->update({ extra => { update_notify => 'none' } });
+    FixMyStreet::Script::Alerts::send();
+    $mech->email_count_is(0);
+    is @{$twilio->texts}, 0;
+
+    FixMyStreet::override_config {
+        ALLOWED_COBRANDS => 'fixmystreet',
+        SMS_AUTHENTICATION => 1,
+        TWILIO_ACCOUNT_SID => 'AC123',
+        MAPIT_URL => 'http://mapit.uk/',
+    }, sub {
+        foreach (
+            { extra => { update_notify => 'phone' } },
+            { email_verified => 0 },
+            { extra => { update_notify => undef } },
+        ) {
+            FixMyStreet::DB->resultset('AlertSent')->delete;
+            $user1->update($_);
+            FixMyStreet::Script::Alerts::send();
+            $mech->email_count_is(0);
+            is @{$twilio->texts}, 1, 'got a text';
+            my $text = $twilio->texts->[0]->{Body};
+            my $id = $report->id;
+            like $text, qr{Your report \($id\) has had an update; to view: http://www.example.org/report/$id\n\nTo stop: http://www.example.org/A/[A-Za-z0-9]+}, 'text looks okay';
+            @{$twilio->texts} = ();
+        }
+    };
+
+    $mech->delete_user( $user1 );
+    $mech->delete_user( $user2 );
+    $mech->delete_user( $user3 );
+};
 
 done_testing();

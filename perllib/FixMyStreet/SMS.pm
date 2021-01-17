@@ -11,30 +11,46 @@ use WWW::Twilio::API;
 use FixMyStreet;
 use mySociety::EmailUtil qw(is_valid_email);
 use FixMyStreet::DB;
+use GovUkNotify;
+
+has cobrand => ( is => 'ro' );
 
 has twilio => (
     is => 'lazy',
     default => sub {
-        WWW::Twilio::API->new(
-            AccountSid => FixMyStreet->config('TWILIO_ACCOUNT_SID'),
+        my $sid = FixMyStreet->config('TWILIO_ACCOUNT_SID');
+        return unless $sid;
+        my $api = WWW::Twilio::API->new(
+            AccountSid => $sid,
             AuthToken => FixMyStreet->config('TWILIO_AUTH_TOKEN'),
             utf8 => 1,
         );
+        return {
+            api => $api,
+            from => FixMyStreet->config('TWILIO_FROM_PARAMETER'),
+            messaging_service => FixMyStreet->config('TWILIO_MESSAGING_SERVICE_SID'),
+        }
     },
 );
 
-has from => (
+has notify => (
     is => 'lazy',
-    default => sub { FixMyStreet->config('TWILIO_FROM_PARAMETER') },
-);
-
-has messaging_service => (
-    is => 'lazy',
-    default => sub { FixMyStreet->config('TWILIO_MESSAGING_SERVICE_SID') },
+    default => sub {
+        my $self = shift;
+        my $cfg = $self->cobrand->feature('govuk_notify');
+        my $key = $cfg->{key};
+        return unless $key;
+        my $api = GovUkNotify->new(
+            key => $key,
+            template_id => $cfg->{template_id},
+            sms_sender => $cfg->{sms_sender},
+        );
+        return $api;
+    },
 );
 
 sub send_token {
-    my ($class, $token_data, $token_scope, $to) = @_;
+    my ($class, $token_data, $token_scope, $to, $cobrand) = @_;
 
     # Random number between 10,000 and 75,535
     my $random = 10000 + unpack('n', mySociety::Random::random_bytes(2, 1));
@@ -45,7 +61,7 @@ sub send_token {
     });
     my $body = sprintf(_("Your verification code is %s"), $random);
 
-    my $result = $class->new->send(to => $to, body => $body);
+    my $result = $class->new(cobrand => $cobrand)->send(to => $to, body => $body);
     return {
         random => $random,
         token => $token_obj->token,
@@ -55,17 +71,38 @@ sub send_token {
 
 sub send {
     my ($self, %params) = @_;
-    my $output = $self->twilio->POST('Messages.json', 
-        $self->from ? (From => $self->from) : (),
-        $self->messaging_service ? (MessagingServiceSid => $self->messaging_service) : (),
-        To => $params{to},
-        Body => $params{body},
-    );
-    my $data = decode_json($output->{content});
-    if ($output->{code} >= 400) {
-        return { error => "$data->{message} ($data->{code})" };
+
+    my $twilio = $self->twilio;
+    my $notify = $self->notify;
+    unless ($twilio || $notify) {
+        return { error => "No SMS service configured" };
     }
-    return { success => $data->{sid} };
+
+    if ($notify) {
+        my $output = $notify->send(
+            to => $params{to},
+            body => $params{body},
+        );
+        my $data = decode_json($output->{content});
+        if ($output->{code} >= 400) {
+            return { error => "$data->{errors}[0]{message} ($data->{errors}[0]{error})" };
+        }
+        return { success => $data->{id} };
+    }
+
+    if ($twilio) {
+        my $output = $twilio->{api}->POST('Messages.json',
+            $twilio->{from} ? (From => $twilio->{from}) : (),
+            $twilio->{messaging_service} ? (MessagingServiceSid => $twilio->{messaging_service}) : (),
+            To => $params{to},
+            Body => $params{body},
+        );
+        my $data = decode_json($output->{content});
+        if ($output->{code} >= 400) {
+            return { error => "$data->{message} ($data->{code})" };
+        }
+        return { success => $data->{sid} };
+    }
 }
 
 =head2 parse_username
@@ -85,6 +122,15 @@ sub parse_username {
     $username =~ s/\s+//g;
 
     return { type => 'email', email => $username, username => $username } if is_valid_email($username);
+
+    if (my $phone = test_number($username)) {
+        return {
+            type => 'phone',
+            phone => $phone,
+            may_be_mobile => 1,
+            username => $username,
+        };
+    }
 
     my $type = $username =~ /^[^a-z]+$/i ? 'phone' : 'email';
     my $phone = do {
@@ -114,5 +160,20 @@ sub parse_username {
         username => $username,
     };
 }
+
+sub test_number {
+    my $username = shift;
+    my @notify_test_numbers = ('+447700900003', '+447700900002', '07700900003', '07700900002');
+    foreach (@notify_test_numbers) {
+        return FixMyStreet::SMS::TestNumber->new( number => $username ) if $username eq $_;
+    }
+    return 0;
+}
+
+package FixMyStreet::SMS::TestNumber;
+use Moo;
+has number => ( is => 'ro' );
+sub format { $_[0]->number }
+sub format_for_country { $_[0]->number }
 
 1;

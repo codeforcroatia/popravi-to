@@ -14,7 +14,9 @@
 [%~ END %]
 
 [% UNLESS omit_wrapper %]
-    <div id="main-nav" role="navigation">
+    <div id="js-menu-open-modal"></div>
+    <input role="button" type="checkbox" id="main-nav-btn" autocomplete="off">
+    <nav id="main-nav" role="navigation">
 [% END %]
 
     <ul class="[% ul_class %]"[% " id='" _ ul_id _ "'" IF ul_id %]>
@@ -22,5 +24,5 @@
     </ul>
 
 [% UNLESS omit_wrapper %]
-    </div>
+    </nav>
 [% END %]

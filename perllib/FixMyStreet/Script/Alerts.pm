@@ -69,9 +69,11 @@ sub send() {
         $query = FixMyStreet::DB->schema->storage->dbh->prepare($query);
         $query->execute();
         my $last_alert_id;
-        my $last_problem_state = '';
+        my $last_problem_state = 'confirmed';
         my %data = ( template => $alert_type->template, data => [], schema => $schema );
         while (my $row = $query->fetchrow_hashref) {
+
+            $row->{is_new_update} = defined($row->{item_text});
 
             my $cobrand = FixMyStreet::Cobrand->get_class_for_moniker($row->{alert_cobrand})->new();
             $cobrand->set_lang_and_domain( $row->{alert_lang}, 1, FixMyStreet->path_to('locale')->stringify );
@@ -95,25 +97,23 @@ sub send() {
             } );
 
             # this is currently only for new_updates
-            if (defined($row->{item_text})) {
+            if ($row->{is_new_update}) {
                 # this might throw up the odd false positive but only in cases where the
                 # state has changed and there was already update text
-                if ($row->{item_problem_state} &&
-                    !( $last_problem_state eq '' && $row->{item_problem_state} eq 'confirmed' ) &&
-                    $last_problem_state ne $row->{item_problem_state}
-                ) {
+                if ($row->{item_problem_state} && $last_problem_state ne $row->{item_problem_state}) {
                     my $state = FixMyStreet::DB->resultset("State")->display($row->{item_problem_state}, 1, $cobrand->moniker);
 
                     my $update = _('State changed to:') . ' ' . $state;
                     $row->{item_text} = $row->{item_text} ? $row->{item_text} . "\n\n" . $update :
                                                             $update;
+                    $last_problem_state = $row->{item_problem_state};
                 }
                 next unless $row->{item_text};
             }
 
             if ($last_alert_id && $last_alert_id != $row->{alert_id}) {
                 $last_problem_state = '';
-                _send_aggregated_alert_email(%data);
+                _send_aggregated_alert(%data);
                 %data = ( template => $alert_type->template, data => [], schema => $schema );
             }
 
@@ -135,14 +135,10 @@ sub send() {
 
             my $url = $cobrand->base_url_for_report($row);
             # this is currently only for new_updates
-            if (defined($row->{item_text})) {
+            if ($row->{is_new_update}) {
                 if ( $cobrand->moniker ne 'zurich' && $row->{alert_user_id} == $row->{user_id} ) {
                     # This is an alert to the same user who made the report - make this a login link
                     # Don't bother with Zurich which has no accounts
-                    my $user = $schema->resultset('User')->find( {
-                        id => $row->{alert_user_id}
-                    } );
-                    $data{alert_user} = $user;
                     my $token_obj = $schema->resultset('Token')->create( {
                         scope => 'alert_to_reporter',
                         data  => {
@@ -199,6 +195,10 @@ sub send() {
 
             if (!$data{alert_user_id}) {
                 %data = (%data, %$row);
+                my $user = $schema->resultset('User')->find( {
+                    id => $row->{alert_user_id}
+                } );
+                $data{alert_user} = $user;
                 if ($ref eq 'area_problems') {
                     my $va_info = FixMyStreet::MapIt::call('area', $row->{alert_parameter});
                     $data{area_name} = $va_info->{name};
@@ -217,7 +217,7 @@ sub send() {
             $last_alert_id = $row->{alert_id};
         }
         if ($last_alert_id) {
-            _send_aggregated_alert_email(%data);
+            _send_aggregated_alert(%data);
         }
     }
 
@@ -286,36 +286,42 @@ sub send() {
             };
             push @{$data{data}}, $row;
         }
-        _send_aggregated_alert_email(%data) if @{$data{data}};
+        _send_aggregated_alert(%data) if @{$data{data}};
     }
 }
 
-sub _send_aggregated_alert_email(%) {
+sub _send_aggregated_alert(%) {
     my %data = @_;
 
     my $cobrand = $data{cobrand};
 
     $cobrand->set_lang_and_domain( $data{lang}, 1, FixMyStreet->path_to('locale')->stringify );
-    FixMyStreet::Map::set_map_class($cobrand->map_type);
 
-    if (!$data{alert_user}) {
-        my $user = $data{schema}->resultset('User')->find( {
-            id => $data{alert_user_id}
-        } );
-        $data{alert_user} = $user;
-    }
+    my $user = $data{alert_user};
 
-    # Ignore phone-only users
-    return unless $data{alert_user}->email_verified;
+    my $pref = $data{is_new_update} ? 'update_notify' : 'alert_notify';
+    $pref = $user->get_extra_metadata($pref) || '';
+    return if $pref eq 'none';
+
+    # Only send text alerts for new report updates at present
+    my $allow_phone_update = ($user->phone_verified && $data{is_new_update} && $cobrand->sms_authentication);
+    return unless $user->email_verified || $allow_phone_update;
 
     # Mark user as active as they're being sent an alert
-    $data{alert_user}->set_last_active;
-    $data{alert_user}->update;
+    $user->set_last_active;
+    $user->update;
 
-    my $email = $data{alert_user}->email;
-    my ($domain) = $email =~ m{ @ (.*) \z }x;
+    my @check;
+    if ($user->email_verified) {
+        push @check, $user->email;
+        my ($domain) = $user->email =~ m{ @ (.*) \z }x;
+        push @check, $domain;
+    }
+    if ($user->phone_verified) {
+        push @check, $user->phone;
+    }
     return if $data{schema}->resultset('Abuse')->search( {
-        email => [ $email, $domain ]
+        email => \@check,
     } )->first;
 
     my $token = $data{schema}->resultset("Token")->new_result( {
@@ -323,10 +329,30 @@ sub _send_aggregated_alert_email(%) {
         data  => {
             id => $data{alert_id},
             type => 'unsubscribe',
-            email => $email,
         }
     } );
     $data{unsubscribe_url} = $cobrand->base_url( $data{cobrand_data} ) . '/A/' . $token->token;
+
+    my $result;
+    if ($allow_phone_update && (!$user->email_verified || $pref eq 'phone')) {
+        $result = _send_aggregated_alert_phone(%data);
+    } else {
+        $result = _send_aggregated_alert_email(%data);
+    }
+
+    if ($result->{success}) {
+        $token->insert();
+    } else {
+        warn "Failed to send alert $data{alert_id}: $result->{error}";
+    }
+}
+
+sub _send_aggregated_alert_email {
+    my %data = @_;
+
+    my $cobrand = $data{cobrand};
+
+    FixMyStreet::Map::set_map_class($cobrand->map_type);
 
     my $sender = FixMyStreet::Email::unique_verp_id([ 'alert', $data{alert_id} ], $cobrand->call_hook('verp_email_domain'));
     my $result = FixMyStreet::Email::send_cron(
@@ -334,7 +360,7 @@ sub _send_aggregated_alert_email(%) {
         "$data{template}.txt",
         \%data,
         {
-            To => $email,
+            To => $data{alert_user}->email,
         },
         $sender,
         0,
@@ -343,10 +369,19 @@ sub _send_aggregated_alert_email(%) {
     );
 
     unless ($result) {
-        $token->insert();
+        return { success => 1 };
     } else {
-        print "Failed to send alert $data{alert_id}!";
+        return { error => "failed to send email" };
     }
+}
+
+sub _send_aggregated_alert_phone {
+    my %data = @_;
+    my $result = FixMyStreet::SMS->new(cobrand => $data{cobrand})->send(
+        to => $data{alert_user}->phone,
+        body => sprintf(_("Your report (%d) has had an update; to view: %s\n\nTo stop: %s"), $data{id}, $data{problem_url}, $data{unsubscribe_url}),
+    );
+    return $result;
 }
 
 sub _get_address_from_geocode {

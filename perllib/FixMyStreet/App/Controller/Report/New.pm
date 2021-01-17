@@ -712,7 +712,6 @@ sub setup_categories_and_bodies : Private {
     my ( $self, $c ) = @_;
 
     my $all_areas = $c->stash->{all_areas};
-    my $first_area = ( values %$all_areas )[0];
 
     my @bodies = $c->model('DB::Body')->active->for_areas(keys %$all_areas)->all;
     my %bodies = map { $_->id => $_ } @bodies;
@@ -813,7 +812,7 @@ sub setup_categories_and_bodies : Private {
     $c->stash->{category_extras_hidden}  = \%category_extras_hidden;
     $c->stash->{category_extras_notices}  = \%category_extras_notices;
     $c->stash->{non_public_categories}  = \%non_public_categories;
-    $c->stash->{extra_name_info} = $first_area->{id} == COUNCIL_ID_BROMLEY ? 1 : 0;
+    $c->stash->{extra_name_info} = $all_areas->{+COUNCIL_ID_BROMLEY} ? 1 : 0;
 
     # escape these so we can then split on , cleanly in the template.
     my @list_of_names = map { $_->name } values %bodies_to_list;
@@ -943,7 +942,7 @@ sub process_user : Private {
 
     my $parsed = FixMyStreet::SMS->parse_username($params{username});
     my $type = $parsed->{type} || 'email';
-    $type = 'email' unless FixMyStreet->config('SMS_AUTHENTICATION') || $c->stash->{contributing_as_another_user};
+    $type = 'email' unless $c->cobrand->sms_authentication || $c->stash->{contributing_as_another_user};
     $report->user( $c->model('DB::User')->find_or_new( { $type => $parsed->{username} } ) );
 
     $c->stash->{phone_may_be_mobile} = $type eq 'phone' && $parsed->{may_be_mobile};

@@ -4,6 +4,7 @@ $body-font: MuseoSans, Helmet, Freesans, sans-serif !default;
 $meta-font: Helmet, Freesans, sans-serif !default;
 $heading-font: 'Museo300-display', MuseoSans, Helmet, Freesans, sans-serif !default;
 $menu-image: 'menu-white' !default;
+$close-menu-image: "close-#{$menu-image}" !default;
 
 $link-color: #005ea5 !default;
 $link-hover-color: #2b8cc4 !default;
@@ -665,6 +666,21 @@ ul.error {
 
 /*** LAYOUT ***/
 
+.skiplink {
+    display: inline-block;
+    padding: 1em;
+    position: absolute;
+    left: -9999em;
+}
+.skiplink:focus {
+   outline: 3px solid transparent;
+   color: $primary_text;
+   background-color: $primary;
+   text-decoration: none;
+   left: 0;
+   z-index: 2;
+}
+
 .dev-site-notice {
     font-size: 1.5em;
     color: #fff;
@@ -712,15 +728,23 @@ ul.error {
 }
 
 // this is a skip to nav for mobile users only
+label[for="main-nav-btn"] {
+  font-weight: normal;
+  margin: 0;
+}
+
 #nav-link {
   width: 3em;
   height: 0;
   padding-top: 3em;
   overflow: hidden;
-  background: transparent url(../fixmystreet/images/#{$menu-image}.png) center center no-repeat;
-  background-image: inline-image("../fixmystreet/images/#{$menu-image}.svg"), none;
+  background: transparent inline-image("../fixmystreet/images/#{$menu-image}.svg") center center no-repeat;
   background-size: 22px 18px;
   #{$right}: 0;
+
+  html.js-nav-open & {
+    background-image: inline-image("../fixmystreet/images/#{$close-menu-image}.svg");
+  }
 }
 
 #nav-link, #report-cta {
@@ -747,10 +771,30 @@ ul.error {
   }
 }
 
-// The nav list has this sort of "full width" look,
-// so we want to cancel out the margin from .container
+html.mobile.js-nav-open #js-menu-open-modal {
+    position: absolute;
+    bottom: -1000px; // Just to be sure
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 #main-nav {
-  margin: 0 -1em;
+  display: none;
+  position: absolute;
+  overflow: auto;
+  left: 0;
+  right: 0;
+  z-index: 1; // So appears over map
+}
+
+#main-nav-btn {
+    position: absolute;
+    #{$left}: -9999px;
+}
+
+#main-nav-btn:checked ~ #main-nav {
+  display: block;
 }
 
 .nav-menu {
@@ -758,10 +802,10 @@ ul.error {
   a, span {
     display: block;
     padding: 0.5em 1em;
-    background-color: #f6f6f6;
+    background-color: #fff;
     color: #333;
     font-size: 1.25em;
-    border-bottom: 0.25em solid #333;
+    border-bottom: 1px solid #ccc;
   }
   a:visited {
     color: #333;
@@ -772,7 +816,7 @@ ul.error {
     text-decoration: none;
   }
   span {
-    background-color: #ccc;
+    background-color: mix(#fff, $primary, 70%);
   }
   span.report-a-problem-btn {
     cursor: pointer;
@@ -2141,7 +2185,7 @@ img.pin {
   }
 }
 
-.only-map {
+.only-map, .mobile.js-nav-open {
   height: 100%;
   body {
     height: 100%;
@@ -2749,10 +2793,6 @@ a#geolocate_link.loading, .btn--geolocate.loading {
 
   // Tell assistive devices to ignore this element.
   visibility: hidden;
-
-  // Hack for IE8 which doesn't allow interaction with
-  // `visibility:hidden` elements.
-  visibility: visible\9;
 }
 
 

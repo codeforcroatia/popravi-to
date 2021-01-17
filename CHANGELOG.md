@@ -3,10 +3,15 @@
 * Unreleased
     - Front end improvements:
         - New aerial map toggle.
+        - Send text alerts for report updates to only-phone-verified users.
+        - Add options for user to set global notification preferences.
+        - Pop over mobile navigation menu. #3270
     - Bugfixes:
         - Fix non-JS form when all extra questions answered. #3248
         - Improve display of disabled fields in iOS.
         - Use div for inspector form wrapped extra questions. #3250
+        - Fix Open311 JSON services output. #3279
+        - Send email reports in staff-only categories.
     - Admin improvements:
         - Enable per-category hint customisation.
         - Move ban/unban buttons to user edit admin page.
@@ -88,6 +93,7 @@
     - UK:
         - Add option for recaptcha. #3050
         - Display search tips when location search returns no results. #3180
+        - Add ability to use GOV.UK Notify for text messaging.
 
 * v3.0.1 (6th May 2020)
     - New features:

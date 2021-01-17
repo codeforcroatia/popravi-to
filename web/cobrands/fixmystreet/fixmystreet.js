@@ -667,7 +667,7 @@ $.extend(fixmystreet.set_up, {
   on_resize: function() {
     var last_type;
     $(window).on('resize', function() {
-        var type = Modernizr.mq('(min-width: 48em)') || $('html.ie8').length ? 'desktop' : 'mobile';
+        var type = Modernizr.mq('(min-width: 48em)') ? 'desktop' : 'mobile';
         if (last_type == type) { return; }
         if (type == 'mobile') {
             fixmystreet.resize_to.mobile_page();
@@ -815,22 +815,46 @@ $.extend(fixmystreet.set_up, {
     $('.mobile #skip-this-step').addClass('chevron').wrap('<li>').parent().appendTo('#key-tools');
   },
 
+  // Very similar function in front.js for front page
   on_mobile_nav_click: function() {
-    $('.mobile').on('click', '#nav-link', function(e) {
-        e.preventDefault();
-        var offset = $('#main-nav').offset().top;
-        $('html, body').animate({scrollTop:offset}, 1000);
+    var html = document.documentElement;
+    if (!html.classList) {
+      return;
+    }
 
-        // Registering a pushState here means that mobile users can
-        // press their browser's Back button to return out of the
-        // mobile menu (easier than scrolling all the way back up
-        // the page). However, to show the map page popstate listener
-        // that this was a special state, we set hashchange to true in
-        // the event state, so we can detect it, and ignore it, later.
-        if ('pushState' in history) {
-            history.pushState({
-                hashchange: true
-            }, null);
+    var modal = document.getElementById('js-menu-open-modal'),
+        nav = document.getElementById('main-nav'),
+        nav_checkbox = document.getElementById('main-nav-btn');
+        nav_link = document.querySelector('label[for="main-nav-btn"]');
+
+    var toggle_menu = function(e) {
+      if (!html.classList.contains('mobile')) {
+        return;
+      }
+      e.preventDefault();
+      var opened = html.classList.toggle('js-nav-open');
+      if (opened) {
+        // Set height so can scroll menu if not enough space
+        var nav_top = nav_checkbox.offsetTop;
+        var h = window.innerHeight - nav_top;
+        nav.style.maxHeight = h + 'px';
+        modal.style.top = nav_top + 'px';
+      }
+      nav_link.setAttribute('aria-expanded', opened);
+      nav_checkbox.checked = opened;
+    };
+
+    nav_checkbox.addEventListener('focus', function() {
+        nav_link.classList.add('focussed');
+    });
+    nav_checkbox.addEventListener('blur', function() {
+        nav_link.classList.remove('focussed');
+    });
+    modal.addEventListener('click', toggle_menu);
+    nav_checkbox.addEventListener('change', toggle_menu);
+    nav.addEventListener('click', function(e) {
+        if (e.target.matches('span')) {
+            toggle_menu(e);
         }
     });
   },
@@ -1323,6 +1347,11 @@ fixmystreet.update_councils_text = function(data) {
 fixmystreet.update_pin = function(lonlat, savePushState) {
     var lonlats = fixmystreet.maps.update_pin(lonlat);
 
+    if ($('body').hasClass('noise')) {
+        // Do nothing for noise map page
+        return;
+    }
+
     if (savePushState !== false) {
         if ('pushState' in history) {
             var newReportUrl = '/report/new?longitude=' + lonlats.url.lon + '&latitude=' + lonlats.url.lat;
@@ -1763,6 +1792,18 @@ $(function() {
         setup_func();
     });
 
+    // We only do popstate things on normal map pages, which set this variable
+    if (!fixmystreet.page) {
+        return;
+    }
+    // The replaceState below means that normal browser behaviour with POSTed
+    // pages stops working (because the replaceState turns the POST into a
+    // GET), e.g. clicking back in a multi-page form reloads the page and
+    // takes you back to the start, so avoid that on the noise flow.
+    if ($('body').hasClass('noise')) {
+        return;
+    }
+
     // Have a fake history entry so we can cover all eventualities.
     if ('replaceState' in history) {
         history.replaceState({ initial: true }, null);
@@ -1778,11 +1819,6 @@ $(function() {
                 // Note: no pushState callbacks in these display_* calls,
                 // because we're already inside a popstate: We want to roll
                 // back to a previous state, not create a new one!
-
-                if (!fixmystreet.page) {
-                    // Only care about map pages, which set this variable
-                    return;
-                }
 
                 var location = window.history.location || window.location;
 
