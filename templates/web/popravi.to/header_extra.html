@@ -1,0 +1,11 @@
+[% IF bodyclass.match('frontpage') %]
+<link rel="prefetch" href="[% version('/cobrands/popravi.to/js.js') %]">
+[% END %]
+
+[% IF c.req.uri.host == 'map.popravi.to' %]
+    <link rel="canonical" href="https://popravi.to[% c.req.uri.path_query %]">
+[% END %]
+
+<link rel="Shortcut Icon" type="image/x-icon" href="/cobrands/popravi.to/favicon.ico">
+
+[% INCLUDE 'tracking_code.html' %]

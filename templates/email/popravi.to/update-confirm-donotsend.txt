@@ -1,0 +1,8 @@
+[% IF NOT problem.updates_sent_to_body %]
+Note that we do not send updates to [% update.problem.body %] - they are
+intended as a place for [% site_name %] users to
+discuss, support, and offer advice.
+[% ELSE %]
+This update will be sent to [% update.problem.body %] and will
+also be displayed on the [% site_name %] website.
+[% END %]

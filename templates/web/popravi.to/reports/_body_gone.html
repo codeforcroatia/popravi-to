@@ -1,0 +1,16 @@
+[% RETURN IF body.name == 'Hrvatske autoceste' # Nije jedinica lokalne samouprave ali postoji. %]
+<p id="unknown" class="alert">Ova jedinica lokalne samoprave više ne postoji.
+    [% IF body.name.match('Antrim|Newtownabbey') %]
+    Its area is now covered by <a href="/reports/Antrim+and+Newtownabbey">Antrim and Newtownabbey Borough Council</a>.
+    [% ELSIF body.name.match('Ards|North Down') %]
+    Its area is now covered by <a href="/reports/Ards+and+North+Down">Ards and North Down Borough Council</a>.
+    [% ELSIF body.name.match('Armagh|Banbridge|Craigavon') %]
+    Its area is now covered by <a href="/reports/Armagh+City%2C+Banbridge+and+Craigavon">Armagh City, Banbridge and Craigavon Borough Council</a>.
+    [% ELSIF body.name.match('Cheshire') %]
+    Its area is now covered by <a href="/reports/Cheshire+West+and+Chester">Cheshire West and Chester Council</a> or
+    <a href="/reports/Cheshire+East">Cheshire East Council</a>.
+    [% ELSIF body.name.match('Bedfordshire') %]
+    Its area is now covered by <a href="/reports/Bedford">Bedford Borough Council</a> or
+    <a href="/reports/Central+Bedfordshire">Central Bedfordshire Council</a>.
+    [% END %]
+</p>

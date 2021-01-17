@@ -1,0 +1,92 @@
+<div class="mysoc-footer" role="contentinfo">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-5">
+                <h2 class="mysoc-footer__site-name">FixMyStreet</h2>
+                <div class="mysoc-footer__site-description">
+                    <p>Mapping and reporting street problems to the councils responsible for fixing them &ndash; anywhere in the UK.</p>
+                </div>
+
+                <div class="fms-app-badges">
+                    <a class="js-lazyload fms-app-badge fms-app-badge--ios" href="https://itunes.apple.com/gb/app/fixmystreet/id297456545">
+                        FixMyStreet app on the App Store
+                    </a>
+                    <a class="js-lazyload fms-app-badge fms-app-badge--android" href="https://play.google.com/store/apps/details?id=org.mysociety.FixMyStreet">
+                        FixMyStreet Android app on Google Play
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <nav class="mysoc-footer__links">
+                    <ul>
+                        <li><[% IF c.req.uri.path == '/' %]span[% ELSE %]a href="[% base %]/"[% END %] class="report-a-problem-btn"
+                            >[% loc("Report a problem") %]</[% c.req.uri.path == '/' ? 'span' : 'a' %]></li>
+                        <li><[% IF c.req.uri.path == '/my' %]span[% ELSE %]a href="[% base %]/my"[% END
+                            %]>[% loc("Your reports") %]</[% c.req.uri.path == '/my' ? 'span' : 'a' %]></li>
+                        <li><[% IF c.req.uri.path == '/reports' %]span[% ELSE %]a href="[% base %]/reports"[% END
+                            %]>[% loc("All reports") %]</[% c.req.uri.path == '/reports' ? 'span' : 'a' %]></li>
+                        <li><[% IF c.req.uri.path == '/alert' %]span[% ELSE %]a href="[% base %]/alert[% pc ? '/list?pc=' : '' %][% pc | uri %]"[% END
+                            %]>[% loc("Local alerts") %]</[% c.req.uri.path == '/alert' ? 'span' : 'a' %]></li>
+                    </ul>
+                    <ul>
+                        <li><a href="/pro/">FixMyStreet Pro</a></li>
+                        <li><[% IF c.req.uri.path == '/posters' %]span[% ELSE %]a href="[% base %]/posters"[% END
+                            %]>[% loc("FixMyStreet Goodies") %]</[% c.req.uri.path == '/posters' ? 'span' : 'a' %]></li>
+                        <li><[% IF c.req.uri.path == '/contact' %]span[% ELSE %]a href="[% base %]/contact"[% END
+                            %]>[% loc("Contact") %]</[% c.req.uri.path == '/contact' ? 'span' : 'a' %]></li>
+                        <li><[% IF c.req.uri.path == '/faq' %]span[% ELSE %]a href="[% base %]/faq"[% END
+                            %]>[% loc("Help") %]</[% c.req.uri.path == '/faq' ? 'span' : 'a' %]></li>
+                        <li><[% IF c.req.uri.path == '/privacy' %]span[% ELSE %]a href="[% base %]/privacy"[% END
+                            %]>[% loc("Privacy") %]</[% c.req.uri.path == '/privacy' ? 'span' : 'a' %]></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="mysoc-footer__donate">
+                    <p>Your donations keep this site and others like it running</p>
+                    <a href="https://www.mysociety.org/donate?utm_source=fixmystreet.com&amp;utm_content=footer+donate+now&amp;utm_medium=link&amp;utm_campaign=mysoc_footer" class="mysoc-footer__donate__button">Donate now</a>
+                </div>
+            </div>
+
+        </div>
+        <hr class="mysoc-footer__divider" role="presentation">
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="mysoc-footer__orgs">
+                    <p class="mysoc-footer__org">
+                        Built by
+                        <a href="https://www.mysociety.org?utm_source=fixmystreet.com&amp;utm_content=footer+logo&amp;utm_medium=link&amp;utm_campaign=mysoc_footer" class="js-lazyload mysoc-footer__org__logo mysoc-footer__org__logo--mysociety">mySociety</a>
+                    </p>
+                    <p class="mysoc-footer__org">
+                        Powered by
+                        <a href="https://fixmystreet.org" class="js-lazyload mysoc-footer__org__logo mysoc-footer__org__logo--fms-platform">FixMyStreet Platform</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="mysoc-footer__legal">
+                    <p>
+                        <a href="https://www.societyworks.org?utm_source=fixmystreet.com&amp;utm_content=footer+full+legal+details&amp;utm_medium=link&amp;utm_campaign=mysoc_footer">SocietyWorks</a>
+                        is a limited company (05798215). It is a trading subsidiary of
+                        <a href="https://www.mysociety.org?utm_source=fixmystreet.com&amp;utm_content=footer+full+legal+details&amp;utm_medium=link&amp;utm_campaign=mysoc_footer">mySociety</a>,
+                        a registered charity in England and Wales (1076346).
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <ul class="mysoc-footer__badges">
+                    <li role="presentation"><a href="https://github.com/mysociety/fixmystreet" class="js-lazyload mysoc-footer__badge mysoc-footer__badge--github">Github</a></li>
+                    <li role="presentation"><a href="https://twitter.com/fixmystreet/" class="js-lazyload mysoc-footer__badge mysoc-footer__badge--twitter">Twitter</a></li>
+                    <li role="presentation"><a href="https://www.facebook.com/FixMyStreet" class="js-lazyload mysoc-footer__badge mysoc-footer__badge--facebook">Facebook</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
