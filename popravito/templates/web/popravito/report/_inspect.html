@@ -1,0 +1,86 @@
+[% second_column = BLOCK -%]
+  <div id="side-inspect">
+
+    <h2 class="inspect-form-heading">[% loc('Inspect report') %]</h2>
+
+    [% INCLUDE 'errors.html' %]
+
+    <form name="report_inspect_form" id="report_inspect_form" method="post" action="[% c.uri_for( '/report', problem.id ) %]" class="validate"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %]>
+
+    [% INCLUDE 'report/inspect/information.html' %]
+
+    [% IF permissions.report_edit_category OR permissions.report_inspect %]
+      <div class="inspect-section">
+        <p>
+          <label for="category">[% loc('Category') %]</label>
+          [% INCLUDE 'admin/report-category.html' %]
+        </p>
+
+        [% FOREACH category IN category_options %]
+          [% cat_name = category.category;
+             cat_safe = mark_safe(cat_name);
+             cat_prefix = cat_name | lower | replace('[^a-z]', '');
+             cat_prefix = "category_" _ cat_prefix _ "_" %]
+            <div data-category="[% cat_name | html %]"
+               [%~ IF cat_name != problem.category %] class="hidden"[% END %]
+               data-priorities='[% priorities_by_category.$cat_safe | html %]'
+               data-templates='[% templates_by_category.$cat_safe | html %]'>
+                [% INCLUDE 'report/new/category_extras_fields.html' metas=category_extras.$cat_safe hide_notices=1 show_hidden=1 %]
+            </div>
+        [% END %]
+
+        [% IF permissions.report_inspect %]
+          <p>
+            <label for="state">[% loc('State') %]</label>
+            [% INCLUDE 'report/inspect/state_groups_select.html' %]
+          </p>
+          [% TRY %][% INCLUDE 'report/inspect/_raise_defect.html' %][% CATCH file %][% END %]
+          <div id="js-duplicate-reports" class="[% "hidden" UNLESS problem.duplicate_of %]">
+            <input type="hidden" name="duplicate_of" value="[% problem.duplicate_of.id %]">
+            <p class="[% "hidden" UNLESS problem.duplicate_of %]"><strong>[% loc('Duplicate of') %]</strong></p>
+            <p class="[% "hidden" IF problem.duplicate_of %]">[% loc('Which report is it a duplicate of?') %]</p>
+            <ul class="item-list item-list--inspect-duplicates">
+              [% IF problem.duplicate_of %]
+                [% INCLUDE 'report/_item_expandable.html' item_extra_class = 'item-list__item--selected' problem = problem.duplicate_of %]
+                <li class="item-list__item"><a class="btn" href="#" id="js-change-duplicate-report">[% loc('Choose another') %]</a></li>
+              [% END %]
+            </ul>
+          </div>
+          [% IF problem.duplicates.size %]
+            <p><strong>[% loc('Duplicates') %]</strong></p>
+            <ul class="item-list item-list--inspect-duplicates">
+              [% FOR duplicate IN problem.duplicates %]
+                [% INCLUDE 'report/_item_expandable.html' problem = duplicate %]
+              [% END %]
+            </ul>
+          [% END %]
+        [% END %]
+
+      </div>
+    [% END %]
+
+    [% IF permissions.report_edit_priority OR permissions.report_inspect %]
+      <div class="inspect-section">
+          [% INCLUDE 'report/inspect/extra_details.html' %]
+      </div>
+    [% END %]
+
+      <div class="inspect-section">
+
+        [% IF permissions.report_inspect %]
+          [% INCLUDE 'report/inspect/public_update.html' %]
+        [% END %]
+
+        <p>
+          <input type="hidden" name="token" value="[% csrf_token %]" />
+          [% IF permissions.planned_reports %]
+            <input type="hidden" name="post_inspect_url" value="[% post_inspect_url | html %]" />
+          [% END %]
+          <input class="btn btn-primary" type="submit" value="[% loc('Save changes') %]" data-value-original="[% loc('Save changes') %]" data-value-duplicate="[% loc('Save + close as duplicate') %]" name="save" />
+        </p>
+      </div>
+
+      <input type="hidden" name="js" value="">
+    </form>
+  </div>
+[%- END %]

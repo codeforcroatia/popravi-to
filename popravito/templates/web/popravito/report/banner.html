@@ -1,0 +1,22 @@
+[% USE date %]
+
+[% BLOCK banner %]
+    <div class="banner banner--[% id %]">
+        <p>
+            <img src="[% c.cobrand.path_to_pin_icons _ 'pin-' _ c.cobrand.pin_colour(problem, 'report') _ '.png' %]" alt="" class="pin">
+            [% text %]
+        </p>
+    </div>
+[% END %]
+
+[% IF problem.is_open AND date.now - problem.lastupdate.epoch > 8 * 7 * 24 * 60 * 60 %]
+    [% INCLUDE banner, id = 'unknown', text = loc('Unknown') %]
+[% ELSIF problem.is_in_progress %]
+    [% INCLUDE banner, id = 'progress', text = prettify_state(problem.state) %]
+[% END %]
+[% IF problem.is_fixed %]
+    [% INCLUDE banner, id = 'fixed', text = prettify_state('fixed') %]
+[% END %]
+[% IF problem.is_closed %]
+    [% INCLUDE banner, id = 'closed', text = prettify_state('closed') %]
+[% END %]

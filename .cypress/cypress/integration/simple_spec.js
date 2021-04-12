@@ -71,19 +71,19 @@ describe('Leaving updates', function() {
     });
 });
 
-describe('Clicking the "big green banner" on a map page', function() {
-    before(function() {
-        cy.server();
-        cy.route('/around\?ajax*').as('update-results');
-        cy.visit('/');
-        cy.get('[name=pc]').type(Cypress.env('postcode'));
-        cy.get('[name=pc]').parents('form').submit();
-        cy.wait('@update-results');
-        cy.get('.big-green-banner').click();
-    });
+// describe('Clicking the "big green banner" on a map page', function() {
+//     before(function() {
+//         cy.server();
+//         cy.route('/around\?ajax*').as('update-results');
+//         cy.visit('/');
+//         cy.get('[name=pc]').type(Cypress.env('postcode'));
+//         cy.get('[name=pc]').parents('form').submit();
+//         cy.wait('@update-results');
+//         cy.get('.big-green-banner').click();
+//     });
 
-    it('begins a new report', function() {
-        cy.url().should('include', '/report/new');
-        cy.get('#form_title').should('be.visible');
-    });
-});
+//     it('begins a new report', function() {
+//         cy.url().should('include', '/report/new');
+//         cy.get('#form_title').should('be.visible');
+//     });
+// });

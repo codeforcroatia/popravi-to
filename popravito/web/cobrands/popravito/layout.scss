@@ -1,0 +1,63 @@
+// @import "_colours";
+@import "../sass/layout";
+@import "_css_reset";
+@import "_global_styles";
+@use "./components/index";
+
+
+// general layout styles
+.btn-popravito-primary {
+  width: 152px;
+  height: 40px;
+  background-color: purple;
+  color: $primary-color-white;
+}
+
+.btn-primary-popravito {
+  color: white;
+  background: black;
+  padding: 14px 24px;
+  border-radius: 16px;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-left: 8px;
+  }
+  &:hover {
+    background-color: #333333;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+// Map page
+
+.big-green-banner {
+  color: black;
+  text-align: left;
+  text-transform: lowercase;
+}
+
+#side {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.geolocate {
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  color: #2C8F72;
+  margin-bottom: 36px;
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+

@@ -1,0 +1,85 @@
+[% INCLUDE 'admin/header.html' title=loc('Bodies') -%]
+
+[% IF body_errors.size %]
+    <p class="error">[% loc('Please correct the errors below') %]</p>
+[% END %]
+
+[% IF bodies.size == 0 %]
+  <p class="fms-admin-info">
+    [% loc('Currently no bodies have been created.') %]
+    <br>
+    [% loc('You need to add bodies (such as councils or departments) so that you can then add
+    the categories of problems they can handle (such as potholes or streetlights) and the
+    contacts (such as an email address) to which reports are sent.') %]
+  </p>
+[% ELSE %]
+
+  [% IF c.config.STAGING_SITE and !c.config.STAGING_FLAGS.send_reports %]
+  <p class="fms-admin-warning">
+    [% tprintf(loc("As this is a staging site and %s is false, reports made on this site will be sent to the problem reporter, not the contact given for the report’s category."), "<a class='admin-offsite-link' href='https://fixmystreet.org/customising/config/#send_reports_on_staging'><code>STAGING_FLAGS send_reports</code></a>") %]
+  </p>
+  [% END %]
+
+  <table cellspacing="0" cellpadding="2" border="1" id="admin_bodies">
+      <tr>
+          <th>[% loc('Name') %]</th>
+        [% IF c.cobrand.moniker == 'zurich' %]
+          <th>[% loc('Email') %]</th>
+        [% ELSE %]
+          <th>[% loc('Summary') %]</th>
+        [% END %]
+          <th>[% loc('Deleted') %]</th>
+      </tr>
+  [%- FOREACH body IN bodies %]
+      [%- SET id = body.id %]
+      [% NEXT IF c.cobrand.moniker == 'zurich' AND admin_type == 'dm' AND (body.parent OR body.children_count) %]
+      <tr[% IF body.deleted %] class="adminhidden"[% END %]
+        [% IF NOT counts.$id OR counts.$id.deleted == counts.$id.c %] class="is-deleted"[% END %]>
+          <td>
+            [% IF c.cobrand.moniker == 'zurich' %]
+              [% FILTER repeat(4*body.indent_level) %]&nbsp;[% END %]
+              [% IF admin_type == 'super' %]
+                <a href="[% c.uri_for_action( 'admin/bodies/edit', [ id ] ) %]">[% body.name | html %]</a>
+              [% ELSE %]
+                [% body.name | html %]
+              [% END %]
+            [% ELSE %] [%# not Zurich: all bodies should be links %]
+              <a href="[% c.uri_for_action( 'admin/bodies/edit', [ id ] ) %]">[% body.name | html %]</a>
+              [%- IF body.parent %], [% body.parent.name | html %][% END -%]
+            [% END %]
+          </td>
+      [% IF c.cobrand.moniker == 'zurich' %]
+          <td>[% body.endpoint %]</td>
+      [% ELSE %]
+          <td>
+          [% IF counts.$id %]
+              [% tprintf( nget('%d address', '%d addresses', counts.$id.c), counts.$id.c) %]
+              [% IF counts.$id.deleted == counts.$id.c %]
+                  (all deleted; reports will not be sent)
+              [% ELSIF counts.$id.deleted %]
+                  ([% counts.$id.deleted %] deleted)
+              [% END %]
+              [% IF counts.$id.confirmed != counts.$id.c %]
+                  ([% counts.$id.c-counts.$id.confirmed %] unconfirmed)
+              [% END %]
+          [% ELSE %]
+              No categories, reports will not be sent
+          [% END %]
+          </td>
+      [% END %]
+          <td>[% IF body.deleted %][% loc('Yes') %][% END %]</td>
+      </tr>
+  [%- END %]
+  </table>
+[% END %]
+
+[% IF (c.cobrand.moniker == 'zurich' AND admin_type == 'super') OR c.user.is_superuser %]
+    <div class="admin-box">
+      <h2>[% loc('Add body') %]</h2>
+      [% INCLUDE 'admin/bodies/form.html', body='' %]
+    </div>
+[% END %]
+
+[% INCLUDE 'admin/bodies/edit-league.html' %]
+
+[% INCLUDE 'admin/footer.html' %]

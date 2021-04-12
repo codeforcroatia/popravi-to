@@ -1,0 +1,173 @@
+[% USE Number.Format %]
+
+[% extra_css = BLOCK %]
+	    <link rel="stylesheet" href="[% version('/cobrands/fixmystreet/dashboard.css') %]">
+[% END %]
+
+[%
+    INCLUDE 'header.html'
+        title = loc('Dashboard')
+        robots = 'noindex, nofollow'
+        bodyclass = 'fullwidthpage'
+%]
+
+<form>
+
+[% IF body %]
+<hgroup>
+    [% tprintf(loc('<h2>Reports, Statistics and Actions for</h2> <h1>%s</h1>'), body_name) %]
+</hgroup>
+[% ELSE %]
+<h1>[% loc('Summary statistics') %]</h1>
+[% END %]
+
+<div class="filters">
+  [% IF body %]
+    <input type="hidden" name="body" value="[% body.id | html %]">
+    [% IF NOT c.user.area_ids.size %]
+    <p>
+        <label for="ward">[% loc('Ward:') %]</label>
+        <select class="form-control js-multiple" multiple name="ward" id="ward">
+            [% FOR w IN children.values.sort('name') %]
+                <option value="[% w.id %]"[% ' selected' IF ward.grep(w.id).size %]>[% w.name %]</option>
+            [% END %]
+        </select>
+    </p>
+    [% END %]
+
+    <p>
+        <label for="category">[% loc('Category:') %]</label>
+        <select class="form-control" name="category" id="category"><option value=''>[% loc('All') %]</option>
+            [% BLOCK category_option %]
+                <option value='[% cat.category | html %]'[% ' selected' IF category == cat.category %]>[% cat.category_display | html %]</option>
+            [% END %]
+            [%~ INCLUDE 'report/new/_category_select.html' category_options=contacts ~%]
+        </select>
+    </p>
+
+  [% ELSE %]
+
+    <p>
+        <label for="body">[% loc('Council:') %]</label>
+        <select class="form-control" name="body" id="body"><option value=''>[% loc('All') %]</option>
+            [% FOR b IN bodies %]
+                [% NEXT IF NOT b.area_count %]
+                <option value="[% b.id %]">[% b.name %]</option>
+            [% END %]
+        </select>
+    </p>
+
+  [% END %]
+
+    <p>
+        <label for="state">[% loc('Report state:') | replace(' ', '&nbsp;') %]</label>
+        <select class="form-control" name="state" id="state">
+            <option value=''>[% loc('All') %]</option>
+          [% FOR group IN filter_states %]
+          [% FOR state IN group.1 %]
+            [% NEXT IF state == 'hidden' %]
+            <option [% 'selected ' IF state == q_state %] value="[% state %]">[% prettify_state(state, 1) %]</option>
+          [% END %]
+          [% END %]
+        </select>
+    </p>
+    <p>
+        <label for="start_date">[% loc('Start Date') %]</label>
+        <input name="start_date" id="start_date" type="date" value="[% start_date | html %]" class="form-control">
+    </p>
+    <p>
+        <label for="end_date">[% loc('End Date') %]</label>
+        <input name="end_date" id="end_date" type="date" value="[% end_date | html %]" class="form-control">
+    </p>
+    <p class="no-label">
+        <input type="submit" class="btn" value="[% loc('Look up') %]">
+    </p>
+</div>
+
+<input type="hidden" name="group_by" value="[% group_by | html %]">
+
+</form>
+
+[% BLOCK gb %]
+  [% IF group_by == new_gb %]
+    <strong title="[% tprintf(loc('Currently grouped by %s'), text) %]">[% text %]</strong>
+  [% ELSE %]
+    <a href="[% c.uri_with({ group_by => new_gb }) %]" title="[% tprintf(loc('Group by %s'), text) %]">[% text %]</a>
+  [% END %]
+[% END %]
+
+<ul class="dashboard-options-tabs">
+    <li role="presentation"><span>[% loc('Group by:') %]</span><li>
+    <li>[% INCLUDE gb new_gb='category' text=loc('Category') %]</li>
+    <li>[% INCLUDE gb new_gb='state' text=loc('State') %]</li>
+    <li>[% INCLUDE gb new_gb='month' text=loc('Month') %]</li>
+    <li>[% INCLUDE gb new_gb='category+state' text=loc('Category and State') %]</li>
+    <li>[% INCLUDE gb new_gb='device+site' text=loc('Device and Site') %]</li>
+    <li class="pull-right">
+        <span>[% loc('Export as CSV') %]:</span>
+        <a href="[% c.uri_with({ export => 2 }) %]">[% loc('Reports') %]</a>
+        <a href="[% c.uri_with({ export => 2, updates => 1 }) %]">[% loc('Updates') %]</a>
+    </li>
+</ul>
+
+<table width="100%" id="overview">
+    <tr>
+      <th></th>
+      [% IF group_by == 'category+state' %]
+        <th scope="col">[% loc('Open') %]</th>
+        <th scope="col">[% loc('Closed') %]</th>
+        <th scope="col">[% loc('Fixed') %]</th>
+        <th scope="col">[% loc('Total') %]</th>
+      [% ELSE %]
+        [% FOR k2 IN columns.sort %]
+          <th scope="col">[% k2 or loc('Website') %]</td>
+        [% END %]
+        <th scope="col">[% loc('Total') %]</th>
+      [% END %]
+    </tr>
+  [% FOR k IN rows %]
+    <tr>
+      [% IF group_by == 'state' %]
+        <th scope="row">[% prettify_state(k) %]</th>
+      [% ELSE %]
+        <th scope="row">[% k %]</th>
+      [% END %]
+      [% IF group_by == 'category+state' %]
+        <td>[% grouped.$k.open OR 0 %]</td>
+        <td>[% grouped.$k.closed OR 0 %]</td>
+        <td>[% grouped.$k.fixed OR 0 %]</td>
+        <td>[% grouped.$k.total OR 0 %]</td>
+      [% ELSE %]
+        [% FOR k2 IN columns.sort %]
+          <td>[% grouped.$k.$k2 OR 0 %]</td>
+        [% END %]
+        <td>[% grouped.$k.total OR 0 %]</td>
+      [% END %]
+    </tr>
+  [% END %]
+    <tr class="subtotal">
+        <th scope="row">[% loc('Total') %]</th>
+      [% IF group_by == 'category+state' %]
+        <td>[% totals.open OR 0 %]</td>
+        <td>[% totals.closed OR 0 %]</td>
+        <td>[% totals.fixed OR 0 %]</td>
+      [% ELSE %]
+        [% FOR k2 IN columns.sort %]
+          <td>[% totals.$k2 OR 0 %]</td>
+        [% END %]
+      [% END %]
+        <td>[% totals.total OR 0 %]</td>
+    </tr>
+</table>
+
+<p>
+[% loc('Within the specified timeframe:') %]
+[%
+summary_open = summary_open | format_number;
+summary_closed = summary_closed | format_number;
+summary_fixed = summary_fixed | format_number;
+tprintf( loc('%s opened, %s closed, %s fixed'),
+    decode(summary_open), decode(summary_closed), decode(summary_fixed) ) %]
+</p>
+
+[% INCLUDE 'footer.html' %]

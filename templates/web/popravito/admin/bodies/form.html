@@ -1,0 +1,142 @@
+    <form method="post" action="[% body ? c.uri_for_action('admin/bodies/edit', [ body.id ]) : c.uri_for_action('admin/bodies/index') %]" enctype="application/x-www-form-urlencoded" accept-charset="utf-8">
+    <div class="fms-admin-info">
+        [% loc(
+          "Add a <strong>body</strong> for each administrative body, such as a council or department
+          to which problem reports can be sent. You can add one or more contacts (for different
+          categories of problem) to each body."
+        ) %]
+    </div>
+
+    [% IF body_errors.name %]
+      <div class="fms-admin-warning">
+        [% body_errors.name %]
+      </div>
+    [% END %]
+    <div class="admin-hint">
+      <p>
+        [% loc(
+          "The body's <strong>name</strong> identifies the body (for example, <em>Borsetshire District Council</em>)
+          and may be displayed publically."
+        ) %]
+      </p>
+    </div>
+    <p>
+        <label for="name">[% loc('Name') %]</label>
+        <input type="text" class="form-control" name="name" id="name" value="[% body.name | html %]" size="50">
+    </p>
+
+    [% INCLUDE 'admin/bodies/_translations.html' %]
+
+    <div class="admin-hint">
+      <p>
+        [% loc(
+          "Identify a <strong>parent</strong> if this body is itself part of another body.
+          For basic installations, you don't need to join bodies in this way."
+        ) %]
+      </p>
+    </div>
+    <p>
+        <label for="parent">[% loc('Parent') %]</label>
+        <select class="form-control" name="parent" id="parent">
+            <option value=""> -- [% loc('Select a body') %] -- </option>
+            [% FOR b IN bodies %]
+            <option value="[% b.id %]"[% ' selected' IF body.parent.id == b.id %]>[% b.name %]</option>
+            [% END %]
+        </select>
+    </p>
+
+    [% IF areas.size == 0 AND c.config.MAPIT_URL AND (NOT c.config.MAPIT_TYPES OR c.config.MAPIT_TYPES.size==O) %]
+        <p class="fms-admin-warning">
+          [% tprintf( loc(
+              '<code>MAPIT_URL</code> is set (<code>%s</code>) but no <code>MAPIT_TYPES</code>.<br>
+              This is probably why "area covered" is empty (below).<br>
+              Maybe add some <code>MAPIT_TYPES</code> to your config file?'), c.config.MAPIT_URL)
+          %]
+        </p>
+    [% END %]
+
+    <div class="admin-hint">
+      <p>
+        [% loc(
+          "This body will only be sent reports for problems that are located in the <strong>area covered</strong>.
+          A body will not receive any reports unless it covers at least one area."
+        ) %]
+        <br>
+        [% IF c.config.MAPIT_URL %]
+          [% tprintf( loc("The list of available areas is being provided by the MapIt service at %s."), c.config.MAPIT_URL) %]
+        [% ELSE %]
+          [% loc(
+            "No specific areas are currently available, because the <code>MAPIT_URL</code> in
+            your config file is not pointing to a live MapIt service.") %]
+        [% END %]
+        <br>
+        [% loc("For more information, see <a href='https://fixmystreet.org/customising/fms_and_mapit' class='admin-offsite-link'>How FixMyStreet uses Mapit</a>.")%]
+      </p>
+    </div>
+    <p>
+        <label for="area_ids">[% loc('Area covered') %]</label>
+        <select class="form-control js-multiple" name="area_ids" id="area_ids" multiple data-none="-- [% loc('Select an area') %] --">
+            [% SET body_areas = body.areas %]
+            [% FOR area IN areas %]
+            [% SET aid = area.id %]
+            <option value="[% area.id %]"[% ' selected' IF body_areas.$aid %]>[% area.name | html %]</option>
+            [% END %]
+        </select>
+    </p>
+
+    <p>
+        <label for="external_url">[% loc('External URL') %]</label>
+        <input type="text" class="form-control" name="external_url" id="external_url" value="[% body.external_url | html %]" size="50">
+    </p>
+    <div class="admin-hint">
+      <p>[% loc( "You can mark a body as deleted if you do not want it to be active on the site." ) %]</p>
+    </div>
+    <p>
+        <input type="checkbox" name="deleted" id="deleted" value="1"[% ' checked' IF body.deleted %]>
+        <label for="deleted" class="inline">[% loc('Flag as deleted') %]</label>
+    </p>
+
+    <div class="admin-hint">
+      <p>
+        [% loc(
+          "The <strong>send method</strong> determines how problem reports will be sent to the body.
+           If you leave this blank, <strong>send method defaults to email</strong>."
+        ) %]
+      </p>
+    </div>
+    <p>
+        <label for="send_method">Send Method</label>
+        <select class="form-control" name="send_method" id="send_method">
+            <option value=""> -- Select a method -- </option>
+            [% FOR method IN send_methods %]
+            <option value="[% method %]"[% ' selected' IF body.send_method == method %]>[% method %]</option>
+            [% END %]
+        </select>
+    </p>
+
+    [% INCLUDE 'admin/bodies/open311-form-fields.html', object = body, show_body_fields = 1 %]
+
+    <div class="admin-hint">
+      <p>
+        [% loc(
+          "Enable this <strong>can be devolved</strong> setting if one or more contacts have a 
+          different endpoint (and send method) from the body's. For example, if reports for some categories of
+          problem must be emailed, while others can be sent over Open311."
+        ) %]
+        <br>
+        [%# NB 'email' is a literal setting, so not translating it in following string? %]
+        [% tprintf( loc('Leave this blank if all reports to this body should be sent using the same send method (e.g., "%s").'), body.send_method or 'email' ) %]
+      </p>
+    </div>
+    <p>
+        <input type="checkbox" id="can_be_devolved" name="can_be_devolved"[% ' checked' IF body.can_be_devolved %]>
+        <label for="can_be_devolved" class="inline">Send method or endpoints can be devolved to contacts (i.e, can be different from the body's)</label>
+    </p>
+
+    <p>
+    <input type="hidden" name="posted" value="body">
+    <input type="hidden" name="token" value="[% csrf_token %]">
+    <input type="submit" class="btn" value="[% body ? loc('Update body') : loc('Add body') %]">
+    </p>
+    </form>
+

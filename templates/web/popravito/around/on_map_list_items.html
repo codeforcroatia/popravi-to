@@ -1,0 +1,35 @@
+<ul class="item-list item-list--reports"[%' data-show-old-reports="1"' IF num_old_reports > 0 %]>
+[% IF on_map.size %]
+    [% FOREACH problem IN on_map %]
+        [% INCLUDE 'reports/_list-entry.html' %]
+    [% END %]
+    [% IF around_map.size %]
+    <li class="item-list__item item-list__item--empty">
+        <p>[% loc('Here are some other nearby reports:') %]</p>
+    </li>
+    [% END %]
+[% ELSIF around_map.size %]
+    <li class="item-list__item item-list__item--empty">
+        <p>[% loc('No reports to show on map, here are some nearby:') %]</p>
+    </li>
+[% ELSE %]
+    <li class="item-list__item item-list__item--empty">
+        [% IF c.get_param('js') %]
+            <p>[% loc('Loading reports…') %]</p>
+        [% ELSE %]
+            [% PROCESS 'around/_on_map_empty.html' %]
+        [% END %]
+    </li>
+[% END %]
+</ul>
+
+[% IF around_map.size %]
+<ul class="item-list item-list--reports">
+    [% FOREACH problem IN around_map %]
+        [% dist = tprintf("%.1f", (problem.distance || 0) );
+           problem = problem.problem;
+        %]
+        [% INCLUDE 'reports/_list-entry.html' %]
+    [% END %]
+</ul>
+[% END %]

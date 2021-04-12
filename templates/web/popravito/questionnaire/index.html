@@ -1,0 +1,95 @@
+[%
+    SET bodyclass = 'mappage';
+    PROCESS "report/photo-js.html";
+    PROCESS "maps/${map.type}.html";
+    INCLUDE 'header.html', title = loc('Questionnaire');
+%]
+
+[% map_html | safe %]
+
+</div>
+
+<div id="map_sidebar">
+
+<h1>[% loc('Questionnaire') %]</h1>
+
+<form method="post" action="/questionnaire/submit" id="questionnaire"
+[%- IF c.cobrand.allow_photo_upload -%]
+ enctype="multipart/form-data"
+[%- END -%]
+>
+
+<input type="hidden" name="token" value="[% token | html %]">
+
+[% IF errors %]
+<ul class="error questionnaire-errors">
+  [% FOR error IN errors %]
+    <li>[% error %]</li>
+  [% END %]
+</ul>
+[% END %]
+
+<p>1.
+[% loc('An update marked this problem as fixed.') IF was_fixed %]
+[% loc('Has this problem been fixed?') %]
+</p>
+
+<p class="segmented-control segmented-control--radio">
+    <input type="radio" name="been_fixed" id="been_fixed_yes" value="Yes"[% ' checked' IF been_fixed == 'Yes' %]>
+    <label class="btn" for="been_fixed_yes">[% loc('Yes') %]</label>
+    <input type="radio" name="been_fixed" id="been_fixed_no" value="No"[% ' checked' IF been_fixed == 'No' %]>
+    <label class="btn" for="been_fixed_no">[% loc('No') %]</label>
+    <input type="radio" name="been_fixed" id="been_fixed_unknown" value="Unknown"[% ' checked' IF been_fixed == 'Unknown' %]>
+    <label class="btn" for="been_fixed_unknown">[% loc('Don&rsquo;t know') %]</label>
+</p>
+
+<h2 class="questionnaire-report-header">[% loc('Your report') %]</h2>
+<div class="questionnaire-report-reminder">
+    [% INCLUDE 'report/photo.html' object=problem %]
+    <h3 class="questionnaire-report-reminder__report-title">
+        <a href="/report/[% problem.id %]">[% problem.title | html %]</a>
+    </h3>
+    <p class="questionnaire-report-reminder__report-meta">[% problem.meta_line(c.user) | html %]</p>
+  [% IF updates.size %]
+    <p class="questionnaire-report-reminder__last-update-header">
+        <strong>[% loc('Last update') %]</strong>
+        <a href="/report/[% problem.id %]">[% loc('Show all updates') %]</a>
+    </p>
+    <p class="questionnaire-report-reminder__last-update">&ldquo;[% updates.last.text | staff_html_markup(updates.last.extra) %]&rdquo;</p>
+  [% END %]
+</div>
+
+[% UNLESS answered_ever_reported %]
+<p>2. [% loc('Have you ever reported a problem to a council before, or is this your first time?') %]</p>
+<p class="segmented-control segmented-control--radio">
+    <input type="radio" name="reported" id="reported_yes" value="Yes"[% ' checked' IF reported == 'Yes' %]>
+    <label class="btn" for="reported_yes">[% loc('Reported before') %]</label>
+    <input type="radio" name="reported" id="reported_no" value="No"[% ' checked' IF reported == 'No' %]>
+    <label class="btn" for="reported_no">[% loc('First time') %]</label>
+</p>
+[% END %]
+
+<p>3. [% loc('If you wish to leave a public update on the problem, please enter it here
+(please note it will not be sent to the council).') %]</p>
+
+<p><textarea class="form-control" name="update" rows="7" cols="30">[% update | html %]</textarea></p>
+
+[% INCLUDE report/form/photo_upload.html %]
+
+<div class="js-another-questionnaire">
+    <p>4. [% loc('Would you like to receive another questionnaire in 4 weeks, reminding you to check the status?') %]</p>
+    <p class="segmented-control segmented-control--radio">
+        <input type="radio" name="another" id="another_yes" value="Yes"[% ' checked' IF another == 'Yes' %]>
+        <label class="btn" for="another_yes">[% loc('Yes') %]</label>
+        <input type="radio" name="another" id="another_no" value="No"[% ' checked' IF another == 'No' %]>
+        <label class="btn" for="another_no">[% loc('No') %]</label>
+    </p>
+</div>
+
+<p><input type="submit" class="btn" name="submit" value="[% loc('Submit questionnaire') %]"></p>
+
+</form>
+
+</div>
+
+[% INCLUDE 'footer.html' %]
