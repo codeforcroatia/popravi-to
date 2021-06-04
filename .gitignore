@@ -40,7 +40,7 @@ inc/
 _Inline/
 *.pyc
 docker-compose.override.yml
-popravito/
+/popravito/
 
 # JS coverage
 /.nyc_output
