@@ -21,23 +21,26 @@ function isR2L() {
     // that doesn't change the main content at all.
     small_drawer: function(id) {
         var $this = $(this), d = $('#' + id);
-        this.toggle(function() {
-            if (opened) {
-                opened.click();
+        this.click(function(e) {
+            e.preventDefault();
+            if (!$this.hasClass('hover')) {
+                if (opened) {
+                    opened.click();
+                }
+                if (!$this.addClass('hover').data('setup')) {
+                    d.hide().removeClass('hidden-js').css({
+                    padding: '1em',
+                    background: '#fff'
+                    });
+                    $this.data('setup', true);
+                }
+                d.slideDown();
+                opened = $this;
+            } else {
+                $this.removeClass('hover');
+                d.slideUp();
+                opened = null;
             }
-            if (!$this.addClass('hover').data('setup')) {
-                d.hide().removeClass('hidden-js').css({
-                padding: '1em',
-                background: '#fff'
-                });
-                $this.data('setup', true);
-            }
-            d.slideDown();
-            opened = $this;
-        }, function(e) {
-            $this.removeClass('hover');
-            d.slideUp();
-            opened = null;
         });
     },
 
@@ -56,58 +59,62 @@ function isR2L() {
         var $drawer = $('#' + id);
 
         this.off('click');
-        this.toggle(function() {
-            // Find the specified drawer, or create it if it doesn't exist
-            if ($drawer.length === 0) {
-                $drawer = $('<div id="' + id + '">');
-                $drawer.appendTo($swparent);
-            }
-
-            if (!$this.addClass('hover').data('setup')) {
-                // Optionally fill $drawer with HTML from an AJAX data source
-                if (ajax) {
-                    var href = $this.attr('href') + ';ajax=1';
-                    var margin = isR2L() ? 'margin-left' : 'margin-right';
-                    var $ajax_result = $('<div>').appendTo($drawer);
-                    $ajax_result.html('<p style="text-align:center">Loading</p>');
-                    $ajax_result.load(href);
+        this.click(function(e) {
+            e.preventDefault();
+            var drawer_top;
+            if (!$this.hasClass('hover')) {
+                // Find the specified drawer, or create it if it doesn't exist
+                if ($drawer.length === 0) {
+                    $drawer = $('<div id="' + id + '">');
+                    $drawer.appendTo($swparent);
                 }
 
-                // Style up the $drawer
-                var drawer_top = $(window).height() - $sw.height();
-                var drawer_css = {
-                    position: 'fixed',
-                    zIndex: 10,
-                    top: drawer_top,
-                    bottom: 0,
-                    width: $sidebar.css('width'),
-                    paddingLeft: $sidebar.css('padding-left'),
-                    paddingRight: $sidebar.css('padding-right'),
-                    overflow: 'auto',
-                    background: '#fff'
-                };
-                drawer_css[isR2L() ? 'right' : 'left'] = 0;
-                $drawer.css(drawer_css).removeClass('hidden-js').find('h2').css({ marginTop: 0 });
-                $this.data('setup', true);
+                if (!$this.addClass('hover').data('setup')) {
+                    // Optionally fill $drawer with HTML from an AJAX data source
+                    if (ajax) {
+                        var href = $this.attr('href') + ';ajax=1';
+                        var margin = isR2L() ? 'margin-left' : 'margin-right';
+                        var $ajax_result = $('<div>').appendTo($drawer);
+                        $ajax_result.html('<p style="text-align:center">Loading</p>');
+                        $ajax_result.load(href);
+                    }
+
+                    // Style up the $drawer
+                    drawer_top = $(window).height() - $sw.height();
+                    var drawer_css = {
+                        position: 'fixed',
+                        zIndex: 10,
+                        top: drawer_top,
+                        bottom: 0,
+                        width: $sidebar.css('width'),
+                        paddingLeft: $sidebar.css('padding-left'),
+                        paddingRight: $sidebar.css('padding-right'),
+                        overflow: 'auto',
+                        background: '#fff'
+                    };
+                    drawer_css[isR2L() ? 'right' : 'left'] = 0;
+                    $drawer.css(drawer_css).removeClass('hidden-js').find('h2').css({ marginTop: 0 });
+                    $this.data('setup', true);
+                }
+
+                // Insert the .shadow-wrap controls into the top of the drawer.
+                $sw.addClass('static').prependTo($drawer);
+
+                // Animate the drawer into place, enitrely covering the sidebar.
+                var sidebar_top_px = $sidebar.position().top;
+                $drawer.show().animate({ top: sidebar_top_px }, 1000);
+
+            } else {
+                // Slide the drawer down, move the .shadow-wrap back to its
+                // original parent, and hide the drawer for potential re-use later.
+                $this.removeClass('hover');
+                drawer_top = $(window).height() - $sw.height();
+
+                $drawer.animate({ top: drawer_top }, 1000, function() {
+                    $sw.removeClass('static').appendTo($swparent);
+                    $drawer.hide();
+                });
             }
-
-            // Insert the .shadow-wrap controls into the top of the drawer.
-            $sw.addClass('static').prependTo($drawer);
-
-            // Animate the drawer into place, enitrely covering the sidebar.
-            var sidebar_top_px = $sidebar.position().top;
-            $drawer.show().animate({ top: sidebar_top_px }, 1000);
-
-        }, function(e) {
-            // Slide the drawer down, move the .shadow-wrap back to its
-            // original parent, and hide the drawer for potential re-use later.
-            $this.removeClass('hover');
-            var drawer_top = $(window).height() - $sw.height();
-
-            $drawer.animate({ top: drawer_top }, 1000, function() {
-                $sw.removeClass('static').appendTo($swparent);
-                $drawer.hide();
-            });
         });
     },
 
@@ -130,7 +137,7 @@ function isR2L() {
             settings.presets = [];
             settings.presets.push({
                 name: settings.allText,
-                options: $select.data('all-options') || []
+                all: true
             });
         }
 
@@ -158,6 +165,14 @@ fixmystreet.mobile_reporting = {
     // Creates the "app-like" mobile reporting UI with full screen map
     // and special "OK/Cancel" buttons etc.
     $('html').addClass('map-fullscreen only-map map-reporting');
+    $('#map_box').removeClass('hidden-js');
+
+    if (fixmystreet.page === 'new') {
+        // Might have come direct to report/new, need right buttons
+        fixmystreet.pageController.mapStepButtons();
+        return;
+    }
+
     $('.mobile-map-banner span').text(translation_strings.place_pin_on_map);
 
     if ($('#map_filter').length === 0) {
@@ -187,8 +202,7 @@ fixmystreet.mobile_reporting = {
   remove_ui: function() {
     // Removes the "app-like" mobile reporting UI, reverting all the
     // changes made by fixmystreet.mobile_reporting.apply_ui().
-    $('html').removeClass('map-fullscreen only-map map-reporting');
-    $('#map_box').css({ width: "", height: "", position: "" });
+    $('html').removeClass('map-fullscreen only-map map-reporting map-page');
     $('#mob_sub_map_links').remove();
 
     // Turn off the mobile map filters.
@@ -201,7 +215,7 @@ fixmystreet.mobile_reporting = {
 fixmystreet.resize_to = {
   mobile_page: function() {
     $('html').addClass('mobile');
-    if (typeof fixmystreet !== 'undefined' && fixmystreet.page == 'around') {
+    if (typeof fixmystreet !== 'undefined' && (fixmystreet.page === 'around' || fixmystreet.page === 'new')) {
         fixmystreet.mobile_reporting.apply_ui();
     }
 
@@ -241,6 +255,110 @@ fixmystreet.update_list_item_buttons = function($list) {
   $list.children(':last-child').find('[name="shortlist-down"]').prop('disabled', true);
 };
 
+fixmystreet.pageController = {
+    toPage: function(page, opts) {
+        opts = opts || {};
+        var $curr = $('.js-reporting-page--active');
+        var $page;
+        if (page === 'first') {
+            $page = $('.js-reporting-page').first();
+            page = $page.data('pageName');
+        } else if (page === 'next') {
+            if ($curr.data('pageName') === 'map') {
+                if (!fixmystreet.reporting.selectedCategory().category) {
+                    $page = $('.js-reporting-page').first();
+                } else {
+                    // It is possible for multiple map 'page' divs to exist if
+                    // multiple layers shown. We only need one of them
+                    $page = $curr.nextAll('.js-reporting-page:not(.js-reporting-page--skip,.js-reporting-page--map)').first();
+                }
+            } else {
+                $page = $curr.nextAll('.js-reporting-page:not(.js-reporting-page--skip)').first();
+            }
+            page = $page.data('pageName');
+        } else {
+            $page = $('.js-reporting-page[data-page-name=' + page + ']');
+        }
+        if ($curr.data('pageName') === 'map' || $('#mob_ok:visible').length || opts.forceMapHide) {
+            if ($("html").hasClass("mobile")) {
+                $('#map_box').addClass('hidden-js');
+                $('html').removeClass('only-map map-page');
+            }
+        }
+
+        $curr.removeClass('js-reporting-page--active');
+        $page.addClass('js-reporting-page--active');
+
+        if ($page.data('pageName') === 'map' || opts.forceMapShow) {
+            // We're going to bypass to the map for the next step, then come back here
+            // Or we have clicked Back to the original map
+            if ($("html").hasClass("mobile")) {
+                $('#map_box').removeClass('hidden-js');
+                $('html').addClass('only-map map-page');
+            }
+        }
+        setTimeout(function() {
+            $('html, body, #map_sidebar').scrollTop(0);
+        }, 0);
+        if (!opts.popstate && 'pushState' in history) {
+            history.pushState({
+                reportingPage: page
+            }, null, '#' + page);
+        }
+        $(fixmystreet).trigger('report_new:page_change', [ $curr, $page ]);
+    },
+    mapStepButtons: function() {
+        // We are now in the reporting flow, so set the page flag used for error display
+        $('html').addClass('map-page');
+
+        var $map_box = $('#map_box');
+        var links = '<a href="#ok" id="mob_ok">' + translation_strings.ok + '</a>';
+        if (fixmystreet.page !== 'new') {
+            links = '<a href="#" class="js-back" id="problems_nearby">' + translation_strings.back + '</a>' + links;
+        }
+        $map_box.append('<p class="sub-map-links" id="mob_sub_map_links">' + links + '</p>');
+
+        $('.mobile-map-banner span').text(translation_strings.right_place);
+
+        // mobile user clicks 'ok' on map
+        $('#mob_ok').click(function(e){
+            e.preventDefault();
+            var $page = $('.js-reporting-page--active');
+            var first_page = $('.js-reporting-page').first().data('pageName');
+            if ($page.data('pageName') === first_page || !$page.length) {
+                // Either the original pin location, or the map 'page' was
+                // removed while we had it open, due to e.g. clicking the map
+                // in a totally different council. Show first step
+                fixmystreet.pageController.toPage('first', {
+                    forceMapHide: true
+                });
+            } else {
+                // Something later, e.g. asset selection, move to next step
+                fixmystreet.pageController.toPage('next');
+            }
+        });
+    },
+    addMapPage: function(layer) {
+        var $map_page = $('#' + layer.id + '_map');
+        if (!$map_page.length) {
+            $map_page = $('<div data-page-name="map" class="js-reporting-page js-reporting-page--map" id="' + layer.id + '_map"></div>');
+        }
+        // Move the map page depending on if we are basing its appearance on the
+        // answer to an extra question (so subcategories key is present) or not
+        if (layer.fixmystreet.subcategories) {
+            $map_page.insertAfter('#js-post-category-messages');
+        } else {
+            $map_page.insertBefore('#js-post-category-messages');
+        }
+    },
+    addNextPage: function(name, $div) {
+        $div.addClass('js-reporting-page');
+        $div.attr('data-page-name', name);
+        $div.append("<button class='btn btn--block btn--final js-reporting-page--next'>" + translation_strings.ok + "</button>");
+        $('.js-reporting-page--active').after($div);
+    }
+};
+
 fixmystreet.set_up = fixmystreet.set_up || {};
 $.extend(fixmystreet.set_up, {
   basics: function() {
@@ -263,7 +381,7 @@ $.extend(fixmystreet.set_up, {
     $('#pc').focus();
 
     // In case we've come here by clicking back to a form that disabled a submit button
-    $('form.validate input[type=submit]').removeAttr('disabled');
+    $('form.validate input[type=submit]').prop('disabled', false);
 
     $('[data-confirm]').on('click', function() {
         return confirm(this.getAttribute('data-confirm'));
@@ -290,7 +408,7 @@ $.extend(fixmystreet.set_up, {
     // FIXME - needs to use translated string
     if (jQuery.validator) {
         jQuery.validator.addMethod('validCategory', function(value, element) {
-            return this.optional(element) || value != '-- Pick a category --'; }, translation_strings.category );
+            return this.optional(element) || value != ''; }, translation_strings.category );
         jQuery.validator.addMethod('js-password-validate', function(value, element) {
             return !value || value.length >= fixmystreet.password_minimum_length;
         }, translation_strings.password_register.short);
@@ -316,7 +434,7 @@ $.extend(fixmystreet.set_up, {
         errorElement: 'div',
         errorClass: 'form-error',
         errorPlacement: function( error, element ) {
-            if (element.parent().hasClass('segmented-control')) {
+            if (element.attr('type') == 'radio') {
                 element.parent().before( error );
             } else {
                 element.before( error );
@@ -421,21 +539,8 @@ $.extend(fixmystreet.set_up, {
         }
     }
 
-    // On the new report form, does this by asking for details from the server.
-    // Delegation is necessary because #form_category may be replaced during the lifetime of the page
-    $("#problem_form").on("change.category", "select#form_category", function(){
-	// If we haven't got any reporting data (e.g. came straight to
-	// /report/new), fetch it first. That will then automatically call this
-	// function again, due to it calling change() on the category if set.
-        if (!fixmystreet.reporting_data) {
-            if (fixmystreet.page === 'new') {
-                fixmystreet.fetch_reporting_data();
-            }
-            return;
-        }
-
-        var category = $(this).val(),
-            data = fixmystreet.reporting_data.by_category[category] || {},
+    var category_changed = function(category) {
+        var data = fixmystreet.reporting_data.by_category[category] || {},
             $category_meta = $('#category_meta');
 
         if (!$.isEmptyObject(data)) {
@@ -454,17 +559,15 @@ $.extend(fixmystreet.set_up, {
             fixmystreet.update_councils_text(fixmystreet.reporting_data);
         }
         if (data.category_extra) {
-            if ( $category_meta.length ) {
-                $category_meta.replaceWith( data.category_extra );
-                var $new_category_meta = $('#category_meta');
-                // Preserve any existing values
-                $category_meta.find("[name]").each(function() {
-                    $new_category_meta.find("[name="+this.name+"]").val(this.value);
-                });
-            } else {
-                $('#js-post-category-messages').prepend( data.category_extra );
-            }
+            $category_meta.replaceWith( data.category_extra );
+            var $new_category_meta = $('#category_meta');
+            $new_category_meta.closest('.js-reporting-page').toggleClass('js-reporting-page--skip', !!data.extra_hidden);
+            // Preserve any existing values
+            $category_meta.find("[name]").each(function() {
+                $new_category_meta.find("[name="+this.name+"]").val(this.value);
+            });
         } else {
+            $category_meta.closest('.js-reporting-page').addClass('js-reporting-page--skip');
             $category_meta.empty();
         }
         if (data.non_public) {
@@ -478,8 +581,10 @@ $.extend(fixmystreet.set_up, {
         }
         if (data.allow_anonymous) {
             $('.js-show-if-anonymous').removeClass('hidden-js');
+            $('.js-reporting-page--include-if-anonymous').removeClass('js-reporting-page--skip');
         } else {
             $('.js-show-if-anonymous').addClass('hidden-js');
+            $('.js-reporting-page--include-if-anonymous').addClass('js-reporting-page--skip');
         }
 
         text_update('#title-hint', data.title_hint);
@@ -512,8 +617,49 @@ $.extend(fixmystreet.set_up, {
             }
         });
 
-        $(fixmystreet).trigger('report_new:category_change', { check_duplicates_dismissal: true });
+        $(fixmystreet).trigger('report_new:category_change');
+    };
+    fixmystreet.reporting.topLevelPoke = function() {
+        var checked = $("#form_category_fieldset input:checked");
+        if (checked.length) {
+            checked.trigger('change');
+        } else {
+            var $subcategory_page = $('.js-reporting-page--subcategory');
+            $subcategory_page.addClass('js-reporting-page--skip');
+            category_changed('');
+        }
+    };
+
+    // Delegation is necessary because category/subcategory may be replaced during the lifetime of the page
+    $("#problem_form").on("change.category", '[name^="category."]', function() {
+        category_changed($(this).val());
     });
+    $("#problem_form").on("change.category", "[name=category]", function(e, no_event){
+        // First we need to check if we are picking a group or a category
+        var $subcategory_page = $('.js-reporting-page--subcategory');
+        var subcategory_id = $(this).data("subcategory");
+        $(".js-subcategory").addClass('hidden-js');
+        var $input;
+        if (subcategory_id === undefined) {
+            $subcategory_page.addClass('js-reporting-page--skip');
+            $input = $(this);
+        } else {
+            $subcategory_page.removeClass('js-reporting-page--skip');
+            var $subcategory = $("#subcategory_" + subcategory_id);
+            $subcategory.removeClass('hidden-js');
+            $input = $subcategory.find('input:checked');
+        }
+        if (!no_event) {
+            category_changed($input.val());
+        }
+    });
+
+    // If we haven't got any reporting data (e.g. came straight to
+    // /report/new), fetch it first. That will then automatically call this
+    // function again, due to it calling change() on the category if set.
+    if (!fixmystreet.reporting_data && fixmystreet.page === 'new') {
+        fixmystreet.fetch_reporting_data();
+    }
   },
 
   reapply_validation: function(rules) {
@@ -531,115 +677,6 @@ $.extend(fixmystreet.set_up, {
                 }
             }
         });
-  },
-
-  // no_event makes sure no change event is fired (so we don't end up in an infinite loop)
-  // and also only sets up the main group dropdown, assuming the subs are left alone
-  category_groups: function(old_group, no_event) {
-    var $category_select = $("select#form_category");
-    if (!$category_select.hasClass('js-grouped-select')) {
-        if (!no_event && $category_select.val() !== '-- Pick a category --') {
-            $category_select.change();
-        }
-        return;
-    }
-
-    var $group_select = $("<select></select>").addClass("form-control validCategory").attr('id', 'category_group');
-    var $category_label = $("#form_category_label");
-    var $subcategory_label = $("#form_subcategory_label");
-    var $empty_option = $category_select.find("option").first();
-
-    $group_select.change(function() {
-        var subcategory_id = $(this).find(":selected").data("subcategory_id");
-        $(".js-subcategory").hide();
-        if (subcategory_id === undefined) {
-            $subcategory_label.addClass("hidden");
-            $category_select.val($(this).val()).change();
-        } else {
-            $("#" + subcategory_id).show().change();
-            $subcategory_label.removeClass("hidden").attr('for', subcategory_id);
-        }
-    });
-
-    var subcategory_change = function() {
-        $category_select.val($(this).val()).change();
-    };
-
-    var add_option = function(el) {
-        $group_select.append($(el).clone());
-        if (el.selected) {
-            $group_select.val(el.value);
-        }
-    };
-
-    var add_optgroup = function(el) {
-        var $el = $(el);
-        var $options = $el.find("option");
-
-        if ($options.length === 0) {
-            /// Pass empty optgroups
-        } else if ($options.length == 1) {
-            add_option($options.get(0));
-        } else {
-            var label = $el.attr("label");
-            var subcategory_id = "subcategory_" + label.replace(/[^a-zA-Z]+/g, '');
-            var $opt = $("<option></option>").text(label).val(label);
-            $opt.data("subcategory_id", subcategory_id);
-            $group_select.append($opt);
-
-            if (no_event) {
-                $options.each(function() {
-                    // Make sure any preselected value is preserved in the new UI:
-                    if (this.selected) {
-                        $group_select.val(label);
-                    }
-                });
-                return;
-            }
-
-            var $sub_select = $("<select></select>").addClass("form-control js-subcategory validCategory");
-            $sub_select.attr("id", subcategory_id);
-            $sub_select.append($empty_option.clone());
-            $options.each(function() {
-                $sub_select.append($(this).clone());
-                // Make sure any preselected value is preserved in the new UI:
-                if (this.selected) {
-                    $group_select.val(label);
-                    $sub_select.val(this.value);
-                }
-            });
-            $sub_select.hide().insertAfter($subcategory_label).change(subcategory_change);
-        }
-    };
-
-    $category_select.hide();
-    $group_select.insertAfter($category_select);
-    $category_label.attr('for', 'category_group');
-    $category_select.find("optgroup, > option").each(function() {
-        if (this.tagName.toLowerCase() === 'optgroup') {
-            add_optgroup(this);
-        } else if (this.tagName.toLowerCase() === 'option') {
-            add_option(this);
-        }
-    });
-    // Sort elements in place, but leave the first 'pick a category' option alone
-    $group_select.find("option").slice(1).sort(function(a, b) {
-        // 'Other' should always be at the end.
-        if (a.label === 'Other') {
-            return 1;
-        }
-        if (b.label === 'Other') {
-            return -1;
-        }
-        return a.label > b.label ? 1 : -1;
-    }).appendTo($group_select);
-
-    if (old_group !== '-- Pick a category --' && $category_select.val() == '-- Pick a category --') {
-        $group_select.val(old_group);
-    }
-    if (!no_event) {
-        $group_select.change();
-    }
   },
 
   hide_name: function() {
@@ -749,7 +786,7 @@ $.extend(fixmystreet.set_up, {
             $('input[type=submit]', $context).prop("disabled", true).removeClass('green-btn');
           });
           this.on("queuecomplete", function() {
-            $('input[type=submit]', $context).removeAttr('disabled').addClass('green-btn');
+            $('input[type=submit]', $context).prop('disabled', false).addClass('green-btn');
           });
           this.on("success", function(file, xhrResponse) {
             var ids = $('input[name=upload_fileid]', $context).val().split(','),
@@ -905,8 +942,8 @@ $.extend(fixmystreet.set_up, {
         }
         $('#key-tools li:empty').remove();
         $('#report-updates-data').insertAfter($('#map_box'));
-        if (fixmystreet.page !== 'around' && !$('#toggle-fullscreen').length) {
-            $('#sub_map_links').append('<a href="#" id="toggle-fullscreen" class="expand" data-expand-text="'+ translation_strings.expand_map +'" data-compress-text="'+ translation_strings.collapse_map +'" >'+ translation_strings.expand_map +'</span>');
+        if (fixmystreet.page !== 'around' && fixmystreet.page !== 'new' && !$('#toggle-fullscreen').length) {
+            $('#sub_map_links').append('<a href="#" id="toggle-fullscreen" data-expand-text="'+ translation_strings.expand_map +'" data-compress-text="'+ translation_strings.collapse_map +'" >'+ translation_strings.expand_map +'</span>');
         }
     }
 
@@ -977,6 +1014,24 @@ $.extend(fixmystreet.set_up, {
         e.preventDefault();
         $(".js-ward-single").addClass("hidden");
         $(".js-ward-multi").removeClass("hidden");
+    });
+  },
+
+  page_controller: function() {
+    // Delegation because e.g. Highways England button gets added
+    $('#problem_form, #form_update_form').on('click', '.js-reporting-page .js-reporting-page--next', function(e) {
+        e.preventDefault();
+        var v = $(this).closest('form').validate();
+        if (!v.form()) {
+            v.focusInvalid();
+            return;
+        }
+        fixmystreet.pageController.toPage('next');
+    });
+
+    $(document).on('click', '.js-back', function(e) {
+        e.preventDefault();
+        history.back();
     });
   },
 
@@ -1066,6 +1121,7 @@ $.extend(fixmystreet.set_up, {
         focusFirstVisibleInput();
     });
 
+    // XXX Is this still needed, should it be better done server side? Will need to spot multiple pages too
     var err = $('.form-error');
     if (err.length) {
         $('.js-sign-in-password-btn').click();
@@ -1168,7 +1224,14 @@ $.extend(fixmystreet.set_up, {
     // (due to not wanting around form to submit, though good thing anyway)
     $('body').on('click', '#alert_rss_button', function(e) {
         e.preventDefault();
-        var feed = $('input[name=feed][type=radio]:checked').parent().prevAll('a').attr('href');
+        var a = $('input[name=feed][type=radio]:checked').parent().prevAll('a');
+        var feed = a.attr('href');
+        if (a.hasClass('js-alert-local')) {
+            var dist = $('#distance').val();
+            if (parseInt(dist)) {
+                feed += '/' + dist;
+            }
+        }
         window.location.href = feed;
     });
     $('body').on('click', '#alert_email_button', function(e) {
@@ -1376,19 +1439,24 @@ fixmystreet.update_pin = function(lonlat, savePushState) {
 (function() { // fetch_reporting_data closure
 
 function re_select(group, category) {
-    var cat_in_group = $("#form_category optgroup[label=\"" + group + "\"] option[value=\"" + category + "\"]");
+    var group_id = group.replace(/[^a-z]+/gi, '');
+    var cat_in_group = $("#subcategory_" + group_id + " input[value=\"" + category + "\"]");
     if (cat_in_group.length) {
-        cat_in_group.prop({selected:true});
-        return true;
-    } else if ($("#form_category option[value=\"" + category + "\"]").length) {
-        $("#form_category").val(category);
-        return true;
+        $('#form_category_fieldset input[value="' + group + '"]')[0].checked = true;
+        cat_in_group[0].checked = true;
+    } else {
+        var top_level = group || category;
+        var top_level_match = $("#form_category_fieldset input[value=\"" + top_level + "\"]");
+        if (top_level && top_level_match.length) {
+            top_level_match[0].checked = true;
+        }
     }
-    return false;
 }
 
+// On the new report form, does this by asking for details from the server.
 fixmystreet.fetch_reporting_data = function() {
     $.getJSON('/report/new/ajax', {
+        w: 1,
         latitude: $('#fixmystreet\\.latitude').val(),
         longitude: $('#fixmystreet\\.longitude').val()
     }, function(data) {
@@ -1402,9 +1470,9 @@ fixmystreet.fetch_reporting_data = function() {
             return;
         }
         $('#side-form').show();
-        var old_category_group = $('#category_group').val() || $('#filter_group').val(),
-            old_category = $("#form_category").val(),
-            filter_category = $("#filter_categories").val();
+        var selected = fixmystreet.reporting.selectedCategory(),
+            old_category_group = selected.group || $('#filter_group').val() || '',
+            old_category = selected.category || $("#filter_categories").val() || '';
 
         fixmystreet.reporting_data = data;
 
@@ -1441,15 +1509,9 @@ fixmystreet.fetch_reporting_data = function() {
         }
 
         $('#form_category_row').html(data.category);
-        var reselected = re_select(old_category_group, old_category);
-        if (!reselected && filter_category !== undefined) {
-            // If the category filter appears on the map and the user has selected
-            // something from it, then pre-fill the category field in the report,
-            // if it's a value already present in the drop-down.
-            re_select(old_category_group, filter_category);
-        }
-
-        fixmystreet.set_up.category_groups(old_category_group);
+        $('#form_subcategory_row').html(data.subcategories);
+        re_select(old_category_group, old_category);
+        fixmystreet.reporting.topLevelPoke();
 
         if ( data.extra_name_info && !$('#form_fms_extra_title').length ) {
             // there might be a first name field on some cobrands
@@ -1481,11 +1543,38 @@ fixmystreet.fetch_reporting_data = function() {
     });
 };
 
+fixmystreet.reporting = {};
+fixmystreet.reporting.selectedCategory = function() {
+    var group_or_cat = $('#form_category_fieldset input:checked').val() || '',
+        group_id = group_or_cat.replace(/[^a-z]+/gi, ''),
+        $subcategory = $("#subcategory_" + group_id),
+        category,
+        group;
+    if ($subcategory.length) {
+        category = $subcategory.find('input:checked').val() || '';
+        group = group_or_cat;
+    } else {
+        category = group_or_cat;
+        group = '';
+    }
+    return { group: group, category: category };
+};
+
 })(); // fetch_reporting_data closure
 
 fixmystreet.display = {
+  // Possibilities to get here are:
+  // 1. we've clicked the button/banner/map from around page
+  // 2. we've clicked/dragged pin on new page already,
+  // 3. we've clicked Back from page 2 of reporting form to page 1
+  // 4. we've clicked Forward from around page after having gone back to it,
   begin_report: function(lonlat, opts) {
     opts = opts || {};
+
+    if (fixmystreet.page === 'new' && opts.popstate) {
+        // We've clicked Back from page 2 of reporting form to page 1
+        return;
+    }
 
     lonlat = fixmystreet.maps.begin_report(lonlat);
 
@@ -1537,60 +1626,7 @@ fixmystreet.display = {
     $('#sub_map_links').hide();
     $('.map-pins-toggle').hide();
     if ($('html').hasClass('mobile')) {
-        var $map_box = $('#map_box'),
-            width = $map_box.width(),
-            height = $map_box.height();
-        $map_box.append(
-            '<p class="sub-map-links" id="mob_sub_map_links">' +
-            '<a href="#" id="problems_nearby">' +
-                translation_strings.back +
-            '</a>' +
-            '<a href="#" id="try_again">' +
-                translation_strings.try_again +
-            '</a>' +
-            '<a href="#ok" id="mob_ok">' +
-                translation_strings.ok +
-            '</a>' +
-            '</p>')
-        .addClass('above-form') // Stop map being absolute, so reporting form doesn't get hidden
-        .css({
-            width: width,
-            height: height
-        });
-
-        $('.mobile-map-banner span').text(translation_strings.right_place);
-
-        $('#problems_nearby').click(function(e){
-            e.preventDefault();
-            history.back();
-        });
-
-        $('#try_again').click(function(e) {
-            e.preventDefault();
-            $('#mob_ok').click();
-        });
-
-        // mobile user clicks 'ok' on map
-        $('#mob_ok').toggle(function(){
-            //scroll the height of the map box instead of the offset
-            //of the #side-form or whatever as we will probably want
-            //to do this on other pages where #side-form might not be
-            $('html, body').animate({ scrollTop: height-60 }, 500, function(){
-                $('html').removeClass('only-map');
-                $('#mob_sub_map_links').addClass('map_complete');
-                $('#mob_ok').text(translation_strings.map);
-            });
-        }, function(){
-            var current = $('html, body').scrollTop();
-            $('html, body').animate({ scrollTop: 0 }, 500/height*current, function(){
-                $('html').addClass('only-map');
-                $('#mob_sub_map_links').removeClass('map_complete');
-                $('#mob_ok').text(translation_strings.ok);
-                if (fixmystreet.duplicates) {
-                    fixmystreet.duplicates.hide();
-                }
-            });
-        });
+        fixmystreet.pageController.mapStepButtons();
     }
 
     fixmystreet.page = 'new';
@@ -1751,6 +1787,7 @@ fixmystreet.display = {
         fixmystreet.page = fixmystreet.original.page;
         if ($('html').hasClass('mobile') && fixmystreet.page == 'around') {
             $('#mob_sub_map_links').remove();
+            $('html').removeClass('map-page');
             fixmystreet.mobile_reporting.apply_ui();
         }
 
@@ -1813,14 +1850,15 @@ $(function() {
         setTimeout(function () {
             if (!window.addEventListener) { return; }
             window.addEventListener('popstate', function(e) {
-                // The user has pressed the Back button, and there is a
-                // stored History state for them to return to.
+                // The user has pressed the Back or Forward button, and there
+                // is a stored History state for them to return to.
 
                 // Note: no pushState callbacks in these display_* calls,
                 // because we're already inside a popstate: We want to roll
                 // back to a previous state, not create a new one!
 
                 var location = window.history.location || window.location;
+                var page;
 
                 if (e.state === null) {
                     // Hashchange or whatever, we don't care.
@@ -1828,6 +1866,15 @@ $(function() {
                 }
 
                 if ('initial' in e.state) {
+                    if (fixmystreet.original.page === 'new') {
+                        // Started at /report/new, so go back to first 'page' there
+                        fixmystreet.pageController.toPage('first', {
+                            popstate: true,
+                            forceMapShow: true
+                        });
+                        return;
+                    }
+
                     // User has navigated Back from a pushStated state, presumably to
                     // see the list of all reports (which was shown on pageload). By
                     // this point, the browser has *already* updated the URL bar so
@@ -1839,7 +1886,7 @@ $(function() {
                     filters.trigger('change.multiselect');
                     if (fixmystreet.utils && fixmystreet.utils.parse_query_string) {
                         var qs = fixmystreet.utils.parse_query_string();
-                        var page = qs.p || 1;
+                        page = qs.p || 1;
                         $('#show_old_reports').prop('checked', qs.show_old_reports || '');
                         $('.pagination:first').data('page', page)
                             .trigger('change.filters');
@@ -1848,7 +1895,12 @@ $(function() {
                 } else if ('reportId' in e.state) {
                     fixmystreet.display.report(e.state.reportPageUrl, e.state.reportId);
                 } else if ('newReportAtLonlat' in e.state) {
+                    fixmystreet.pageController.toPage('first', {
+                        popstate: true,
+                        forceMapShow: true
+                    });
                     fixmystreet.display.begin_report(e.state.newReportAtLonlat, {
+                        popstate: true,
                         saveHistoryState: false
                     });
                 } else if ('page_change' in e.state) {
@@ -1870,6 +1922,11 @@ $(function() {
                 // } else if ('hashchange' in e.state) {
                     // This popstate was just here because the hash changed.
                     // (eg: mobile nav click.) We want to ignore it.
+                } else if ('reportingPage' in e.state) {
+                    page = e.state.reportingPage;
+                    fixmystreet.pageController.toPage(page, {
+                        popstate: true
+                    });
                 }
                 if ('mapState' in e.state) {
                     fixmystreet.maps.set_map_state(e.state.mapState);

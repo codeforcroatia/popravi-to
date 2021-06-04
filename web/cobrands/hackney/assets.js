@@ -7,7 +7,7 @@ if (!fixmystreet.maps) {
 /** These layers are from the Hackney WFS feed, for non-Alloy categories: */
 var wfs_defaults = {
   http_options: {
-    url: "https://map.hackney.gov.uk/geoserver/wfs",
+    url: 'https://map2.hackney.gov.uk/geoserver/ows',
     params: {
         SERVICE: "WFS",
         VERSION: "1.1.0",
@@ -30,27 +30,7 @@ var wfs_defaults = {
 fixmystreet.assets.add(wfs_defaults, {
   http_options: {
       params: {
-          TYPENAME: "greenspaces:park_bin",
-      }
-  },
-  asset_category: "Overflowing bin",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "amenity:public_toilet",
-      }
-  },
-  asset_category: ["Public toilets", "Toilets"],
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "parking:pay_display_machine_liberator",
+          TYPENAME: "parking:inventory_pay_and_display_machine",
       }
   },
   asset_category: "Pay & Display Machines",
@@ -60,70 +40,10 @@ fixmystreet.assets.add(wfs_defaults, {
 fixmystreet.assets.add(wfs_defaults, {
   http_options: {
       params: {
-          TYPENAME: "recycling:estate_recycling_bin",
-      }
-  },
-  asset_category: "Bin Contamination",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "amenity:sport_facility",
-      }
-  },
-  asset_category: "Sport Area",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "greenspaces:park_bench",
-      }
-  },
-  asset_category: "Park Furniture (bench)",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "greenspaces:park_bin",
-      }
-  },
-  asset_category: "Park Furniture (bin)",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "greenspaces:park_picnic_bench",
-      }
-  },
-  asset_category: "Park Furniture (picnic bench)",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "transport:bike_hangar_scheme",
+          TYPENAME: "transport:bike_hangar",
       }
   },
   asset_category: "Cycle Hangars",
-  attributes: {}
-});
-
-fixmystreet.assets.add(wfs_defaults, {
-  http_options: {
-      params: {
-          TYPENAME: "greenspaces:park_bench",
-      }
-  },
-  asset_category: "Benches",
   attributes: {}
 });
 
@@ -226,11 +146,12 @@ var layers = [
   }
 ];
 
+var base = fixmystreet.staging ? "https://tilma.staging.mysociety.org" : "https://tilma.mysociety.org";
 var hackney_defaults = $.extend(true, {}, fixmystreet.alloyv2_defaults, {
   class: OpenLayers.Layer.NCCVectorAsset,
   protocol_class: OpenLayers.Protocol.AlloyV2,
   http_options: {
-    base: "https://tilma.staging.mysociety.org/resource-proxy/proxy.php?https://hackney.assets/${layerid}/${x}/${y}/${z}/cluster?styleIds=${styleid}"
+    base: base + "/resource-proxy/proxy.php?https://hackney.assets/${layerid}/${x}/${y}/${z}/cluster?styleIds=${styleid}"
   },
   non_interactive: false,
   body: "Hackney Council",

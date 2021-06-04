@@ -1,6 +1,287 @@
-@import "../sass/h5bp";
 @import "./_colours";
-@import "../sass/mixins";
 
-@import "../sass/base";
+$body-font: 'Open Sans';
+$headings-font: 'Darker Grotesque';
+$primary_text: $headings-font;
+$primary_b: none;
+
+body {
+    font-family: $body-font;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 0.063rem;
+    margin: -0.063rem;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 0.063rem;
+}
+
+/* header */
+
+.header {
+    display: flex;
+}
+
+.logo {
+    padding: 0.5rem 0 0 1.6rem;
+}
+
+.button {
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    border-radius: 40px;
+    border: none;
+    background-color: transparent;
+    font-family: $body-font;
+    font-weight: 600;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.menu-item {
+    font-family: $body-font;
+    font-weight: 600;
+}
+
+.menu-list {
+    padding-left: 2rem;
+}
+
+.report-issue-button {
+    background-color: $grayscale;
+    color: white;
+    margin-left: 2rem;
+}
+
+.button-link {
+    align-self: center;
+}
+
+.mobile-menu-button {
+    border: none;
+    background-color: transparent;
+    background: url('../images/ic-menu.svg') no-repeat center;
+    width: 24px;
+    height: 24px;
+    position: fixed;
+    right: 1.8rem;
+    top: 1.6rem;
+    color: $menu-image;
+}
+
+/* homepage */
+
+.central-title {
+    font-family: $primary_text;
+    font-weight: 700;
+    font-size: 3rem;
+    margin: 0 1.5rem 0 1.5rem;
+}
+
+.mobile-hero-images {
+    text-align: center;
+}
+
+.hero-image {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.search-input {
+    border: $primary_b;
+    border-radius: 16px;
+    background-color: #F6F2EF;
+    padding: 1.2rem 1.2rem 1.2rem 3rem;
+    width: 100%;
+}
+
+.search-input::placeholder{
+    color: $col_big_numbers;
+}
+
+.search-icon-button {
+    background: url('../images/Search.svg') no-repeat center;
+    border: none;
+    background-color: transparent;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 12px;
+}
+
+.search {
+    position: relative;
+    display: flex;
+    margin: 2rem 1.5rem 0 1.5rem;
+}
+
+.search-button {
+    border: none;
+    border-radius: 50%;
+    background: $orange;
+    background-image: url('../images/icon-chevron-right.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 1.6rem;
+    margin-left: 1rem;
+}
+
+.location-icon {
+    background: url('../images/ic-location.svg') no-repeat center;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-right: 0.875rem;
+}
+
+.location-link {
+    display: flex;
+    margin: 1.5rem 0 0 2rem;
+}
+
+.report-steps-section {
+    display: block;
+    margin: 1.5rem 1.75rem 1.5rem 1.75rem;
+    border-top: 1px solid black;
+    padding: 2rem 0 2rem 0;
+}
+
+.report-title {
+    font-family: $headings-font;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+li.report-step::marker {
+    background-color: #F6F2EF;
+    color: $col_big_numbers;
+    padding: 1rem 0.8rem 1rem 0.8rem;
+    font-family: $headings-font;
+    font-weight: 800;
+    font-size: 2rem;
+    border-radius: 50%;
+    margin-right: 1.75rem;
+}
+
+.report-steps {
+    display: block;
+    max-height: auto;
+}
+
+.report-stat-num {
+    font-weight: 900;
+    font-family: $headings-font;
+    font-size: 4rem;
+    margin: 0;
+}
+
+.report-stat-detail {
+    display: flex;
+    justify-content: center;;
+}
+
+.report-mark {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+.report-one {
+    background-color: $orange;
+}
+
+.report-two {
+    background-color: $col_big_numbers;
+}
+
+.report-three {
+    background-color: $primary;
+}
+
+.report-statistics {
+    display: block;
+    text-align: center;
+}
+
+.report-stat-item {
+    padding: 0;
+}
+
+/* footer */
+
+.footer {
+    background-color: $grayscale;
+    color: white;
+    padding: 4rem 1.5rem 4rem 1.5rem;
+}
+
+.report-issue-button-footer {
+    border: 1px solid white;
+    color: white;
+    margin-bottom: 4rem;
+}
+
+.menu-item-footer {
+    padding-bottom: 1rem;
+}
+
+.menu-list-footer {
+    margin-bottom: 4rem;
+    padding: 0;
+}
+
+.footer-socials {
+    margin-top: 4rem;
+}
+
+.footer-desc {
+    max-width: auto;
+}
+
+.footer-social-item {
+    padding-right: 1.25rem;
+}
+
+.github-link {
+    background: url('../images/github.svg') no-repeat center;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.twitter-link {
+    background: url('../images/twitter.svg') no-repeat center;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.facebook-link {
+    background: url('../images/facebook.svg') no-repeat center;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.socials {
+    display: flex;
+    padding: 0;
+}
+
 

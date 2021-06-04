@@ -39,7 +39,7 @@ for my $body (
     { area_id => 2232, name => 'Lincolnshire County Council' },
     { area_id => 2237, name => 'Oxfordshire County Council' },
     { area_id => 2600, name => 'Rutland County Council' },
-    { area_id => 2234, name => 'Northamptonshire County Council' },
+    { area_id => 2234, name => 'Northamptonshire Highways' },
     { area_id => 2566, name => 'Peterborough City Council' },
 ) {
     my $body_obj = $mech->create_body_ok($body->{area_id}, $body->{name});
@@ -146,7 +146,7 @@ foreach my $test (
             password_register => '',
         },
         changes => {
-            category => '-- Pick a category --',
+            category => undef,
         },
         errors  => [
             'Please enter a subject',

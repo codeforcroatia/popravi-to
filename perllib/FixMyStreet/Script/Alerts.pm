@@ -237,7 +237,8 @@ sub send() {
 
         my $longitude = $alert->parameter;
         my $latitude  = $alert->parameter2;
-        my $d = FixMyStreet::Gaze::get_radius_containing_population($latitude, $longitude);
+        my $d = $alert->parameter3;
+        $d ||= FixMyStreet::Gaze::get_radius_containing_population($latitude, $longitude);
         # Convert integer to GB locale string (with a ".")
         $d = mySociety::Locale::in_gb_locale {
             sprintf("%f", $d);
@@ -299,13 +300,8 @@ sub _send_aggregated_alert(%) {
 
     my $user = $data{alert_user};
 
-    my $pref = $data{is_new_update} ? 'update_notify' : 'alert_notify';
-    $pref = $user->get_extra_metadata($pref) || '';
-    return if $pref eq 'none';
-
-    # Only send text alerts for new report updates at present
-    my $allow_phone_update = ($user->phone_verified && $data{is_new_update} && $cobrand->sms_authentication);
-    return unless $user->email_verified || $allow_phone_update;
+    my $alert_by = $user->alert_by($data{is_new_update}, $cobrand);
+    return if $alert_by eq 'none';
 
     # Mark user as active as they're being sent an alert
     $user->set_last_active;
@@ -334,7 +330,7 @@ sub _send_aggregated_alert(%) {
     $data{unsubscribe_url} = $cobrand->base_url( $data{cobrand_data} ) . '/A/' . $token->token;
 
     my $result;
-    if ($allow_phone_update && (!$user->email_verified || $pref eq 'phone')) {
+    if ($alert_by eq 'phone') {
         $result = _send_aggregated_alert_phone(%data);
     } else {
         $result = _send_aggregated_alert_email(%data);
@@ -352,7 +348,7 @@ sub _send_aggregated_alert_email {
 
     my $cobrand = $data{cobrand};
 
-    FixMyStreet::Map::set_map_class($cobrand->map_type);
+    FixMyStreet::Map::set_map_class($cobrand);
 
     my $sender = FixMyStreet::Email::unique_verp_id([ 'alert', $data{alert_id} ], $cobrand->call_hook('verp_email_domain'));
     my $result = FixMyStreet::Email::send_cron(

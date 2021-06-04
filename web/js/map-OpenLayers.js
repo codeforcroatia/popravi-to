@@ -522,7 +522,10 @@ $.extend(fixmystreet.utils, {
         }
     }
 
-    function marker_click(problem_id, evt) {
+    function marker_click(feature, evt) {
+        $(fixmystreet).trigger('maps:marker_click', feature);
+
+        var problem_id = feature.attributes.id;
         var $a = $('.item-list a[href$="/' + problem_id + '"]');
         if (!$a[0]) {
             return;
@@ -634,7 +637,19 @@ $.extend(fixmystreet.utils, {
             return;
         }
         var qs = fixmystreet.utils.parse_query_string();
-        var filter_categories = replace_query_parameter(qs, 'filter_categories', 'filter_category');
+
+        // Special checking for all categories being selected
+        var category_val = $('#filter_categories').val();
+        var category_options = $('#filter_categories option').length;
+        var filter_categories;
+        if (category_val && category_val.length == category_options) {
+            // All options selected, so nothing in URL
+            delete qs.filter_category;
+            filter_categories = null;
+        } else {
+            filter_categories = replace_query_parameter(qs, 'filter_categories', 'filter_category');
+        }
+
         var filter_statuses = replace_query_parameter(qs, 'statuses', 'status');
         var sort_key = replace_query_parameter(qs, 'sort', 'sort');
         var show_old_reports = replace_query_parameter(qs, 'show_old_reports', 'show_old_reports');
@@ -815,11 +830,6 @@ $.extend(fixmystreet.utils, {
             });
         }
         fixmystreet.markers = new OpenLayers.Layer.Vector("Pins", pin_layer_options);
-        fixmystreet.markers.events.register( 'loadend', fixmystreet.markers, function(evt) {
-            if (fixmystreet.map.popups.length) {
-                fixmystreet.map.removePopup(fixmystreet.map.popups[0]);
-            }
-        });
         fixmystreet.markers.events.register( 'loadstart', null, fixmystreet.maps.loading_spinner.show);
         fixmystreet.markers.events.register( 'loadend', null, fixmystreet.maps.loading_spinner.hide);
         OpenLayers.Request.XMLHttpRequest.onabort = function() {
@@ -837,7 +847,7 @@ $.extend(fixmystreet.utils, {
                     // Override clickFeature so that we can use it even though
                     // hover is true. http://gis.stackexchange.com/a/155675
                     clickFeature: function (feature) {
-                        marker_click(feature.attributes.id, this.handlers.feature.evt);
+                        marker_click(feature, this.handlers.feature.evt);
                     },
                     overFeature: function (feature) {
                         if (fixmystreet.latest_map_hover_event != 'overFeature') {
@@ -998,12 +1008,7 @@ $.extend(fixmystreet.utils, {
             click.activate();
         }
 
-        // Vector layers must be added onload as IE sucks
-        if ($.browser.msie) {
-            $(window).load(onload);
-        } else {
-            onload();
-        }
+        onload();
 
         // Allow external scripts to react to pans/zooms on the map,
         // by subscribing to $(fixmystreet).on('maps:update_view')
@@ -1137,7 +1142,7 @@ OpenLayers.Control.PermalinkFMS = OpenLayers.Class(OpenLayers.Control, {
         this.element.href = href;
 
         if ('replaceState' in history) {
-            if (fixmystreet.page.match(/around|reports/)) {
+            if (fixmystreet.page.match(/around|reports|my/)) {
                 history.replaceState(
                     history.state,
                     null,
@@ -1261,6 +1266,15 @@ OpenLayers.Protocol.FixMyStreet = OpenLayers.Class(OpenLayers.Protocol.HTTP, {
         options.params = options.params || {};
         $.each(fixmystreet.protocol_params, function(key, id) {
             var val = $('#' + id).val();
+
+            // Special checking for all categories being selected
+            if (key === 'filter_category') {
+                var category_options = $('#filter_categories option').length;
+                if (val && val.length == category_options) {
+                    val = null;
+                }
+            }
+
             if (val && val.length) {
                 options.params[key] = val.join ? fixmystreet.utils.array_to_csv_line(val) : val;
             }
@@ -1279,6 +1293,7 @@ OpenLayers.Protocol.FixMyStreet = OpenLayers.Class(OpenLayers.Protocol.HTTP, {
             this.initial_page = page = qs.p || 1;
         }
         options.params.p = page;
+        options.params.zoom = fixmystreet.map.getZoom();
         return OpenLayers.Protocol.HTTP.prototype.read.apply(this, [options]);
     },
     CLASS_NAME: "OpenLayers.Protocol.FixMyStreet"
@@ -1336,6 +1351,12 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
     },
 
     trigger: function(e) {
+        if ($(e.target).hasClass('olPopupCloseBox')) {
+            // Ignore clicks that are closing popups
+            return;
+        }
+        $(fixmystreet).trigger('maps:click');
+
         // If we are looking at an individual report, and the report was
         // ajaxed into the DOM from the all reports page, then clicking
         // the map background should take us back to the all reports list.

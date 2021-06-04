@@ -197,7 +197,7 @@ sub setup_categories :Private {
 
     $c->stash->{filter_categories} = \@categories;
     $c->stash->{filter_category} = { map { $_ => 1 } $c->get_param_list('filter_category', 1) };
-    $c->forward('/report/stash_category_groups', [ \@categories ]) if $c->cobrand->enable_category_groups;
+    $c->forward('/report/stash_category_groups', [ \@categories ]);
 }
 
 sub setup_map :Private {
@@ -587,6 +587,9 @@ sub load_and_group_problems : Private {
             add_row( $c, $problem, $_, \%problems, \@pins );
         }
     }
+
+    my $extra_pins = $c->cobrand->call_hook('extra_reports_pins');
+    @pins = (@pins, @$extra_pins) if $extra_pins;
 
     $c->stash(
         problems      => \%problems,

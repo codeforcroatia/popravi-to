@@ -4,7 +4,6 @@ extends 'FixMyStreet::App::Form::Wizard';
 
 use utf8;
 
-has c => ( is => 'ro' );
 has addresses => ( is => 'rw');
 
 has default_page_type => ( is => 'ro', isa => 'Str', default => 'Noise' );
@@ -110,7 +109,7 @@ has_field best_time => (
     label => 'When is the best time to contact you?',
     tags => { hint => 'Tick all that apply' },
     options => [
-        { label => 'Weekdays', value => 'day' },
+        { label => 'Weekdays', value => 'weekday' },
         { label => 'Weekends', value => 'weekend' },
         { label => 'Evenings', value => 'evening' },
     ],

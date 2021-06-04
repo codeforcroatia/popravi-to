@@ -1,25 +1,9 @@
-/* LAYOUT */
+$nav_background_colour: #E5E5E5;
+$menu-image: #1D1C1C;
+$col_big_numbers: #917D6E;
+$primary: #149770;
+$secondary: #F25410;
+$tertiary: #E5E1FE;
+$grayscale: #1D1C1C;
 
-// If you are wanting a right-to-left layout, uncomment the following line.
-// $direction: right;
-
-/* COLOURS */
-
-// $white-color: #FDF8F5;
-// $bluey: white;
-
-// $primary: $white-color;
-// $primary_b: #000000;
-// $primary_text: #222222;
-
-// $base_bg: $bluey;
-// $base_fg: #000;
-
-// $nav_background_colour: $bluey;
-// $nav_colour: #000;
-// $nav_hover_background_colour: $primary;
-
-// // Colour used for front page 'how to report a problem' steps
-// $col_big_numbers: #ccc;
-
-// $col_click_map: $bluey;
+$orange: $secondary;

@@ -255,13 +255,17 @@ my @public_holidays = (
     '2022-05-27', '2022-12-27', '2022-12-28', '2022-12-29', '2022-12-30',
 );
 
+sub working_days {
+    return FixMyStreet::WorkingDays->new( public_holidays => \@public_holidays );
+}
+
 sub overdue {
     my ( $self, $problem ) = @_;
 
     my $w = $problem->created;
     return 0 unless $w;
 
-    my $wd = FixMyStreet::WorkingDays->new( public_holidays => \@public_holidays );
+    my $wd = $self->working_days;
 
     # call with previous state
     if ( $problem->state eq 'submitted' ) {
@@ -314,6 +318,7 @@ sub report_page_data {
     })->all_sorted;
     $c->stash->{filter_categories} = \@categories;
     $c->stash->{filter_category} = { map { $_ => 1 } $c->get_param_list('filter_category', 1) };
+    $c->forward('/report/stash_category_groups', [ \@categories ]);
 
     my $pins = $c->stash->{pins};
     FixMyStreet::Map::display_map(
@@ -1273,7 +1278,7 @@ sub export_as_csv {
                     'title', 'detail',
                     'photo',
                     'whensent', 'lastupdate',
-                    'service',
+                    'service', 'non_public',
                     'extra',
                     { sum_time_spent => { sum => 'admin_log_entries.time_spent' } },
                     'name', 'user.id', 'user.email', 'user.phone', 'user.name',
@@ -1287,6 +1292,7 @@ sub export_as_csv {
             'External Body', 'Time Spent', 'Title', 'Detail',
             'Media URL', 'Interface Used', 'Council Response',
             'Strasse', 'Mast-Nr.', 'Haus-Nr.', 'Hydranten-Nr.',
+            'Interne meldung',
         ],
         csv_columns => [
             'id', 'created', 'whensent',' lastupdate', 'local_coords_x',
@@ -1295,6 +1301,7 @@ sub export_as_csv {
             'body_name', 'sum_time_spent', 'title', 'detail',
             'media_url', 'service', 'public_response',
             'strasse', 'mast_nr',' haus_nr', 'hydranten_nr',
+            'interne_meldung',
         ],
         csv_extra_data => sub {
             my $report = shift;
@@ -1339,7 +1346,8 @@ sub export_as_csv {
                 strasse => $extras{'strasse'} || '',
                 mast_nr => $extras{'mast_nr'} || '',
                 haus_nr => $extras{'haus_nr'} || '',
-                hydranten_nr => $extras{'hydranten_nr'} || ''
+                hydranten_nr => $extras{'hydranten_nr'} || '',
+                interne_meldung => $report->non_public,
             };
         },
         filename => 'stats',

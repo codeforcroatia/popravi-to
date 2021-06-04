@@ -141,7 +141,7 @@ var northants_defaults = $.extend(true, {}, fixmystreet.alloyv2_defaults, {
       layerid: highway_layer
   },
   non_interactive: false,
-  body: "Northamptonshire County Council",
+  body: "Northamptonshire Highways",
   attributes: {
     asset_resource_id: function() {
       return this.fid;
@@ -172,14 +172,13 @@ var northants_defaults = $.extend(true, {}, fixmystreet.alloyv2_defaults, {
               $p = $("<p id='overlapping_features_msg' class='hidden box-warning'>" +
               "There is more than one <span class='overlapping_item_name'></span> at this location. " +
               "Please describe which <span class='overlapping_item_name'></span> has the problem clearly.</p>");
-              $p.prependTo('#js-post-category-messages');
+              $('#category_meta').before($p).closest('.js-reporting-page').removeClass('js-reporting-page--skip');
           }
           $p.find(".overlapping_item_name").text(this.fixmystreet.asset_item);
           $p.removeClass('hidden');
       } else {
           $("#overlapping_features_msg").addClass('hidden');
       }
-
     },
     asset_not_found: function() {
       $("#overlapping_features_msg").addClass('hidden');
@@ -232,7 +231,7 @@ var northants_road_defaults = $.extend(true, {}, fixmystreet.alloyv2_defaults, {
         base: url_with_style,
         layerid: highway_layer
     },
-    body: "Northamptonshire County Council",
+    body: "Northamptonshire Highways",
     road: true,
     always_visible: false,
     non_interactive: true,

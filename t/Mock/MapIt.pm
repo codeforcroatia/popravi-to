@@ -29,8 +29,10 @@ my @PLACES = (
     [ 'BS20 5EE', 51.496194, -2.603439, 2608, 'Borsetshire County Council', 'CTY', 148646, 'Bedminster', 'UTW' ],
     [ 'SL9 0NX', 51.615559, -0.556903, 2217, 'Buckinghamshire Council', 'CTY', 2257, 'Chiltern District Council', 'DIS' ],
     [ '?', 51.615499, -0.556667, 2217, 'Buckinghamshire Council', 'CTY', 2257, 'Chiltern District Council', 'DIS' ],
+    [ '?', 51.615965, -0.556367, 2217, 'Buckinghamshire Council', 'CTY', 2257, 'Chiltern District Council', 'DIS' ],
     [ '?', 51.615439, -0.558362, 2217, 'Buckinghamshire Council', 'CTY', 2257, 'Chiltern District Council', 'DIS' ],
     [ 'SW1A 1AA', 51.501009, -0.141588, 2504, 'Westminster City Council', 'LBO' ],
+    [ '?', 51.507461, -0.126890, 2504, 'Westminster City Council', 'LBO' ],
     [ 'GL50 2PR', 51.896268, -2.093063, 2226, 'Gloucestershire County Council', 'CTY', 2326, 'Cheltenham Borough Council', 'DIS', 4544, 'Lansdown', 'DIW', 143641, 'Lansdown and Park', 'CED' ],
     [ 'OX20 1SZ', 51.754926, -1.256179, 2237, 'Oxfordshire County Council', 'CTY', 2421, 'Oxford City Council', 'DIS' ],
     [ 'OX16 9UP', 52.038712, -1.346397, 2237, 'Oxfordshire County Council', 'CTY', 2419, 'Cherwell District Council', 'DIS', 151767, "Banbury, Calthorpe & Easington", "DIW" ],
@@ -40,13 +42,16 @@ my @PLACES = (
     [ 'BR1 3UH', 51.4021, 0.01578, 2482, 'Bromley Council', 'LBO' ],
     [ 'BR1 3UH', 51.402096, 0.015784, 2482, 'Bromley Council', 'LBO' ],
     [ 'BR1 3EF', 51.4039, 0.018697, 2482, 'Bromley Council', 'LBO' ],
+    [ 'BR1 1AA', 51.401546, 0.015415, 2482, 'Bromley Council', 'LBO' ],
     [ '?', 51.466707, 0.181108, 2494, 'London Borough of Bexley', 'LBO' ],
+    [ 'DA6 7AT', 51.45556, 0.15356, 2494, 'London Borough of Bexley', 'LBO' ],
     [ 'NN1 1NS', 52.236251, -0.892052, 2234, 'Northamptonshire County Council', 'CTY', 2397, 'Northampton Borough Council', 'DIS' ],
     [ 'NN1 2NS', 52.238301, -0.889992, 2234, 'Northamptonshire County Council', 'CTY', 2397, 'Northampton Borough Council', 'DIS' ],
     [ '?', 52.238827, -0.894970, 2234, 'Northamptonshire County Council', 'CTY', 2397, 'Northampton Borough Council', 'DIS' ],
     [ '?', 52.23025, -1.015826, 2234, 'Northamptonshire County Council', 'CTY', 2397, 'Northampton Borough Council', 'DIS' ],
     [ 'E8 1DY', 51.552267, -0.063316, 2508, 'Hackney Borough Council', 'LBO' ],
     [ 'E8 2DY', 51.552287, -0.063326, 2508, 'Hackney Council', 'LBO' ],
+    [' E6 1AX', 51.524448, -0.077625, 2508, 'Hackney Council', 'LBO', 144379, 'Hoxton East & Shoreditch', 'LBW' ],
     [ 'TW7 5JN', 51.482286, -0.328163, 2483, 'Hounslow Borough Council', 'LBO' ],
     [ '?', 51.48111, -0.327219, 2483, 'Hounslow Borough Council', 'LBO' ],
     [ '?', 51.482045, -0.327219, 2483, 'Hounslow Borough Council', 'LBO' ],
@@ -60,6 +65,7 @@ my @PLACES = (
     [ 'OX28 4DS', 51.784721, -1.494453 ],
     [ 'E14 2DN', 51.508536, '0.000001' ],
     [ '?', 52.51093, -1.86514, 11809, 'West Midlands', 'EUR' ],
+    [ '?', 51.379009, -2.359276, 2551, 'Bath and North East Somerset Council', 'UTA' ],
     # Norway
     [ '3290', 59, 10, 709, 'Larvik', 'NKO', 7, 'Vestfold', 'NFY' ],
     [ '0045', "59.9", "10.9", 301, 'Oslo', 'NKO', 3, 'Oslo', 'NFY' ],
@@ -127,7 +133,7 @@ sub dispatch_request {
             $self->output({2508 => {parent_area => undef, id => 2508, name => "Hackney Council", type => "LBO"}});
         } elsif ($areas eq 'GRE') {
             $self->output({2493 => {parent_area => undef, id => 2493, name => "Greenwich Borough Council", type => "LBO"}});
-        } elsif ($areas eq 'LBO') {
+        } elsif ($areas eq 'LBO' || $areas eq 'LBO,UTA,DIS') {
             $self->output({
                 2482 => {parent_area => undef, id => 2482, name => "Bromley Borough Council", type => "LBO"},
                 2483 => {parent_area => undef, id => 2483, name => "Hounslow Borough Council", type => "LBO"},

@@ -53,8 +53,18 @@ Returns the old map class, if any.
 =cut
 
 our $map_class;
+our $map_cobrand;
 sub set_map_class {
-    my $str = shift;
+    my $arg = shift;
+    my $str;
+    if (ref $arg) {
+        # A cobrand object
+        $map_cobrand = $arg;
+        $str = $arg->map_type;
+    } else {
+        $map_cobrand = undef;
+        $str = $arg;
+    }
     $str = __PACKAGE__.'::'.$str if $str;
     my %avail = map { $_ => 1 } @ALL_MAP_CLASSES;
     $str = $ALL_MAP_CLASSES[0] unless $str && $avail{$str};
@@ -118,7 +128,7 @@ sub map_features {
         $nearby = $c->model('DB::Nearby')->nearby($c, %p);
     }
 
-    return ( $on_map, $nearby );
+    return ( $on_map, $nearby, $p{distance} );
 }
 
 sub click_to_wgs84 {

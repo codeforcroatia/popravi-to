@@ -78,7 +78,7 @@ sub GetTasks {
 
     my @refs;
     foreach my $ref (@_) {
-        tie(my %a, 'Tie::IxHash',
+        my $a = ixhash(
             Key => 'Handle',
             Type => "Task",
             Value => [
@@ -86,7 +86,7 @@ sub GetTasks {
                 { 'msArray:anyType' => $ref->[1] },
             ],
         );
-        push @refs, \%a;
+        push @refs, $a;
     }
 
     if ($self->sample_data) {
@@ -131,24 +131,27 @@ sub GetTasks {
 
 sub _id_ref {
     require SOAP::Lite;
-    my $id = shift;
-    tie(my %obj, 'Tie::IxHash',
-        Key => 'Id',
-        Type => 'PointAddress',
+    my ($id, $type, $key) = @_;
+    $key ||= 'Id';
+    my $value = SOAP::Data->value($id);
+    $value = $value->type('string') if $key eq 'Uprn';
+    return ixhash(
+        Key => $key,
+        Type => $type,
         Value => [
-            { 'msArray:anyType' => SOAP::Data->value($id) },
+            { 'msArray:anyType' => $value },
         ],
     );
-    return \%obj;
 }
 
 sub GetPointAddress {
     my $self = shift;
     my $id = shift;
-    my $obj = _id_ref($id);
+    my $type = shift || 'Id';
+    my $obj = _id_ref($id, 'PointAddress', $type);
     return {
-        Id => '12345',
-        SharedRef => { Value => { anyType => '1000000002' } },
+        Id => $type eq 'Id' ? $id : 12345,
+        SharedRef => { Value => { anyType => $type eq 'Uprn' ? $id : '1000000002' } },
         PointType => 'PointAddress',
         PointAddressType => { Name => 'House' },
         Coordinates => { GeoPoint => { Latitude => 51.401546, Longitude => 0.015415 } },
@@ -161,34 +164,45 @@ sub GetPointAddress {
 sub FindPoints {
     my $self = shift;
     my $pc = shift;
-    tie(my %obj, 'Tie::IxHash',
+    my $cfg = shift;
+
+    my $obj = ixhash(
         PointType => 'PointAddress',
         Postcode => $pc,
     );
+    if ($cfg->{address_types}) {
+        my @types;
+        foreach (@{$cfg->{address_types}}) {
+            my $obj = _id_ref($_, 'PointAddressType');
+            push @types, { ObjectRef => $obj };
+        }
+        $obj->{TypeRefs} = \@types;
+    }
     return [
         { Description => '1 Example Street, Bromley, BR1 1AA', Id => '11345', SharedRef => { Value => { anyType => 1000000001 } } },
         { Description => '2 Example Street, Bromley, BR1 1AA', Id => '12345', SharedRef => { Value => { anyType => 1000000002 } } },
-        { Description => '3 Example Street, Bromley, BR1 1AA', Id => '13345', SharedRef => { Value => { anyType => 1000000003 } } },
+        $cfg->{address_types} ? () : ({ Description => '3 Example Street, Bromley, BR1 1AA', Id => '13345', SharedRef => { Value => { anyType => 1000000003 } } }),
         { Description => '4 Example Street, Bromley, BR1 1AA', Id => '14345', SharedRef => { Value => { anyType => 1000000004 } } },
         { Description => '5 Example Street, Bromley, BR1 1AA', Id => '15345', SharedRef => { Value => { anyType => 1000000005 } } },
     ] if $self->sample_data;
-    my $res = $self->call('FindPoints', query => \%obj);
+    my $res = $self->call('FindPoints', query => $obj);
     return force_arrayref($res, 'PointInfo');
 }
 
 sub GetServiceUnitsForObject {
     my $self = shift;
     my $id = shift;
-    my $obj = _id_ref($id);
+    my $obj = _id_ref($id, 'PointAddress');
     my $from = DateTime->now->set_time_zone(FixMyStreet->local_time_zone);
     return [ {
         Id => 1001,
-        ServiceId => 101,
-        ServiceName => 'Refuse collection',
+        ServiceId => 531,
+        ServiceName => 'Non-Recyclable Refuse',
         ServiceTasks => { ServiceTask => {
             Id => 401,
-            ScheduleDescription => 'every Wednesday',
             ServiceTaskSchedules => { ServiceTaskSchedule => {
+                ScheduleDescription => 'every Wednesday',
+                StartDate => { DateTime => '2020-01-01T00:00:00Z' },
                 EndDate => { DateTime => '2050-01-01T00:00:00Z' },
                 NextInstance => {
                     CurrentScheduledDate => { DateTime => '2020-06-03T00:00:00Z' },
@@ -207,8 +221,9 @@ sub GetServiceUnitsForObject {
         ServiceName => 'Paper recycling collection',
         ServiceTasks => { ServiceTask => {
             Id => 402,
-            ScheduleDescription => 'every other Wednesday',
             ServiceTaskSchedules => { ServiceTaskSchedule => {
+                ScheduleDescription => 'every other Wednesday',
+                StartDate => { DateTime => '2020-01-01T00:00:00Z' },
                 EndDate => { DateTime => '2050-01-01T00:00:00Z' },
                 NextInstance => {
                     CurrentScheduledDate => { DateTime => '2020-06-10T00:00:00Z' },
@@ -227,8 +242,9 @@ sub GetServiceUnitsForObject {
         ServiceName => 'Domestic Container Mix Collection',
         ServiceTasks => { ServiceTask => {
             Id => 403,
-            ScheduleDescription => 'every other Wednesday',
             ServiceTaskSchedules => { ServiceTaskSchedule => {
+                ScheduleDescription => 'every other Wednesday',
+                StartDate => { DateTime => '2020-01-01T00:00:00Z' },
                 EndDate => { DateTime => '2050-01-01T00:00:00Z' },
                 NextInstance => {
                     CurrentScheduledDate => { DateTime => '2020-06-03T00:00:00Z' },
@@ -247,14 +263,17 @@ sub GetServiceUnitsForObject {
         ServiceName => 'Food waste collection',
         ServiceTasks => { ServiceTask => {
             Id => 404,
-            ScheduleDescription => 'every other Monday',
             ServiceTaskSchedules => { ServiceTaskSchedule => [ {
+                ScheduleDescription => 'every other Monday',
+                StartDate => { DateTime => '2019-01-01T00:00:00Z' },
                 EndDate => { DateTime => '2020-01-01T00:00:00Z' },
                 LastInstance => {
                     OriginalScheduledDate => { DateTime => '2019-12-31T00:00:00Z' },
                     CurrentScheduledDate => { DateTime => '2019-12-31T00:00:00Z' },
                 },
             }, {
+                ScheduleDescription => 'every other Monday',
+                StartDate => { DateTime => '2020-01-01T00:00:00Z' },
                 EndDate => { DateTime => '2050-01-01T00:00:00Z' },
                 NextInstance => {
                     CurrentScheduledDate => { DateTime => '2020-06-02T00:00:00Z' },
@@ -264,6 +283,54 @@ sub GetServiceUnitsForObject {
                     OriginalScheduledDate => { DateTime => '2020-05-18T00:00:00Z' },
                     CurrentScheduledDate => { DateTime => '2020-05-18T00:00:00Z' },
                     Ref => { Value => { anyType => [ 456, 789 ] } },
+                },
+            }, {
+                # Some bad data, future schedule, with past last instance
+                ScheduleDescription => 'every other Tuesday',
+                StartDate => { DateTime => '2050-01-01T00:00:00Z' },
+                EndDate => { DateTime => '2051-01-01T00:00:00Z' },
+                LastInstance => {
+                    OriginalScheduledDate => { DateTime => '2020-05-18T00:00:00Z' },
+                    CurrentScheduledDate => { DateTime => '2020-05-18T00:00:00Z' },
+                    Ref => { Value => { anyType => [ 456, 789 ] } },
+                },
+            } ] },
+        } },
+    }, {
+        Id => 1005,
+        ServiceId => 545,
+        ServiceName => 'Garden waste collection',
+        ServiceTasks => { ServiceTask => {
+            Id => 405,
+            Data => { ExtensibleDatum => [ {
+                DatatypeName => 'LBB - GW Container',
+                ChildData => { ExtensibleDatum => [ {
+                    DatatypeName => 'Quantity',
+                    Value => 1,
+                }, {
+                    DatatypeName => 'Container',
+                    Value => 44,
+                } ] },
+            } ] },
+            ServiceTaskSchedules => { ServiceTaskSchedule => [ {
+                StartDate => { DateTime => '2019-01-01T00:00:00Z' },
+                EndDate => { DateTime => '2020-01-01T00:00:00Z' },
+                LastInstance => {
+                    OriginalScheduledDate => { DateTime => '2019-12-31T00:00:00Z' },
+                    CurrentScheduledDate => { DateTime => '2019-12-31T00:00:00Z' },
+                },
+            }, {
+                ScheduleDescription => 'every other Monday',
+                StartDate => { DateTime => '2020-01-01T00:00:00Z' },
+                EndDate => { DateTime => '2050-01-01T00:00:00Z' },
+                NextInstance => {
+                    CurrentScheduledDate => { DateTime => '2020-06-01T00:00:00Z' },
+                    OriginalScheduledDate => { DateTime => '2020-06-01T00:00:00Z' },
+                },
+                LastInstance => {
+                    OriginalScheduledDate => { DateTime => '2020-05-18T00:00:00Z' },
+                    CurrentScheduledDate => { DateTime => '2020-05-18T00:00:00Z' },
+                    Ref => { Value => { anyType => [ 567, 890 ] } },
                 },
             } ] },
         } },
@@ -285,13 +352,7 @@ sub GetServiceTaskInstances {
 
     my @objects;
     foreach (@tasks) {
-        my $obj = ixhash(
-            Key => 'Id',
-            Type => 'ServiceTask',
-            Value => [
-                { 'msArray:anyType' => $_ },
-            ],
-        );
+        my $obj = _id_ref($_, 'ServiceTask');
         push @objects, { ObjectRef => $obj };
     }
     my $start = DateTime->now->set_time_zone(FixMyStreet->local_time_zone)->truncate( to => 'day' );
@@ -331,11 +392,7 @@ sub GetEvent {
 
 sub GetEventType {
     my ($self, $id) = @_;
-    $self->call('GetEventType', ref => ixhash(
-        Key => 'Id',
-        Type => 'EventType',
-        Value => { 'msArray:anyType' => $id },
-    ));
+    $self->call('GetEventType', ref => _id_ref($id, 'EventType'));
 }
 
 sub GetEventsForObject {
@@ -374,17 +431,9 @@ sub GetEventsForObject {
 
     # uncoverable statement
     my $res = $self->call('GetEventsForObject',
-        objectRef => ixhash(
-            Key => 'Id',
-            Type => $type,
-            Value => { 'msArray:anyType' => $id },
-        ),
+        objectRef => _id_ref($id, $type),
         query => ixhash(
-            $event_type ? (EventTypeRef => ixhash(
-                Key => 'Id',
-                Type => 'EventType',
-                Value => { 'msArray:anyType' => $event_type },
-            )) : (),
+            $event_type ? (EventTypeRef => _id_ref($event_type, 'EventType')) : (),
             From => dt_to_hash($from),
         ),
     );

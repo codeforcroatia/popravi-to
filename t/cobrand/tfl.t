@@ -37,6 +37,10 @@ $staffuser->user_body_permissions->create({
     body => $body,
     permission_type => 'default_to_body',
 });
+$staffuser->user_body_permissions->create({
+    body => $body,
+    permission_type => 'category_edit',
+});
 my $user = $mech->create_user_ok('londonresident@example.com');
 
 my $bromley = $mech->create_body_ok(2482, 'Bromley');
@@ -54,13 +58,12 @@ my $bromley_flooding = $mech->create_contact_ok(
 $bromley_flooding->set_extra_metadata(display_name => 'Flooding');
 $bromley_flooding->update;
 
-my $bromley_flytipping = $mech->create_contact_ok(
+$mech->create_contact_ok(
     body_id => $bromley->id,
     category => 'Flytipping (Bromley)',
     email => 'flytipping-bromley@example.com',
+    group => ['Street cleaning'],
 );
-$bromley_flytipping->set_extra_metadata(group => [ 'Street cleaning' ]);
-$bromley_flytipping->update;
 
 my $hackney = $mech->create_body_ok(2508, 'Hackney Council');
 $mech->create_contact_ok(
@@ -682,6 +685,11 @@ subtest 'TfL staff can access TfL admin' => sub {
     $mech->log_in_ok( $staffuser->email );
     $mech->get_ok('/admin');
     $mech->content_contains( 'This is the administration interface for' );
+};
+
+subtest 'TLRN categories cannot be renamed' => sub {
+    $mech->get_ok('/admin/body/' . $body->id . '/Flooding');
+    $mech->content_contains('This category name is uneditable');
     $mech->log_out_ok;
 };
 

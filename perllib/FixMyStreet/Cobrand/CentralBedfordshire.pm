@@ -26,6 +26,8 @@ sub disambiguate_location {
 
 sub enter_postcode_text { 'Enter a postcode, street name and area, or check an existing report number' }
 
+sub admin_user_domain { 'centralbedfordshire.gov.uk' }
+
 sub open311_munge_update_params {
     my ($self, $params, $comment, $body) = @_;
 
@@ -47,12 +49,25 @@ sub lookup_site_code_config {
         srsname => "urn:ogc:def:crs:EPSG::27700",
         typename => "Highways",
         property => $property,
-        accept_feature => sub { 1 }
+        accept_feature => sub {
+            # Sometimes the nearest feature has a NULL streetref1 property
+            # but there is an overlapping feature that correctly has a streetref1
+            # value a very small distance away. To avoid choosing the feature
+            # with an empty streetref1 we reject those features, forcing selection
+            # of the nearest feature that has a valid value.
+            my $f = shift;
+            return $f->{properties} && $f->{properties}->{$property};
+        }
     }
 }
 
 sub open311_extra_data_include {
     my ($self, $row, $h, $contact) = @_;
+
+    if (my $id = $row->get_extra_field_value('UnitID')) {
+        $h->{cb_original_detail} = $row->detail;
+        $row->detail($row->detail . "\n\nUnit ID: $id");
+    }
 
     # Reports made via the app probably won't have a NSGRef because we don't
     # display the road layer. Instead we'll look up the closest asset from the
@@ -63,18 +78,37 @@ sub open311_extra_data_include {
         }
     }
 
-    my $cfg = $self->feature('area_code_mapping') || return;
-    my @areas = split ',', $row->areas;
-    my @matches = grep { $_ } map { $cfg->{$_} } @areas;
-    if (@matches) {
-        return [
-            { name => 'area_code', value => $matches[0] },
-        ];
+    my $open311_only = [
+        { name => 'title',
+          value => $row->title },
+        { name => 'description',
+          value => $row->detail },
+        { name => 'report_url',
+          value => $h->{url} },
+    ];
+
+    if (my $cfg = $self->feature('area_code_mapping')) {;
+        my @areas = split ',', $row->areas;
+        my @matches = grep { $_ } map { $cfg->{$_} } @areas;
+        if (@matches) {
+            push @$open311_only, { name => 'area_code', value => $matches[0] };
+        }
     }
+
+    return $open311_only;
+}
+
+# Currently, Central Beds does not handle the Unit ID being passed through for
+# Trees; this will need adjusting if a new asset layer is added for which it
+# does want to receive this.
+sub open311_extra_data_exclude {
+    [ 'UnitID' ]
 }
 
 sub open311_post_send {
     my ($self, $row, $h) = @_;
+
+    $row->detail($h->{cb_original_detail}) if $h->{cb_original_detail};
 
     # Check Open311 was successful
     return unless $row->external_id;
@@ -95,5 +129,21 @@ sub report_sent_confirmation_email { 'external_id' }
 sub cut_off_date { '2020-12-02' }
 
 sub front_stats_show_middle { 'completed' }
+
+sub dashboard_export_problems_add_columns {
+    my ($self, $csv) = @_;
+
+    $csv->add_csv_columns(
+        external_id => 'CRNo',
+    );
+
+    $csv->csv_extra_data(sub {
+        my $report = shift;
+
+        return {
+            external_id => $report->external_id,
+        };
+    });
+}
 
 1;

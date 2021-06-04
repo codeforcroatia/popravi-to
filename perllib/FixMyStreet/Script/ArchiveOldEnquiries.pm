@@ -165,7 +165,7 @@ sub send_email_and_close {
 
     my $cobrand = FixMyStreet::Cobrand->get_class_for_moniker($opts->{cobrand})->new();
     $cobrand->set_lang_and_domain($problems[0]->lang, 1);
-    FixMyStreet::Map::set_map_class($cobrand->map_type);
+    FixMyStreet::Map::set_map_class($cobrand);
 
     my %h = (
       reports => [@problems],
@@ -215,11 +215,14 @@ sub close_problems {
             $cobrand->set_lang_and_domain($problem->lang, 1);
         }
 
+        my $whensent = \'current_timestamp' if $problem->send_method_used && $problem->send_method_used eq 'Open311';
+
         my $comment = $problem->add_to_comments( {
             text => get_closure_message() || '',
             user => FixMyStreet::DB->resultset("User")->find($opts->{user}),
             problem_state => $opts->{closed_state},
             extra => $extra,
+            $whensent ? ( whensent => $whensent ) : (),
         } );
         $problem->update({ state => $opts->{closed_state}, send_questionnaire => 0 });
 

@@ -12,7 +12,6 @@ sub council_area_id { 2566 }
 sub council_area { 'Peterborough' }
 sub council_name { 'Peterborough City Council' }
 sub council_url { 'peterborough' }
-sub map_type { 'MasterMap' }
 sub default_map_zoom { 5 }
 
 sub send_questionnaires { 0 }
@@ -101,10 +100,26 @@ around 'open311_config' => sub {
 sub dashboard_export_problems_add_columns {
     my ($self, $csv) = @_;
 
+    my @contacts = $csv->body->contacts->search(undef, { order_by => [ 'category' ] } )->all;
+    my %extra_columns;
+    foreach my $contact (@contacts) {
+        foreach (@{$contact->get_metadata_for_storage}) {
+            next unless $_->{code} =~ /^PCC-/i;
+            $extra_columns{"extra.$_->{code}"} = $_->{description};
+        }
+    }
+    my @extra_columns = map { $_ => $extra_columns{$_} } sort keys %extra_columns;
+
     $csv->add_csv_columns(
+        staff_user => 'Staff User',
         usrn => 'USRN',
         nearest_address => 'Nearest address',
+        external_id => 'External ID',
+        external_status_code => 'External status code',
+        @extra_columns,
     );
+
+    my $user_lookup = $self->csv_staff_users;
 
     $csv->csv_extra_data(sub {
         my $report = shift;
@@ -113,11 +128,31 @@ sub dashboard_export_problems_add_columns {
         $address = $report->geocode->{resourceSets}->[0]->{resources}->[0]->{name}
             if $report->geocode;
 
-        return {
-            usrn => $report->get_extra_field_value('site_code'),
+        my $staff_user = $self->csv_staff_user_lookup($report->get_extra_metadata('contributed_by'), $user_lookup);
+        my $ext_code = $report->get_extra_metadata('external_status_code');
+        my $state = FixMyStreet::DB->resultset("State")->display($report->state);
+        my $extra = {
             nearest_address => $address,
+            staff_user => $staff_user,
+            external_status_code => $ext_code,
+            external_id => $report->external_id,
+            state => $state,
         };
+
+        foreach (@{$report->get_extra_fields}) {
+            $extra->{usrn} = $_->{value} if $_->{name} eq 'site_code';
+            $extra->{"extra.$_->{name}"} = $_->{value} if $_->{name} =~ /^PCC-/i;
+        }
+
+        return $extra;
     });
+}
+
+sub open311_filter_contacts_for_deletion {
+    my ($self, $contacts) = @_;
+
+    # Don't delete inactive contacts
+    return $contacts->search({ state => { '!=' => 'inactive' } });
 }
 
 1;

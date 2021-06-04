@@ -5,13 +5,13 @@
 # Email: matthew@mysociety.org; WWW: http://www.mysociety.org/
 
 package FixMyStreet::Map::FMS;
-use base 'FixMyStreet::Map::Bing';
 
-use strict;
+use Moo;
+extends 'FixMyStreet::Map::Bing';
 
-use constant ZOOM_LEVELS => 6;
+has '+zoom_levels' => ( default => 6 );
 
-sub map_template { 'fms' }
+has '+map_template' => ( default => 'fms' );
 
 sub map_javascript { [
     '/vendor/OpenLayers/OpenLayers.wfs.js',
@@ -20,7 +20,9 @@ sub map_javascript { [
     '/js/map-fms.js',
 ] }
 
-sub map_tile_base { "oml" }
+has '+base_tile_url' => ( default => '//%stilma.mysociety.org/oml' );
+
+has map_tile_prefix  => ( is => 'ro', default => sub { [ 'a-', 'b-', 'c-', '' ] } );
 
 sub map_tiles {
     my ( $self, %params ) = @_;
@@ -29,13 +31,15 @@ sub map_tiles {
     if ($params{aerial} || $ni || $z <= 11) {
         return $self->SUPER::map_tiles(%params);
     } elsif ($z >= 16) {
-        my $tile_base = '//%stilma.mysociety.org/' . $self->map_tile_base . '/%d/%d/%d.png';
-        return [
-            sprintf($tile_base, 'a-', $z, $x-1, $y-1),
-            sprintf($tile_base, 'b-', $z, $x, $y-1),
-            sprintf($tile_base, 'c-', $z, $x-1, $y),
-            sprintf($tile_base, '', $z, $x, $y),
-        ];
+        my $tile_base = $self->base_tile_url . '/%d/%d/%d.png';
+        my $prefixes = $self->map_tile_prefix;
+        my @urls;
+        for (my $i=0; $i<4; $i++) {
+            my @args = ($z, $x-1+($i%2), $y-1+int($i/2));
+            unshift @args, $prefixes->[$i] if defined $prefixes->[$i];
+            push @urls, sprintf($tile_base, @args);
+        }
+        return \@urls;
     } elsif ($z > 11) {
         my $key = FixMyStreet->config('BING_MAPS_API_KEY');
         my $base = "//ecn.%s.tiles.virtualearth.net/tiles/r%s?g=8702&lbl=l1&productSet=mmOS&key=$key";
@@ -50,7 +54,7 @@ sub map_tiles {
 
 sub in_northern_ireland_box {
     my ($lat, $lon) = @_;
-    return 1 if $lat >= 54.015 && $lat <= 55.315 && $lon >= -8.18 && $lon <= -5.415;
+    return 1 if $lat && $lon && $lat >= 54.015 && $lat <= 55.315 && $lon >= -8.18 && $lon <= -5.415;
     return 0;
 }
 

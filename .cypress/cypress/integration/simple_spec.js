@@ -7,12 +7,17 @@ describe('Clicking the map', function() {
     });
 
     it('allows me to report a new problem', function() {
+        cy.server();
+        cy.route('/report/new/ajax*').as('report-ajax');
         cy.url().should('include', '/around');
         cy.get('#map_box').click(200, 200);
-        cy.get('#category_group').select('Flyposting');
+        cy.wait('@report-ajax');
+        cy.pickCategory('Flyposting');
+        cy.nextPageReporting();
+        cy.nextPageReporting(); // No photo
         cy.get('[name=title]').type('Title');
         cy.get('[name=detail]').type('Detail');
-        cy.get('.js-new-report-user-show').click();
+        cy.nextPageReporting();
         cy.get('.js-new-report-show-sign-in').should('be.visible').click();
         cy.get('#form_username_sign_in').type('user@example.org');
         cy.get('[name=password_sign_in]').type('password');
@@ -82,8 +87,49 @@ describe('Leaving updates', function() {
 //         cy.get('.big-green-banner').click();
 //     });
 
+<<<<<<< HEAD
 //     it('begins a new report', function() {
 //         cy.url().should('include', '/report/new');
 //         cy.get('#form_title').should('be.visible');
 //     });
 // });
+=======
+    it('begins a new report', function() {
+        cy.url().should('include', '/report/new');
+        // Clicked randomly in middle of map, so no body, so top message shown
+        cy.get('#js-top-message').should('be.visible');
+        cy.get('.js-reporting-page--next').should('be.visible');
+    });
+});
+
+describe.only('Clicking on drawers', function() {
+    it('works on a direct report page', function() {
+        cy.visit('/report/15');
+        cy.contains('Get updates').click();
+        cy.contains('Receive email when updates are left').should('be.visible');
+        cy.contains('Get updates').click();
+        cy.contains('Receive email when updates are left').should('not.be.visible');
+    });
+
+    it('works on a pulled-in report page', function() {
+        cy.server();
+        cy.route('/report/*').as('show-report');
+        cy.visit('/around?lon=-2.295894&lat=51.526877&zoom=0');
+        // force to hopefully work around apparent Cypress SVG issue
+        cy.get('image[title="Lights out in tunnel"]:last').click({force: true});
+        cy.wait('@show-report');
+        cy.get('#side-report').contains('Get updates').click();
+        cy.contains('Receive email when updates are left').should('be.visible');
+        cy.get('#side-report').contains('Get updates').click();
+        cy.contains('Receive email when updates are left').should('not.be.visible');
+    });
+
+    it('works on an around page', function() {
+        cy.visit('/around?lon=-2.295894&lat=51.526877&zoom=0');
+        cy.contains('Get updates').click();
+        cy.contains('Which problems do you want alerts about?').should('be.visible');
+        cy.contains('Get updates').click();
+        cy.contains('Which problems do you want alerts about?').should('not.be.visible');
+    });
+});
+>>>>>>> 47dc0ed8b1fe21378058165c77d98caab0b47cf4

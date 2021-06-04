@@ -147,9 +147,25 @@ fixmystreet.assets.add(defaults, {
     }
 });
 
-var owned_defaults = $.extend({}, defaults, {
-    stylemap: owned_stylemap,
+var owned_base = $.extend({}, defaults, {
     select_action: true,
+    srsName: "EPSG:27700",
+    actions: {
+        asset_found: function(asset) {
+          var is_occ = this.fixmystreet.owns_function(asset);
+          if (!is_occ) {
+              fixmystreet.message_controller.asset_not_found.call(this);
+          } else {
+              fixmystreet.message_controller.asset_found.call(this);
+          }
+        },
+        // Not a typo, asset selection is not mandatory
+        asset_not_found: fixmystreet.message_controller.asset_found
+    }
+});
+
+var owned_defaults = $.extend({}, owned_base, {
+    stylemap: owned_stylemap,
     // have to do this by hand rather than using wfs_* options
     // as the server does not like being POSTed xml with application/xml
     // as the Content-Type which is what using those options results in.
@@ -165,23 +181,11 @@ var owned_defaults = $.extend({}, defaults, {
             propertyName: 'id,maintained_by,msGeometry'
         }
     },
-    srsName: "EPSG:27700",
     asset_id_field: 'id',
     attributes: {
         feature_id: 'id'
     },
-    actions: {
-        asset_found: function(asset) {
-          var is_occ = occ_owns_feature(asset);
-          if (!is_occ) {
-              fixmystreet.message_controller.asset_not_found.call(this);
-          } else {
-              fixmystreet.message_controller.asset_found.call(this);
-          }
-        },
-        // Not a typo, asset selection is not mandatory
-        asset_not_found: fixmystreet.message_controller.asset_found
-    }
+    owns_function: occ_owns_feature
 });
 
 fixmystreet.assets.add(owned_defaults, {
@@ -204,6 +208,74 @@ fixmystreet.assets.add(owned_defaults, {
     },
     asset_category: ["Ice/Snow"],
     asset_item: 'grit bin'
+});
+
+// Bridges
+
+function occ_owns_bridge(f) {
+    return f &&
+           f.attributes &&
+           f.attributes.MAINTENANCE_AUTHORITY_UID &&
+           f.attributes.MAINTENANCE_AUTHORITY_UID == 1;
+}
+
+function occ_does_not_own_bridge(f) {
+    return !occ_owns_bridge(f);
+}
+
+var bridge_default_style = new OpenLayers.Style({
+    fillColor: "#868686",
+    fillOpacity: 0.6,
+    strokeColor: "#000000",
+    strokeOpacity: 0.6,
+    strokeWidth: 2,
+    pointRadius: 4,
+    title: 'Not maintained by Oxfordshire County Council.'
+});
+
+var rule_bridge_owned = new OpenLayers.Rule({
+    filter: new OpenLayers.Filter.FeatureId({
+        type: OpenLayers.Filter.Function,
+        evaluate: occ_owns_bridge
+    }),
+    symbolizer: {
+        fillColor: "#007258",
+        pointRadius: 6,
+        title: ''
+    }
+});
+
+var rule_bridge_not_owned = new OpenLayers.Rule({
+    filter: new OpenLayers.Filter.FeatureId({
+        type: OpenLayers.Filter.Function,
+        evaluate: occ_does_not_own_bridge
+    })
+});
+
+bridge_default_style.addRules([rule_bridge_owned, rule_bridge_not_owned]);
+
+var bridge_stylemap = new OpenLayers.StyleMap({
+    'default': bridge_default_style,
+    'select': fixmystreet.assets.style_default_select,
+    'hover': occ_hover
+});
+
+fixmystreet.assets.add(owned_base, {
+    stylemap: bridge_stylemap,
+    wfs_url: proxy_base_url + 'nsg/',
+    wfs_feature: 'BRIDESFMS1',
+    geometryName: 'SHAPE_GEOMETRY',
+    propertyNames: ['ALL_STRUCTURES_CODE', 'MAINTENANCE_AUTHORITY_UID', 'SHAPE_GEOMETRY'],
+    filter_key: 'MAINTENANCE_AUTHORITY_UID',
+    filter_value: [1, 21],
+    asset_category: ['Bridges'],
+    asset_item: 'bridge',
+    asset_id_field: 'ALL_STRUCTURES_CODE',
+    attributes: {
+        feature_id: 'ALL_STRUCTURES_CODE'
+    },
+    no_asset_msg_id: '#js-occ-prow-bridge',
+    owns_function: occ_owns_bridge
 });
 
 var road_occ_maintainable = 'Maintainable at Public Expense';
@@ -252,6 +324,70 @@ fixmystreet.assets.add(defaults, {
         "Traffic Lights (permanent only)",
         "Trees"
     ]
+});
+
+// Track open popup for defect pins
+var defect_popup;
+
+function show_defect_popup(feature) {
+    defect_popup = new OpenLayers.Popup.FramedCloud(
+        "occDefects",
+        feature.geometry.getBounds().getCenterLonLat(),
+        null,
+        feature.attributes.title.replace("\n", "<br />"),
+        { size: new OpenLayers.Size(0, 0), offset: new OpenLayers.Pixel(6, -46) },
+        true,
+        close_defect_popup
+    );
+    fixmystreet.map.addPopup(defect_popup);
+}
+
+function close_defect_popup() {
+    if (!!defect_popup) {
+        fixmystreet.map.removePopup(defect_popup);
+        defect_popup.destroy();
+        defect_popup = null;
+    }
+}
+
+// Handle clicks on defect pins when showing duplicates
+function setup_defect_popup() {
+    var select_defect = new OpenLayers.Control.SelectFeature(
+        fixmystreet.markers,
+        {
+            hover: true,
+            clickFeature: function (feature) {
+                close_defect_popup();
+                if (feature.attributes.colour !== 'defects') {
+                    // We're only interested in defects
+                    return;
+                }
+                show_defect_popup(feature);
+            }
+        }
+    );
+    fixmystreet.map.addControl(select_defect);
+    select_defect.activate();
+}
+
+function handle_marker_click(e, feature) {
+    close_defect_popup();
+
+    // Show popups for defects, which have negative fake IDs
+    if (feature.attributes.id < 0) {
+        show_defect_popup(feature);
+    }
+}
+
+$(fixmystreet).on('maps:render_duplicates', setup_defect_popup);
+$(fixmystreet).on('maps:marker_click', handle_marker_click);
+$(fixmystreet).on('maps:click', close_defect_popup);
+
+$(function() {
+    if (fixmystreet.page == 'reports') {
+        // Refresh markers on page load so that defects are loaded in over AJAX.
+        fixmystreet.markers.events.triggerEvent('refresh');
+    }
 });
 
 })();

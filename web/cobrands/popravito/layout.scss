@@ -1,63 +1,127 @@
-// @import "_colours";
-@import "../sass/layout";
-@import "_css_reset";
-@import "_global_styles";
-@use "./components/index";
+@import "./_colours";
 
+$body-font: 'Open Sans';
+$headings-font: 'Darker Grotesque';
+$primary: url('../images/hero-desktop.svg') no-repeat right;
 
-// general layout styles
-.btn-popravito-primary {
-  width: 152px;
-  height: 40px;
-  background-color: purple;
-  color: $primary-color-white;
+/* header */ 
+
+.header {
+    display: flex;
+    align-items: center;
+    padding-top: 1.7rem;
 }
 
-.btn-primary-popravito {
-  color: white;
-  background: black;
-  padding: 14px 24px;
-  border-radius: 16px;
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-
-  svg {
-    margin-left: 8px;
-  }
-  &:hover {
-    background-color: #333333;
-  }
-
-  &:focus:not(:focus-visible) {
-    outline: none;
-  }
+.logo {
+    padding-left: 7.5rem;
+    padding-top: 0;
 }
 
-// Map page
-
-.big-green-banner {
-  color: black;
-  text-align: left;
-  text-transform: lowercase;
+.logo img {
+    display: block; 
+    margin: 0 auto;
 }
 
-#side {
-  width: 300px;
-  margin: 0 auto;
+.menu {
+    display: flex;
+    position: fixed;
+    right: 7.5rem;
 }
 
-.geolocate {
-  border: none;
-  background: transparent;
-  text-align: left;
-  padding: 0;
-  color: #2C8F72;
-  margin-bottom: 36px;
-
-  a:hover {
-    text-decoration: none;
-  }
+.menu-list {
+    display: flex;
 }
 
+.menu-item {
+    padding: 0 2.5rem;
+}
+
+.mobile-menu-button {
+    display: none;
+}
+
+/* homepage */ 
+
+.central-title {
+    font-weight: 800;
+    font-size: 5rem;
+    max-width: 60%;
+}
+
+.central-content {
+    background: $primary;
+    padding: 10rem 5.5rem 10rem 5.5rem;
+}
+
+.search {
+    margin: 3rem 1.5rem 0 1.5rem;
+}
+
+.search-input {
+    width: auto;
+}
+
+.report-steps-section {
+    display: flex;
+    justify-content: flex-start;
+    margin: 2.5rem 7.5rem 2.5rem 7.5rem;
+    padding: 2.5rem 0 2.5rem 0;
+}
+
+.report-steps-section-two {
+    justify-content: space-between;
+}
+.report-steps {
+    display: flex;
+    flex-flow: column wrap;
+    max-height: 100px;
+    margin: 0 8rem 0 8rem;
+}
+
+.report-step {
+    margin: 0 2.5rem 0 2.5rem;
+}
+
+.report-stat-num {
+    font-size: 5rem;
+}
+
+.report-statistics {
+    display: flex;
+}
+
+.report-stat-detail {
+    justify-content: initial;
+}
+
+.report-stat-item {
+    padding: 0 4rem 0 4rem;
+}
+
+/* footer */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 3rem 7.5rem 3rem 7.5rem;
+}
+
+.footer-desc {
+    max-width: 40%;
+}
+.report-issue-button-footer {
+    margin-bottom: 0;
+}
+
+.menu-item-footer {
+    padding-bottom: 1rem;
+}
+
+.menu-list-footer {
+    margin-bottom: 0;
+}
+
+.footer-socials {
+    margin-top: 0.7rem;
+}
 

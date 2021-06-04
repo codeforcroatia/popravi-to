@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# If a district flytipping report within Buckinghamshire has not been closed
+# If an off-road flytipping report within Buckinghamshire has not been closed
 # after three weeks, close it with a message. If it's older than six weeks,
 # use a different message and suppress any alerts.
 
@@ -14,13 +14,10 @@ BEGIN {
     require "$d/../../setenv.pl";
 }
 
-use constant BUCKS_NAME => 'Buckinghamshire Council';
-use constant EX_DISTRICTS => ['Aylesbury Vale District Council', 'Chiltern District Council', 'South Bucks District Council', 'Wycombe District Council'];
-use constant TIME_OPEN => '3 weeks';
-use constant TIME_OPEN_ALERT => '6 weeks';
+use constant DAYS_OPEN => 21;
+use constant DAYS_OPEN_ALERT => 42;
 
-use FixMyStreet::DB;
-use FixMyStreet::Script::ArchiveOldEnquiries;
+use FixMyStreet::Script::UK::AutoClose;
 use Getopt::Long::Descriptive;
 
 my ($opts, $usage) = describe_options(
@@ -30,60 +27,25 @@ my ($opts, $usage) = describe_options(
 );
 print($usage->text), exit if $opts->help;
 
-my $body = FixMyStreet::DB->resultset("Body")->search({ name => BUCKS_NAME })->first;
-die "Could not find Bucks body" unless $body;
+warn "DRY RUN: use --commit to close reports\n" unless $opts->commit;
 
-my @districts = FixMyStreet::DB->resultset("Body")->search({ name => EX_DISTRICTS })->all;
-my @district_ids = map { $_->id } @districts;
-die "Did not find all districts" unless @district_ids == 4;
+my %shared = (
+    commit => $opts->commit,
+    body_name => 'Buckinghamshire Council',
+    category => 'Flytipping (off-road)',
+);
 
-find_problems(TIME_OPEN_ALERT, TIME_OPEN, 'Auto-closure', 1);
-find_problems(undef, TIME_OPEN_ALERT, 'Auto-closure (old)', 0);
+FixMyStreet::Script::UK::AutoClose->new(
+    %shared,
+    template_title => 'Auto-closure',
+    from => DAYS_OPEN_ALERT,
+    to => DAYS_OPEN,
+    retain_alerts => 1,
+)->close;
 
-sub find_problems {
-    my ($from, $to, $title, $retain_alerts) = @_;
-
-    my $template = FixMyStreet::DB->resultset("ResponseTemplate")->search({
-        body_id => $body->id, title => $title,
-    })->first;
-    die "Could not find Bucks Flytipping template" unless $template;
-
-    $to = "current_timestamp - '$to'::interval";
-    my $time_param;
-    if ($from) {
-        $from = "current_timestamp - '$from'::interval";
-        $time_param = [ -and => { '>=', \$from }, { '<', \$to } ],
-    } else {
-        $time_param = { '<', \$to };
-    }
-
-    # Fetch all Flytipping problems made off-road (i.e. those that previously
-    # would been sent only to districts) any any older ones which actually were
-    # sent to districts, between $from and $to
-    my $q = FixMyStreet::DB->resultset("Problem")->search([
-        # Reports sent to district, made before the unitary switchover
-        -and => [
-            \[ "? @> regexp_split_to_array(bodies_str, ',')", [ {} => \@district_ids ] ],
-            category => 'Flytipping'
-        ],
-        # Reports sent to Bucks Council after unitary switchover
-        {
-            bodies_str => $body->id,
-            category => 'Flytipping (off-road)'
-        }
-    ])->search({
-        state => [ FixMyStreet::DB::Result::Problem->open_states() ],
-        confirmed => $time_param,
-    });
-
-    # Provide some variables to the archiving script
-    FixMyStreet::Script::ArchiveOldEnquiries::update_options({
-        user => $body->comment_user->id,
-        closure_text => $template->text,
-        retain_alerts => $retain_alerts,
-        commit => $opts->commit,
-    });
-
-    # Close the reports
-    FixMyStreet::Script::ArchiveOldEnquiries::close_problems($q);
-}
+FixMyStreet::Script::UK::AutoClose->new(
+    %shared,
+    template_title => 'Auto-closure (old)',
+    to => DAYS_OPEN_ALERT,
+    retain_alerts => 0,
+)->close;

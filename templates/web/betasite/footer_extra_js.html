@@ -1,0 +1,18 @@
+[% scripts.push(
+    version('/jslib/jquery-1.7.2.min.js'),
+) %]
+[% PROCESS 'footer_extra_js_base.html' highways=1 cobrand_js=1 %]
+[%~
+IF bodyclass.match('mappage');
+  scripts.push(
+    version('/cobrands/tfl/js.js'),
+  );
+END
+%]
+[%~
+IF c.user_exists AND ((c.user.from_body AND c.user.from_body.name == 'TfL') OR c.user.is_superuser);
+    scripts.push(
+        version('/cobrands/tfl/staff.js'),
+    );
+END
+%]

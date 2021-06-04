@@ -1,8 +1,6 @@
-[% SET bodyclass = 'waste' %]
+[% PROCESS 'waste/header.html' %]
 
-[% INCLUDE header.html %]
-
-  [% PROCESS 'waste/govuk/fields.html' %]
+  [% PROCESS 'govuk/fields.html' %]
   [% PROCESS back %]
   [% PROCESS errors %]
   [% PROCESS title %]
@@ -12,7 +10,7 @@
     <dd class="waste__address__property">[% property.address %]</dd>
   </dl>
   [% END %]
-<form method="post">
+<form class="waste" method="post">
   [% PROCESS form %]
 </form>
 

@@ -26,8 +26,13 @@
     data-zoomOffset=[% map.zoomOffset %]
     data-map_type="[% map.map_type %]"
 [% IF include_key -%]
-    data-key='[% c.config.BING_MAPS_API_KEY %]'
-[%- END -%]
+    data-bing_key='[% c.config.BING_MAPS_API_KEY %]'
+[% END -%]
+[% IF map.os_maps -%]
+    data-os_key='[% map.os_maps.key %]'
+    data-os_layer='[% map.os_maps.layer %]'
+    data-os_url='[% map.os_maps.url %]'
+[% END -%]
 [% IF list_of_names_as_string -%]
     data-bodies='[% list_of_names_as_string | html %]'
 [%- END -%]
@@ -51,7 +56,7 @@
   [% IF map_type_toggle %]
     [% IF c.config.BING_MAPS_API_KEY OR c.cobrand.moniker == 'zurich' %]
       [% aerial = c.req.params.aerial %]
-      [% aerial = 1 IF c.cobrand.moniker == 'zurich' AND NOT c.req.params.aerial.defined %]
+      [% SET aerial = 1 IF c.cobrand.moniker == 'zurich' AND NOT c.req.params.aerial.defined %]
       [% IF aerial %]
         <a class="map-layer-toggle roads" rel="nofollow" href="[% c.uri_with( { aerial => 0 } ) %]">[% loc('Road map') %]</a>
       [% ELSE %]

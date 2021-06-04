@@ -14,9 +14,6 @@
 [% IF report.used_map %]
 
 <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
-    [% IF c.req.params.map_override %]
-        <input type="hidden" name="map_override" value="[% c.req.params.map_override | html %]">
-    [% END %]
 
 [% ELSE %]
 
@@ -32,6 +29,10 @@
 
   [% IF report.used_map %]
     [% map_html | safe %]
+
+        <div class="mobile-map-banner">
+            <span>[% loc('Reposition if needed, then hit Continue') %]</span>
+        </div>
     </div>
     <div id="map_sidebar">
         <div id="side-form">
@@ -41,6 +42,7 @@
   [% END %]
 
             <div id="report-a-problem-main">
+                <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
               [% IF login_success %]
                 [% PROCESS 'report/new/login_success_form.html' %]
               [% ELSIF oauth_need_email %]

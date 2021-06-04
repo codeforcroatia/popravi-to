@@ -2,21 +2,45 @@
 
 * Unreleased
     - Front end improvements:
+        - Multi-page form reporting.
         - New aerial map toggle.
         - Send text alerts for report updates to only-phone-verified users.
         - Add options for user to set global notification preferences.
         - Pop over mobile navigation menu. #3270
+        - Add support for the OS Maps API. #3328
+        - Speed up /report/new/ajax call. #3335
+        - Improve `#geolocate_link` display, especially for smaller screens. #2048
+        - Allow email alert radius to be specified. #68
+        - Update URL on /my when map moves. #3358
+        - Make anonymous updates clearer in email alerts. #3417
     - Bugfixes:
         - Fix non-JS form when all extra questions answered. #3248
         - Improve display of disabled fields in iOS.
         - Use div for inspector form wrapped extra questions. #3250
         - Fix Open311 JSON services output. #3279
         - Send email reports in staff-only categories.
+        - Fix Gaze sometimes being called twice on /around. #3324
+        - Improved alert signup for phone-only user. #3367
+        - Fix moderation of update text.
     - Admin improvements:
         - Enable per-category hint customisation.
         - Move ban/unban buttons to user edit admin page.
         - Add link to user edit admin from report/update edit admin.
         - Improve layout of some admin pages.
+        - Include email in inspector form information.
+        - Improve wording of new report Private checkbox.
+        - No questionnaires on reports as body/anonymous.
+        - CSV export, improve Site Used and add Device Type.
+        - Always record contributed_by for staff users.
+        - Add per-photo moderation. #3055
+        - Redaction support for photos.
+    - Development improvements:
+        - Include failure count in send report error output, #3316
+        - Sort output in export script. #3323
+        - Show relevant updates in alert-update email preview. #3417
+        - Upgrade jQuery. #3017
+    - Open311 improvements:
+        - Consistent protected field ordering.
     - Security:
         - Increase minimum password length to eight.
 

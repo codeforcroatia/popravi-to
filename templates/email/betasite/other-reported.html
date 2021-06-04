@@ -1,0 +1,33 @@
+[%
+
+email_summary = "Hvala vam na prijavi problema";
+email_columns = 2;
+
+PROCESS '_email_settings.html';
+INCLUDE '_email_top.html';
+
+%]
+
+<th style="[% td_style %][% primary_column_style %]" id="primary_column">
+  [% start_padded_box | safe %]
+  <h1 style="[% h1_style %]">Vaš je problem&nbsp;zabilježen</h1>
+  <p style="[% p_style %]">Vaša prijava je zabilježena putem portala [% site_name %].</p>
+
+[% IF report.non_public %]
+<p style="[% p_style %]">Prijava je označena privatnom te neće biti vidljiva 
+javnosti; možete je pogledati putem poveznice ispod, ili nakon što se
+prijavite s email adresom vezanom uz prijavu.</p>
+[% END %]
+
+[% TRY %][% INCLUDE '_council_reference.html' problem=report %][% CATCH file %][% END %]
+  <p style="margin: 20px auto; text-align: center">
+  <a style="[% button_style %]" href="[% cobrand.base_url_for_report(report) %][% report.view_url %]">Otvori moju prijavu</a>
+  </p>
+  [% end_padded_box | safe %]
+</th>
+[% WRAPPER '_email_sidebar.html' object = report %]
+    <h2 style="[% h2_style %]">[% report.title | html %]</h2>
+    <p style="[% secondary_p_style %]">[% report.detail | html %]</p>
+[% END %]
+
+[% INCLUDE '_email_bottom.html' %]

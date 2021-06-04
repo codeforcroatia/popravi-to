@@ -99,7 +99,9 @@ sub rss : Private {
         $c->res->redirect($url);
     }
     elsif ( $feed =~ /^local:([\d\.-]+):([\d\.-]+)$/ ) {
+        my $distance = $c->forward('get_distance');
         $url = $c->cobrand->base_url() . '/rss/l/' . $1 . ',' . $2;
+        $url .= "/$distance" if $distance;
         $c->res->redirect($url);
     }
     else {
@@ -196,13 +198,18 @@ sub create_alert : Private {
         $alert->insert();
     }
 
+    $c->stash->{alert} = $alert;
+
     if ( $c->user_exists && ($c->user->id == $alert->user->id || $c->stash->{can_create_for_another})) {
         $alert->confirm();
+        if ($c->stash->{can_create_for_another} && $c->user->id != $alert->user->id) {
+            # User has been subscribed to the new_updates alert email by a staff member. Send them an email to let them know.
+            $c->forward('send_subscribed_email');
+        }
     } else {
         $alert->confirmed(0);
     }
 
-    $c->stash->{alert} = $alert;
 }
 
 =head2 set_update_alert_options
@@ -252,6 +259,8 @@ sub set_local_alert_options : Private {
     {
         $type = 'local_problems';
         push @params, $2, $1; # Note alert parameters are lon,lat
+        my $distance = $c->forward('get_distance');
+        push @params, $distance if $distance;
     }
     return unless $type;
 
@@ -262,10 +271,13 @@ sub set_local_alert_options : Private {
 
     if ( scalar @params == 1 ) {
         $options->{parameter} = $params[0];
-    }
-    elsif ( scalar @params == 2 ) {
+    } elsif ( scalar @params == 2 ) {
         $options->{parameter}  = $params[0];
         $options->{parameter2} = $params[1];
+    } elsif ( scalar @params == 3 ) {
+        $options->{parameter}  = $params[0];
+        $options->{parameter2} = $params[1];
+        $options->{parameter3} = $params[2];
     }
 
     $c->stash->{alert_options} = $options;
@@ -286,16 +298,20 @@ sub send_confirmation_email : Private {
     # People using 2FA can not log in by code
     $c->detach( '/page_error_403_access_denied', [] ) if $user->has_2fa;
 
-    my $token = $c->model("DB::Token")->create(
-        {
-            scope => 'alert',
-            data  => {
-                id    => $c->stash->{alert}->id,
-                type  => 'subscribe',
-                email => $user->email
-            }
-        }
-    );
+    my $data = {
+        id => $c->stash->{alert}->id,
+        type => 'subscribe',
+    };
+
+    # Logged in as a phone user, need to verify email and update user account
+    if ($c->user_exists && !$c->user->email_verified) {
+        $data->{old_user_id} = $c->user->id;
+    }
+
+    my $token = $c->model("DB::Token")->create({
+        scope => 'alert',
+        data  => $data,
+    });
 
     $c->stash->{token_url} = $c->uri_for_email( '/A', $token->token );
 
@@ -303,6 +319,30 @@ sub send_confirmation_email : Private {
 
     $c->stash->{email_type} = 'alert';
     $c->stash->{template} = 'email_sent.html';
+}
+
+=head2 send_subscribed_email
+
+Send an email to an address that has been subscribed to alerts by a staff user.
+
+=cut
+
+sub send_subscribed_email : Private {
+    my ( $self, $c ) = @_;
+
+    my $user = $c->stash->{alert}->user;
+
+    my $token = $c->model("DB::Token")->create( {
+        scope => 'alert',
+        data  => {
+            id => $c->stash->{alert}->id,
+            type => 'unsubscribe',
+        }
+    } );
+    $c->stash->{unsubscribe_url} = $c->cobrand->base_url( $c->stash->{alert_options}->{cobrand_data} ) . '/A/' . $token->token;
+    $c->stash->{problem_url} = $c->cobrand->base_url_for_report($c->stash->{problem}) . $c->stash->{problem}->url;
+
+    $c->send_email( 'alert-subscribed.txt', { to => $user->email } );
 }
 
 =head2 prettify_pc
@@ -339,10 +379,14 @@ Fetch/check email address
 sub process_user : Private {
     my ( $self, $c ) = @_;
 
+    # If we are logged in (and not creating for someone else) we'll want to use
+    # the logged in user (but note, if they don't have a verified email and it
+    # is a local alert, we still want to email them confirmation)
+    my $type = $c->get_param('type') || "";
     if ( $c->user_exists ) {
         $c->stash->{can_create_for_another} = $c->stash->{problem}
             && $c->user->has_permission_to(contribute_as_another_user => $c->stash->{problem}->bodies_str_ids);
-        if (!$c->stash->{can_create_for_another}) {
+        if (!$c->stash->{can_create_for_another} && ($type eq 'updates' || $c->user->email_verified)) {
             $c->stash->{alert_user} = $c->user->obj;
             return;
         }
@@ -385,11 +429,6 @@ sub setup_coordinate_rss_feeds : Private {
     }
 
     $c->stash->{rss_feed_uri} = $rss_feed;
-
-    $c->stash->{rss_feed_2k}  = $rss_feed . '/2';
-    $c->stash->{rss_feed_5k}  = $rss_feed . '/5';
-    $c->stash->{rss_feed_10k} = $rss_feed . '/10';
-    $c->stash->{rss_feed_20k} = $rss_feed . '/20';
 
     return 1;
 }
@@ -500,6 +539,15 @@ sub setup_request : Private {
     $c->stash->{template} = 'alert/list-ajax.html' if $c->get_param('ajax');
 
     return 1;
+}
+
+sub get_distance : Private {
+    my ($self, $c) = @_;
+
+    my $distance = $c->get_param('distance') || '';
+    $distance = 0 unless $distance =~ /^\d+$/;
+    $distance = 150 if $distance > 150; # Match Gaze maximum
+    return $distance;
 }
 
 =head1 AUTHOR
