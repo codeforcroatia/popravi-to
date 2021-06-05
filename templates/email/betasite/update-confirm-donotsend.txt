@@ -1,2 +1,0 @@
-Ovo ažuriranje biti će poslano nadležnom uredu te će
-biti prikazano na [% site_name %] internetskoj stranici.

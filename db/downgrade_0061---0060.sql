@@ -1,5 +1,0 @@
-BEGIN;
-
-ALTER TABLE body DROP extra;
-
-COMMIT;

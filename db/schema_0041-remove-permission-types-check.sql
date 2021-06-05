@@ -1,4 +1,0 @@
-BEGIN;
-ALTER TABLE user_body_permissions
-DROP CONSTRAINT user_body_permissions_permission_type_check;
-COMMIT;

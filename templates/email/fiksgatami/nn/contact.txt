@@ -1,5 +1,0 @@
-Subject: FiksGataMi-melding: [% subject %]
-
-[% message %]
-
-[ Sendt av contact.cgi på [% host %]. IP-addresse [% ip %] ]
