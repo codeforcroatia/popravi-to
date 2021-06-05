@@ -1,0 +1,21 @@
+[%
+
+email_summary = "Trebate potvrditi vaše " _ site_name _ " postavke za pretplatu prije nego vam počnemo slati lokalne prijave.";
+email_columns = 1;
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<th style="[% td_style %][% only_column_style %]">
+  <h1 style="[% h1_style %]">Molimo vas potvrdite vaše&nbsp;postavke</h1>
+  <p style="[% p_style %]">Kliknite na poveznicu ispod da potvrdite da želite da vam šaljemo informacije o prijavama za izabrano područje.</p>
+  <p style="margin: 20px auto; text-align: center">
+    <a style="[% button_style %]" href="[% token_url %]">Da, šaljite mi prijave</a>
+  </p>
+  <p style="[% p_style %]">Ako više ne želite primati informacije o prijavama u ovom području, zanemarite ovu poruku.</p>
+</th>
+
+[% INCLUDE '_email_bottom.html' %]

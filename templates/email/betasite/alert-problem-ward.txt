@@ -1,0 +1,24 @@
+Subject: New [% site_name %] reports to [% area_name %] within [% ward_name %]
+
+The following new [% site_name %] reports have been sent to [% area_name %]
+within [% ward_name %]:
+
+[% INCLUDE '_email_report_list.txt' %]
+
+[% signature %]
+
+
+Unsubscribe?
+
+You subscribed to receive an email every time someone makes a new [% site_name %]
+report to [% area_name %] within [% ward_name %]. This is a
+free service from [% site_name %].
+
+If you no longer wish to receive an email whenever there are new reports to
+[% area_name %] within [% ward_name %], please follow
+this link:
+
+[% unsubscribe_url %]
+
+This email was sent automatically, from an unmonitored email account - so please
+do not reply to it.
