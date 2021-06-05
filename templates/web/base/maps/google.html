@@ -1,0 +1,29 @@
+<style>
+#map_box img {
+    max-width: none;
+}
+#map_box {
+    color: #000;
+}
+</style>
+
+[% map_html = BLOCK %]
+<script nonce="[% csp_nonce %]">
+var fixmystreet = fixmystreet || {};
+$.extend(fixmystreet, {
+    'area': [ [% map.area.join(',') %] ],
+    'latitude': [% map.latitude %],
+    'longitude': [% map.longitude %],
+[% IF map.zoomToBounds -%]
+    'zoomToBounds': 1,
+[%- END %]
+[% IF map.zoom -%]
+    'zoom': [% map.zoom %],
+[%- END %]
+    'pins': [% INCLUDE maps/pins_js.html %]
+});
+</script>
+<div id="map_box">
+    [% pre_map %]
+    <div id="map"></div>
+[% END %]

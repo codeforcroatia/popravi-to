@@ -1,0 +1,38 @@
+#!/usr/bin/env perl
+
+# send-reports:
+# Send new problem reports to councils
+#
+# Copyright (c) 2011 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org. WWW: http://www.mysociety.org
+
+use strict;
+use warnings;
+require 5.8.0;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use Getopt::Long::Descriptive;
+use CronFns;
+
+use FixMyStreet;
+use FixMyStreet::Script::Reports;
+
+my $site = CronFns::site(FixMyStreet->config('BASE_URL'));
+CronFns::language($site);
+
+my ($opts, $usage) = describe_options(
+    '%c %o',
+    ['verbose|v', 'more verbose output'],
+    ['nomail', 'do not send any email, print instead'],
+    ['debug', 'always try and send reports (no back-off skipping)'],
+    ['help|h', "print usage message and exit" ],
+);
+$usage->die if $opts->help;
+
+FixMyStreet::Script::Reports::send($opts->verbose, $opts->nomail, $opts->debug);

@@ -1,0 +1,17 @@
+make
+g++
+jhead
+liblocale-gettext-perl
+libpng-dev
+perl
+perlmagick
+libmath-bigint-gmp-perl
+gettext
+postgresql-server-dev-all
+postgresql-client
+gnuplot
+ttf-bitstream-vera
+libexpat1-dev
+libssl-dev
+zlib1g-dev
+libxml2-dev

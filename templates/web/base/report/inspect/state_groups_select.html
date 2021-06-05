@@ -1,0 +1,7 @@
+[%
+
+SET state_groups = c.cobrand.state_groups_inspect;
+
+%]
+[% DEFAULT current_state = problem.state %]
+[% INCLUDE 'report/_state_select_field.html' single_fixed=1 %]

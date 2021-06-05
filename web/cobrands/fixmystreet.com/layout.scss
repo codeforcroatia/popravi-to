@@ -1,0 +1,435 @@
+@font-face {
+  font-family: 'MuseoSans';
+  src: url('fonts/MuseoSans_300-webfont.eot');
+  src: url('fonts/MuseoSans_300-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/MuseoSans_300-webfont.woff') format('woff'),
+       url('fonts/MuseoSans_300-webfont.ttf') format('truetype'),
+       url('fonts/MuseoSans_300-webfont.svg#MuseoSans300') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MuseoSans';
+  src: url('fonts/MuseoSans_300_Italic-webfont.eot');
+  src: url('fonts/MuseoSans_300_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/MuseoSans_300_Italic-webfont.woff') format('woff'),
+       url('fonts/MuseoSans_300_Italic-webfont.ttf') format('truetype'),
+       url('fonts/MuseoSans_300_Italic-webfont.svg#MuseoSans300Italic') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'MuseoSans';
+  src: url('fonts/MuseoSans_500-webfont.eot');
+  src: url('fonts/MuseoSans_500-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/MuseoSans_500-webfont.woff') format('woff'),
+       url('fonts/MuseoSans_500-webfont.ttf') format('truetype'),
+       url('fonts/MuseoSans_500-webfont.svg#MuseoSans500') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MuseoSans';
+  src: url('fonts/MuseoSans_500_Italic-webfont.eot');
+  src: url('fonts/MuseoSans_500_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/MuseoSans_500_Italic-webfont.woff') format('woff'),
+       url('fonts/MuseoSans_500_Italic-webfont.ttf') format('truetype'),
+       url('fonts/MuseoSans_500_Italic-webfont.svg#MuseoSans500Italic') format('svg');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Museo300-display';
+  src: url('fonts/Museo300-Regular-webfont.eot');
+  src: url('fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/Museo300-Regular-webfont.woff') format('woff'),
+       url('fonts/Museo300-Regular-webfont.ttf') format('truetype'),
+       url('fonts/Museo300-Regular-webfont.svg#Museo300') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$body-font: MuseoSans, Helmet, Freesans, sans-serif;
+
+/* Opera has a bug (from around 10.5 upwards to current 11.6) with showing the
+ * table caption *at all* if the header is set to a font-face :( */
+noindex:-o-prefocus, #site-header {
+  font-family: sans-serif;
+}
+
+h3, h4,
+.item-list__heading {
+    font-weight: bold;
+}
+
+@import "_colours";
+@import "../sass/layout";
+
+body {
+    @media ($high-dpi-screen) {
+        background-image: url(images/tile@2x.jpg);
+        background-size: 500px;
+    }
+}
+body.mappage {
+    background-image: none;
+}
+
+// Tiled background stripe, not plain colour
+#front-main {
+    background: $primary url(images/tile-y.jpg);
+
+    @media ($high-dpi-screen) {
+        background-image: url(images/tile-y@2x.jpg);
+        background-size: 500px;
+    }
+}
+
+.nav-menu--main {
+    a:hover {
+        @include linear-gradient(#000, #444 10%, #444 95%, #111);
+    }
+    a.report-a-problem-btn:hover {
+        background: $primary/1.1;
+    }
+}
+
+#site-header {
+    background: none;
+    border-image-source: url(images/tile-y.jpg);
+    border-image-slice: 4 0 0 0;
+    border-image-repeat: repeat;
+
+    @media ($high-dpi-screen) {
+        border-image-source: url(images/tile-y@2x.jpg);
+        border-image-slice: 8 0 0 0;
+    }
+}
+body.mappage {
+    #site-header {
+        @include linear-gradient(#000, #222 10%, #222 90%, #000);
+    }
+}
+
+body.twothirdswidthpage,
+body.fullwidthpage {
+    #front-main {
+        color: #333;
+        padding-bottom: 4em;
+
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            font-family: $body-font;
+        }
+        h2 {
+            font-family: $body-font;
+        }
+        #postcodeForm {
+            div {
+                font-size: 1.3em;
+                width: 24em;
+                label {
+                    font-family: $body-font;
+                }
+                input#pc {
+                    color: #777;
+                    font-size: 0.9em;
+                    height: 2.6em;
+                    &:focus {
+                        outline: 0;
+                    }
+                }
+                input#sub {
+                    font-size: 1.1em;
+                    height: 2.4em;
+                    font-family: $body-font;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+a#geolocate_link {
+    font-family: $body-font;
+    background: url(images/locate-me.png) $left 0 no-repeat;
+    height: 34px;
+    padding-#{$left}: 24px;
+    margin-top: 0.25em;
+
+    @media ($high-dpi-screen) {
+        background-image: url(images/locate-me@2.png);
+        background-size: 22px 34px;
+    }
+
+    &.loading {
+        background: url("/cobrands/fixmystreet/images/spinner-yellow.gif") 100% 33% no-repeat
+    }
+}
+
+.search-help__header {
+    font-family: inherit;
+}
+
+body.frontpage {
+    #site-logo {
+        margin: 2em 0;
+        width: 300px;
+        height: 60px;
+        background: none;
+
+        // Override the width="175" height="35" attributes on the svg element,
+        // forcing the SVG contents to stretch to the new, larger, size.
+        svg {
+            width: 300px;
+            height: 60px;
+            margin-top: 0; // no need for the vertical centering any more
+        }
+    }
+
+    .site-logo__fallback {
+        width: 300px;
+        padding-top: 60px;
+        // No need for svg-background-image() here because the
+        // logo on the homepage is an inline SVG, and the only browsers
+        // not to show it will be IE8 and below, which are @1x.
+        background-image: url("/cobrands/fixmystreet.com/images/site-logo-homepage.png");
+        background-size: 300px 60px;
+    }
+
+    .content {
+        margin-top: -3em; // overlap the bottom of #front-main
+    }
+}
+
+.next-steps {
+  @include flex-container();
+  margin-bottom: 2em; // add some space between this and the footer
+}
+
+.next-steps__step {
+  font-family: $body-font;
+  flex: 1;
+  padding: 1.8em;
+
+  & + .next-steps__step {
+    border-top: none;
+    border-#{$left}: 1px solid #ede8c9;
+  }
+
+  h2 {
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 1.2em;
+  }
+
+  p {
+    line-height: 1.4em;
+  }
+}
+
+body.unresponsive-council {
+    .container .content {
+        padding: 0;
+        margin-bottom: 4em;
+    }
+
+    h1, h2 {
+        font-family: inherit;
+        font-weight: bold;
+    }
+}
+
+.unresponsive-council__header,
+.unresponsive-council__body {
+    padding: 1.5em;
+    font-size: 1.3em;
+}
+
+.unresponsive-council__header {
+    background-color: $primary;
+
+    border-bottom: none;
+    margin-bottom: 0;
+
+    h1 {
+        font-size: 2.5em;
+        line-height: 1em;
+        margin-bottom: 0.2em;
+    }
+}
+
+.unresponsive-council__body {
+    p {
+        max-width: 26em;
+    }
+}
+
+.unresponsive-council-cta {
+    margin: 1.5em 0;
+    max-width: 20em;
+    padding-#{$right}: 6em;
+    background-image: url(images/unresponsive-council-cta-arrow.png);
+    background-position: $right center;
+    background-repeat: no-repeat;
+
+    @media ($high-dpi-screen) {
+        background-image: url(images/unresponsive-council-cta-arrow@2.png);
+        background-size: 60px;
+    }
+}
+
+.mysoc-footer {
+  margin-top: 3em;
+  // The below lines are so that on e.g. /about/posters the footer will move on
+  // top of the fixed sidebar in narrow height situations.
+  position: relative;
+  z-index: 1;
+}
+body.mappage .mysoc-footer {
+    display: none;
+}
+
+// FMS Pro advert
+footer {
+  background: $base_bg; // (images/tile.jpg)
+  margin: -1em;
+  padding: 1em 0;
+
+  @media ($high-dpi-screen) {
+    background-image: url(images/tile@2x.jpg);
+    background-size: 500px;
+  }
+}
+
+.fms-pro-promo {
+    @include clearfix();
+    @include flex-container();
+
+    margin: 1em 0 3em 0;
+
+    h2 {
+        font-family: inherit;
+        font-weight: bold;
+    }
+
+    @media (min-width: 60em) {
+        p {
+            font-size: 1.2em;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+    }
+}
+
+.fms-pro-promo__pro,
+.fms-pro-promo__stats {
+    @include box-sizing(border-box);
+    float: left;
+    padding: 2em;
+
+    @media (min-width: 60em) {
+        padding: 3em;
+    }
+}
+
+.fms-pro-promo__pro {
+    width: 40%;
+    background: $primary url(images/tile-y.jpg) 0 0 repeat;
+
+    @media ($high-dpi-screen) {
+        background-image: url(images/tile-y@2x.jpg);
+        background-size: 500px;
+    }
+}
+
+.fms-pro-promo__stats {
+    width: 56%;
+    margin-left: 4%;
+    border-bottom: none;
+    background: #fff;
+    position: relative;
+
+    &:before {
+        content: "NEW";
+        display: block;
+        position: absolute;
+        top: -0.5em;
+        right: 0.5em;
+        background: $primary;
+        font-weight: bold;
+        width: 4em;
+        line-height: 4em;
+        text-align: center;
+        border-radius: 100%;
+        transform: rotate(5deg);
+    }
+}
+
+.footer-marketing {
+  color: #ccc;
+
+  a {
+      color: white;
+  }
+}
+
+.healthcheck-unit {
+    padding-left: 94px;
+    background-size: 64px;
+
+    & + & {
+        margin-top: 2em;
+    }
+}
+
+.healthcheck-cta-trio {
+    @include clearfix();
+    margin: 0 -2em;
+    text-align: center;
+
+    .dashboard-item {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+}
+
+.dashboard-fms-case-studies {
+    & > div {
+        @include flex-container();
+        @include flex-wrap(wrap);
+        @include justify-content(space-between);
+
+        a {
+            @include box-sizing(border-box);
+            display: block;
+            width: 48%;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.council-dashboard-login {
+    margin: -1em;
+    padding: 2em;
+
+    form {
+        margin-top: 4em;
+        margin-bottom: 4em;
+    }
+}
+
+.area-reports-dashboard-cta {
+    // To overpower `body.mappage .full-width` in core.
+    body.mappage & {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+}

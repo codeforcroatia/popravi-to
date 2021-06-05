@@ -1,0 +1,37 @@
+[% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
+[% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+[% SET ol_css = version('/vendor/OpenLayers/theme/default/style.css') %]
+
+[% TRY %][% critical = INSERT "header/critical.auto.min.css" %][% CATCH file %][% END %]
+
+[% IF inline_css AND critical %]
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="[% ol_css %]">
+<link rel="stylesheet" href="[% base_css %]">
+<![endif]-->
+<!--[if gte IE 9]><!-->
+<style id="critical">
+[% critical | safe %]
+</style>
+
+<noscript><link rel="stylesheet" href="[% base_css %]"></noscript>
+<link rel="prefetch" href="[% ol_css %]" as="style">
+<link id="preload_base_css" rel="preload" href="[% base_css %]" as="style">
+<script nonce="[% csp_nonce %]">
+/* If browser *does* support preload, use stylesheets when loaded */
+document.getElementById('preload_base_css').onload = function(){this.onload=null;this.rel='stylesheet'};
+/*!  loadCSS. [c]2017 Filament Group, Inc. MIT License */
+(function(){var e=function(a){function b(){a.removeEventListener("load",b);a.setAttribute("onload",null);a.media=c}var c=a.media||"all";a.addEventListener("load",b);setTimeout(function(){a.rel="stylesheet";a.media="only x"});setTimeout(b,3E3)};try{var d=document.createElement("link").relList.supports("preload")}catch(a){d=!1}d||function(){for(var a=document.getElementsByTagName("link"),b=0;b<a.length;b++){var c=a[b];"preload"===c.rel&&"style"===c.getAttribute("as")&&e(c)}}()})();
+</script>
+<link rel="stylesheet" href="[% base_css %]" media="(min-width:48em)">
+<!--<![endif]-->
+[% ELSE %]
+<link rel="stylesheet" href="[% ol_css %]">
+<link rel="stylesheet" href="[% base_css %]">
+[% END %]
+<link rel="stylesheet" href="[% layout_css %]" media="screen and (min-width:48em)">
+<!--[if (lt IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" href="[% layout_css %]">
+<![endif]-->
+
+[% extra_css | safe %]

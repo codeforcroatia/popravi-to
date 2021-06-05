@@ -1,0 +1,26 @@
+MIME-Version: 1.0
+Subject: =?UTF-8?B?dGVzdCBlbWFpbCDimLo=?=
+Content-Type: text/plain; charset="utf-8"
+To: test@recipient.com
+Content-Transfer-Encoding: quoted-printable
+From: CONTACT_EMAIL
+
+Hello,
+
+This is a test email where foo: bar <b>bold</b>.
+
+utf8: =E6=88=91=E4=BB=AC=E5=BA=94=E8=AF=A5=E8=83=BD=E5=A4=9F=E6=97=A0=E7=BC=
+=9D=E5=A4=84=E7=90=86UTF8=E7=BC=96=E7=A0=81
+
+  indented_text
+
+long line: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do=
+ eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min=
+im veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea =
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate veli=
+t esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupi=
+datat non proident, sunt in culpa qui officia deserunt mollit anim id est l=
+aborum.
+
+Yours,
+FixMyStreet.=

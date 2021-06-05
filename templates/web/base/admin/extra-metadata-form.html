@@ -1,0 +1,11 @@
+<div class="extra-metadata-form js-metadata-items">
+  [% FOR meta IN metas %]
+    [% INCLUDE 'admin/extra-metadata-item.html' i=loop.index collapsed=1 %]
+  [% END %]
+</div>
+
+<div class="hidden-js" id="js-template-extra-metadata-item">
+  [% INCLUDE 'admin/extra-metadata-item.html' meta={} i=9999 collapsed=0 %]
+</div>
+
+<button type="button" class="btn btn--small js-metadata-item-add hidden-nojs">[% loc('Add field') %]</button>

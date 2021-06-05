@@ -1,0 +1,155 @@
+@import "../sass/h5bp";
+@import "./_colours";
+@import "./_fonts";
+@import "../sass/mixins";
+
+@import "../sass/base";
+
+.container {
+  padding: 0 20px;
+}
+
+h1 {
+  @extend %bold-font;
+  font-size: 2.625em;
+  line-height: 120%;
+}
+
+h2 {
+  @extend %bold-font;
+  font-size: 1.75em;
+  line-height: 125%;
+}
+
+h3 {
+  @extend %bold-font;
+  font-size: 1.5em;
+  line-height: 130%;
+}
+
+h4 {
+  @extend %bold-font;
+  font-size: 1.3125em;
+  line-height: 135%;
+}
+
+#site-header {
+  background-color: $bucks_indigo;
+}
+
+// Put the logo in place, and reveal the text alongside it
+#site-logo {
+  @extend %normal-font;
+  @include svg-background-image("img/bucks-logo");
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  background-size: 178px 45px;
+  padding: 12px 1em;
+  width: 178px;
+  height: 45px
+}
+
+#report-cta {
+  @include bucks-button();
+}
+
+.nav-menu {
+  padding: 0 1.5em;
+  background-color: #6D6D6C;
+  a, span {
+    background-color: transparent;
+    border-bottom: 1px solid lighten($bucks_charcoal, 5%);
+    color: #fff;
+    font-size: 16px;
+    padding: 1em 0;
+    @extend %bold-font;
+    &:hover,
+    &:active,
+    &:focus {
+      color: #999;
+      background-color: transparent;
+    }
+    &:visited {
+      color: #fff;
+    }
+  }
+}
+
+// Set the default font colour everywhere
+body, .content {
+  color: $primary_text;
+}
+
+// Make sure the numbers on the front page have the correct font weight
+#front_stats {
+  color: white;
+
+  div {
+    @extend %bold-font;
+  }
+}
+
+// FAQ/privacy pages should have correctly-weighted headers
+dl dt {
+  @extend %bold-font;
+}
+
+#front-main {
+  text-align: left;
+
+  h1 {
+    font-size: 1.75em;
+  }
+
+  #postcodeForm {
+    margin: 1em 0 0 0;
+    padding: 0;
+    background: #fff;
+
+    div input#sub {
+      @include bucks-button();
+      box-shadow: 0;
+    }
+  }
+}
+
+.btn-primary, .green-btn, .btn--primary {
+  background: none;
+  color: $bucks_charcoal !important;
+  @include bucks-button();
+    &:hover,
+    &:active,
+    &:focus { 
+      background-image: none;
+      color: $bucks_charcoal !important;
+    }
+}
+
+a#geolocate_link {
+  color: $bucks_links;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $link-hover-color;
+  }
+}
+
+label {
+  @extend %bold-font;
+}
+
+// uses important because btn also uses it
+#highways .segmented-control--radio input:checked + label.btn {
+    color: $g7 !important;
+}
+
+.description_tips  {
+  .do {
+    color: $bucks_green_five;
+  }
+
+  .dont {
+    color: $bucks_warning;
+  }
+}

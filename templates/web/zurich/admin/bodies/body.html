@@ -1,0 +1,51 @@
+[% INCLUDE 'admin/header.html' title=tprintf(loc('Council contacts for %s'), body.name) -%]
+[% PROCESS 'admin/report_blocks.html' %]
+
+[% IF updated %]
+  <p>
+    <em>[% updated %]</em>
+  </p>
+[% END %]
+
+[% IF admin_type == 'super' AND body.parent AND NOT body.parent.parent # A division %]
+  [% IF NOT errors %]
+    <table cellspacing="0" cellpadding="2" border="1">
+        <tr>
+            <th>[% loc('Category') %]</th>
+            <th>[% loc('Email') %]</th>
+            <th>[% loc('Last editor') %]</th>
+            <th>[% loc('Note') %]</th>
+            <th>[% loc('When edited') %]</th>
+            <th>Kürzel</th>
+        </tr>
+        [% FOR cat IN contacts %]
+            <tr[% IF cat.state == 'deleted' %] class="is-deleted"[% END %]>
+                <td><a href="[% c.uri_for_action( 'admin/bodies/edit', [ body_id ], cat.category ) %]">[% cat.category_display %]</a></td>
+                <td>[% cat.email | html %]</td>
+                <td>[% cat.editor %]</td>
+                <td>[% cat.note | html %]</td>
+                <td>[% PROCESS format_date this_date=cat.whenedited %]</td>
+                <td>[% cat.get_extra_metadata('abbreviation') %]</td>
+            </tr>
+        [% END %]
+    </table>
+
+    <h2>[% loc('Add new category') %]</h2>
+  [% END %][%# Only show all the above if no errors with below form %]
+
+  [% IF errors %]
+    <div class="fms-admin-warning">
+        [% FOR error IN errors.values %][% error %][% IF NOT loop.last %]<br>[% END %][% END %]
+    </div>
+  [% END %]
+
+  [% INCLUDE 'admin/bodies/contact-form.html' %]
+
+[% END %]
+
+[% IF NOT errors %]
+    <h2>[% loc('Edit body details') %]</h2>
+    [% INCLUDE 'admin/bodies/form.html' %]
+[% END %]
+
+[% INCLUDE 'admin/footer.html' %]

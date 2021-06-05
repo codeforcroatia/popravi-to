@@ -1,0 +1,58 @@
+{
+    "body": { "name": "South Borsetshire District Council" },
+    "children": {
+        "1": { "id": 1, "name": "West Ward" },
+        "2": { "id": 2, "name": "East Ward" },
+        "3": { "id": 3, "name": "North Ward" },
+        "4": { "id": 4, "name": "South Ward" }
+    },
+    "contacts": [
+        { "category": "Abandoned vehicles", "category_display": "Abandoned vehicles" },
+        { "category": "Grafitti", "category_display": "Grafitti" },
+        { "category": "Potholes", "category_display": "Potholes" },
+        { "category": "Street lighting", "category_display": "Street lighting" },
+        { "category": "Trees", "category_display": "Trees" },
+        { "category": "Other", "category_display": "Other" }
+    ],
+    "summary_open": 3133,
+    "summary_closed": 1928,
+    "summary_fixed": 1895,
+    "totals": {
+        "total": 543,
+        "open": 139,
+        "closed": 178,
+        "fixed": 226
+    },
+    "grouped": {
+        "Abandoned vehicles": {
+            "total": 140,
+            "open": 21,
+            "closed": 59,
+            "fixed": 10
+        },
+        "Graffiti": {
+            "total": 96,
+            "open": 7,
+            "closed": 5,
+            "fixed": 84
+        },
+        "Street lighting": {
+            "total": 175,
+            "open": 39,
+            "closed": 23,
+            "fixed": 113
+        },
+        "Trees": {
+            "total": 67,
+            "open": 39,
+            "closed": 27,
+            "fixed": 1
+        },
+        "Potholes": {
+            "total": 115,
+            "open": 33,
+            "closed": 64,
+            "fixed": 18
+        }
+    }
+}

@@ -1,0 +1,20 @@
+@import "_colours";
+@import "../sass/layout";
+
+
+body.frontpage #site-header {
+  height: 10em;
+}
+
+
+body.frontpage #site-logo {
+    background: url("/cobrands/rutland/RCCLogo.gif");
+    background-size: contain;
+    height: 100px;
+    width: 220px;
+}
+
+
+a.platform-logo {
+    background-image: url(/cobrands/fixmystreet/images/fms-platform-logo-dark.svg);
+}

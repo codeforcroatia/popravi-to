@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Wrapper to call new script
+
+DIR="$(cd "$(dirname "$BASH_SOURCE")" && pwd -P)"
+$DIR/fetch --updates

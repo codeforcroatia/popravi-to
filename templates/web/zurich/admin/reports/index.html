@@ -1,0 +1,15 @@
+[% PROCESS 'admin/header.html' title=loc('All Reports') %]
+[% PROCESS 'admin/report_blocks.html' %]
+
+<form method="get" action="[% c.uri_for_action('admin/reports/index') %]" enctype="application/x-www-form-urlencoded" accept-charset="utf-8">
+    <p><label for="search">[% loc('Search:') %]</label> <input type="text" name="search"  size="30" id="search" value="[% searched | html %]">
+</form>
+
+[% IF problems.size %]
+    [% PROCESS 'admin/_index_table.html' %]
+    [% INCLUDE 'pagination.html', admin = 1, param = 'p', pager = problems_pager %]
+[% END %]
+
+[% INCLUDE 'admin/list_updates.html' %]
+
+[% INCLUDE 'admin/footer.html' %]

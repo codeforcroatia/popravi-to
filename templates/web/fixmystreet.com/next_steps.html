@@ -1,0 +1,37 @@
+[%# A trio of suggested steps, shown on completion pages across FMS.com %]
+
+[% DEFAULT share_url = c.cobrand.base_url %]
+[% DEFAULT twitter_comment = 'I just used @fixmystreet, you should try it!' %]
+
+<div class="next-steps">
+  <div class="next-steps__step next-steps__step--social">
+    [% IF just_interacted %]
+      <h2>[% loc('Great work. Now spread the word!') %]</h2>
+      <p>[% loc('Share your report on Twitter and Facebook, and let your friends join the conversation.') %]</p>
+    [% ELSE %]
+      <h2>[% loc('Spread the word about FixMyStreet!') %]</h2>
+      <p>[% loc('You know how to get things fixed - now make sure your friends do too.') %]</p>
+    [% END %]
+    <p class="next-steps__step__cta">
+      <a href="https://twitter.com/intent/tweet?text=[% twitter_comment | uri %]&amp;url=[% share_url | uri %]&amp;related=fixmystreet,mysociety"><img src="/cobrands/fixmystreet.com/images/next-step-twitter.png" alt="Tweet it" width="120" height="37"></a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=[% share_url | uri %]"><img src="/cobrands/fixmystreet.com/images/next-step-facebook.png" alt="Share on Facebook" width="120" height="37"></a>
+    </p>
+  </div>
+  <div class="next-steps__step next-steps__step--donate">
+      <h2>[% loc('Help support FixMyStreet') %]</h2>
+      <p>[% loc('Even a small donation of £5 today will help mySociety run sites like FixMyStreet.') %]</p>
+    <p class="next-steps__step__cta">
+      <a href="https://www.mysociety.org/donate?utm_source=fixmystreet.com&amp;utm_content=[% utm_content | uri %]&amp;utm_medium=link&amp;utm_campaign=fms_thankyou_pages"><img src="/cobrands/fixmystreet.com/images/next-step-donate.png" alt="Donate now" width="138" height="37"></a>
+    </p>
+  </div>
+  <div class="next-steps__step next-steps__step--goodies">
+    <h2>[% loc('Free FixMyStreet goodies for you!') %]</h2>
+    <a href="/posters">
+      <img src="/cobrands/fixmystreet.com/images/next-step-goodies.png" alt="" width="105" height="125" class="goodies-preview">
+    </a>
+    <p>[% loc('Perfect for civic groups, clubs, and schools.') %]</p>
+    <p class="next-steps__step__cta">
+      <a href="/posters"><img src="/cobrands/fixmystreet.com/images/next-step-download.png" alt="Download" width="120" height="37"></a>
+    </p>
+  </div>
+</div>

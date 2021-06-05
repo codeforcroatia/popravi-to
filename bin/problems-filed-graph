@@ -1,0 +1,67 @@
+#!/usr/bin/env perl
+
+# problems-filed-graph:
+# Plot graph of FixMyStreet problem report creation rate.
+#
+# Copyright (c) 2014 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org. WWW: http://www.mysociety.org
+
+use strict;
+use warnings;
+require 5.8.0;
+
+my $DIR;
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    $DIR = dirname(dirname(File::Spec->rel2abs($0)));
+    require "$DIR/setenv.pl";
+}
+
+use File::Temp qw(tempfile);
+
+use FixMyStreet::DB;
+
+my %config = (
+    gplot_output => "set terminal png font 'Vera.ttf' 9 size 1200,600",
+    extension => '.png',
+);
+
+my ($fh, $source) = tempfile("fms-report-rate-graph-data-nonwmc-XXXXXXXXXX", UNLINK => 1);
+
+my @entries = FixMyStreet::DB->resultset('Problem')->search({
+        state => { -not_in => [ 'unconfirmed', 'hidden', 'partial' ] },
+    }, {
+        columns => [
+            { 'date' => { date => 'created' } },
+            { 'count' => { count => '*' } }
+        ],
+        group_by => [ 'date' ],
+        order_by => [ 'date' ],
+    }
+);
+@entries = map { { $_->get_columns } } @entries;
+foreach (@entries) {
+    $fh->print($_->{date}, ' ', $_->{count}, "\n");
+}
+
+my $gp = <<END;
+    unset border
+    $config{gplot_output}
+
+    set xdata time;
+    set timefmt "%Y-%m-%d";
+    set format x "%b %Y"
+    unset xlabel
+
+    set ylabel "problems filed / calendar day"
+    set xtics nomirror
+    set ytics nomirror
+
+    n = 0
+    plot "$source" using 1:2 with lines axes x1y2 lt 3 title "FixMyStreet problem reports"
+END
+
+open(my $gnuplot, '|-', "GDFONTPATH=/usr/share/fonts/truetype/ttf-bitstream-vera gnuplot > $DIR/web/fms-live-line$config{extension} 2> /dev/null") or die $!;
+$gnuplot->print($gp);
+close $gnuplot;

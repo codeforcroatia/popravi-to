@@ -1,0 +1,29 @@
+#!/usr/bin/env perl
+
+# send-comments:
+# Send comments/updates on reports to bodies
+#   In Open311 parlance these are 'service request updates' and are sent using
+#   mySociety's proposed extension to the Open311 Georeport v2 spec:
+#   https://github.com/mysociety/fixmystreet/wiki/Open311-FMS---Proposed-differences-to-Open311
+
+use strict;
+use warnings;
+use v5.14;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use CronFns;
+use FixMyStreet;
+use Open311::PostServiceRequestUpdates;
+
+my ($verbose, $nomail) = CronFns::options();
+
+my $updates = Open311::PostServiceRequestUpdates->new(
+    verbose => $verbose,
+);
+$updates->send;

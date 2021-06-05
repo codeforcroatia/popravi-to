@@ -1,0 +1,93 @@
+<!doctype html>
+<!--[if IE 8]>   <html class="no-js ie8" lang="[% lang_code %]"><![endif]-->
+<!--[if IE 9]>   <html class="no-js ie9" lang="[% lang_code %]"><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="[% lang_code %]"><!--<![endif]-->
+    <head>
+        <meta name="viewport" content="initial-scale=1.0">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="HandHeldFriendly" content="true">
+        <meta name="mobileoptimized" content="0">
+
+        [% INCLUDE 'header_opengraph.html' %]
+        [% INCLUDE 'header/css.html' %]
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/redmond/jquery-ui.css">
+
+        [% INCLUDE 'common_header_tags.html' %]
+
+        [% INCLUDE 'tracking_code.html' %]
+
+    </head>
+    <body class="[% bodyclass | html IF bodyclass %]">
+
+    [% INCLUDE 'debug_header.html' %]
+
+    <div class="wrapper">
+        <div class="table-cell clearfix">
+            <header id="site-header" role="banner">
+                <div class="container">
+                    <a href="/" id="site-logo-text">Züri wie neu</a>
+                    <a href="http://www.stadt-zuerich.ch/" id="site-logo">Stadt Zürich</a>
+                    <a href="#main-nav" id="nav-link">Main Navigation</a>
+                </div>
+            </header>
+
+            <div class="container">
+
+[% IF admin %]
+    <div class="admin-nav-wrapper">
+    <div class="admin-nav">
+        <ul>
+            [% pagename = c.req.uri.path %]
+            [% pagename = pagename.replace('/admin/?(\w*).*', '$1') %]
+
+            [% IF admin_type == 'super' %]
+            <li [% IF pagename == 'summary' OR pagename == '' %]class="current"[% END %]>
+                <a href="/admin/summary">[% loc('Summary') %]</a>
+            </li>
+            [% ELSE %]
+            <li [% IF NOT c.get_param('internal') AND (pagename == 'summary' OR pagename == '') %]class="current"[% END %]>
+                <a href="/admin/summary">Öffentliche</a>
+            </li>
+            <li [% IF c.get_param('internal') AND (pagename == 'summary' OR pagename == '') %]class="current"[% END %]>
+                <a href="/admin/summary?internal=1">Interne</a>
+            </li>
+            [% END %]
+            <li [% IF pagename == 'reports' OR pagename == 'report_edit' %]class="current"[% END %]>
+                <a href="/admin/reports">[% loc('All') %]</a>
+            </li>
+            [% IF admin_type == 'dm' OR admin_type == 'super' %]
+            <li [% IF pagename == 'bodies' OR pagename == 'body' %]class="current"[% END %]>
+                <a href="/admin/bodies">[% loc('Bodies') %]</a>
+            </li>
+            [% END %]
+            [% IF admin_type == 'super' %]
+            <li [% IF pagename == 'users' OR pagename == 'user_edit' %]class="current"[% END %]>
+                <a href="/admin/users">[% loc('Users') %]</a>
+            </li>
+            [% END %]
+            <li [% IF pagename == 'stats' %]class="current"[% END %]>
+                <a href="/admin/stats">[% loc('Stats') %]</a>
+            </li>
+            [% IF admin_type == 'dm' %]
+            <li [% IF pagename == 'templates' OR pagename == 'template' %]class="current"[% END %]>
+                <a href="/admin/templates">[% loc('Templates') %]</a>
+            </li>
+            [% END %]
+            <li class="search-box">
+                <form method="get" action="[% c.uri_for_action('/admin/reports/index') %]" enctype="application/x-www-form-urlencoded" accept-charset="utf-8">
+                    <input type="text" name="search" size="20" id="search" placeholder="[% loc('Search reports') %]">
+                </form>
+
+            </li>
+        </ul>
+    </div>
+    </div>
+[% END %]
+
+                <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
+                [% IF NOT admin %]
+                  [% INCLUDE 'nav_over_content.html' %]
+                [% END %]
+
+                [% pre_container_extra | safe %]

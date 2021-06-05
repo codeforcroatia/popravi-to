@@ -1,0 +1,77 @@
+[% INCLUDE 'admin/header.html' title=loc('Summary') -%]
+[% PROCESS 'admin/report_blocks.html' %]
+
+<div class="fms-admin-info fms-admin-floated">
+This is the administration interface for [% site_name %]. If you
+need any help or guidance, there is <a href="https://fixmystreet.org/">plenty of
+online documentation</a>. The FixMyStreet Platform is
+<a href="https://github.com/mysociety/fixmystreet">actively supported</a> by
+its developers, and has a community of people using or working on the code.
+Please <a href="https://fixmystreet.org/community/">sign up to the mailing list
+or get in touch</a> to let us know about your use of the FixMyStreet Platform,
+and to receive notices of updates.
+</div>
+
+[% IF bodies.size == 0 %]
+  <p class="fms-admin-info">
+    [% loc('Currently no bodies have been created.') %]
+    <br>
+    [% tprintf( loc('You need to <a href="%s">add some bodies</a> (such as councils or departments) before any reports can be sent.'), c.uri_for('bodies')) %]
+  </p>
+[% END %]
+
+<div class="admin-index-search clearfix">
+
+<form method="get" action="[% c.uri_for('reports') %]" accept-charset="utf-8">
+    <label for="search_reports">[% loc('Search Reports') %]</label>
+    <div class="form-txt-submit-box">
+        <input type="text" class="form-control" name="search"  size="30" id="search_reports" value="[% searched | html %]">
+        <input type="submit" class="btn" value="[% loc('Go') %]">
+    </div>
+</form>
+
+<form method="get" action="[% c.uri_for('users') %]" accept-charset="utf-8">
+    <label for="search_users">[% loc('Search Users') %]</label>
+    <div class="form-txt-submit-box">
+        <input type="text" class="form-control" name="search"  size="30" id="search_users" value="[% searched | html %]">
+        <input type="submit" class="btn" value="[% loc('Go') %]">
+    </div>
+</form>
+
+[% IF c.user.is_superuser %]
+<form method="get" action="[% c.uri_for('bodies') %]">
+    <label for="search_body">[% loc('Edit body details') %]</label>
+    <div class="form-txt-submit-box">
+        <select class="form-control" id="search_body" name="body">
+          [% FOREACH body IN bodies %]
+            [%- SET id = body.id %]
+            <option[% IF body.deleted %] class="adminhidden"[% END %] value="[% body.id %]">
+            [% body.name | html %]
+            [%- IF body.parent %], [% body.parent.name | html %][% END -%]
+            </option>
+          [% END %]
+        </select>
+        <input type="submit" class="btn" value="[% loc('Go') %]">
+    </div>
+</form>
+[% END %]
+
+</div>
+
+[% IF unsent_reports.size %]
+<h2>[% loc('Reports waiting to be sent') %]</h2>
+
+<table cellspacing="0" cellpadding="2" border="1">
+    <tr>
+        <th>[% loc('ID') %]</th>
+        <th>[% loc('Title') %]</th>
+        <th>[% loc('Name') %]</th>
+        <th>[% loc('Body') %]</th>
+        <th>[% loc('State') %]</th>
+        <th>*</th>
+    </tr>
+    [% INCLUDE 'admin/problem_row.html' problems = unsent_reports %]
+</table>
+[% END %]
+
+[% INCLUDE 'admin/footer.html' %]

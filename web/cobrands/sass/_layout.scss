@@ -1,0 +1,921 @@
+@import "_mixins";
+
+$layout_front_stats_color: $primary !default;
+$mappage-header-height: 4em !default; // eg: might want this to equal outer height of #site-header on normal pages
+$mappage-sidebar-width: 29em;
+$mappage-sidebar-padding: 1em;
+$mappage-notes-width: 15em;
+$mappage-actions-width: 25em;
+$mappage-sidebar-width--medium: 24em;
+$mappage-actions-width--medium: 20em;
+$header-top-border-width: 0.25em !default;
+$header-top-border: $header-top-border-width solid $primary !default;
+
+$container-max-width: 60em !default;
+
+$primary_link_color: null !default;
+$primary_link_hover_color: null !default;
+
+.internal-link-fixed-header {
+    display: block;
+    position: relative;
+    top: -2em;
+}
+
+//hacks for desk/mob only stuff
+.desk-only {
+    display: block;
+}
+.mob-only {
+    // Override `display: block` etc if other classes are defined
+    display: none !important ;
+}
+
+body {
+    color: $base_fg;
+    background: $base_bg;
+}
+
+/* The OpenLayers popup sets a background image with a white background without setting the CSS colours correctly. */
+#popup {
+    color: #000;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+// Page wrapper and header bits follow
+
+.container {
+    position: relative;
+}
+
+// Body sometimes has a .top_banner at the start, which we don't want to
+// cover up when we absolutely position the nav to the top of the body.
+// So make .wrapper into a new positioning context for the nav.
+.wrapper {
+  position: relative;
+}
+
+#main-nav {
+  min-height: $mappage-header-height; // defaults to map header height; should be height of #site-header (eg: #site-logo + any vertical padding)
+  height: 1px; // flex `align-items: center` doesn't work in IE10 and IE11 unless flex container has an explicit height (even when min-height means this explicit height gets ignored!)
+  @include flex-container();
+  @include flex-align(center);
+  float: $right; // we could use justify-content here, but float degrades better for non-flexbox browsers
+  margin: 0;
+  @if ($header-top-border) {
+    margin-top: $header-top-border-width * -1; // visually compensate for border on #site-header
+  }
+
+  // No flexbox in IE9, so replace `align-items: center` with absolute positioning
+  .ie9 & {
+    position: relative;
+    float: none;
+
+    & > * {
+        position: absolute;
+        top: 50%;
+        #{$right}: 0;
+        -ms-transform: translate(0, -50%);
+    }
+  }
+}
+
+#site-logo {
+    // Bring #site-logo in front of .nav-wrapper (which has no z-index) so that it's clickable
+    position: relative;
+    z-index: 1;
+}
+
+#nav-link {
+  #{$right}: auto;
+  #{$left}: -999999px;
+}
+
+#report-cta,
+.nav-menu__item--privacy {
+    display: none;
+}
+
+.nav-wrapper {
+  position: absolute;
+  @if ($header-top-border) {
+    top: $header-top-border-width;
+  } @else {
+    top: 0;
+  }
+  #{$left}: 0;
+  #{$right}: 0;
+}
+
+.nav-menu {
+  float: $right;
+  li {
+    float: $left;
+  }
+  a, span {
+    display: block;
+    color: $nav_colour;
+    background-color: transparent;
+    border-bottom: none;
+  }
+  a:visited {
+    color: $nav_colour;
+  }
+}
+.nav-menu--main {
+  a, span {
+    padding: 0.75em;
+    font-size: 0.9em;
+  }
+  a:hover {
+    background-color: $nav_hover_background_colour;
+  }
+  a.report-a-problem-btn {
+    color: $primary_text;
+    background-color: $primary;
+    padding:0.25em 0.5em;
+    margin:0.5em;
+    @include border-radius(0.25em);
+    &:hover {
+      background-color:$primary/1.1;
+    }
+  }
+  span {
+    color:$primary;
+  }
+  /* Stop mobile-only things */
+  span.report-a-problem-btn {
+    cursor: auto;
+  }
+  span.report-a-problem-btn:hover {
+    background-color: transparent;
+    color: $primary;
+  }
+}
+
+// .content Is the white box
+.content {
+  margin: 1em 0 0 0;
+  padding: 1em;
+  background: #fff;
+  color: #222;
+}
+
+// map page - has fixed header and different styling
+body.mappage {
+  .wrapper {
+    position: static;
+  }
+
+  .container {
+    max-width: none;
+    position: static;
+  }
+
+  .content {
+    padding: 0;
+    margin: 0;
+  }
+
+  .full-width {
+    margin: 0 ($mappage-sidebar-padding * -1);
+  }
+
+  #site-header {
+    // With the exception of the #site-logo child, the rest of
+    // #site-header gets entirely hidden behind the navigation
+    position: absolute;
+    z-index: auto;
+    top: 0;
+    #{$left}: 0;
+    #{$right}: 0;
+    height: $mappage-header-height;
+  }
+
+//  .nav-menu--main a, .nav-menu--main span {
+//    padding: 1.4em 0.75em 1.35em;
+//  }
+//
+//  .nav-menu--main a.report-a-problem-btn {
+//    padding: 0.5em;
+//    margin: 0.9em 0.25em 0.85em;
+//  }
+}
+
+.box-warning,
+.extra-category-questions {
+  margin: 1em ($mappage-sidebar-padding * -1);
+}
+
+// Want to cover over the blue sidebar
+body.mappage.admin {
+    .full-width--top {
+        margin-top: -1em;
+        padding-top: 1em;
+    }
+    .full-width--bottom {
+        padding-bottom: 1em;
+        margin-bottom: -4em;
+    }
+}
+
+#map_box {
+  position: absolute;
+  z-index: auto;
+  top: $mappage-header-height;
+  bottom: 0;
+  #{$right}: 0;
+  #{$left}: $mappage-sidebar-width;
+  width: auto; // stretch from right edge of sidebar to left edge of window
+  height: auto; // stretch from bottom of header to bottom of window
+  margin: 0;
+
+  .with-notes & {
+    #{$left}: $mappage-sidebar-width + $mappage-notes-width;
+  }
+
+  .with-actions & {
+    #{$left}: $mappage-sidebar-width + $mappage-actions-width;
+
+    @media (max-width: 79em) {
+      #{$left}: $mappage-sidebar-width--medium  + $mappage-actions-width--medium;
+    }
+  }
+}
+
+#map_sidebar {
+  position: absolute;
+  z-index: auto;
+  top: $mappage-header-height;
+  #{$left}: 0;
+  bottom: 0;
+  width: ($mappage-sidebar-width - ($mappage-sidebar-padding * 2));
+  padding: $mappage-sidebar-padding;
+  overflow: auto; // vertical scrollbar when list is taller than window
+  background-color: #fff; // since no longer in the flow inside .content
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+  .with-notes & {
+    width: (($mappage-sidebar-width + $mappage-notes-width) - ($mappage-sidebar-padding * 2));
+    // TODO: Should have a bitmap image fallback for old browsers!!
+    background-image: -webkit-linear-gradient(flip(90deg, 270deg), transparent 29em, #E9F2FF 29em);
+    background-image: linear-gradient(flip(90deg, 270deg), transparent 29em, #E9F2FF 29em);
+  }
+
+  .with-actions & {
+    width: $mappage-sidebar-width + $mappage-actions-width;
+    max-width: 100%; // Secondary column will squish on screens 768-960px
+    padding: 0; // Padding will be handled by children of .two_column_sidebar
+
+    &:after {
+      display: none; // 4em bottom spacing will be handled by children of .two_column_sidebar
+    }
+
+    @media (max-width: 79em) {
+      width: $mappage-sidebar-width--medium + $mappage-actions-width--medium;
+    }
+  }
+}
+
+// This goes inside #map_sidebar, and establishes a flex container allowing
+// us to split the sidebar into two side-by-side columns.
+.two_column_sidebar {
+  @include flex-container();
+  @include flex-align(stretch); // children will fill entire height of this element
+  min-height: 100%; // this element will fill entire height of parent (#map_sidebar)
+
+  & > * {
+    // Columns should start at 50% width, and (eg: if scrollbars appear,
+    // reducing the available width), shrink down to less than 50%.
+    @include box-sizing(border-box);
+    @include flex(0 1 auto);
+    width: 50%;
+    padding: $mappage-sidebar-padding;
+
+    // Add extra space at the bottom of the sidebar columns, to stop
+    // .shadow-wrap obscuring text at the bottom of the sidebar.
+    &:after {
+      content: "";
+      display: block;
+      height: 4em;
+    }
+  }
+
+  // Default for children is to share the horizontal space equally amongst
+  // themselves. But to make sure that the edge of #side-report lines up
+  // with the edge of .shadow-wrap, we give #side-report a fixed width,
+  // and leave the other column to shrink to the remaining space.
+  #side-report {
+    width: $mappage-sidebar-width;
+    @include flex(0 0 auto);
+
+    @media (max-width: 79em) {
+      width: $mappage-sidebar-width--medium;
+    }
+  }
+
+  // Line up edge of .shadow-wrap with edge of #side-report
+  .shadow-wrap {
+    width: $mappage-sidebar-width;
+
+    @media (max-width: 79em) {
+      width: $mappage-sidebar-width--medium;
+    }
+  }
+
+  // No flexbox in IE8-9, so we settle for floating the columns instead.
+  // They will no longer stretch the full height of the sidebar, and the
+  // width of #side-report will no longer match the width of .shadow-wrap
+  // when a scrollbar is present.
+  .ie8 &,
+  .ie9 & {
+    @include clearfix();
+
+    & > * {
+      float: #{$left};
+      width: 50%;
+    }
+
+    #side-report {
+      width: 50%;
+    }
+  }
+}
+
+.change_location {
+  display: block;
+}
+
+.category_meta_message {
+  padding-top: 0.5em;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#skip-this-step {
+  display: block;
+  color: inherit;
+  //margin: 0 -15px;
+  padding: 16px;
+  font-size: 18px;
+  line-height: 20px;
+  border-bottom: 1px solid #E7E1C0;
+  background: #FDF4C5;
+
+  em {
+    font-style: normal;
+    text-decoration: underline;
+    color: #0BA7D1;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  html.js & {
+    // If javascript is enabled, hide the skip link off-screen,
+    // but keep it visible for screen readers.
+    position: absolute;
+    top: -999px;
+
+    &:focus {
+      // And show it again if it receives focus (eg: via tab key)
+      position: static;
+    }
+  }
+}
+
+// Only want to capture footers that are inside .content
+// (like the one in base)
+.content {
+    footer {
+        margin-top: 0em;
+        margin-bottom: -1em;
+        .tablewrapper {
+            padding-top: 2em;
+            padding-bottom: 3em;
+            background: $base_bg;
+            color: $base_fg;
+            a:link,
+            a:visited {
+                color: $primary;
+            }
+            h4 {
+                font-weight: normal;
+                padding-bottom: 0.5em;
+            }
+        }
+    }
+}
+
+a.platform-logo {
+    vertical-align: baseline;
+    display: inline-block;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: auto 1.5em;
+    background-image: url(/cobrands/fixmystreet/images/fms-platform-logo.svg);
+    text-indent: -1000%;
+    height: 1.7em;
+    width: 16em;
+    padding-#{$right}: 0.25em;
+
+    .ie8 & {
+        color: #ffffff;
+        background: none;
+        text-indent: 0px;
+        height: auto;
+    }
+}
+
+// two thirds width page, also has option for a sidebar which can be sticky or not
+body.twothirdswidthpage {
+  #site-header + .container {
+    // This used to be on all containers, but there was a bug in Chrome, so now
+    // it's just here so that the sidebar links are still clickable with their
+    // negative z-index.
+    z-index: 1;
+  }
+  .content {
+    width:40em;
+    position: relative;
+    aside {
+      background:#eee;
+      position:absolute;
+      #{$left}: 42em;
+      top:0;
+      z-index: -1;
+      width:13em;
+      padding:1em;
+      h2 {
+        margin-top: 0;
+      }
+      img {
+        margin-bottom: 0.25em;
+      }
+    }
+    .sticky-sidebar {
+      position: absolute;
+      #{$left}: 42em;
+      z-index: -1;
+      aside {
+        position: fixed;
+        top:7em;
+        #{$left}: auto;
+      }
+    }
+  }
+
+  @media (max-width: 61em) {
+    // make twothirdswidthpage nearly as small as main
+    // .content: just enough to still fit the sidebar in
+    .content {
+      width:30em;
+      .sticky-sidebar {
+        #{$left}: 32em;
+      }
+    }
+  }
+}
+
+// Centre the login and password change pages,
+// but keep them narrow to match the report sidebar
+body.authpage {
+  .content {
+    width: 27em;
+    margin-#{$left}: auto;
+    margin-#{$right}: auto;
+  }
+}
+
+
+// table wrapper - this enables anything to become a
+// table with div children as table cells
+.tablewrapper {
+  display:table;
+  width:100%;
+  padding: 0 0 1em;
+  table-layout: fixed;
+  >div {
+    display:table-cell;
+    width:50%;
+  }
+  .full-width {
+    margin:0;
+  }
+}
+
+// adds border to the top and goes full width
+.bordered {
+  margin:0 -1em;
+  padding:0 1em;
+  width:auto;
+  border-top:0.25em solid $primary;
+}
+
+// Shown at bottom of homepage, among other places
+.footer-marketing {
+  width: 100%;
+}
+
+//footer blocks
+#footer-mobileapps {
+  border-#{$right}: 1em solid transparent;
+  background:none;
+  padding:0;
+  h2 {
+    color:#222;
+    margin-top:0;
+  }
+  p {
+    border-bottom:none;
+  }
+  a {
+    padding-#{$left}: 0.5em;
+  }
+}
+
+#footer-help {
+  border-#{$left}: 1em solid transparent;
+  ul {
+    display:table;
+    li {
+      display:table-cell;
+      border-bottom:none;
+      &:last-child {
+        border-#{$left}: 1.25em solid transparent;
+      }
+    }
+  }
+}
+
+// Openlayers map controls (overrides)
+#fms_pan_zoom_panup,
+#fms_pan_zoom_pandown,
+#fms_pan_zoom_panleft,
+#fms_pan_zoom_panright {
+    display: block;
+}
+
+#fms_pan_zoom_panup,
+#fms_pan_zoom_pandown,
+#fms_pan_zoom_panleft,
+#fms_pan_zoom_panright,
+#fms_pan_zoom_zoomin,
+#fms_pan_zoom_zoomout,
+.big-hide-pins-link {
+  opacity: 0.85;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// indent zoom to line up with pan
+#fms_pan_zoom_zoomin {
+  #{$right}: 30px;
+  top: 130px;
+}
+#fms_pan_zoom_zoomout {
+  #{$right}: 30px;
+  top: 174px;
+}
+
+.olControlAttribution {
+  bottom:0.5em !important;
+  #{$left}: auto !important;
+}
+
+// Dock to side of screen, rather than filling 100% width.
+.sub-map-links {
+  #{$left}: auto;
+  bottom: 2em;
+
+  a {
+    padding: 0.5em 1em;
+  }
+}
+
+// Show the extra button if there is vertical space.
+@media (min-height: 450px) {
+  .big-hide-pins-link {
+    $fms_pan_zoom_top: 8px;
+    $fms_pan_zoom_right: 8px;
+    $fms_pan_zoom_zoomout_top: 174px;
+    $fms_pan_zoom_zoomout_right: 30px;
+    $fms_pan_zoom_zoomout_height: 44px;
+    $gap: 22px;
+
+    display: block;
+    position: absolute;
+    top: $fms_pan_zoom_top + $fms_pan_zoom_zoomout_top + $fms_pan_zoom_zoomout_height + $gap;
+    #{$right}: $fms_pan_zoom_right + $fms_pan_zoom_zoomout_right;
+    border-radius: 5px;
+    color: #fff;
+    width: 36px;
+    height: 0;
+    padding-top: 36px;
+    overflow: hidden;
+
+    background: #222;
+    background-size: 36px 36px;
+    background-repeat: no-repeat;
+    background-position: flip(100% 0, 0 0);
+    @include svg-background-image('/cobrands/fixmystreet/images/hide-pins-link');
+
+    &:hover {
+      text-decoration: none;
+      color: #fff;
+      width: auto;
+      height: auto;
+      padding: flip(6px 40px 6px 10px, 6px 10px 6px 40px);
+      overflow: visible;
+    }
+  }
+}
+
+#map_links_toggle {
+  display: block;
+  cursor: pointer;
+  position: absolute;
+  #{$left}: -1em;
+  width: 1em;
+  height: 100%;
+  border-radius: flip(0.25em 0 0 0.25em, 0 0.25em 0.25em 0);
+  background-color: #333;
+
+  &:hover {
+    #{$left}: -1.2em;
+    width: 1.2em;
+    background-color: #000;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 6px;
+    height: 12px;
+    top: 50%;
+    margin-top: -6px;
+    #{$left}: ((16px - 6px) / 2); // horizontally centre in 16px wide parent
+    background-size: 108px 12px;
+    @include svg-background-image('/cobrands/fixmystreet/images/map-tools');
+  }
+
+  // Expanded arrow points towards edge of window.
+  // Closed arrow points away from edge of window.
+  &:after {
+    background-position: flip(-6px 0, 0 0);
+  }
+
+  &.closed:after {
+    background-position: flip(0 0, -6px 0);
+  }
+}
+
+
+// Wraps around #key-tools box - sticks to the bottom of the screen on desktop
+.shadow-wrap {
+  position: fixed;
+  z-index: 10; //this is just to ensure anythign inside .content that has position set goes sites it
+  bottom: 0;
+  #{$left}: 0;
+  margin: 0;
+  width: $mappage-sidebar-width;
+  overflow: hidden;
+  padding-top: 2em;
+
+  &.static {
+    padding: 0 0 1em;
+    margin: 0 -1em; // overlap parent side padding
+    position: static;
+    width: auto; // avoid horizontal scrollbar as drawer opens (on devices with permanent scroll bars)
+  }
+}
+
+#key-tools {
+  border-top: 0.25em solid $primary;
+  margin: 0;
+  @include box-shadow(0 0 1em 1em #fff);
+
+  li {
+    border-#{$right}: none; // undo border-right/left from _base.scss
+
+    // Cancel centre alignment, if the *only child* in list.
+    &:first-child:last-child {
+      text-align: $right;
+    }
+  }
+
+  a, button {
+    font-size: 0.75em;
+    line-height: 18px; // match `body`
+    color: #666;
+    padding: 0.5em;
+    text-transform: none; // undo uppercase from _base.scss
+  }
+}
+
+// If JS is disabled, these are still CSS positioned, so don't want behind shining through.
+#report-share, #report-updates-data {
+    background-color: #fff;
+}
+// Prevent gap in non-JS, and looks better with JS, due to some padding/margin effect.
+#report-updates-data fieldset {
+    margin-bottom: 0;
+}
+
+#loading-indicator {
+  height: 64px;
+  width: 64px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.big-green-banner {
+  top: auto;
+  margin: (-1em/1.375) (-1em/1.375) 0 (-1em/1.375);
+  font-size: 1.375em;
+  padding: flip(1em 2em 1em 1em, 1em 1em 1em 2em);
+  background: $col_click_map inline-image("../fixmystreet/images/chevron-white-#{$right}.svg") $right center no-repeat;
+  background-size: 43px 33px;
+
+  span {
+    display: block;
+    font-size: 80%;
+    padding-top: 0.5em;
+  }
+}
+.ie8 {
+  .big-green-banner {
+    background-image: url(/cobrands/fixmystreet/images/chevron-white-#{$right}-on-green.gif);
+  }
+}
+
+/*FORMS*/
+input[type=text],
+input[type=password],
+input[type=email],
+textarea{
+    max-width: 27em;
+}
+
+/* form errors */
+div.form-error,
+p.form-error {
+  display:block;
+}
+
+input.form-error,
+textarea.form-error {
+  @include border-radius(0 0 0.25em 0.25em);
+}
+
+// If the form is .with-notes, limit the width of the inputs
+// to make space for the #report-a-problem-sidebar.
+#side-form, #side {
+  .with-notes & {
+    width: 27em;
+  }
+}
+
+// Notes presented alongside the reporting form
+.sidebar, #report-a-problem-sidebar {
+  padding: 0;
+
+  // If the parent is .with-notes we know we have space to
+  // float the sidebar content to the side of the form.
+  .with-notes & {
+    float: #{$right};
+    width: 13em;
+    margin-#{$right}: -15em;
+  }
+
+  div {
+    font-size: 0.75em;
+  }
+
+  ul {
+      @include list-reset-soft;
+      li {
+          margin-bottom: 0.5em;
+      }
+  }
+
+  .sidebar-notes {
+    color: #666;
+  }
+}
+
+// The coloured sidebar column on .with-actions pages.
+#side-inspect {
+    margin: 0;
+}
+
+.inspect-form-heading {
+  display: none;
+}
+
+// More general notes
+.general-notes {
+    font-size: 0.9em;
+}
+
+// Frontpage
+
+// big yellow bit full screen width
+#front-main {
+  color: $primary_text;
+  background: $primary;
+  margin: 0;
+  padding: 1em;
+  #front-main-container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+  }
+  h2 {
+    font-style:normal;
+    margin:0;
+    color: inherit;
+  }
+  #postcodeForm {
+    color: inherit;
+    background:none;
+    overflow:hidden;
+    padding-bottom: 0;
+    label {
+      margin:0.5em 0;
+    }
+    .form-hint {
+        margin-top: -0.25em;
+    }
+    div {
+      margin:0 auto;
+      width:20em;
+    }
+  }
+  a {
+    color: $primary_link_color;
+    &:hover {
+      color: $primary_link_hover_color;
+    }
+  }
+}
+
+#front-howto {
+  border-#{$right}: 1em solid transparent;
+}
+
+#front_stats {
+  background:none;
+  color: #222;
+  border-top:0.25em solid $primary;
+  padding-top:1em;
+  big {
+    color: $layout_front_stats_color;
+    font-size: 2em;
+    @media (min-width: 54em) {
+      // 54em roughly halfway between 48em and 62em
+      font-size: 2.5em;
+    }
+    @media (min-width: 62em) {
+      // container max-width 60em + 2em side padding
+      font-size: 3em;
+    }
+  }
+}
+
+#front-recently {
+  border-#{$left}: 1em solid transparent;
+}
+
+#front-howto h2,
+#front-recently h2 {
+   margin-top:0;
+}
+
+.alerts__columns {
+    @include clearfix;
+    @include flex-container();
+    > div {
+        width: 50%;
+        margin: 0 2em;
+    }
+}
+
+.confirmation-header {
+    width: 25em;
+    margin: 0 auto 1em;
+    text-align: $left;
+    padding: flip(3em 0 3em 132px, 3em 132px 3em 0); // for tick icon
+    background-position: $left 2em;
+}
+
+/* Admin interface */
+
+.fms-admin-floated {
+    float: $right;
+    width: 25%;
+}

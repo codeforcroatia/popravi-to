@@ -1,0 +1,26 @@
+@import "_colours";
+
+@import "../sass/layout";
+
+body.twothirdswidthpage .content .sticky-sidebar aside {
+    top: 10em;
+}
+
+#site-logo {
+    width: 282px;
+    height: 76px;
+    padding: 24px 0;
+    background-position: 0px 50%;
+    background-size: 282px 76px;
+}
+
+.mappage #site-header {
+    box-sizing: border-box;
+    border-bottom: solid 5px $cyan;
+}
+
+.meta-highlight {
+    margin: 1em -1em;
+    padding: 2em 2em;
+    background-color: mix(#fff, $primary, 70%);
+}

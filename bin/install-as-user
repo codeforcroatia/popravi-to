@@ -1,0 +1,113 @@
+#!/bin/sh
+
+set -e
+error_msg() { printf "\033[31m%s\033[0m\n" "$*"; }
+notice_msg() { printf "\033[33m%s\033[0m " "$*"; }
+done_msg() { printf "\033[32m%s\033[0m\n" "$*"; }
+DONE_MSG=$(done_msg done)
+
+if [ $# -ne 3 ]
+then
+    cat >&2 <<EOUSAGE
+Usage: $0 <UNIX-USER> <HOST> <INSTALLATION-DIRECTORY>
+EOUSAGE
+    exit 1
+fi
+
+UNIX_USER="$1"
+HOST="$2"
+DIRECTORY="$3"
+
+misuse() {
+  echo The variable $1 was not defined, and it should be.
+  echo This script should not be run directly.
+  exit 1
+}
+
+[ -z "$DEVELOPMENT_INSTALL" ] && misuse DEVELOPMENT_INSTALL
+[ -z "$DOCKER" ] && misuse DOCKER
+[ -z "$INSTALL_DB" ] && misuse INSTALL_DB
+
+DB_NAME="fixmystreet"
+
+# Check that the arguments we've been passed are sensible:
+
+if ! id "$UNIX_USER" 2> /dev/null > /dev/null
+then
+    error_msg "The user '$UNIX_USER' didn't exist."
+    exit 1
+fi
+
+if [ "$(whoami)" != "$UNIX_USER" ]
+then
+    error_msg "This script should be run by the user '$UNIX_USER'."
+    exit 1
+fi
+
+REPOSITORY="$DIRECTORY/fixmystreet"
+LINK_DESTINATION="$HOME/fixmystreet"
+
+if [ "$REPOSITORY" != "$LINK_DESTINATION" ]; then
+    ln -sfn "$REPOSITORY" $LINK_DESTINATION
+fi
+cd "$REPOSITORY"
+
+if [ ! "$DEVELOPMENT_INSTALL" = true ]; then
+    echo -n "Adding crontab... "
+    # Add regularly scheduled tasks to cron:
+    TEMPORARY_CRONTAB=$(mktemp)
+    echo crontab file is $TEMPORARY_CRONTAB
+    cp "$REPOSITORY"/conf/crontab-example "$TEMPORARY_CRONTAB"
+    sed -i \
+        -e 's,$FMS,'"$REPOSITORY,g" \
+        -e 's,$LOCK_DIR,'"$DIRECTORY,g" \
+        -e 's,$UNIX_USER,'"$UNIX_USER,g" \
+        "$TEMPORARY_CRONTAB"
+    crontab $TEMPORARY_CRONTAB
+    echo $DONE_MSG
+fi
+
+# Write sensible values into the config file, if it doesn't already exist
+if [ ! -f conf/general.yml ]; then
+    echo -n "Setting up default conf/general.yml file... "
+    sed -r \
+        -e "s,^( *FMS_DB_HOST:).*,\\1 ''," \
+        -e "s,^( *FMS_DB_NAME:).*,\\1 '$DB_NAME'," \
+        -e "s,^( *FMS_DB_USER:).*,\\1 '$UNIX_USER'," \
+        -e "s,^( *BASE_URL:).*,\\1 'http://$HOST'," \
+        -e "s,^( *EMAIL_DOMAIN:).*,\\1 '$HOST'," \
+        -e "s,^( *CONTACT_EMAIL:).*,\\1 'help@$HOST'," \
+        -e "s,^( *DO_NOT_REPLY_EMAIL:).*,\\1 'help@$HOST'," \
+        conf/general.yml-example > conf/general.yml
+    echo $DONE_MSG
+fi
+
+echo "Installing required Perl modules - this may take some time"
+cd "$REPOSITORY"
+bin/install_perl_modules
+echo $DONE_MSG
+
+echo "Setting up CSS... "
+if [ ! -f web/cobrands/default/base.css ]
+then
+    bin/make_css
+fi
+echo $DONE_MSG
+
+if [ $INSTALL_DB = true ]; then
+    # Create the database if it doesn't exist:
+    echo -n "Setting up database... "
+    if ! psql -l | egrep "^ *$DB_NAME *\|" > /dev/null
+    then
+        createdb --owner "$UNIX_USER" "$DB_NAME"
+        echo 'CREATE LANGUAGE plpgsql;' | psql -U "$UNIX_USER" "$DB_NAME" || true
+    fi
+    bin/update-schema --commit
+    bin/update-all-reports
+    echo $DONE_MSG
+fi
+
+# Generate po and mo files (these invocations taken from Kagee's script):
+echo "Creating locale .mo files"
+commonlib/bin/gettext-makemo FixMyStreet 2>&1
+echo $DONE_MSG

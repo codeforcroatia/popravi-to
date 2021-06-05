@@ -1,0 +1,176 @@
+@import "_colours";
+@import "../sass/layout";
+
+// Alter the logo and the header on every page *but* the map page. On the map
+// page it stays small like in base.css
+body.fullwidthpage, body.twothirdswidthpage, body.authpage {
+  #site-logo {
+    width: 159px;
+    height: 114px;
+    background: url(/cobrands/bromley/bromley-logo.png) 0 0 no-repeat;
+    float: left;
+  }
+}
+body.waste #site-logo {
+    width: 334px;
+    height: 114px;
+    float: left;
+}
+
+body.mappage {
+  .bromley-header {
+    margin-bottom: 0;
+    padding-top: 0.5em;
+  }
+}
+
+#main-nav {
+  display: block; // remove flex so nav touches top of parent
+  min-height: 0; // no vertical align, so no need for a height
+  margin-top: 0; // don't bother overlapping the border
+
+  .ie9 & > * {
+    position: static;
+    -ms-transform: none;
+  }
+}
+
+// Override the FMS main menu to give it a background colour
+.nav-menu--main {
+  background-color: $bromley_blue;
+
+  // Bromley doesn't have a special styling for the report button in the nav
+  a.report-a-problem-btn {
+    color: $nav_colour;
+    background: none;
+    padding: 0.75em;
+    margin: 0;
+    @include border-radius(0);
+    &:hover {
+      background: $nav_hover_background_colour;
+    }
+  }
+}
+.nav-menu--main span {
+  color: $nav_colour;
+  background-color: $nav_hover_background_colour;
+}
+
+// Fix bad margin on local alerts form
+body.alertindex form.full-width {
+  margin-left: 0;
+}
+
+// The page h1 needs to be white on desktop, because it's in a blue box
+h1.main {
+  color: #fff;
+}
+
+// We have slightly different content in our lists of issues to what
+// reports_list.scss expects, so we need to tweak the padding back to normal.
+// This stops the spacing being too large.
+.item-list__item--with-pin a {
+  padding: 0;
+  padding-left: 3em;
+}
+
+// Because we've changed the page background, the footer looks a bit rubbish
+footer,
+.content footer .tablewrapper {
+  background-color: $bromley_blue;
+}
+
+// This is our custom wrapper for Bromley's header elements
+.bromley-header {
+  // Bromley's logo has a bottom margin to space it out from the A-Z nav, we
+  // can't do that because they're in separate divs, so add a margin here
+  // instead.
+  margin-bottom: 20px;
+}
+
+// Center the mobile app buttons
+#footer-mobileapps p,
+#footer-help p {
+  text-align: center;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Bromley desktop styles
+//////////////////////////////////////////////////////////////////////////////
+
+// Bromley's .top-links section floats to the right on bigger screens
+.top-links {
+    float: right;
+    width: auto;
+    margin-top: 3em;
+}
+
+// Bromley's search form floats to the right too
+.main-search {
+  width: 35%;
+  margin: 0;
+  float: right;
+  min-width: 287px;
+  clear: right;
+}
+
+// Bromley's A-Z nav gets the background coloured in on bigger screens to
+// appear full-screen
+.a-z-container {
+  background: #647890;
+  padding: 0;
+}
+
+// The link to open the A-Z nav gets hidden on big screens
+.drop-down-nav > li > a {
+  display: none;
+}
+
+// And the rest of the A-Z nav gets show with a horrible !important
+.main-a-z ul li ul {
+  display: block!important;
+}
+
+// Bromley's footer
+.site-footer {
+  // Undo our footer background styling above
+  background-color: #d5d2c3;
+  padding-top: 1em;
+
+  .column {
+    margin-right: 1.66667%;
+    display: block;
+    float: left;
+    .additional-links {
+      float: left;
+      width: 24%;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      li {
+        padding: 0 1em;
+      }
+    }
+    .footer-list2 {
+      margin-left: 2%;
+      margin-right: 2%;
+      width: 48%;
+      ul {
+        overflow: auto;
+      }
+    }
+    .footer-list2 ul li,
+    .footer-list1 ul li {
+      width: 41%;
+      margin-right: 2%;
+      padding-left: 1em;
+    }
+    .social ul li {
+      padding: 0 0 0 1em;
+    }
+  }
+}
+
+.bromley-waste-credits {
+  margin-bottom: 0;
+}

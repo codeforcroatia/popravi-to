@@ -1,0 +1,87 @@
+[% sidebar_html | safe %]
+
+<div id="report-a-problem-main">
+    <h1>[% loc('Reporting a problem') %]</h1>
+
+    [% INCLUDE 'errors.html' %]
+    <fieldset>
+        <div id="problem_form">
+
+            [% INCLUDE 'report/new/form_after_heading.html' %]
+
+
+            [% IF field_errors.bodies %]
+                <p class='form-error'>[% field_errors.bodies %]</p>
+            [% END %]
+
+          [% IF c.cobrand.allow_photo_upload %]
+            <input type="hidden" name="upload_fileid" value="[% upload_fileid %]">
+                <label for="form_photo">
+                    <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]">[% loc('Photo') %]</span>
+                    [% loc('(Defect &amp; location of defect)') %]
+                </label>
+
+              [% IF field_errors.photo %]
+                <p class='form-error'>[% field_errors.photo %]</p>
+              [% END %]
+
+            <div id="form_photos">
+              [% IF upload_fileid %]
+                <p>[% loc('You have already attached photos to this report.  Note that you can attach a maximum of 3 to this report (if you try to upload more, the oldest will be removed).') %]</p>
+                [% FOREACH id IN upload_fileid.split(',') %]
+                <img align="right" src="/photo/temp.[% id %]" alt="">
+                [% END %]
+              [% END %]
+                <input type="file" name="photo1" id="form_photo">
+                <label for="form_photo2">[% loc('Photo') %]</label>
+                <input type="file" name="photo2" id="form_photo2">
+                <label for="form_photo3">[% loc('Photo') %]</label>
+                <input type="file" name="photo3" id="form_photo3">
+            </div>
+          [% END %]
+
+          [% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
+
+            <label for="form_detail">[% loc('Details') %]</label>
+            [% IF field_errors.detail %]
+                <p class='form-error'>[% field_errors.detail %]</p>
+            [% END %]
+            <textarea class="form-control" rows="7" cols="26" name="detail" id="form_detail" required>[% report.detail | html %]</textarea>
+
+            [% PROCESS "report/new/category_wrapper.html" %]
+
+                <label for="form_username_register">[% loc('Your email') %]</label>
+                [% IF field_errors.username_register %]
+                    <p class='form-error'>[% field_errors.username_register %]</p>
+                [% END %]
+                <input class="form-control" type="email" value="[% email | html %]" name="username_register" id="form_username_register" required>
+
+                <label for="form_name">[% loc('Name') %] [% loc('(optional)') %]</label>
+                [% IF field_errors.name %]
+                    <p class='form-error'>[% field_errors.name %]</p>
+                [% END %]
+                <input class="form-control js-form-name" type="text" value="[% report.name | html %]" name="name" id="form_name">
+
+                <label for="form_phone">[% loc('Phone number') %]</label>
+                [% IF field_errors.phone %]
+                    <p class='form-error'>[% field_errors.phone %]</p>
+                [% END %]
+                <input class="form-control" type="text" value="[% phone | html %]" name="phone" id="form_phone" required>
+
+                <div class="form-txt-submit-box">
+                    [%# class of submit_sign_in so name can be optional, name of submit_register so it doesn't try and sign us in %]
+                    <p>
+                    <input class="desk-only green-btn js-submit_sign_in" type="submit" name="submit_register" value="[% loc('Submit') %]">
+                    <input class="mob-only green-btn js-submit_sign_in" type="submit" name="submit_register_mobile" value="[% loc('Submit') %]">
+                    </p>
+                </div>
+
+        </div>
+    </fieldset>
+
+    [% IF partial_token %]
+        <input type="hidden" name="partial" value="[% partial_token.token %]">
+    [% END %]
+
+    <input type="hidden" name="submit_problem" value="1">
+</div>

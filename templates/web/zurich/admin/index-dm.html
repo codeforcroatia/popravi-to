@@ -1,0 +1,18 @@
+[% PROCESS 'admin/header.html' title=loc('Summary') -%]
+[% PROCESS 'admin/report_blocks.html' %]
+
+<div class="index-status">
+[% status_message | safe %]
+</div>
+
+<h2 id="submitted">[% loc('Submitted') %]</h2>
+[% INCLUDE 'admin/_index_table.html' problems=submitted.all hash='submitted' %]
+
+<h2 id="feedback_pending">Rückmeldung ausstehend</h2>
+[% INCLUDE 'admin/_index_table.html' problems=approval.all hash='feedback_pending' %]
+
+<h2 id="alle">[% loc('All reports') %]</h2>
+[% INCLUDE 'admin/_index_table.html' problems=other.all include_subdiv=1 hash='alle' %]
+[% INCLUDE 'pagination.html', admin = 1, param = 'p', hash = 'alle' %]
+
+[% INCLUDE 'admin/footer.html' %]

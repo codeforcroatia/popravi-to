@@ -1,0 +1,40 @@
+/* COLOURS */
+
+$warwickshire-green: #096f48;
+$warwickshire-red: #b11030;
+$warwickshire-orange: #d43900;
+$warwickshire-blue: #0f4880;
+$warwickshire-purple: #591d77;
+$warwickshire-light-grey: #f6f6f6;
+$warwickshire-yellow: #ffc848;
+
+$body-font: "Nunito Sans", sans-serif;
+$meta-font: $body-font;
+$heading-font: $body-font;
+
+$primary: $warwickshire-light-grey;
+$primary_b: #333;
+$primary_text: #333;
+
+$link-color: $warwickshire-green;
+$link-hover-color: $link-color;
+
+$base_bg: #fff;
+$base_fg: #333;
+
+$nav_background_colour: $warwickshire-green;
+$nav_colour: #fff;
+$nav_hover_background_colour: lighten($warwickshire-green, 5%);
+
+$col_click_map: $warwickshire-purple;
+
+$header-top-border: false;
+$mappage-header-height: 5em;
+
+$container-max-width: 78em;
+
+$search-help-alignment: left;
+$search-help-background: #fff3f3;
+$search-help-margin-desktop: 1em -1em 0 -1em;
+$search-help-header-background: $warwickshire-red;
+$search-help-header-font-size-desktop: 1.25em;

@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+# send-failure-summary:
+# Prints a summary of report/update sending failures
+
+use warnings;
+use v5.14;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use FixMyStreet::Script::Reports;
+use Open311::PostServiceRequestUpdates;
+
+# report summary
+my $manager = FixMyStreet::Script::Reports->new;
+$manager->end_summary_failures;
+
+# updates summary
+my $updates = Open311::PostServiceRequestUpdates->new;
+$updates->summary_failures;

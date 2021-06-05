@@ -1,0 +1,31 @@
+/* COLOURS */
+
+$hart_primary: #7ECBA2;
+
+$primary: $hart_primary;
+$col_click_map: $hart_primary;
+$col_fixed_label: $hart_primary;
+
+$primary_b: #000000;
+$primary_text: #ffffff;
+$primary_link_color: $primary_text;
+$primary_link_hover_color: rgba($primary_text, 0.8);
+
+$link-color: #369;
+$link-hover-color: #369;
+
+$base_bg: #ffffff;
+$base_fg: #1a1a1a;
+
+/* Unused here */
+$nav_colour: #fff;
+$nav_hover_background_colour: #444;
+
+$nav_background_colour: $primary;
+$mappage-header-height: 173px + 32px;
+$header-top-border: false;
+
+$container-max-width: 60em;
+
+$search-help-background: #fff3f3;
+$search-help-header-font-size-desktop: 1.25em;

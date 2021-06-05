@@ -1,0 +1,22 @@
+# Please note that this package list currently forms part of the
+# mySociety deployment infrastructure -- please discuss on the
+# mailing list if you want to change it.
+
+make
+g++
+jhead
+liblocale-gettext-perl
+libpng-dev
+libsoap-lite-perl
+memcached
+perl
+perlmagick
+libmath-bigint-gmp-perl
+gettext
+postgresql-server-dev-all
+gnuplot
+ttf-bitstream-vera
+libexpat1-dev
+libssl-dev
+zlib1g-dev
+libxml2-dev

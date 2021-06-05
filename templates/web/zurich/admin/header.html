@@ -1,0 +1,12 @@
+[%
+    SET bodyclass = bodyclass || 'fullwidthpage';
+    INCLUDE 'header.html' admin = 1, bodyclass = bodyclass _ ' admin';
+%]
+<style type="text/css">
+    .adminhidden { color: #666666; }
+    .active { background-color: #ffffee; cursor: pointer; }
+    .error { color: red; }
+    .overdue { background-color: #ffcccc; }
+    select { width: auto; }
+    .admin-report-edit select { max-width: 100%; }
+</style>

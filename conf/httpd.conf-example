@@ -1,0 +1,46 @@
+# Apache configuration for FixMyStreet.
+#
+# This file should be included in an Apache <VirtualHost> section.  An
+# example of such a virtualhost configuration file can be found in the
+# file apache-vhost.conf.example in this directory.
+#
+# See our installation help at https://fixmystreet.org/
+
+RewriteEngine on
+# RewriteLog /var/log/apache2/rewrite.log
+# RewriteLogLevel 3
+
+# RSS feeds for voting areas
+RewriteRule ^/rss/council/([0-9]+)$     /rss/reports/$1 [R=permanent,L]
+RewriteRule ^/report$                   /reports        [R=permanent,L]
+# Fix incorrect RSS urls caused by my stupidity
+RewriteRule ^/{/rss/(.*)}$              /rss/$1         [R=permanent,L]
+RewriteRule ^/reports/{/rss/(.*)}$      /rss/$1         [R=permanent,L]
+# In case of misspelling
+RewriteRule ^/alerts/?$                 /alert          [R=permanent,L]
+
+# Proxy mapit so that our js code can make calls on the originating server. Use
+# a RewriteRule rather than ProxyPass so that Apache's processing order is more
+# predictable. ProxyPassReverse is not affected by this.
+RewriteRule /mapit/(.*) https://mapit.mysociety.org/$1 [P,L]
+ProxyPassReverse /mapit/ https://mapit.mysociety.org/
+
+# serve static files directly
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f
+RewriteRule /(.+) /$1 [L]
+
+# Performance things
+ExpiresActive On
+ExpiresByType text/css "access plus 10 years"
+ExpiresByType application/javascript "access plus 10 years"
+<Location /js/>
+    AddOutputFilter DEFLATE js
+    Header append Cache-Control "no-transform"
+</Location>
+
+# Don't want jslib being passed to Catalyst
+RewriteRule ^/jslib(.*)                 /jslib$1 [L,PT]
+
+# trap anything that reaches us here and send it to the Catalyst app
+RewriteRule ^(.*)$                      /fixmystreet_app_fastcgi.cgi$1  [L]
+

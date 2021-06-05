@@ -1,0 +1,47 @@
+$mappage-header-height: 9.6em;
+
+/* GOV.UK frontend toolkit bits, adapted */
+$site-width: 60em;
+@mixin media($size: false) {
+    @if $size == desktop {
+      @media (min-width: 48em) {
+        @content;
+      }
+    } @else {
+      @media (min-width: $size){
+        @content
+      }
+    }
+}
+
+/* COLOURS */
+
+@import "pattern-lib/colours";
+
+$primary: $bathnes-primary;
+$primary_b: #0b0b0c;
+$primary_text: #fff;
+$primary_link_color: $primary_text;
+$primary_link_hover_color: rgba($primary_text, 0.8);
+
+$base_bg: white;
+$base_fg: #0b0c0c;
+
+$nav_background_colour: #fff;
+$nav_colour: #000;
+$nav_hover_background_colour: #eee;
+
+// Colour used for front page 'how to report a problem' steps
+$col_big_numbers: $bathnes-primary;
+
+$col_click_map: $bathnes-secondary;
+
+$col_fixed_label: $bathnes-secondary;
+
+$front_main_background: $bathnes-primary;
+
+$menu-image: 'menu-black';
+$header-top-border: false;
+
+$search-help-background: #fff3f3;
+$search-help-header-font-size-desktop: 1.25em;

@@ -1,0 +1,43 @@
+<!doctype html>
+<!--[if IE 8]>   <html class="no-js ie8" lang="[% lang_code %]"><![endif]-->
+<!--[if IE 9]>   <html class="no-js ie9" lang="[% lang_code %]"><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="[% lang_code %]"><!--<![endif]-->
+    <head>
+        <meta name="viewport" content="initial-scale=1.0">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="HandHeldFriendly" content="true">
+        <meta name="mobileoptimized" content="0">
+
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,600,700,900|Open+Sans:300,400,600,700" rel="stylesheet">
+        [% INCLUDE 'header/css.html' %]
+        [% INCLUDE 'common_header_tags.html' %]
+
+        [% INCLUDE 'tracking_code.html' %]
+    </head>
+    <body class="[% bodyclass | html IF bodyclass %]">
+
+    [% INCLUDE 'debug_header.html' %]
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NT76GJ5"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="oxford-wrapper">
+    <div class="wrapper">
+
+        <div class="table-cell">
+            <header id="site-header" role="banner">
+                <div class="container">
+                    <a href="https://www.oxfordshire.gov.uk/" id="site-logo">Oxfordshire County Council</a>
+                    <a href="#main-nav" id="nav-link">Main Navigation</a>
+                </div>
+            </header>
+
+            <div class="nav-spacer"></div>
+
+            [% pre_container_extra | safe %]
+
+            <div class="container">
+                <div class="content[% " $mainclass" | html IF mainclass %]" role="main">

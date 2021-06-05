@@ -1,0 +1,78 @@
+Subject: Problem Report: [% report.title %]
+
+Dear [% bodies_name %],
+
+[% missing %][% multiple %]A user of
+[% site_name %] has submitted the following report
+of a local problem that they believe might require your attention.
+
+[% fuzzy %], or to provide an update on the problem,
+please visit the following link:
+
+    [% url %]
+
+[% has_photo %]----------
+
+Name: [% report.name %]
+
+Email: [% report.user.email OR 'None provided' %]
+
+Phone: [% report.user.phone OR 'None provided' %]
+
+Category: [% report.category %]
+
+Subject: [% report.title %]
+
+Details: [% report.detail %]
+
+[% FOR field IN report.get_extra_fields %][% IF field.value ~%]
+[% field.description %]: [% field.value %]
+
+[% END %][% END ~%]
+
+Easting/Northing
+[%- " (IE)" IF coordsyst == "I" -%]
+: [% easting %]/[% northing %]
+
+Latitude: [% report.latitude %]
+
+Longitude: [% report.longitude %]
+
+[% IF report.get_extra_field_value('road_name') ~%]
+Road: [% report.get_extra_field_value('road_name') %]
+[% END %]
+[% IF report.get_extra_field_value('sect_label') ~%]
+Section: [% report.get_extra_field_value('sect_label') %]
+[% END %]
+
+View OpenStreetMap of this location: [% osm_url %]
+
+[% closest_address %]----------
+
+Replies to this email will go to the user who submitted the problem.
+
+[% signature %]
+
+----------
+
+Never retype another FixMyStreet report
+
+Good news: we can now send these reports from FixMyStreet
+directly into your customer service queue. Find out how:
+
+    https://www.fixmystreet.com/pro
+
+----------
+
+Where did this report come from?
+
+FixMyStreet is the website and app that makes it easy for anyone
+to report street faults, anywhere in the UK. Find out more:
+
+    https://www.mysociety.org/better-cities/fixmystreet-in-the-uk/
+
+Are reports about [% category_footer %] best sent to a different address?
+
+Please let us know by visiting <https://www.fixmystreet.com/contact>
+and help make the service smoother for your residents. We also welcome
+any other feedback you may have.

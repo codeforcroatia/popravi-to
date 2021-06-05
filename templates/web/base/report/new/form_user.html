@@ -1,0 +1,24 @@
+<!-- report/new/form_user.html -->
+<div class="js-hide-if-invalid-category[% ' hidden-nojs' IF form_show_category_only %]">
+
+    [% PROCESS 'report/form/user.html' type='report' %]
+
+    <div class="hidden-js js-new-report-user-shown">
+        <div class="hidden-nojs form-section-preview">
+            <h2 class="form-section-heading">[% loc('About the problem') %]</h2>
+            <p>
+                <strong class="js-form-section-preview" data-source="#form_title"></strong>
+                <span class="js-form-section-preview" data-source="#form_detail"></span>
+            </p>
+            <button type="button" class="btn btn--block js-new-report-user-hide">[% loc('Edit report details') %]</button>
+        </div>
+
+[% IF c.user_exists %]
+  [% PROCESS "report/new/form_user_loggedin.html" type='report' %]
+[% ELSE %]
+  [% PROCESS "report/form/user_loggedout.html" type='report' object=report %]
+[% END %]
+
+    </div>
+</div>
+<!-- /report/new/form_user.html -->

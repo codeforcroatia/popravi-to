@@ -1,0 +1,225 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use lib '.'; # For the mock MapIt module
+
+use Getopt::Long ':config' => qw(pass_through auto_help);
+
+my ($run_server, $run_cypress, $vagrant, $wsl, $node, $config_file);
+my ($cobrand, $coords, $area_id, $name, $mapit_url, $coverage);
+
+BEGIN {
+    $config_file = 'conf/general.yml-example';
+    $cobrand = [qw(
+        bathnes
+        borsetshire
+        buckinghamshire
+        fixmystreet
+        hackney
+        hounslow
+        isleofwight
+        northamptonshire
+        oxfordshire
+        peterborough
+        tfl
+    )];
+    $coords = '51.532851,-2.284277';
+    $area_id = 2608;
+    $name = 'Borsetshire';
+    $mapit_url = 'https://mapit.uk/';
+    $node = 'C:\Program Files\nodejs\node.exe';
+
+    GetOptions(
+        'coverage' => \$coverage,
+        'config=s' => \$config_file,
+        'server' => \$run_server,
+        'cypress' => \$run_cypress,
+        'vagrant' => \$vagrant,
+        'wsl=s' => \$wsl,
+        'node=s' => \$node,
+        'cobrand=s@' => \$cobrand,
+        'coords=s' => \$coords,
+        'area_id=s' => \$area_id,
+        'name=s' => \$name,
+        'mapit_url=s' => \$mapit_url,
+    );
+    $cobrand = [ split(',', join(',', @$cobrand)) ];
+
+    if ($vagrant && $wsl) {
+        print 'You cannot use both --vagrant and --wsl';
+        exit 1;
+    }
+
+    if ($coverage && (system('git', 'diff', '--quiet', 'web') >> 8)) {
+        print 'Do not run coverage with changes in web, they will be lost';
+        exit 1;
+    }
+
+    if (!$run_server && !$run_cypress) {
+        # If asked for neither, run both
+        $run_server = $run_cypress = 1;
+    }
+
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    if (!$vagrant && $run_server) {
+        require "$d/../setenv.pl";
+    }
+}
+
+if ($vagrant) {
+    # Test inception
+    system('vagrant ssh -- "cd fixmystreet && bin/browser-tests --server 2>/dev/null" &');
+
+    require IO::Socket;
+    sub check_connection {
+        my $remote = IO::Socket::INET->new(Proto => "tcp", PeerAddr => "localhost", PeerPort => 3001) or return;
+        $remote->autoflush(1);
+        print $remote "GET / HTTP/1.0\r\n\r\n";
+        while (<$remote>) { return 1; }
+        0;
+    }
+
+    local $| = 1;
+    print 'Waiting for test server';
+    while (!check_connection()) {
+        print '.'; sleep 1;
+    }
+    print " done\n";
+    system('bin/browser-tests', '--cypress', @ARGV);
+    system('vagrant', 'ssh', '--', 'kill $(cat /tmp/cypress-server.pid)');
+    exit;
+}
+
+BEGIN {
+    # setenv.pl above unloads File:: modules but we need them
+    use File::Path qw(remove_tree);
+}
+
+sub coverage_setup {
+    # Add instrumentation to all JS files under web/
+    if (system('nyc', 'instrument', '--exclude', 'vendor', '--compact', 'false', 'web', 'webO') >> 8) {
+        print 'Could not instrument JS files - are @cypress/code-coverage and nyc installed?';
+        exit 1;
+    }
+
+    # Move the instrumented files on top of the originals
+    while (glob("webO/js/*.js webO/cobrands/*/*.js")) {
+        (my $new = $_) =~ s/webO/web/;
+        rename $_, $new;
+    }
+
+    remove_tree('webO', { safe => 1 }); # Remove anything else left
+}
+
+sub coverage_teardown {
+    remove_tree('.nyc_output', '.cypress/coverage', { safe => 1 }); # Remove old data and incorrect report
+    rename '.cypress/.nyc_output', './.nyc_output'; # Move to top level so nyc can find JS files
+    system('git', 'checkout', 'web'); # Remove instrumented JS files
+    system('nyc', 'report', '--reporter=lcov'); # Generate correct report
+    print "The JS coverage report is at coverage/lcov-report/index.html\n";
+}
+
+sub run {
+    my $cmd = shift @ARGV;
+    die "Must specify a cypress command\n" unless $cmd || !$run_cypress;
+
+    if ($run_server) {
+        require FixMyStreet::TestAppProve;
+        require t::Mock::MapIt;
+        my $config_out = FixMyStreet::TestAppProve->get_config({
+            config_file => $config_file,
+            # Want this to be like .com
+            ALLOWED_COBRANDS => $cobrand,
+            MAPIT_URL => $mapit_url,
+            BASE_URL => 'http://fixmystreet.localhost:3001',
+            STAGING_FLAGS => { skip_checks => 1 },
+            COBRAND_FEATURES => {
+                category_groups => { map { $_ => 1 } @$cobrand },
+                suggest_duplicates => { map { $_ => 1 } @$cobrand },
+            }
+        });
+        $ENV{FMS_OVERRIDE_CONFIG} = $config_out;
+
+        # Set up, and load in some data
+        system('bin/make_css', map { $_ eq 'fixmystreet' ? 'fixmystreet.com' : $_ } @$cobrand);
+        system('bin/fixmystreet.com/fixture', '--test_fixtures', '--nonrandom', '--coords', $coords, '--name', $name, '--area-id', $area_id, '--commit');
+    }
+
+    my $pid;
+    if ($run_server && $run_cypress) {
+        $pid = fork();
+        die if not defined $pid;
+    }
+
+    if (($run_cypress && !$run_server) || $pid) {
+        # Parent, run the test runner (then kill the child)
+        my @cypress = ('cypress');
+        if ($wsl) {
+            @cypress = ('cmd.exe', '/c', $node, $wsl);
+        }
+        my @config = $coverage ? () : ('--config', 'pluginsFile=false,supportFile=false');
+        my $exit = system(@cypress, $cmd, @config, '--project', '.cypress', @ARGV);
+        kill 'TERM', $pid if $pid;
+
+        coverage_teardown() if $coverage;
+
+        exit $exit >> 8;
+    } else {
+        # Child, run the server on port 3001
+        require FixMyStreet;
+        FixMyStreet->test_mode(1); # So email doesn't try to send
+        local $ENV{FIXMYSTREET_APP_DEBUG} = 0;
+        require Plack::Runner;
+        my $runner = Plack::Runner->new;
+        $runner->parse_options('--listen', ':3001', '-s', 'Starman', '--env', 'deployment', '--pid', '/tmp/cypress-server.pid');
+        $runner->run;
+    }
+}
+
+coverage_setup() if $coverage;
+run();
+
+
+__END__
+
+=head1 NAME
+
+browser-tests - Run Cypress browser tests, set up for FixMyStreet.
+
+=head1 SYNOPSIS
+
+browser-tests [running options] [fixture options] [cypress options]
+
+ Running options:
+   --config         provide an override general.yml file
+   --server         only run the test server, not cypress
+   --cypress        only run cypress, not the test server
+   --vagrant        run test server inside Vagrant, cypress outside
+   --wsl            provide path to cypress node script, to run test server inside WSL, cypress outside
+   --help           this help message
+
+ Fixture option:
+   --cobrand        Cobrand(s) to use, default is fixmystreet,northamptonshire,bathnes,buckinghamshire,isleofwight,peterborough,tfl,hackney,oxfordshire
+   --coords         Default co-ordinates for created reports
+   --area_id        Area ID to use for created body
+   --name           Name to use for created body
+   --mapit_url      MapIt URL to use, default mock
+
+Use browser-tests instead of running cypress directly, so that a clean
+database is set up for Cypress to use, not affecting your normal dev database.
+If you're running FixMyStreet in a VM, you can use this script to run the test
+server in the VM and Cypress outside of it.
+
+ $ browser-tests open                # to run interactively
+ $ browser-tests run                 # run headlessly
+ $ browser-tests run --record --key  # record and upload a run
+ $ browser-tests --vagrant run       # run if you use Vagrant
+ $ browser-tests --wsl ..cypress run # run if you use WSL
+
+You need to have installed cypress already using npm, and it needs to be on
+your PATH.
+
+=cut

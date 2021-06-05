@@ -1,0 +1,30 @@
+#!/usr/bin/env perl
+
+# send-questionnaires:
+# Send out creator questionnaires
+#
+# Copyright (c) 2011 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org. WWW: http://www.mysociety.org
+
+use strict;
+use warnings;
+require 5.8.0;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use CronFns;
+use FixMyStreet;
+use FixMyStreet::Script::Questionnaires;
+
+my %params;
+( $params{verbose}, $params{nomail} ) = CronFns::options();
+$params{site} = CronFns::site(FixMyStreet->config('BASE_URL'));
+CronFns::language($params{site});
+
+FixMyStreet::Script::Questionnaires::send( \%params );
+

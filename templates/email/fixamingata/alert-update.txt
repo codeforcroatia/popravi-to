@@ -1,0 +1,18 @@
+Subject: Ny uppdatering - '[% title %]'
+
+OBS! Du kan inte svara på detta brev. För att se eller svara på dessa
+uppdateringar, klicka på följande länk:
+
+[% problem_url %]
+
+Följande uppdatering har lämnats för rapporten
+[% title %]:
+
+[% INCLUDE '_email_comment_list.txt' %]
+
+[% state_message %]
+
+[% signature %]
+
+För att avsluta din prenumeration på nya uppdateringar kring denna
+rapport, klicka på följande länk: [% unsubscribe_url %]

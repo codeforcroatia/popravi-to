@@ -1,0 +1,82 @@
+[% INCLUDE 'admin/header.html' title=tprintf(loc('Response Template for %s'), body.name) -%]
+[% rt = response_template %]
+
+[% UNLESS rt.id %]<h3>[% loc('New template') %]</h3>[% END %]
+
+<form method="post"
+    action="[% c.uri_for_action('/admin/templates/edit', body.id, rt.id || 'new' ) %]"
+    enctype="application/x-www-form-urlencoded"
+    accept-charset="utf-8"
+    class="validate">
+
+    [% IF errors %]
+        <p class="error">[% loc('Please correct the errors below') %]</p>
+    [% END %]
+
+    [% IF errors.title %]
+        <div class="form-error">[% errors.title %]</div>
+    [% END %]
+    <div class="admin-hint">
+      <p>
+        [% loc('This is a <strong>private</strong> name for this template so you can identify it when updating reports or editing in the admin.') %]
+      </p>
+    </div>
+    <p>
+        <strong>[% loc('Title:') %] </strong>
+        <input type="text" name="title" class="required form-control" size="30" value="[% rt.title | html %]">
+    </p>
+
+    <div class="admin-hint">
+      <p>
+        [% loc('This is the <strong>public</strong> text that will be shown on the site.') %]
+      </p>
+    </div>
+    <p>
+        <strong>[% loc('Text:') %] </strong>
+        <textarea class="form-control" name="text" class="required">[% rt.text | html %]</textarea>
+    </p>
+
+    [% INCLUDE 'admin/category-checkboxes.html' hint=loc('If you only want this template to be an option for specific categories, pick them here. By default they will show for all categories.') %]
+
+    [% IF errors.state %]
+        <div class="form-error">[% errors.state %]</div>
+    [% END %]
+    <div class="admin-hint">
+      <p>
+        [% loc('If you want to use this template to prefill the update field when changing a report&rsquo;s state, select the state here.') %]
+      </p>
+    </div>
+    <p>
+      <label for="state">[% loc('State') %]</label>
+      [% INCLUDE 'report/inspect/state_groups_select.html' current_state=rt.state include_empty=1 %]
+    </p>
+
+    [% PROCESS 'admin/templates/_external.html' %]
+
+    [% IF errors.auto_response %]
+        <div class="form-error">[% errors.auto_response %]</div>
+    [% END %]
+    <div class="admin-hint">
+      <p>
+        [% loc('If ticked, this template will be used for Open311 updates that put problems in this state.') %]
+      </p>
+    </div>
+    <p>
+      <label>
+        <strong>[% loc('Auto-response:') %]</strong>
+        <input type="checkbox" name="auto_response" [% 'checked' IF rt.auto_response %] />
+      </label>
+    </p>
+
+    <p>
+      <input type="hidden" name="token" value="[% csrf_token %]" >
+      <input type="submit" class="btn" name="Edit templates" value="[% rt.id ? loc('Save changes') : loc('Create template') %]" >
+    </p>
+    [% IF rt.id %]
+        <p>
+            <input class="delete btn-danger" type="submit" name="delete_template" value="[% loc('Delete template') %]" data-confirm="[% loc('Are you sure?') %]">
+        </p>
+    [% END %]
+</form>
+
+[% INCLUDE 'admin/footer.html' %]

@@ -1,0 +1,36 @@
+# Timed tasks for FixMyStreet.
+
+# This is an example crontab that you may want to use as a basis for
+# one on your own server.  You should replace $FMS with the path to the
+# clone of the FixMyStreet repository that you are using.  You should
+# also replace $LOCK_DIR with a writeable directory for the lock files.
+
+# Copyright (c) 2007 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org. WWW: http://www.mysociety.org/
+
+PATH=/usr/local/bin:/usr/bin:/bin
+
+# send-reports has three rows so that its 8am entry can be run with --verbose to send a morning summary of anything that's gone wrong
+*/5 * * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/send-reports.lock" "$FMS/bin/send-reports" || echo "stalled?"
+0 8 * * * "$FMS/bin/send-failure-summary"
+
+2 * * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/send-alerts.lock" "$FMS/bin/send-alerts" || echo "stalled?"
+22,52 * * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/send-questionnaires.lock" "$FMS/bin/send-questionnaires" || echo "stalled?"
+
+# If you utilise Open311 and the updates extension, you will need to run these scripts.
+# We currently run fetch --updates with a 24hr timespan once a night to catch anything missed.
+#*/5 * * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/send-comments.lock" "$FMS/bin/send-comments" || echo "stalled?"
+#5,10,15,20,25,30,35,40,45,50,55 * * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/fetch-updates.lock" "$FMS/bin/fetch --updates" || echo "stalled?"
+#0 1 * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/fetch-updates.lock" "$FMS/bin/fetch --updates --start 24" || echo "stalled?"
+
+47 0-7,9-23 * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/open311-populate-service-list.lock" "$FMS/bin/open311-populate-service-list" || echo "stalled?"
+47 8 * * * "$FMS/commonlib/bin/run-with-lockfile.sh" -n "$LOCK_DIR/open311-populate-service-list.lock" "$FMS/bin/open311-populate-service-list --warn" || echo "stalled?"
+
+# Once an hour, update the all reports stats
+13 * * * * "$FMS/bin/update-all-reports"
+
+# Once a day on all servers
+0  0 * * * "$FMS/bin/expire-sessions"
+39 2 * * * "$FMS/bin/problems-filed-graph"
+43 2 * * * "$FMS/bin/problem-creation-graph"
+00 8 * * * "$FMS/bin/check-for-zombies" $UNIX_USER

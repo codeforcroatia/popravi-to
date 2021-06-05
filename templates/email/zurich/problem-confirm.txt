@@ -1,0 +1,29 @@
+Subject: Züri wie neu: Bitte bestätigen Sie Ihre Meldung #[% report.id %]
+
+Grüezi [% report.name %]
+
+Besten Dank für Ihre Meldung auf <<Züri wie neu>>. Klicken Sie bitte auf diesen Link, um[% UNLESS email_confirmed %] Ihre Meldung zu bestätigen und[% END %] über den Status ihrer Meldung per E-Mail informiert zu bleiben. Falls der Link nicht funktioniert, kopieren Sie ihn in Ihren Browser:
+
+[% token_url %]
+
+Wir bitten Sie um Verständnis, dass Meldungen und Schäden während der
+Coronakrise weniger schnell als gewohnt beantwortet respektive repariert werden
+können.
+
+Achtung: Notfälle müssen der Polizei gemeldet werden via Telefon 117.
+
+
+Ihre Meldung lautet:
+
+[% report.detail %]
+
+
+
+Freundliche Grüsse
+
+Ihre Stadt Zürich
+
+
+
+
+Dieses E-Mail wurde automatisch generiert. Bitte antworten Sie nicht darauf.

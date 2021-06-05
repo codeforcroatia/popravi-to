@@ -1,0 +1,34 @@
+# An example Apache virtualhost configuration file.
+#
+# See our installation help at https://fixmystreet.org/
+#
+# Hopefully you can use either mod_fastcgi or mod_fcgid.
+# Ubuntu has mod_fcgid by default, with mod_fastcgi in multiverse.
+# Debian has both.
+
+<VirtualHost *:80>
+    ServerName fixmystreet.yourservername
+    DocumentRoot /home/yourname/fixmystreet/web/
+
+    # Pull in the specific config
+    Include /home/yourname/fixmystreet/conf/httpd.conf
+
+    <Directory /home/yourname/fixmystreet/web>
+        # You also need to enable cgi files to run as CGI scripts.  For example:
+        Options +ExecCGI
+
+        AddHandler your-handler .cgi
+        # mod_fastcgi: AddHandler fastcgi-script .cgi
+        # mod_fcgid: AddHandler fcgid-script .cgi
+        # CGI: AddHandler cgi-script .cgi
+
+        AllowOverride None
+    </Directory>
+
+    Alias /jslib/ /home/yourname/fixmystreet/commonlib/jslib/
+    <Location /jslib>
+        AddOutputFilter DEFLATE js
+        Header append Cache-Control "no-transform"
+    </Location>
+
+</VirtualHost>

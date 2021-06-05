@@ -1,0 +1,123 @@
+@import "../sass/h5bp";
+@import "./_colours";
+@import "../sass/mixins";
+
+@import "../sass/base";
+
+#site-logo {
+    background-position: 0 0;
+    background-size: 120px 32px;
+    height: 32px;
+    width: 120px;
+    @include svg-background-image('images/site-logo-mobile');
+}
+
+#site-header {
+    .container {
+        padding: 1em; // up from default `0 1em`
+    }
+}
+
+#site-subheader,
+.site-header__fake-nav {
+    display: none;
+}
+
+.homepage-login-hint {
+    padding: 1.5em 0;
+    background-color: rgb(0, 61, 101);
+    background-color: darken($color-borsetshire-blue, 20%);
+    color: #fff;
+
+    .container {
+        position: relative;
+
+        // Little arrow.
+        &:before {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            position: absolute;
+            border: 0.5em solid transparent;
+            border-top-width: 0;
+            border-bottom-color: darken($color-borsetshire-blue, 20%);
+            top: -1.5em;
+            right: 1em;
+            margin-top: -0.5em;
+        }
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.3em;
+    }
+
+    p {
+        margin: 0.5em 0 0 0;
+    }
+
+    a {
+        font-weight: bold;
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
+body.authpage {
+    .content {
+        max-width: 27em;
+        margin-#{$left}: auto;
+        margin-#{$right}: auto;
+    }
+}
+
+#demo-user-list {
+    @include list-reset-soft();
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2em;
+
+    li {
+        margin: 2em 0;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    span {
+        color: #666;
+        font-size: (14em / 16);
+        display: block;
+        margin-top: 0.5em;
+    }
+}
+
+.fms-pro-promo {
+  margin: 2em -1em;
+  padding: 1em;
+  background: $primary;
+  color: $primary_text;
+
+  .lead {
+    font-weight: bold;
+  }
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  .btn {
+    @include button-variant($text: #000, $hover-text: #000);
+  }
+}
+
+body.mappage .ms-header {
+    display: none;
+}
+
+@import "mysoc-header";

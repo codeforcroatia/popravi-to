@@ -1,0 +1,72 @@
+$pin_prefix: '/i/' !default;
+
+// Like .item-list__item--indented except with a pin icon baked in!
+.item-list__item--with-pin {
+  @extend .item-list__item--indented;
+
+  a {
+    background-image: url('#{$pin_prefix}pin-yellow-small.png');
+    background-size: 24px 32px;
+    background-repeat: no-repeat;
+    background-position: $left center;
+  }
+
+  &.yellow a {
+      background-image: url('#{$pin_prefix}pin-yellow-small.png');
+  }
+  &.green a {
+      background-image: url('#{$pin_prefix}pin-green-small.png');
+  }
+  &.red a {
+      background-image: url('#{$pin_prefix}pin-red-small.png');
+  }
+  &.grey a {
+      background-image: url('#{$pin_prefix}pin-grey-small.png');
+  }
+  &.orange a {
+      background-image: url('#{$pin_prefix}pin-orange-small.png');
+  }
+}
+.item-list__item--selected {
+  background: $base_bg;
+
+  a, a:hover, a:focus {
+    background-color: transparent;
+  }
+}
+
+
+.big-green-banner {
+  display: none; // hide the empty banner by default
+}
+
+.click-the-map {
+  color: #000;
+  margin: -1em -1em 0; // overlap padding on parents
+  padding: 18px;
+  border-bottom: 1px solid #e5e5e5;
+  // TODO This is not right-to-left enabled yet
+  background: #fff url('/i/click-map-chevron-big.gif') 90% 12px no-repeat;
+
+  h2 {
+    font-family: inherit;
+    margin: 0 0 5px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 20px;
+    color: $primary;
+    padding-#{$right}: 20px;
+    // TODO This is not right-to-left enabled yet, image wise
+    background: transparent url('/i/click-map-chevron-small.gif') $right center no-repeat;
+    display: inline-block;
+  }
+
+  img {
+    // the little chevron icon
+    vertical-align: -1px;
+    margin-#{$left}: 0.2em;
+  }
+}

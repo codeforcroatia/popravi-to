@@ -1,0 +1,49 @@
+MIME-Version: 1.0
+Subject: =?UTF-8?B?dGVzdCBlbWFpbCDimLo=?=
+Content-Type: multipart/mixed; boundary="BOUNDARY"
+To: test@recipient.com
+Content-Transfer-Encoding: 7bit
+From: CONTACT_EMAIL
+
+
+--BOUNDARY
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+This is a test email where foo: bar <b>bold</b>.
+
+utf8: =E6=88=91=E4=BB=AC=E5=BA=94=E8=AF=A5=E8=83=BD=E5=A4=9F=E6=97=A0=E7=BC=
+=9D=E5=A4=84=E7=90=86UTF8=E7=BC=96=E7=A0=81
+
+  indented_text
+
+long line: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do=
+ eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad min=
+im veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea =
+commodo consequat. Duis aute irure dolor in reprehenderit in voluptate veli=
+t esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupi=
+datat non proident, sunt in culpa qui officia deserunt mollit anim id est l=
+aborum.
+
+Yours,
+FixMyStreet.=
+
+--BOUNDARY
+Content-Type: image/gif; name="foo.gif"
+Content-Disposition: inline; filename="foo.gif"
+Content-Transfer-Encoding: quoted-printable
+
+GIF89a=01=00=01=00=80=00=00=00=00=00=CC=CC=CC,=00=00=00=00=01=00=01=00=00=
+=02=01L=00;=
+
+--BOUNDARY
+Content-Type: image/gif; name="bar.gif"
+Content-Disposition: inline; filename="bar.gif"
+Content-Transfer-Encoding: quoted-printable
+
+GIF89a=01=00=01=00=80=00=00=00=00=00=CC=CC=CC,=00=00=00=00=01=00=01=00=00=
+=02=01L=00;=
+
+--BOUNDARY--

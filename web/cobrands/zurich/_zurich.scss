@@ -1,0 +1,32 @@
+// Some things from the Zurich stylesheet
+
+#zurich-footer {
+    margin: 2em auto; // mySociety
+    font-size: 67.5%;
+    line-height: 1.5em;
+    clear: both;
+    background-image: url(bg_mainnav_portal.png);
+    background-repeat: repeat-x;
+    border: 1px solid #d8d8d8;
+    max-width: 953px;
+    padding: 3px 10px;
+    margin-bottom: 24px;
+    height: 1.5em
+}
+
+#zurich-footer a {
+    padding-left: 20px;
+}
+
+#zurich-footer a:hover {
+    color: #3c3c3c;
+}
+
+#form_sign_in_yes {
+    .form-txt-submit-box {
+        clear: both;
+        div.form-error {
+            width: 61%;
+        }
+    }
+}

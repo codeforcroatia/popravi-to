@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# fixmystreet/bin/gettext-extract
+# Generate English language .po files from the source code and email templates,
+# for FixMyStreet. Writes the output to appropriate .po files in locale/.
+#
+# Copyright (c) 2011 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org; WWW: http://www.mysociety.org/
+
+cd "$(cd "$(dirname "$BASH_SOURCE")" && pwd -P)"/..
+
+# Install required code if needed
+vendor/bin/carton install --path local-gettext --cpanfile locale/cpanfile --deployment
+export PATH="local-gettext/bin:$PATH"
+export PERL5LIB="local-gettext/lib/perl5:local/lib/perl5"
+
+# File to write to, clear it to start with
+PO=locale/FixMyStreet.po
+rm -f $PO
+
+# we don't want to extract strings from all the cobrand templates so list
+# the ones we care about
+find templates/web/base templates/web/zurich -name '*.html' > template_list
+
+# Extract from Perl
+xgettext.pl --gnu-gettext --verbose --output $PO --plugin perl=* --plugin tt2 --directory perllib -f template_list --directory db --directory bin
+
+# remove temporary list of templates
+rm template_list
+
+# Fix headers
+# no such thing as tempfile on OS X
+bin/update_po_header.bash $PO
+
+echo "$( bin/gettext-nget-patch )" >> $PO
+

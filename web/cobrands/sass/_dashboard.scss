@@ -1,0 +1,368 @@
+.dashboard-header {
+    background-color: $primary;
+    margin: 0 -1em;
+    padding: 1em;
+
+    @media (min-width: 48em) {
+        margin: -1em -1em 0 -1em;
+        padding: 2em;
+    }
+
+    h1 {
+        font-family: inherit;
+        font-weight: bold;
+        margin: 0;
+    }
+}
+
+.dashboard-row {
+    @include clearfix();
+    margin: 0 -1em;
+}
+
+.dashboard-item {
+    @include box-sizing(border-box);
+    padding: 1em;
+
+    @media (min-width: 48em) {
+        float: $left;
+        padding: 2em;
+    }
+
+    h2 {
+        font-family: inherit;
+        margin-top: 0;
+    }
+}
+
+@media (min-width: 48em) {
+    .dashboard-item--12 {
+        width: 100%;
+    }
+
+    .dashboard-item--6 {
+        width: 50%;
+    }
+    .dashboard-item--4 {
+        width: 33.3%;
+    }
+}
+
+.dashboard-subheading {
+    margin-top: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1em;
+}
+
+.labelled-line-chart,
+.labelled-sparkline,
+.responsive-bar-chart {
+    position: relative;
+    width: 100%;
+
+    canvas {
+        width: 100% !important;
+    }
+}
+
+.labelled-line-chart,
+.labelled-sparkline {
+    line-height: 1.2em;
+
+    .label {
+        strong {
+            display: block;
+            font-size: 2em;
+            line-height: 1em;
+            margin-bottom: 0.1em;
+            font-weight: bold;
+        }
+    }
+}
+
+.labelled-line-chart {
+    @include box-sizing(border-box);
+
+    @media (min-width: 48em) {
+        padding-right: 20%; // Same way round, regardless of text direction
+    }
+
+    .label {
+        float: $left;
+        margin-#{$right}: 2em;
+    }
+}
+.js .labelled-line-chart .label {
+    @media (min-width: 48em) {
+        position: absolute;
+        margin-top: -1em;
+        margin-#{$right}: 0;
+        right: 0;
+        width: 18%; // 20% padding from .labelled-line-chart, 2% gutter
+    }
+}
+
+.labelled-sparkline {
+    .label {
+        strong {
+            margin-top: 0.3em;
+        }
+    }
+}
+
+.dashboard-sparklines {
+    margin: 0 -1em;
+
+    & > * {
+        @include box-sizing(border-box);
+        padding: 0 1em 1em 1em;
+    }
+
+    @media (min-width: 48em) {
+        @include clearfix();
+
+        & > * {
+            float: $left;
+            width: 33%;
+        }
+    }
+}
+
+.dashboard-search {
+    background-color: $primary;
+    margin: 0 -1em;
+    padding: 1em;
+
+    @include clearfix();
+
+    @media (min-width: 48em) {
+        margin: 0 -3em 0 0;
+        padding: 2em;
+    }
+
+    input[type="text"] {
+        margin-bottom: 0;
+    }
+
+    input[type="submit"] {
+        background: #000;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: inherit;
+        border-radius: 4px;
+        border: none;
+    }
+}
+
+.dashboard-search__input {
+    @include box-sizing(border-box);
+    width: 80%;
+    float: $left;
+    padding-#{$right}: 1em;
+}
+
+.dashboard-search__submit {
+    width: 20%;
+    float: $right;
+
+    input {
+        width: 100%;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 10px 8px;
+    }
+}
+
+.dashboard-search #geolocate_link {
+    display: block;
+    color: inherit;
+
+    &:before {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-repeat: no-repeat;
+        background-size: 112px 16px;
+        @include svg-background-image('/cobrands/fixmystreet/images/button-icons');
+        background-position: -96px 0;
+        margin-#{$right}: 0.5em;
+        vertical-align: -0.1em;
+    }
+}
+
+.dashboard-ranking-table {
+    width: 100%;
+
+    td, th {
+        padding: 0.4em 0.8em;
+
+        &:last-child {
+            text-align: $right;
+        }
+    }
+
+    th {
+        text-align: left;
+    }
+
+    tbody tr:nth-child(odd) > * {
+        background-color: mix($primary, #fff, 15%);
+    }
+
+    tfoot tr > * {
+        font-weight: bold;
+    }
+}
+
+.filters {
+    @include clearfix();
+    background-color: mix(#fff, $primary, 60%);
+    margin: 0 -1em 1em -1em;
+    border-top: $primary solid 0.75em;
+    padding: 0 1em;
+
+    // Force field elements onto a single line.
+    @media (min-width: 48em) {
+        @include flex-container();
+    }
+
+    // No border-top when visually preceded by .dashboard-header
+    .dashboard-header + * & {
+        border-top: none;
+    }
+
+    // Quick fix for too much spacing when followed by .dashboard-item(s)
+    & + .dashboard-row {
+        margin-top: -1em;
+    }
+
+    p {
+        padding: 0 1em;
+        font-size: 0.75em;
+
+        @media (min-width: 48em) {
+            float: $left;
+            max-width: 25%;
+        }
+    }
+
+    .no-label {
+        margin-top: 1.25em + 1.5em + 0.5em; // label line-height + margin-top + margin-bottom
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .pro-feature {
+        color: mix(#222, mix(#fff, $primary, 60%), 30%);
+        cursor: help;
+
+        label {
+            cursor: inherit;
+
+            &:after {
+                display: inline-block;
+                content: "PRO";
+                color: #fff;
+                background: mix(#222, mix(#fff, $primary, 60%), 30%);
+                border-radius: 0.3em;
+                padding: 0.2em 0.4em;
+                margin-#{$left}: 1em;
+                font-size: 0.8em;
+                line-height: 1em;
+            }
+        }
+    }
+
+    .form-control[disabled] {
+        border-color: #ccc;
+        color: #999;
+        box-shadow: none;
+    }
+
+    .btn {
+        padding: 0.5em 0.75em;
+    }
+}
+
+.dashboard-options-tabs {
+    @include clearfix();
+    @include list-reset-soft();
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 2em;
+
+    li {
+        float: $left;
+        margin: 0 0.4em;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        & > * + * {
+            margin-left: 0.4em;
+        }
+    }
+
+    .pull-right {
+        float: $right;
+    }
+
+    a, span, strong {
+        display: inline-block;
+        padding: 0.4em 0;
+    }
+
+    strong {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-bottom-color: #fff;
+        border-radius: 0.3em 0.3em 0 0;
+        margin-bottom: -1px;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+    }
+}
+
+.dashboard-options-tabs--below {
+    margin-bottom: 0;
+    margin-top: 2em;
+    border-bottom: none;
+    border-top: 1px solid #ddd;
+
+    strong {
+        border-top-color: #fff;
+        border-bottom-color: #ddd;
+        border-radius: 0 0 0.3em 0.3em;
+        margin-bottom: 0;
+        margin-top: -1px;
+    }
+}
+
+.ie9 {
+    .labelled-line-chart,
+    .labelled-sparkline,
+    .responsive-bar-chart {
+        canvas {
+            height: 0 !important;
+            width: 0 !important;
+            display: none !important;
+        }
+       
+    }
+    .labelled-line-chart .label {
+        @media (min-width: 48em) {
+            position: static !important;
+            margin-top: inherit !important;
+            margin-#{$right}: 1.5em !important;
+        }
+    }
+}

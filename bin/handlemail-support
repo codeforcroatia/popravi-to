@@ -1,0 +1,64 @@
+#!/usr/bin/perl
+#
+# handlemail-support:
+# Handle an individual incoming mail message.
+#
+# This script should be invoked through the .forward mechanism. It processes
+# emails to the support address to remove out of office and so on, before
+# forwarding on.
+#
+# Copyright (c) 2013 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org; WWW: http://www.mysociety.org/
+
+use strict;
+use warnings;
+require 5.8.0;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use FixMyStreet;
+use FixMyStreet::Email::Sender;
+use mySociety::HandleMail;
+
+my %data = mySociety::HandleMail::get_message();
+exit 0 if is_ignorable($data{message});
+forward_on();
+
+# ---
+
+sub forward_on {
+    my ($l, $d) = split /\@/, FixMyStreet->config('CONTACT_EMAIL');
+    my ($rp) = $data{return_path} =~ /^\s*<(.*)>\s*$/;
+    unless (FixMyStreet::Email::Sender->try_to_send(
+        join("\n", @{$data{lines}}) . "\n",
+        {
+            from => $rp,
+            to => join('@', join('_deli', $l, 'very'), $d)
+        }
+    )) {
+        exit 75;
+    }
+    exit 0;
+}
+
+sub is_ignorable {
+    my $m = shift;
+    my $head = $m->head();
+    my ($from, $subject, $body) = ($head->get('From'), $head->get('Subject'), $m->body);
+    $body = join("\n", @$body);
+
+    my $fp = FixMyStreet->path_to("..", "data", "ignored-emails.csv")->open or exit 75;
+    while (<$fp>) {
+        chomp;
+        my ($f, $s, $b) = split /,/;
+        next unless $f || $s || $b;
+        return 1 unless ( $f && $from !~ /$f/ ) || ( $s && $subject !~ /$s/ ) || ( $b && $body !~ /$b/ );
+    }
+    return 0;
+}
+

@@ -1,0 +1,186 @@
+<form method="post" id="user_edit" action="[%
+    SET action_end = user.id || 'add';
+    c.uri_for_action( 'admin/users/edit', [ action_end ] )
+    %]" enctype="application/x-www-form-urlencoded" accept-charset="utf-8">
+    <input type="hidden" name="token" value="[% csrf_token %]" >
+    <input type="hidden" name="submit" value="1" >
+
+    [% INCLUDE 'errors.html' errors = field_errors.values %]
+    <ul class="no-bullets">
+        [% PROCESS 'admin/users/_form_details.html' %]
+
+      [% IF c.user.is_superuser %]
+        <li>
+          <div class="admin-hint">
+            <p>
+              [% loc(
+                "Normal (public) users should not be associated with any <strong>body</strong>.<br>
+                Authorised staff users can be associated with the body they represent.<br>
+                Depending on the implementation, staff users may have access to the dashboard (summary of
+                activity across their body), the ability to hide reports or set special report statuses.")
+              %]
+            </p>
+          </div>
+          <label for="body">[% loc('Body:') %]</label>
+          <select class="form-control" id='body' name='body'>
+            <option value=''>[% loc('No body') %]</option>
+          [% FOR body IN bodies %]
+            <option value="[% body.id %]"[% ' selected data-originally-selected' IF body.id == user.from_body.id %]>[% body.name %]</option>
+          [% END %]
+          </select>
+        </li>
+      [% ELSE %]
+        <li>
+            <div class="admin-hint">
+              <p>
+                [% loc("Staff users have permission to log in to the admin.") %]
+              </p>
+            </div>
+            <label>
+              [% loc('Staff:') %]
+              <input type="checkbox" id="body" name="body" value="[% c.user.from_body.id %]" [% user.from_body.id == c.user.from_body.id ? ' checked' : '' %] [% 'disabled' UNLESS c.user.has_body_permission_to('user_assign_body') %]>
+            </label>
+          </li>
+      [% END %]
+
+        [% IF areas %]
+          <li>
+            <div class="admin-hint">
+              <p>
+                [% loc(
+                  "Normal (public) users should not be associated with any <strong>area</strong>.<br>
+                  Authorised staff users can be associated with the area in which they operate.")
+                %]
+              </p>
+            </div>
+            <label for="area_ids">[% loc('Area:') %]</label>
+            <select class="form-control js-multiple" id="area_ids" name="area_ids"
+                multiple data-none="-- [% loc('Select an area') %] --"
+                [% 'disabled' UNLESS c.user.has_permission_to('user_assign_areas', user.from_body.id) %]>
+              [% FOREACH area IN areas %]
+              [% SET aid = area.id %]
+                <option value="[% aid %]"[% ' selected' IF user.in_area(aid) %]>[% area.name | html %]</option>
+              [% END %]
+            </select>
+          </li>
+        [% END %]
+
+        [% IF contacts %]
+          <li class="js-user-categories">
+            [% INCLUDE 'admin/category-checkboxes.html' hint=loc("Authorised staff users can be associated with the categories in which they operate.") %]
+          </li>
+        [% END %]
+
+
+      [% IF user.from_body %]
+        <li>
+          <div class="admin-hint">
+            <p>
+              [% loc("This means the user will only see front end staff features (such as the inspector form) in their assigned categories.") %]
+            </p>
+          </div>
+
+          <label>
+            [% loc('Assigned categories only') %]:
+            <input type="checkbox" id="assigned_categories_only" name="assigned_categories_only"[% user.extra.assigned_categories_only ? ' checked' : '' %]>
+          </label>
+        </li>
+      [% END %]
+
+        <li>
+          <div class="admin-hint">
+            <p>
+              [% loc("Mark users whose behaviour you want to keep a check on as <strong>flagged</strong>.") %]
+              <br>
+              [% tprintf(loc("Flagged users are listed on the <a href='%s'>flagged</a> page."), c.uri_for_action( 'admin/flagged' )) %]
+              <br>
+              [% loc("You can add an abusive user's email to the abuse list, which automatically hides (and never sends) reports they create.") %]
+            </p>
+          </div>
+
+          <label>
+            [% loc('Flagged:') %]
+            <input type="checkbox" id="flagged" name="flagged"[% user.flagged ? ' checked' : '' %]>
+          </label>
+        </li>
+
+        [% IF c.user.is_superuser %]
+          <li>
+            <div class="admin-hint">
+              <p>
+                [% loc("Superusers have permission to perform <strong>all actions</strong> within the admin.") %]
+              </p>
+            </div>
+            <label>
+              [% loc('Superuser:') %]
+              <input type="checkbox" id="is_superuser" name="is_superuser"[% user.is_superuser ? ' checked' : '' %]>
+            </label>
+          </li>
+        [% END %]
+
+        [% IF available_permissions AND NOT user.is_superuser %]
+          <li>
+            <div class="admin-hint">
+              <p>
+                [% loc("Users can be assigned one or more roles to give them all the permissions of those roles. Selecting a role or roles will disable manual permission selection.") %]
+              </p>
+            </div>
+            <label for="roles">[% loc('Role:') %]</label>
+            <select class="form-control js-multiple" id="roles" name="roles" multiple>
+              [% FOREACH role IN roles %]
+                <option data-permissions='["[% role.permissions.join('","') | html %]"]' value="[% role.id %]"[% ' selected' IF user.in_role(role.id) %]>[% role.name | html %]</option>
+              [% END %]
+            </select>
+          </li>
+
+          <li>
+            <fieldset>
+              <legend>
+                <div class="admin-hint">
+                  <p>
+                    [% loc("Users can perform the following actions within their assigned body or area.") %]
+                  </p>
+                </div>
+                [% loc('Permissions:') %]
+              </legend>
+              <ul class="permissions-checkboxes">
+                [% FOREACH group IN available_permissions.pairs %]
+                  <li>
+                    [% group.key %]
+                    <ul class="no-bullets no-margin">
+                      <li>
+                        (<a href="#" data-select-all>[% loc('all') %]</a> /
+                        <a href="#" data-select-none>[% loc('none') %]</a>)
+                      </li>
+                      [% FOREACH permission IN group.value %]
+                        <li>
+                          <label class="inline">
+                            <input type="checkbox" id="perms_[% permission.key %]" name="permissions[[% permission.key %]]" [% "checked" IF NOT user.is_superuser AND user.has_body_permission_to(permission.key) %]>
+                            [% permission.value %]
+                          </label>
+                        </li>
+                      [% END %]
+                    </ul>
+                  </li>
+                [% END %]
+              </ul>
+            </fieldset>
+          </li>
+        [% END %]
+
+      [% TRY %][% INCLUDE 'admin/users/form-extra-fields.html' %][% CATCH file %][% END %]
+    </ul>
+    <p>
+      <input type="submit" class="btn" name="Submit changes" value="[% loc('Submit changes') %]" >
+    </p>
+
+  [% IF user AND NOT user.from_body %]
+    <ul class="no-bullets danger-zone">
+      <li><input class="btn-danger" type="submit" name="logout_everywhere" value="[% loc('Log out of all sessions') %]">
+      <li><input class="btn-danger" type="submit" name="anon_everywhere" value="[% loc('Make anonymous on all reports and updates') %]">
+      <li><input class="btn-danger" type="submit" name="hide_everywhere" value="[% loc('Hide all reports and updates') %]">
+      <li><input class="btn-danger" type="submit" name="remove_account" value="[% loc('Remove account details') %]">
+    </ul>
+  [% END %]
+
+</form>
