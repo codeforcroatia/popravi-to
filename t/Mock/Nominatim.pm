@@ -3,7 +3,6 @@ package t::Mock::Nominatim;
 use JSON::MaybeXS;
 use LWP::Protocol::PSGI;
 use Web::Simple;
-use mySociety::Locale;
 
 has json => (
     is => 'lazy',

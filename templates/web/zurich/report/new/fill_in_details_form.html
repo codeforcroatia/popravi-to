@@ -15,7 +15,7 @@
             [% END %]
 
             [% PROCESS 'report/form/photo_upload.html' %]
-            [% PROCESS 'report/new/after_photo.html' %]
+            [% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
 
             <label for="form_detail">[% loc('Details') %]</label>
             [% IF field_errors.detail %]

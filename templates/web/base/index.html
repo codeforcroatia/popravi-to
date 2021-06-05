@@ -6,7 +6,7 @@
     <p class="form-error">[% error %]</p>
 [% END %]
 
-[% PROCESS 'front/pre-steps.html' %]
+[% TRY %][% PROCESS 'front/pre-steps.html' %][% CATCH file %][% END %]
 
 <div class="tablewrapper">
     <div id="front-howto">

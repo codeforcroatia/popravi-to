@@ -92,16 +92,15 @@ sub close_reports {
             { problem_id => $r->id },
             { order_by => 'confirmed' }
         );
-        my $old_state = '';
-        my $last_change;
+        my $earliest;
         while ( my $c = $comments->next ) {
-            my $new_state = $c->problem_state || '';
-            if ( $new_state eq 'action scheduled' && $new_state ne $old_state) {
-                $last_change = $c->confirmed;
+            if ( ($c->problem_state || '') ne 'action scheduled' ) {
+                $earliest = undef;
+                next;
             }
-            $old_state = $new_state if $new_state;
+            $earliest = $c->confirmed unless defined $earliest;
         }
-        next unless defined $last_change && $last_change < $self->newest;
+        next unless defined $earliest && $earliest < $self->newest;
         if ($self->commit) {
             $r->update({
                 state => 'fixed - council',

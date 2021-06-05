@@ -24,7 +24,6 @@ sub index : Path : Args(0) {
     my ( $self, $c ) = @_;
 
     if (my $id = $c->get_param('address')) {
-        $c->cobrand->call_hook( clear_cached_lookups => $id );
         $c->detach('redirect_to_id', [ $id ]);
     }
 
@@ -79,11 +78,6 @@ sub property : Chained('/') : PathPart('waste') : CaptureArgs(1) {
 
     $c->forward('/auth/get_csrf_token');
 
-    # clear this every time they visit this page to stop stale content.
-    if ( $c->req->path =~ m#^waste/\d+$# ) {
-        $c->cobrand->call_hook( clear_cached_lookups => $id );
-    }
-
     my $property = $c->stash->{property} = $c->cobrand->call_hook(look_up_property => $id);
     $c->detach( '/page_error_404_not_found', [] ) unless $property;
 
@@ -96,9 +90,6 @@ sub property : Chained('/') : PathPart('waste') : CaptureArgs(1) {
 
 sub bin_days : Chained('property') : PathPart('') : Args(0) {
     my ($self, $c) = @_;
-
-    my $staff = $c->user_exists && ($c->user->is_superuser || $c->user->from_body);
-    $c->cobrand->call_hook(waste_bin_days_check => $staff);
 }
 
 sub calendar : Chained('property') : PathPart('calendar.ics') : Args(0) {
@@ -154,7 +145,7 @@ sub construct_bin_request_form {
                 type => 'Checkbox',
                 apply => [
                     {
-                        when => { "quantity-$id" => sub { $max > 1 && $_[0] > 0 } },
+                        when => { "quantity-$id" => sub { $_[0] > 0 } },
                         check => qr/^1$/,
                         message => 'Please tick the box',
                     },
@@ -164,27 +155,19 @@ sub construct_bin_request_form {
                 tags => { toggle => "form-quantity-$id-row" },
             };
             $name = ''; # Only on first container
-            if ($max == 1) {
-                push @$field_list, "quantity-$id" => {
-                    type => 'Hidden',
-                    default => '1',
-                    apply => [ { check => qr/^1$/ } ],
-                };
-            } else {
-                push @$field_list, "quantity-$id" => {
-                    type => 'Select',
-                    label => 'Quantity',
-                    tags => {
-                        hint => "You can request a maximum of " . NUMWORDS($max) . " containers",
-                        initial_hidden => 1,
-                    },
-                    options => [
-                        { value => "", label => '-' },
-                        map { { value => $_, label => $_ } } (1..$max),
-                    ],
-                    required_when => { "container-$id" => 1 },
-                };
-            }
+            push @$field_list, "quantity-$id" => {
+                type => 'Select',
+                label => 'Quantity',
+                tags => {
+                    hint => "You can request a maximum of " . NUMWORDS($max) . " containers",
+                    initial_hidden => 1,
+                },
+                options => [
+                    { value => "", label => '-' },
+                    map { { value => $_, label => $_ } } (1..$max),
+                ],
+                required_when => { "container-$id" => 1 },
+            };
         }
     }
 
@@ -202,11 +185,7 @@ sub request : Chained('property') : Args(0) {
         request => {
             fields => [ grep { ! ref $_ } @$field_list, 'submit' ],
             title => 'Which containers do you need?',
-            next => sub {
-                my $data = shift;
-                return 'replacement' if $data->{"container-44"}; # XXX
-                return 'about_you';
-            }
+            next => 'about_you',
         },
     ];
     $c->stash->{field_list} = $field_list;
@@ -216,26 +195,20 @@ sub request : Chained('property') : Args(0) {
 sub process_request_data : Private {
     my ($self, $c, $form) = @_;
     my $data = $form->saved_data;
-    my @services = grep { /^container-/ && $data->{$_} } sort keys %$data;
-    my @reports;
+    my $address = $c->stash->{property}->{address};
+    my @services = grep { /^container-/ && $data->{$_} } keys %$data;
     foreach (@services) {
         my ($id) = /container-(.*)/;
-        $c->cobrand->call_hook("waste_munge_request_data", $id, $data);
+        my $container = $c->stash->{containers}{$id};
+        my $quantity = $data->{"quantity-$id"};
+        $data->{title} = "Request new $container";
+        $data->{detail} = "Quantity: $quantity\n\n$address";
+        $c->set_param('Container_Type', $id);
+        $c->set_param('Quantity', $quantity);
         $c->forward('add_report', [ $data ]) or return;
-        push @reports, $c->stash->{report};
+        push @{$c->stash->{report_ids}}, $c->stash->{report}->id;
     }
-    group_reports($c, @reports);
     return 1;
-}
-
-sub group_reports {
-    my ($c, @reports) = @_;
-    my $report = shift @reports;
-    if (@reports) {
-        $report->set_extra_metadata(grouped_ids => [ map { $_->id } @reports ]);
-        $report->update;
-    }
-    $c->stash->{report} = $report;
 }
 
 sub construct_bin_report_form {
@@ -278,15 +251,17 @@ sub report : Chained('property') : Args(0) {
 sub process_report_data : Private {
     my ($self, $c, $form) = @_;
     my $data = $form->saved_data;
-    my @services = grep { /^service-/ && $data->{$_} } sort keys %$data;
-    my @reports;
+    my $address = $c->stash->{property}->{address};
+    my @services = grep { /^service-/ && $data->{$_} } keys %$data;
     foreach (@services) {
         my ($id) = /service-(.*)/;
-        $c->cobrand->call_hook("waste_munge_report_data", $id, $data);
+        my $service = $c->stash->{services}{$id}{service_name};
+        $data->{title} = "Report missed $service";
+        $data->{detail} = "$data->{title}\n\n$address";
+        $c->set_param('service_id', $id);
         $c->forward('add_report', [ $data ]) or return;
-        push @reports, $c->stash->{report};
+        push @{$c->stash->{report_ids}}, $c->stash->{report}->id;
     }
-    group_reports($c, @reports);
     return 1;
 }
 
@@ -315,7 +290,6 @@ sub enquiry : Chained('property') : Args(0) {
     my $field_list = [];
     foreach (@{$contact->get_metadata_for_input}) {
         next if $_->{code} eq 'service_id' || $_->{code} eq 'uprn' || $_->{code} eq 'property_id';
-        next if ($_->{automated} || '') eq 'hidden_field';
         my $type = 'Text';
         $type = 'TextArea' if 'text' eq ($_->{datatype} || '');
         my $required = $_->{required} eq 'true' ? 1 : 0;
@@ -348,9 +322,9 @@ sub enquiry : Chained('property') : Args(0) {
 sub process_enquiry_data : Private {
     my ($self, $c, $form) = @_;
     my $data = $form->saved_data;
-
-    $c->cobrand->call_hook("waste_munge_enquiry_data", $data);
-
+    my $address = $c->stash->{property}->{address};
+    $data->{title} = $data->{category};
+    $data->{detail} = "$data->{category}\n\n$address";
     # Read extra details in loop
     foreach (grep { /^extra_/ } keys %$data) {
         my ($id) = /^extra_(.*)/;
@@ -358,6 +332,7 @@ sub process_enquiry_data : Private {
     }
     $c->set_param('service_id', $data->{service_id});
     $c->forward('add_report', [ $data ]) or return;
+    push @{$c->stash->{report_ids}}, $c->stash->{report}->id;
     return 1;
 }
 
@@ -403,10 +378,7 @@ sub form : Private {
 
     $form->process unless $form->processed;
 
-    # If we have sent a confirmation email, that function will have
-    # set a template that we need to show
-    $c->stash->{template} = $form->template || 'waste/index.html'
-        unless $c->stash->{sent_confirmation_message};
+    $c->stash->{template} = $form->template || 'waste/index.html';
     $c->stash->{form} = $form;
 }
 
@@ -427,7 +399,6 @@ sub add_report : Private {
     my ( $self, $c, $data ) = @_;
 
     $c->stash->{cobrand_data} = 'waste';
-    $c->stash->{override_confirmation_template} = 'waste/confirmation.html';
 
     # XXX Is this best way to do this?
     if ($c->user_exists && $c->user->from_body && $c->user->email ne $data->{email}) {
@@ -454,9 +425,17 @@ sub add_report : Private {
 
     $c->forward('setup_categories_and_bodies') unless $c->stash->{contacts};
     $c->forward('/report/new/non_map_creation', [['/waste/remove_name_errors']]) or return;
-    $c->forward('/report/new/redirect_or_confirm_creation');
+    my $report = $c->stash->{report};
+    $report->confirm;
+    $report->update;
 
-    $c->cobrand->call_hook( clear_cached_lookups => $c->stash->{property}{id} );
+    $c->model('DB::Alert')->find_or_create({
+        user => $report->user,
+        alert_type => 'new_updates',
+        parameter => $report->id,
+        cobrand => $report->cobrand,
+        lang => $report->lang,
+    })->confirm;
 
     return 1;
 }
@@ -473,9 +452,7 @@ sub remove_name_errors : Private {
 sub setup_categories_and_bodies : Private {
     my ($self, $c) = @_;
 
-    $c->stash->{fetch_all_areas} = 1;
-    $c->stash->{area_check_action} = 'submit_problem';
-    $c->forward('/council/load_and_check_areas', []);
+    $c->stash->{all_areas} = $c->stash->{all_areas_mapit} = { $c->cobrand->council_area_id => { id => $c->cobrand->council_area_id } };
     $c->forward('/report/new/setup_categories_and_bodies');
     my $contacts = $c->stash->{contacts};
     @$contacts = grep { grep { $_ eq 'Waste' } @{$_->groups} } @$contacts;
@@ -517,8 +494,6 @@ sub receive_echo_event_notification : Path('/waste/echo') : Args(0) {
 
     my $cfg = { echo => Integrations::Echo->new(%$echo) };
     my $request = $c->cobrand->construct_waste_open311_update($cfg, $event);
-    $c->detach('soap_ok') if !$request->{status} || $request->{status} eq 'confirmed'; # Ignore new events
-
     $request->{updated_datetime} = DateTime::Format::W3CDTF->format_datetime(DateTime->now);
     $request->{service_request_id} = $event->{Guid};
 
@@ -587,16 +562,6 @@ sub check_existing_update : Private {
     $c->detach('soap_ok')
         unless $c->cobrand->waste_check_last_update(
             $cfg, $p, $request->{status}, $request->{external_status_code});
-}
-
-sub uprn_redirect : Path('/property') : Args(1) {
-    my ($self, $c, $uprn) = @_;
-
-    my $cfg = $c->cobrand->feature('echo');
-    my $echo = Integrations::Echo->new(%$cfg);
-    my $result = $echo->GetPointAddress($uprn, 'Uprn');
-    $c->detach( '/page_error_404_not_found', [] ) unless $result;
-    $c->res->redirect('/waste/' . $result->{Id});
 }
 
 __PACKAGE__->meta->make_immutable;

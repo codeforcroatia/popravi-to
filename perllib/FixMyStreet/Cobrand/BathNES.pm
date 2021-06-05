@@ -160,6 +160,18 @@ sub categories_restriction {
     ] } );
 }
 
+# Do a manual prefetch of all staff users for contributed_by lookup
+sub _dashboard_user_lookup {
+    my $self = shift;
+
+    my @user_ids = FixMyStreet::DB->resultset('User')->search(
+        { from_body => { '!=' => undef } },
+        { columns => [ 'id', 'email' ] })->all;
+
+    my %user_lookup = map { $_->id => $_->email } @user_ids;
+    return \%user_lookup;
+}
+
 sub dashboard_export_updates_add_columns {
     my ($self, $csv) = @_;
 
@@ -174,12 +186,15 @@ sub dashboard_export_updates_add_columns {
         '+columns' => ['user.email'],
         join => 'user',
     });
-    my $user_lookup = $self->csv_staff_users;
+    my $user_lookup = $self->_dashboard_user_lookup;
 
     $csv->csv_extra_data(sub {
         my $report = shift;
 
-        my $staff_user = $self->csv_staff_user_lookup($report->get_extra_metadata('contributed_by'), $user_lookup);
+        my $staff_user = '';
+        if ( my $contributed_by = $report->get_extra_metadata('contributed_by') ) {
+            $staff_user = $user_lookup->{$contributed_by};
+        }
 
         return {
             user_email => $report->user->email || '',
@@ -204,12 +219,15 @@ sub dashboard_export_problems_add_columns {
         '+columns' => ['user.email', 'user.phone'],
         join => 'user',
     });
-    my $user_lookup = $self->csv_staff_users;
+    my $user_lookup = $self->_dashboard_user_lookup;
 
     $csv->csv_extra_data(sub {
         my $report = shift;
 
-        my $staff_user = $self->csv_staff_user_lookup($report->get_extra_metadata('contributed_by'), $user_lookup);
+        my $staff_user = '';
+        if ( my $contributed_by = $report->get_extra_metadata('contributed_by') ) {
+            $staff_user = $user_lookup->{$contributed_by};
+        }
         my $attribute_data = join "; ", map { $_->{name} . " = " . $_->{value} } @{ $report->get_extra_fields };
         return {
             user_email => $report->user->email || '',

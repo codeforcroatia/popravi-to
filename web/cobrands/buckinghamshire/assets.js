@@ -83,18 +83,7 @@ fixmystreet.assets.add(labeled_defaults, {
         'Street light dim',
         'Street light intermittent',
         'Street light not working' ],
-    asset_item: 'street light',
-    asset_item_message: 'You can pick a <b class="asset-ITEM">ITEM</b> from the map &raquo;<br>If there is no yellow dot showing then this ITEM is not maintained by Transport for Buckinghamshire',
-    construct_selected_asset_message: function(asset) {
-        var id = asset.attributes[this.fixmystreet.feature_code] || '';
-        if (id === '') {
-            return;
-        }
-        var data = this.fixmystreet.construct_asset_name(id);
-        var extra = '. Only ITEMs maintained by Transport for Buckinghamshire are displayed.';
-        extra = extra.replace(/ITEM/g, data.name);
-        return 'You have selected ' + data.name + ' <b>' + data.id + '</b>' + extra;
-    }
+    asset_item: 'street light'
 });
 
 fixmystreet.assets.add(labeled_defaults, {
@@ -217,8 +206,8 @@ var ex_district_categories = [
 ];
 
 function category_unselected_or_ex_district() {
-    var cat = fixmystreet.reporting.selectedCategory().category;
-    if (OpenLayers.Util.indexOf(ex_district_categories, cat) != -1) {
+    var cat = $('select#form_category').val();
+    if (cat === "-- Pick a category --" || cat === "Loading..." || OpenLayers.Util.indexOf(ex_district_categories, cat) != -1) {
         return true;
     }
     return false;
@@ -354,9 +343,9 @@ fixmystreet.assets.add(defaults, {
     road: true,
     actions: {
         found: function() {
-            var $div = $(".js-reporting-page.js-gritting-notice");
+            var $div = $("#category_meta .js-gritting-notice");
             if ($div.length) {
-                $div.removeClass('js-reporting-page--skip');
+                $div.show();
             } else {
                 var msg = "<div class='box-warning js-gritting-notice'>" +
                             "<h1>Winter Gritting</h1>" +
@@ -367,11 +356,11 @@ fixmystreet.assets.add(defaults, {
                             "policy</a>.</p>" +
                             "</div>";
                 $div = $(msg);
-                fixmystreet.pageController.addNextPage('gritting', $div);
+                $div.prependTo("#category_meta");
             }
         },
         not_found: function() {
-            $('.js-reporting-page.js-gritting-notice').addClass('js-reporting-page--skip');
+            $("#category_meta .js-gritting-notice").hide();
         }
     }
 });

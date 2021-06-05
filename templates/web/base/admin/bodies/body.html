@@ -104,6 +104,7 @@
       </tr>
     [% END %]
 
+  [%~ IF category_groups.size ~%]
     [%~ FOREACH group IN category_groups ~%]
       [% IF group.name %]
         <tr>
@@ -114,6 +115,11 @@
             [% INCLUDE category_row %]
         [%~ END ~%]
     [%~ END =%]
+  [%~ ELSE ~%]
+    [%~ FOREACH cat IN contacts ~%]
+        [% INCLUDE category_row %]
+    [%~ END =%]
+  [%~ END ~%]
 
   </table>
 

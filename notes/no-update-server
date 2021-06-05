@@ -202,6 +202,7 @@ apache_config() {
     </Location>
 
     Alias /admin/ $basedir/fixmystreet/web-admin/
+    Alias /jslib/ $basedir/fixmystreet/commonlib/jslib/
 </VirtualHost>
 EOF
 

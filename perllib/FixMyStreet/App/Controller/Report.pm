@@ -200,7 +200,7 @@ sub load_problem_or_display_error : Private {
     $c->cobrand->call_hook(munge_problem_list => $problem);
     $c->stash->{problem} = $problem;
     if ( $c->user_exists && $c->user->can_moderate($problem) ) {
-        $c->stash->{original} = $problem->find_or_new_related(
+        $c->stash->{problem_original} = $problem->find_or_new_related(
             moderation_original_data => {
                 title => $problem->title,
                 detail => $problem->detail,
@@ -353,7 +353,6 @@ sub generate_map_tags : Private {
         $c,
         latitude  => $problem->latitude,
         longitude => $problem->longitude,
-        no_compass => 1,
         pins      => $problem->used_map
             ? [ $problem->pin_data('report', type => 'big', draggable => 1) ]
             : [],
@@ -502,6 +501,8 @@ sub inspect : Private {
 
                 $update_params{problem_state} = $problem->state;
 
+                my $state = $problem->state;
+
                 # If an inspector has changed the state, subscribe them to
                 # updates
                 my $options = {
@@ -589,7 +590,6 @@ sub inspect : Private {
                     confirmed => $timestamp,
                     user => $c->user->obj,
                     photo => $c->stash->{upload_fileid} || undef,
-                    problem_state => $problem->state,
                     %update_params,
                 } );
             }
@@ -685,12 +685,9 @@ sub _nearby_json :Private {
         ]
     } @$nearby;
 
-    my @extra_pins = $c->cobrand->call_hook('extra_nearby_pins', $params->{latitude}, $params->{longitude}, $dist);
-    @pins = (@pins, @extra_pins) if @extra_pins;
-
     my $list_html = $c->render_fragment(
         'report/nearby.html',
-        { reports => $nearby, inline_maps => $c->get_param("inline_maps") ? 1 : 0, extra_pins => \@extra_pins }
+        { reports => $nearby, inline_maps => $c->get_param("inline_maps") ? 1 : 0 }
     );
 
     my $json = { pins => \@pins };
@@ -715,13 +712,13 @@ sub fetch_permissions : Private {
 };
 
 sub stash_category_groups : Private {
-    my ( $self, $c, $contacts, $opts ) = @_;
+    my ( $self, $c, $contacts, $combine_multiple ) = @_;
 
     my %category_groups = ();
     for my $category (@$contacts) {
         my $group = $category->{group} // $category->groups;
         my @groups = @$group;
-        if (scalar @groups > 1 && $opts->{combine_multiple}) {
+        if (scalar @groups > 1 && $combine_multiple) {
             @groups = sort @groups;
             $category->{group} = \@groups;
             push( @{$category_groups{_('Multiple Groups')}}, $category );
@@ -730,43 +727,12 @@ sub stash_category_groups : Private {
         }
     }
 
-    # New reporting, top level mixes groups and categories not in a group
-    # (or where the category is the only entry in the group)
-    if ($opts->{mix_in}) {
-        my $no_group = delete $category_groups{""};
-        my @list = map { [ $_->category_display, $_ ]  } @$no_group;
-        foreach (keys %category_groups) {
-            (my $id = $_) =~ s/[^a-zA-Z]+//g;
-            if (@{$category_groups{$_}} == 1) {
-                my $contact = $category_groups{$_}[0];
-                push @list, [ $contact->category_display, $contact ];
-            } else {
-                push @list, [ $_, { id => $id, name => $_, categories => $category_groups{$_} } ];
-            }
-        }
-        @list = sort {
-            return 1 if $a->[0] eq _('Other');
-            return -1 if $b->[0] eq _('Other');
-            $a->[0] cmp $b->[0];
-        } @list;
-        @list = map { $_->[1] } @list;
-        $c->stash->{category_groups} = \@list;
-        return;
-    }
-
-    # Change empty group to 'No Group' if multiple groups and combining multiple
-    if ($opts->{combine_multiple} && scalar keys %category_groups > 1 && $category_groups{""}) {
-        $category_groups{_('No Group')} = delete $category_groups{""};
-    }
-
     my @category_groups = ();
-    for my $group ( sort keys %category_groups ) {
-        next if $group eq _('Other') || $group eq _('Multiple Groups') || $group eq _('No Group');
+    for my $group ( grep { $_ ne _('Other') && $_ ne _('Multiple Groups') } sort keys %category_groups ) {
         push @category_groups, { name => $group, categories => $category_groups{$group} };
     }
     push @category_groups, { name => _('Other'), categories => $category_groups{_('Other')} } if ($category_groups{_('Other')});
     push @category_groups, { name => _('Multiple Groups'), categories => $category_groups{_('Multiple Groups')} } if ($category_groups{_('Multiple Groups')});
-    unshift @category_groups, { name => _('No Group'), categories => $category_groups{_('No Group')} } if $category_groups{_('No Group')};
     $c->stash->{category_groups}  = \@category_groups;
 }
 

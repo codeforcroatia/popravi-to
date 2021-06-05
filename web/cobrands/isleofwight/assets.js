@@ -202,6 +202,9 @@ for (i = 0; i < line_category_list.length; i++) {
 
     fixmystreet.assets.add($.extend(true, {}, line_asset_defaults, {
         asset_group: cat,
+        asset_category: [
+            cat
+        ],
         http_options: {
             params: {
                 TYPENAME: layer
@@ -250,6 +253,9 @@ fixmystreet.assets.add($.extend(true, {}, point_asset_defaults, {
 
 fixmystreet.assets.add($.extend(true, {}, line_asset_defaults, {
     asset_group: "Grass Verges & Weeds",
+    asset_category: [
+      "Grass Verges & Weeds"
+    ],
     http_options: {
         params: {
             TYPENAME: "Verges-Natural"
@@ -265,6 +271,8 @@ fixmystreet.assets.add($.extend(true, {}, point_asset_defaults, {
         }
     }
 }));
+
+fixmystreet.message_controller.add_msg_after_bodies(defaults.body);
 
 
 })();

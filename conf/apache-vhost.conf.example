@@ -25,4 +25,10 @@
         AllowOverride None
     </Directory>
 
+    Alias /jslib/ /home/yourname/fixmystreet/commonlib/jslib/
+    <Location /jslib>
+        AddOutputFilter DEFLATE js
+        Header append Cache-Control "no-transform"
+    </Location>
+
 </VirtualHost>

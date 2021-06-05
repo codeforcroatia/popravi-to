@@ -461,17 +461,6 @@ sub munge_red_route_categories {
     }
 }
 
-sub is_hardcoded_category {
-    my ($self, $category) = @_;
-
-    my %cats = (
-        %{ $self->feature('safety_critical_categories') || {} },
-        map { $_ => 1 } @{ $self->_tlrn_categories }, @{ $self->_tfl_council_categories }, @{ $self->_tfl_no_resend_categories },
-    );
-
-    return $cats{$category};
-}
-
 # Reports in these categories can only be made on a red route
 sub _tlrn_categories { [
     "All out - three or more street lights in a row",
@@ -489,7 +478,7 @@ sub _tlrn_categories { [
     "Hoardings blocking carriageway or footway",
     "Light on during daylight hours",
     "Lights out in Pedestrian Subway",
-    "Low hanging branches",
+    "Low hanging branches and general maintenance",
     "Manhole Cover - Damaged (rocking or noisy)",
     "Manhole Cover - Missing",
     "Mobile Crane Operation",
@@ -522,7 +511,6 @@ sub _cleaning_categories { [
     'Fly-tipping',
     'Fly-Tipping',
     'Fly tipping - Enforcement Request',
-    'Graffiti and Flyposting', # Bromley
 ] }
 
 sub _cleaning_groups { [ 'Street cleaning', 'Fly-tipping' ] }

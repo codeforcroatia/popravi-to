@@ -40,20 +40,6 @@ sub admin_user_domain { 'cheshireeast.gov.uk' }
 
 sub get_geocoder { 'OSM' }
 
-around open311_extra_data_include => sub {
-    my ($orig, $self, $row, $h) = @_;
-    my $open311_only = $self->$orig($row, $h);
-
-    if ($row->geocode) {
-        my $address = $row->geocode->{resourceSets}->[0]->{resources}->[0]->{address};
-        push @$open311_only, (
-            { name => 'closest_address', value => $address->{formattedAddress} }
-        );
-    }
-
-    return $open311_only
-};
-
 sub geocoder_munge_results {
     my ($self, $result) = @_;
     $result->{display_name} = '' unless $result->{display_name} =~ /Cheshire East/;
@@ -70,14 +56,6 @@ sub on_map_default_status { 'open' }
 sub abuse_reports_only { 1 }
 
 sub send_questionnaires { 0 }
-
-sub anonymous_account {
-    my $self = shift;
-    return {
-        email => $self->feature('anonymous_account') . '@' . $self->admin_user_domain,
-        name => 'Anonymous user',
-    };
-}
 
 # TODO These values may not be accurate
 sub lookup_site_code_config { {

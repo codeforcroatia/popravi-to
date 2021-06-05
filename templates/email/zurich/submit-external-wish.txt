@@ -13,8 +13,8 @@ Telefonnummer des Meldenden: [% report.user.phone %]
 
 Meldung: [% report.detail %]
 
-Standort in Liegenschafteninventar anzeigen:
-https://gdi.intra.stzh.ch/geoserver_viewer/?t=Liegenschafteninventar_OGD&c=[% east %]%2C[% nord %]&s=1000&bl=Basiskarte%20Zuerich
+Standort in AV-Online anzeigen:
+http://webgis.intra.stzh.ch/AV_Online/Direct.asp?Map=AV&Search=Koord&West=[% west %]&Nord=[% nord %]&B=300
 
 
 Bei Fragen zu "Züri wie neu" wenden Sie sich bitte an gis-zentrum@zuerich.ch.

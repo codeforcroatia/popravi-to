@@ -1,8 +1,8 @@
 package FixMyStreet::Cobrand::FixMyStreet;
 use base 'FixMyStreet::Cobrand::UK';
 
-use Moo;
-with 'FixMyStreet::Roles::BoroughEmails';
+use strict;
+use warnings;
 
 use constant COUNCIL_ID_BROMLEY => 2482;
 use constant COUNCIL_ID_ISLEOFWIGHT => 2636;
@@ -135,9 +135,6 @@ sub munge_report_new_contacts {
     }
     if ( $bodies{'Bromley Council'} ) {
         @$contacts = grep { grep { $_ ne 'Waste' } @{$_->groups} } @$contacts;
-    }
-    if ( $bodies{'Hackney Council'} ) {
-        @$contacts = grep { $_->category ne 'Noise report' } @$contacts;
     }
     if ( $bodies{'TfL'} ) {
         # Presented categories vary if we're on/off a red route
@@ -389,28 +386,5 @@ sub report_new_munge_before_insert {
 
     FixMyStreet::Cobrand::Buckinghamshire::report_new_munge_before_insert($self, $report);
 }
-
-around 'munge_sendreport_params' => sub {
-    my ($orig, $self, $row, $h, $params) = @_;
-
-    my $to = $params->{To}->[0]->[0];
-    if ($to !~ /northamptonshire$/) {
-        return $self->$orig($row, $h, $params);
-    }
-
-    # The district areas won't exist in MapIt at some point, so look up what
-    # district this report would have been in and temporarily override the
-    # areas column so BoroughEmails::munge_sendreport_params can do its thing.
-    my ($lat, $lon) = ($row->latitude, $row->longitude);
-    my $district = FixMyStreet::MapIt::call( 'point', "4326/$lon,$lat", type => 'DIS', generation => 36 );
-    ($district) = keys %$district;
-
-    my $original_areas = $row->areas;
-    $row->areas(",$district,");
-
-    $self->$orig($row, $h, $params);
-
-    $row->areas($original_areas);
-};
 
 1;

@@ -633,16 +633,12 @@ sub delete_response_template {
 
 sub create_contact_ok {
     my $self = shift;
-    my %params = @_;
-    if (my $group = delete $params{group}) {
-        $params{extra}{group} = $group;
-    }
     my %contact_params = (
         state => 'confirmed',
         editor => 'Test',
         whenedited => \'current_timestamp',
         note => 'Created for test',
-        %params,
+        @_
     );
     my $contact = FixMyStreet::DB->resultset('Contact')->find_or_create( \%contact_params );
     ok $contact, 'found/created contact ' . $contact->category;;

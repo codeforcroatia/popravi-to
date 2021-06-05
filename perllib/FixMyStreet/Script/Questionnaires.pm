@@ -45,7 +45,7 @@ sub send_questionnaires_period {
 
         my $cobrand = $row->get_cobrand_logged;
         $cobrand->set_lang_and_domain($row->lang, 1);
-        FixMyStreet::Map::set_map_class($cobrand);
+        FixMyStreet::Map::set_map_class($cobrand->map_type);
 
         # Not all cobrands send questionnaires
         next unless $cobrand->send_questionnaires;

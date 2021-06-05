@@ -320,7 +320,7 @@
 			loading.hide();
 
 			if (wrap.is(":visible") && false === currentOpts.onCleanup(currentArray, currentIndex, currentOpts)) {
-                $('.fancybox-inline-tmp').trigger('fancybox-cancel');
+				$.event.trigger('fancybox-cancel');
 
 				busy = false;
 				return;
@@ -379,7 +379,7 @@
 						content.html( tmp.contents() ).fadeTo(currentOpts.changeFade, 1, _finish);
 					};
 
-                    $('.fancybox-inline-tmp').trigger('fancybox-change');
+					$.event.trigger('fancybox-change');
 
 					content
 						.empty()
@@ -597,7 +597,7 @@
 			}
 
 			if (currentOpts.type == 'iframe') {
-				$('<iframe id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '" frameborder="0" hspace="0" scrolling="' + selectedOpts.scrolling + '" src="' + currentOpts.href + '"></iframe>').appendTo(content);
+				$('<iframe id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '" frameborder="0" hspace="0" ' + ($.browser.msie ? 'allowtransparency="true""' : '') + ' scrolling="' + selectedOpts.scrolling + '" src="' + currentOpts.href + '"></iframe>').appendTo(content);
 			}
 
 			wrap.show();
@@ -897,7 +897,7 @@
 
 		busy = true;
 
-        $('.fancybox-inline-tmp').trigger('fancybox-cancel');
+		$.event.trigger('fancybox-cancel');
 
 		_abort();
 
@@ -942,7 +942,7 @@
 			title.empty().hide();
 			wrap.hide();
 
-            $('.fancybox-inline-tmp').trigger('fancybox-cleanup');
+			$.event.trigger('fancybox-cleanup');
 
 			content.empty();
 

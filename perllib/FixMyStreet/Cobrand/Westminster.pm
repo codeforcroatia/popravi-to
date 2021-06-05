@@ -153,10 +153,7 @@ sub categories_restriction {
     # on /report/new before a category is selected...
     return $rs->search( {
             'body.name' => 'Westminster City Council',
-            -or => [
-                'me.send_method' => undef, # Open311 categories
-                'me.send_method' => '', # Open311 categories that have been edited in the admin
-            ]
+            'me.send_method' => undef,
         }, { join => 'body' });
 }
 

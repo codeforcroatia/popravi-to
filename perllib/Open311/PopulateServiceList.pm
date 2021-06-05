@@ -251,8 +251,7 @@ sub _add_meta_to_contact {
         @{ $meta_data->{attributes} };
 
     # and then add back in any protected fields that we don't fetch
-    # sort by code for consistent sort order later on
-    push @meta, sort { $a->{code} cmp $b->{code} } values %$protected;
+    push @meta, values %$protected;
 
     # turn the data into something a bit more friendly to use
     @meta =
@@ -329,13 +328,11 @@ sub _get_new_groups {
     return [] unless $self->_current_body_cobrand && $self->_current_body_cobrand->enable_category_groups;
 
     my $groups = $self->_current_service->{groups} || [];
-    my @groups = map { Utils::trim_text($_) } @$groups;
-    return \@groups if @groups;
+    return $groups if @$groups;
 
     my $group = $self->_current_service->{group} || [];
     $group = [] if @$group == 1 && !$group->[0]; # <group></group> becomes [undef]...
-    @groups = map { Utils::trim_text($_) } @$group;
-    return \@groups;
+    return $group;
 }
 
 sub _groups_different {

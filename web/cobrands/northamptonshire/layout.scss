@@ -2,19 +2,6 @@
 
 @import "../sass/layout";
 
-#site-logo {
-    width: 450px;
-
-    // Prevents the wide double logo overlapping nav items at medium screen widths
-    @media (max-width: 60em) {
-        width: 260px;
-    }
-}
-
-#site-header {
-    padding: 20px 0;
-}
-
 #front-main {
     color: $base_fg;
     background-color: $base_bg;
@@ -24,34 +11,15 @@
     color: $dark;
 }
 
-.nav-menu {
-    a {
-        color: $nav_header_colour;
-        &:hover, &:visited {
-            color: $nav_header_colour;
-        }
-    }
-}
-
 .nav-menu--main {
-    a {
-        &:hover {
-            background-color: transparent;
-        }
-    }
-    a.report-a-problem-btn {
-        color: $white;
-        &:hover, &:visited {
-            background-color: $primary_b;
-        }
+    a.report-a-problem-btn:hover {
+        background-color: $nav_hover_background_colour;
     }
     span {
-        color: $nav_header_colour;
+        color: $nav_colour;
     }
-    span.report-a-problem-btn {
-        &:hover {
-            color: $nav_header_colour;
-        }
+    span.report-a-problem-btn:hover {
+        color: $nav_colour;
     }
 }
 

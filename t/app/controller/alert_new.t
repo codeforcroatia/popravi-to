@@ -18,52 +18,50 @@ foreach my $test (
     {
         email      => $user->email,
         type       => 'area_problems',
-        uri => '/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=area:1000:A_Location',
+        content    => 'Click the link in our confirmation email to activate your alert',
+        email_text => "confirms that you'd like to receive an email",
+        uri =>
+'/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=area:1000:A_Location',
         param1 => 1000
     },
     {
         email      => $user->email,
         type       => 'council_problems',
-        uri => '/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=council:1000:A_Location',
+        content    => 'Click the link in our confirmation email to activate your alert',
+        email_text => "confirms that you'd like to receive an email",
+        uri =>
+'/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=council:1000:A_Location',
         param1 => 1000,
         param2 => 1000,
     },
     {
         email      => $user->email,
         type       => 'ward_problems',
-        uri => '/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=ward:1000:1001:A_Location:Diff_Location',
+        content    => 'Click the link in our confirmation email to activate your alert',
+        email_text => "confirms that you'd like to receive an email",
+        uri =>
+'/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=ward:1000:1001:A_Location:Diff_Location',
         param1 => 1000,
         param2 => 1001,
     },
     {
         email      => $user->email,
         type       => 'local_problems',
-        uri => '/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=local:10.2:20.1',
+        content    => 'Click the link in our confirmation email to activate your alert',
+        email_text => "confirms that you'd like to receive an email",
+        uri =>
+'/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=local:10.2:20.1',
         param1 => 20.1,
         param2 => 10.2,
-    },
-    {
-        email => $user->email,
-        type => 'local_problems',
-        uri => '/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=local:10.2:20.1&distance=5',
-        param1 => 20.1,
-        param2 => 10.2,
-        param3 => 5,
     },
     {
         email      => $user->email,
         type       => 'new_updates',
+        content    => 'Click the link in our confirmation email to activate your alert',
+        email_text => "confirms that you'd like to receive an email",
         uri    => '/alert/subscribe?type=updates&rznvy=' . $user->email . '&id=' . $report->id,
         param1 => $report->id,
-    },
-    {
-        phone => 1,
-        email => $user->email,
-        type => 'local_problems',
-        uri => '/alert/subscribe?type=local&rznvy=' . $user->email . '&feed=local:10.2:20.1',
-        param1 => 20.1,
-        param2 => 10.2,
-    },
+    }
   )
 {
     subtest "$test->{type} alert correctly created" => sub {
@@ -71,20 +69,11 @@ foreach my $test (
 
         my $type = $test->{type};
 
-        my $phone_user;
-        if ($test->{phone}) {
-            FixMyStreet::override_config {
-                SMS_AUTHENTICATION => 1,
-            }, sub {
-                $phone_user = $mech->log_in_ok( '07700900002' );
-            };
-        }
-
         $mech->get_ok('/alert/subscribe?id=' . $report->id);
         my ($csrf) = $mech->content =~ /name="token" value="([^"]*)"/;
 
         $mech->get_ok( $test->{uri} . "&token=$csrf" );
-        $mech->content_contains('Click the link in our confirmation email to activate your alert');
+        $mech->content_contains( $test->{content} );
 
         my $user =
           FixMyStreet::DB->resultset('User')
@@ -98,7 +87,6 @@ foreach my $test (
                 alert_type => $type,
                 parameter  => $test->{param1},
                 parameter2 => $test->{param2},
-                parameter3 => $test->{param3},
                 confirmed  => 0,
             }
         );
@@ -107,7 +95,7 @@ foreach my $test (
 
         my $email = $mech->get_email;
         ok $email, "got an email";
-        like $mech->get_text_body_from_email($email), qr/confirms that you'd like to receive an email/i, "Correct email text";
+        like $mech->get_text_body_from_email($email), qr/$test->{email_text}/i, "Correct email text";
 
         my $url = $mech->get_link_from_email($email);
         my ($url_token) = $url =~ m{/A/(\S+)};
@@ -150,16 +138,6 @@ foreach my $test (
           FixMyStreet::DB->resultset('Alert')->find( { id => $existing_id, } );
 
         ok $alert->confirmed, 'alert set to confirmed';
-
-        if ($phone_user) {
-            $phone_user->discard_changes;
-            is $phone_user->email, $test->{email}, 'Phone user now has email';
-            is $phone_user->email_verified, 1, 'Phone user now has email';
-            my $deleted_user = FixMyStreet::DB->resultset("User")->find({id => $user->id });
-            is $deleted_user, undef, 'Email user deleted';
-            $mech->delete_user($phone_user);
-        }
-
         $mech->delete_user($user);
     };
 }
@@ -359,16 +337,6 @@ subtest 'Test body user signing someone else up for alerts' => sub {
         confirmed  => 1,
     });
     is $alert, undef, 'No alert created for staff user';
-
-    # Check that email is sent to newly subscribed user.
-    my $email = $mech->get_email;
-    my $title = $report->title;
-    like $mech->get_text_body_from_email($email), qr/You have been subscribed to FixMyStreet alerts for $title/i, "Correct email text";
-    my @urls = $mech->get_link_from_email($email, 1);
-    ok $urls[0] =~ m{/report/\S+}, "report URL '$urls[0]'";
-    ok $urls[-1] =~ m{/A/\S+}, "unsubscribe URL '$urls[-1]'";
-
-    $mech->clear_emails_ok;
 };
 
 $report->delete; # Emails sent otherwise below
@@ -379,7 +347,6 @@ $mech->create_body_ok(2326, 'Cheltenham Borough Council');
 subtest "Test two-tier council alerts" => sub {
     for my $alert (
         { feed => "local:51.896269:-2.093063",          result => '/rss/l/51.896269,-2.093063' },
-        { feed => "local:51.896269:-2.093063", result => '/rss/l/51.896269,-2.093063/4', distance => 4 },
         { feed => "area:2326:Cheltenham",               result => '/rss/area/Cheltenham' },
         { feed => "area:2326:4544:Cheltenham:Lansdown", result => '/rss/area/Cheltenham/Lansdown'  },
         { feed => "area:2226:Gloucestershire",          result => '/rss/area/Gloucestershire' },
@@ -402,7 +369,6 @@ subtest "Test two-tier council alerts" => sub {
                 button => 'rss',
                 with_fields => {
                     feed => $alert->{feed},
-                    distance => $alert->{distance},
                 }
             } );
         };
@@ -497,8 +463,7 @@ subtest "Test normal alert signups and that alerts are sent" => sub {
 
     my $email = $emails[0];
     is +(my $c = () = $email->as_string =~ /Other User/g), 2, 'Update name given, twice';
-    unlike $email->as_string, qr/Anonymous User/, 'Update name not given for anonymous update';
-    like $email->as_string, qr/Posted anonymously/, '"Posted anonymously" text shown for anonymous update';
+    unlike $email->as_string, qr/Anonymous User/, 'Update name not given';
 
     $report->discard_changes;
     ok $report->get_extra_metadata('closure_alert_sent_at'), 'Closure time set';
@@ -955,17 +920,11 @@ subtest 'check staff updates can include sanitized HTML' => sub {
     $mech->delete_user( $user3 );
 };
 
-FixMyStreet::override_config {
-    ALLOWED_COBRANDS => 'fixmystreet',
-    SMS_AUTHENTICATION => 1,
-    TWILIO_ACCOUNT_SID => 'AC123',
-    MAPIT_URL => 'http://mapit.uk/',
-}, sub {
-  subtest 'test notification preferences' => sub {
+subtest 'test notification preferences' => sub {
     # Create a user with both email and phone verified
     my $user1 = $mech->create_user_ok('alerts@example.com',
         name => 'Alert User',
-        phone => '07700900003',
+        phone => '01234',
         email_verified => 1,
         phone_verified => 1,
     );
@@ -978,12 +937,6 @@ FixMyStreet::override_config {
     my ($report) = $mech->create_problems_for_body(1, $body->id, 'Testing', {
         user => $user2,
     });
-
-    my $user0 = $mech->log_in_ok('07700900002');
-    $mech->get_ok('/alert/subscribe?id=' . $report->id);
-    $mech->content_contains('Receive a text when updates are left');
-    $mech->submit_form_ok({ button => 'alert' });
-    $mech->content_contains('Text alert created');
 
     my $update = $mech->create_comment_for_problem($report, $user3, 'Anonymous User', 'This is some more update text', 't', 'confirmed', undef, { confirmed  => $r_dt });
 
@@ -1009,27 +962,32 @@ FixMyStreet::override_config {
     $mech->email_count_is(0);
     is @{$twilio->texts}, 0;
 
-    foreach (
-        { extra => { update_notify => 'phone' } },
-        { email_verified => 0 },
-        { extra => { update_notify => undef } },
-    ) {
-        FixMyStreet::DB->resultset('AlertSent')->delete;
-        $user1->update($_);
-        FixMyStreet::Script::Alerts::send();
-        $mech->email_count_is(0);
-        is @{$twilio->texts}, 1, 'got a text';
-        my $text = $twilio->texts->[0]->{Body};
-        my $id = $report->id;
-        like $text, qr{Your report \($id\) has had an update; to view: http://www.example.org/report/$id\n\nTo stop: http://www.example.org/A/[A-Za-z0-9]+}, 'text looks okay';
-        @{$twilio->texts} = ();
-    }
+    FixMyStreet::override_config {
+        ALLOWED_COBRANDS => 'fixmystreet',
+        SMS_AUTHENTICATION => 1,
+        TWILIO_ACCOUNT_SID => 'AC123',
+        MAPIT_URL => 'http://mapit.uk/',
+    }, sub {
+        foreach (
+            { extra => { update_notify => 'phone' } },
+            { email_verified => 0 },
+            { extra => { update_notify => undef } },
+        ) {
+            FixMyStreet::DB->resultset('AlertSent')->delete;
+            $user1->update($_);
+            FixMyStreet::Script::Alerts::send();
+            $mech->email_count_is(0);
+            is @{$twilio->texts}, 1, 'got a text';
+            my $text = $twilio->texts->[0]->{Body};
+            my $id = $report->id;
+            like $text, qr{Your report \($id\) has had an update; to view: http://www.example.org/report/$id\n\nTo stop: http://www.example.org/A/[A-Za-z0-9]+}, 'text looks okay';
+            @{$twilio->texts} = ();
+        }
+    };
 
     $mech->delete_user( $user1 );
     $mech->delete_user( $user2 );
     $mech->delete_user( $user3 );
-  };
 };
-
 
 done_testing();

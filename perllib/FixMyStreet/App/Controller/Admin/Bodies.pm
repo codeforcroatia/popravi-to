@@ -128,7 +128,7 @@ sub edit : Chained('body') : PathPart('') : Args(0) {
     $c->stash->{template} = 'admin/bodies/body.html';
     $c->forward('/admin/fetch_contacts');
     $c->stash->{contacts} = [ $c->stash->{contacts}->all ];
-    $c->forward('/report/stash_category_groups', [ $c->stash->{contacts} ]);
+    $c->forward('/report/stash_category_groups', [ $c->stash->{contacts}, 0 ]);
 
     return 1;
 }

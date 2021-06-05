@@ -27,18 +27,14 @@ OpenLayers.Layer.VectorBase = OpenLayers.Class(OpenLayers.Layer.Vector, {
     },
 
     relevant: function(category, group) {
-      var selected = fixmystreet.reporting.selectedCategory();
-      group = group || $('#inspect_category_group').val() || selected.group || '';
-      category = category || $('#inspect_form_category').val() || selected.category || '';
+      category = category || $('#inspect_form_category').val() || $('#form_category').val();
+      group = group || $('#inspect_category_group').val() || $('#category_group').val();
       var layer = this.fixmystreet,
           relevant;
       if (layer.relevant) {
           relevant = layer.relevant({category: category, group: group});
       } else if (layer.asset_group) {
-          // Check both group and category because e.g. Isle of Wight has
-          // layers attached with groups that should also apply to categories
-          // with the same name
-          relevant = (layer.asset_group === group || layer.asset_group === category);
+          relevant = (layer.asset_group === group);
       } else {
           relevant = (OpenLayers.Util.indexOf(layer.asset_category, category) != -1);
       }
@@ -450,7 +446,8 @@ function check_zoom_message_visibility() {
         return;
     }
     if (this.relevant()) {
-        var category = fixmystreet.reporting.selectedCategory().category,
+        var select = this.fixmystreet.asset_group ? 'category_group' : 'form_category',
+            category = $("select#" + select).val() || '',
             prefix = category.replace(/[^a-z]/gi, ''),
             id = "category_meta_message_" + prefix,
             $p = $('.category_meta_message'),
@@ -458,16 +455,13 @@ function check_zoom_message_visibility() {
         if ($p.length === 0) {
             $p = $("<p>").prop('class', 'category_meta_message');
             if ($('html').hasClass('mobile')) {
-                $p.appendTo('#map_box');
-            } else {
-                $p.appendTo('.js-reporting-page--active .js-post-category-messages');
+                $p.click(function() {
+                    $("#mob_ok").trigger('click');
+                }).addClass("btn");
             }
+            $p.prependTo('#js-post-category-messages');
         }
         $p.prop('id', id);
-
-        if (this.getVisibility() && $('html').hasClass('mobile')) {
-            fixmystreet.pageController.addMapPage(this);
-        }
 
         if (this.getVisibility() && this.inRange) {
             message = get_asset_pick_message.call(this);
@@ -477,7 +471,6 @@ function check_zoom_message_visibility() {
         $p.html(message);
     } else {
         update_message_display.call(this, null);
-        $('#' + this.id + '_map').remove();
     }
 }
 
@@ -485,7 +478,7 @@ function get_asset_pick_message() {
     var message;
     if (typeof this.fixmystreet.asset_item_message !== 'undefined') {
         message = this.fixmystreet.asset_item_message;
-        message = message.replace(/ITEM/g, this.fixmystreet.asset_item);
+        message = message.replace('ITEM', this.fixmystreet.asset_item);
     } else {
         message = 'You can pick a <b class="asset-' + this.fixmystreet.asset_type + '">' + this.fixmystreet.asset_item + '</b> from the map &raquo;';
     }
@@ -542,8 +535,6 @@ function layer_visibilitychanged() {
         for (j = 0; j < controls.length; j++) {
             controls[j].deactivate();
         }
-        // Deactivating 2 controls means the pin layer z-index ends up being 1 too high...?
-        fixmystreet.map.resetLayersZIndex();
     }
 
     check_zoom_message_visibility.call(this);
@@ -1174,9 +1165,11 @@ fixmystreet.message_controller = (function() {
     var stopperId = 'js-category-stopper',
         stoppers = [],
         ignored_bodies = [];
+        msg_after_bodies = [];
 
     // This shows an error message because e.g. an asset isn't selected or a road hasn't been clicked
     function show_responsibility_error(id, asset_item, asset_type) {
+        $("#js-roads-responsibility").removeClass("hidden");
         $("#js-roads-responsibility .js-responsibility-message").addClass("hidden");
         var asset_strings = $(id).find('.js-roads-asset');
         if (asset_item) {
@@ -1194,13 +1187,6 @@ fixmystreet.message_controller = (function() {
             });
             return href;
         });
-        if ($('html').hasClass('mobile')) {
-            var msg = $(id).html();
-            $div = $('<div class="js-mobile-not-an-asset"></div>').html(msg);
-            $div.appendTo('#map_box');
-        } else {
-            $("#js-roads-responsibility").removeClass("hidden");
-        }
         $(id).removeClass("hidden");
     }
 
@@ -1212,56 +1198,43 @@ fixmystreet.message_controller = (function() {
         } else {
             $(id).addClass("hidden");
         }
-        $('.js-mobile-not-an-asset').remove();
         if (!$("#js-roads-responsibility .js-responsibility-message:not(.hidden)").length) {
             $("#js-roads-responsibility").addClass("hidden");
         }
     }
 
-    // Show the reporting form, unless the road responsibility message is visible.
+    // This shows the reporting form
     function enable_report_form() {
-        if ( $('#js-roads-responsibility').is(':visible') ) {
-            return;
-        }
-        $('.js-reporting-page--next').prop('disabled', false);
-        $("#mob_ok, #toggle-fullscreen").removeClass('hidden-js');
+        $(".js-hide-if-invalid-category").show();
+        $(".js-hide-if-invalid-category_extras").show();
     }
 
     // This hides the reporting form, apart from the category selection
     // And perhaps the category_extras unless asked not to
-    function disable_report_form(type) {
-        if ($('html').hasClass('mobile') && type !== 'stopper') {
-            $("#mob_ok, #toggle-fullscreen").addClass('hidden-js');
-        } else {
-            $('.js-reporting-page--next').prop('disabled', true);
+    function disable_report_form(keep_category_extras) {
+        $(".js-hide-if-invalid-category").hide();
+        if (!keep_category_extras) {
+            $(".js-hide-if-invalid-category_extras").hide();
         }
     }
 
     // This hides the responsibility message, and (unless a
     // stopper message or dupes are shown) reenables the report form
-    function responsibility_off(layer, type) {
-        var layer_data = layer.fixmystreet;
+    function responsibility_off(layer_data) {
         var id = layer_data.no_asset_msg_id || '#js-not-an-asset';
         hide_responsibility_errors(id, layer_data);
         if (!document.getElementById(stopperId)) {
             enable_report_form();
-            if (type === 'road') {
-                $('#' + layer.id + '_map').remove();
-            }
         }
     }
 
     // This disables the report form and (unless a stopper
     // message is shown) shows a responsibility message
-    function responsibility_on(layer, type, override_id) {
-        var layer_data = layer.fixmystreet;
+    function responsibility_on(layer_data, override_id) {
         var id = override_id || layer_data.no_asset_msg_id || '#js-not-an-asset';
-        disable_report_form(type);
-        if (type === 'road') {
-            fixmystreet.pageController.addMapPage(layer);
-        }
+        disable_report_form();
         hide_responsibility_errors(id, layer_data);
-        if (!document.getElementById(stopperId)) {
+        if (!document.getElementById(stopperId) && !$('#js-duplicate-reports').is(':visible')) {
             show_responsibility_error(id, layer_data.asset_item, layer_data.asset_type);
         }
     }
@@ -1274,13 +1247,13 @@ fixmystreet.message_controller = (function() {
     }
 
     function is_matching_stopper(stopper, i) {
-        var body = $('#form_category_fieldset').data('body');
+        var body = $('#form_category').data('body');
 
         if (OpenLayers.Util.indexOf(ignored_bodies, body) > -1) {
             return false;
         }
 
-        var category = fixmystreet.reporting.selectedCategory().category;
+        var category = $('#form_category').val();
         if (category != stopper.category) {
             return false;
         }
@@ -1296,6 +1269,14 @@ fixmystreet.message_controller = (function() {
         }
     }
 
+    function stopper_after(stopper) {
+        var body =  fixmystreet.bodies[0];
+        if (OpenLayers.Util.indexOf( msg_after_bodies, body) > -1 ) {
+            return true;
+        }
+        return false;
+    }
+
     function check_for_stopper() {
         var only_send = fixmystreet.body_overrides.get_only_send();
         if (only_send == 'Highways England') {
@@ -1307,7 +1288,9 @@ fixmystreet.message_controller = (function() {
         var matching = $.grep(stoppers, is_matching_stopper);
         if (!matching.length) {
             $id.remove();
-            enable_report_form();
+            if ( !$('#js-roads-responsibility').is(':visible') && !$('#js-duplicate-reports').is(':visible') ) {
+                enable_report_form();
+            }
             return;
         }
 
@@ -1322,28 +1305,32 @@ fixmystreet.message_controller = (function() {
         $msg.attr('role', 'alert');
         $msg.attr('aria-live', 'assertive');
 
-        // XXX Will this need to move the message from one 'page' to another ever?
         if ($id.length) {
             $id.replaceWith($msg);
         } else {
-            $msg.appendTo('.js-reporting-page--active .js-post-category-messages');
+            if (stopper_after(stopper)) {
+                $msg.insertAfter('#js-post-category-messages');
+            } else {
+                $msg.insertBefore('#js-post-category-messages');
+            }
+            $msg[0].scrollIntoView();
         }
-        disable_report_form('stopper');
+        disable_report_form(stopper.keep_category_extras);
     }
 
     $(fixmystreet).on('report_new:category_change', check_for_stopper);
 
     return {
         asset_found: function() {
-            responsibility_off(this, 'asset');
+            responsibility_off(this.fixmystreet);
             return ($('#' + stopperId).length);
         },
 
         asset_not_found: function() {
             if (!this.visibility) {
-                responsibility_off(this, 'asset');
+                responsibility_off(this.fixmystreet);
             } else {
-                responsibility_on(this, 'asset');
+                responsibility_on(this.fixmystreet);
             }
         },
 
@@ -1352,13 +1339,13 @@ fixmystreet.message_controller = (function() {
         // plus an ID of the message to be shown
         road_found: function(layer, feature, criterion, msg_id) {
             if (fixmystreet.assets.selectedFeature()) {
-                responsibility_off(layer, 'road');
+                responsibility_off(layer.fixmystreet);
             } else if (!criterion || criterion(feature)) {
-                responsibility_off(layer, 'road');
+                responsibility_off(layer.fixmystreet);
             } else {
                 fixmystreet.body_overrides.do_not_send(layer.fixmystreet.body);
                 if (is_only_body(layer.fixmystreet.body)) {
-                    responsibility_on(layer, 'road', msg_id);
+                    responsibility_on(layer.fixmystreet, msg_id);
                 }
             }
         },
@@ -1369,12 +1356,12 @@ fixmystreet.message_controller = (function() {
         road_not_found: function(layer) {
             // don't show the message if clicking on a highways england road
             if (fixmystreet.body_overrides.get_only_send() == 'Highways England' || !layer.visibility) {
-                responsibility_off(layer, 'road');
+                responsibility_off(layer.fixmystreet);
             } else if (fixmystreet.assets.selectedFeature()) {
                 fixmystreet.body_overrides.allow_send(layer.fixmystreet.body);
-                responsibility_off(layer, 'road');
+                responsibility_off(layer.fixmystreet);
             } else if (is_only_body(layer.fixmystreet.body)) {
-                responsibility_on(layer, 'road');
+                responsibility_on(layer.fixmystreet);
             }
         },
 
@@ -1390,6 +1377,10 @@ fixmystreet.message_controller = (function() {
 
         add_ignored_body: function(body) {
             ignored_bodies.push(body);
+        },
+
+        add_msg_after_bodies: function(body) {
+            msg_after_bodies.push(body);
         }
     };
 

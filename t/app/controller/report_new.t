@@ -63,7 +63,7 @@ $mech->create_contact_ok(
 );
 $mech->create_contact_ok(
     body_id => $body_ids{2227}, # Hampshire
-    category => 'Street Lighting',
+    category => 'Street  lighting',
     email => 'highways@example.com',
 );
 my $contact9 = $mech->create_contact_ok(
@@ -410,7 +410,7 @@ foreach my $test (
                     photo1        => '',
                     photo2        => '',
                     photo3        => '',
-                    category      => undef,
+                    category      => '-- Pick a category --',
                 },
                 "user's details prefilled"
             );
@@ -553,7 +553,7 @@ foreach my $test (
                     photo1        => '',
                     photo2        => '',
                     photo3        => '',
-                    category      => undef,
+                    category      => '-- Pick a category --',
                 },
                 "user's details prefilled"
             );
@@ -644,50 +644,8 @@ subtest "category groups" => sub {
         $contact9->update( { extra => { group => 'Pavements' } } );
         $contact10->update( { extra => { group => 'Roads' } } );
         $mech->get_ok("/report/new?lat=$saved_lat&lon=$saved_lon");
-
-        my $div = '<div[^>]*>\s*';
-        my $div_end = '</div>\s*';
-        my $pavements_label = '<label[^>]* for="category_Pavements">Pavements</label>\s*' . $div_end;
-        my $pavements_input = '<input[^>]* value="Pavements" data-subcategory="Pavements">\s*';
-        my $pavements_input_checked = '<input[^>]* value="Pavements" data-subcategory="Pavements" checked>\s*';
-        my $roads = $div . '<input[^>]* value="Roads" data-subcategory="Roads">\s*<label[^>]* for="category_Roads">Roads</label>\s*' . $div_end;
-        my $trees_label = '<label [^>]* for="category_\d+">Trees</label>\s*' . $div_end;
-        my $trees_input = $div . '<input[^>]* value=\'Trees\'>\s*';
-        my $trees_input_checked = $div . '<input[^>]* value=\'Trees\' checked>\s*';
-        $mech->content_like(qr{$pavements_input$pavements_label$roads$trees_input$trees_label</fieldset>});
-        my $streetlighting = $div . '<input[^>]*value=\'Street lighting\'>\s*<label[^>]* for="subcategory_\d+">Street lighting</label>\s*' . $div_end;
-        my $potholes_label = '<label[^>]* for="subcategory_\d+">Potholes</label>\s*' . $div_end;
-        my $potholes_input = $div . '<input[^>]* value=\'Potholes\'>\s*';
-        my $potholes_input_checked = $div . '<input[^>]* value=\'Potholes\' checked>\s*';
-        my $options = "$potholes_input$potholes_label$streetlighting</fieldset>";
-        my $optionsS = "$potholes_input_checked$potholes_label$streetlighting</fieldset>";
-        my $fieldset_pavements = '<fieldset[^>]*id="subcategory_Pavements">\s*<legend>Pavements: Subcategory</legend>\s*';
-        my $fieldset_roads = '<fieldset[^>]*id="subcategory_Roads">\s*<legend>Roads: Subcategory</legend>\s*';
-        $mech->content_like(qr{$fieldset_pavements$options});
-        $mech->content_like(qr{$fieldset_roads$options});
-        foreach my $key ('category', 'filter_group') { # Server-submission of top-level, or clicking on map with hidden field
-            $mech->get_ok("/report/new?lat=$saved_lat&lon=$saved_lon&$key=Pavements");
-            $mech->content_like(qr{$pavements_input_checked$pavements_label$roads$trees_input$trees_label</fieldset>});
-            $mech->content_like(qr{$fieldset_pavements$options});
-            $mech->content_like(qr{$fieldset_roads$options});
-        }
-        $mech->get_ok("/report/new?lat=$saved_lat&lon=$saved_lon&category=Trees");
-        $mech->content_like(qr{$pavements_input$pavements_label$roads$trees_input_checked$trees_label</fieldset>});
-        $mech->content_like(qr{$fieldset_pavements$options});
-        $mech->content_like(qr{$fieldset_roads$options});
-        # Server submission of pavement subcategory
-        $mech->get_ok("/report/new?lat=$saved_lat&lon=$saved_lon&category=Pavements&category.Pavements=Potholes");
-        $mech->content_like(qr{$pavements_input_checked$pavements_label$roads$trees_input$trees_label</fieldset>});
-        $mech->content_like(qr{$fieldset_pavements$optionsS});
-        $mech->content_like(qr{$fieldset_roads$options});
-
-        $contact9->update( { extra => { group => 'Lights' } } );
-        $mech->get_ok("/report/new?lat=$saved_lat&lon=$saved_lon");
-        $streetlighting = $div . '<input[^>]*value=\'Street lighting\'>\s*<label[^>]* for="category_\d+">Street lighting</label>\s*' . $div_end;
-        $potholes_label = '<label[^>]* for="category_\d+">Potholes</label>\s*' . $div_end;
-        $mech->content_like(qr{$potholes_input$potholes_label$roads$streetlighting$trees_input$trees_label</fieldset>});
-        $mech->content_unlike(qr{$fieldset_pavements});
-        $mech->content_like(qr{$fieldset_roads$options});
+        $mech->content_like(qr{<optgroup label="Pavements">\s*<option value='Potholes'>Potholes</option>\s*<option value='Street lighting'>Street lighting</option></optgroup>});
+        $mech->content_like(qr{<optgroup label="Roads">\s*<option value='Potholes'>Potholes</option>\s*<option value='Street lighting'>Street lighting</option></optgroup>});
     };
 };
 
@@ -784,12 +742,12 @@ subtest "check map click ajax response" => sub {
         ALLOWED_COBRANDS => 'fixmystreet',
         MAPIT_URL => 'http://mapit.uk/',
     }, sub {
-        $extra_details = $mech->get_ok_json( '/report/new/ajax?w=1&latitude=' . $saved_lat . '&longitude=' . $saved_lon );
+        $extra_details = $mech->get_ok_json( '/report/new/ajax?latitude=' . $saved_lat . '&longitude=' . $saved_lon );
     };
     # this order seems to be random so check individually/sort
     like $extra_details->{councils_text}, qr/Cheltenham Borough Council/, 'correct council text for two tier';
     like $extra_details->{councils_text}, qr/Gloucestershire County Council/, 'correct council text for two tier';
-    like $extra_details->{category}, qr/Pothol\x{00E9}s.*Trees/s, 'category looks correct for two tier council';
+    like $extra_details->{category}, qr/Pothol\x{00E9}s.*Street lighting/, 'category looks correct for two tier council';
     my @sorted_bodies = sort @{ $extra_details->{bodies} };
     is_deeply \@sorted_bodies, [ "Cheltenham Borough Council", "Gloucestershire County Council" ], 'correct bodies for two tier';
     ok !$extra_details->{titles_list}, 'Non Bromley does not send back list of titles';

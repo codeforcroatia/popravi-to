@@ -61,38 +61,12 @@ sub geocoder_munge_results {
     $result->{display_name} =~ s/, London Borough of Hackney//;
 }
 
-sub address_for_uprn {
-    my ($self, $uprn) = @_;
-
-    my $api = $self->feature('address_api');
-    my $url = $api->{url};
-    my $key = $api->{key};
-
-    $url .= '?uprn=' . uri_escape_utf8($uprn);
-    my $ua = LWP::UserAgent->new;
-    $ua->default_header(Authorization => $key);
-    my $res = $ua->get($url);
-    my $data = decode_json($res->decoded_content);
-    my $address = $data->{data}->{address}->[0];
-    return "" unless $address;
-
-    my $string = join(", ",
-        grep { $_ && $_ ne 'Hackney' }
-        map { s/((^\w)|(\s\w))/\U$1/g; $_ }
-        map { lc $address->{"line$_"} }
-        (1..3)
-    );
-    $string .= ", $address->{postcode}";
-    return $string;
-}
-
 sub addresses_for_postcode {
     my ($self, $postcode) = @_;
 
     my $api = $self->feature('address_api');
     my $url = $api->{url};
     my $key = $api->{key};
-    my $pageAttr = $api->{pageAttr};
 
     $url .= '?format=detailed&postcode=' . uri_escape_utf8($postcode);
     my $ua = LWP::UserAgent->new;
@@ -104,7 +78,7 @@ sub addresses_for_postcode {
     for (my $page = 1; $page <= $pages; $page++) {
         my $res = $ua->get($url . '&page=' . $page);
         my $data = decode_json($res->decoded_content);
-        $pages = $data->{data}->{$pageAttr} || 0;
+        $pages = $data->{data}->{pageCount} || 0;
         foreach my $address (@{$data->{data}->{address}}) {
             unless ($address->{locality} eq 'HACKNEY') {
                 $outside = 1;
@@ -238,12 +212,6 @@ sub get_body_sender {
     return $self->SUPER::get_body_sender($body, $problem);
 }
 
-sub munge_report_new_contacts {
-    my ($self, $contacts) = @_;
-    @$contacts = grep { $_->category ne 'Noise report' } @$contacts;
-    $self->SUPER::munge_report_new_contacts($contacts);
-}
-
 # Translate email address to actual delivery address
 sub noise_destination_email {
     my ($self, $row, $name) = @_;
@@ -263,7 +231,6 @@ sub munge_sendreport_params {
         if (my $recipient = $self->noise_destination_email($row, $name)) {
             $params->{To} = $recipient;
         }
-        $params->{Subject} = "Noise report: " . $row->title;
         return;
     }
 

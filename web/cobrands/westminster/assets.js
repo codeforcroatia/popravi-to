@@ -49,8 +49,7 @@ OpenLayers.Layer.VectorAssetWestminsterSubcatUPRN = OpenLayers.Class(OpenLayers.
     CLASS_NAME: 'OpenLayers.Layer.VectorAssetWestminsterSubcatUPRN'
 });
 
-var proxy_url = fixmystreet.staging ? 'https://westminster.staging/' : 'https://westminster.assets/';
-var url_base = 'https://tilma.mysociety.org/resource-proxy/proxy.php?' + proxy_url;
+var url_base = 'https://tilma.mysociety.org/resource-proxy/proxy.php?https://westminster.assets/';
 
 var defaults = {
     http_options: {
@@ -120,15 +119,10 @@ function add_to_uprn_select($select, assets) {
 
 function construct_uprn_select(assets, has_children) {
     old_uprn = $('#uprn').val();
+    $("#uprn_select").remove();
     $('.category_meta_message').html('');
-    var $div = $("#uprn_select");
-    if (!$div.length) {
-        $div = $('<div data-page-name="uprn" class="js-reporting-page extra-category-questions" id="uprn_select"></div>');
-        $div.insertBefore('.js-reporting-page[data-page-name="photo"]');
-    }
-    $div.removeClass('js-reporting-page--skip');
+    var $div = $('<div class="extra-category-questions" id="uprn_select">');
     if (assets.length > 1 || has_children) {
-        $div.empty();
         $div.append('<label for="uprn">Please choose a property:</label>');
         var $select = $('<select id="uprn" class="form-control" name="UPRN" required>');
         $select.append('<option value="">---</option>');
@@ -137,7 +131,7 @@ function construct_uprn_select(assets, has_children) {
     } else {
         $div.html('You have selected <b>' + assets[0].attributes.ADDRESS + '</b>');
     }
-    $div.append("<button class='btn btn--block btn--final js-reporting-page--next'>Continue</button>");
+    $div.appendTo('#js-post-category-messages');
 }
 
 $.each(layer_data, function(i, o) {
@@ -196,7 +190,7 @@ $.each(layer_data, function(i, o) {
             },
             asset_not_found: function() {
                 $('.category_meta_message').html('You can pick a <b class="asset-spot">' + this.fixmystreet.asset_item + '</b> from the map &raquo;');
-                $("#uprn_select").addClass('js-reporting-page--skip');
+                $("#uprn_select").remove();
                 fixmystreet.message_controller.asset_not_found.call(this);
             }
         }
@@ -220,55 +214,18 @@ layer_data = [
     { category: 'Signs and bollards', subcategories: [ '1' ], subcategory_id: '#form_featuretypecode', item: 'bollard', layers: [ 42, 52 ] },
     { category: 'Signs and bollards', subcategories: [ 'PLFP' ], subcategory_id: '#form_featuretypecode', item: 'feeder pillar', layers: [ 56 ] },
     { category: 'Signs and bollards', subcategories: [ '3' ], subcategory_id: '#form_featuretypecode', item: 'sign', layers: [ 48, 58, 54 ] },
-    { category: 'Signs and bollards', subcategories: [ '2' ], subcategory_id: '#form_featuretypecode', item: 'street nameplate', layers: [ 46 ] },
-
-    {
-        category: 'Busking and Street performance',
-        outFields: 'Site,Category,Terms_Conditions,UPRN',
-        attr: 'UPRN',
-        item: 'street entertainment pitch',
-        layers: [ 66 ],
-        actions: {
-            asset_found: function(asset) {
-                // Remove any existing street entertainment messages using function below.
-                this.fixmystreet.actions.asset_not_found.call(this);
-
-                var attr = asset.attributes;
-                var site = attr.Site;
-                var category = attr.Category;
-                var terms = attr.Terms_Conditions;
-
-                var $msg = $('<div class="js-street-entertainment-message box-warning"></div>');
-                var $dl = $("<dl></dl>").appendTo($msg);
-
-                $dl.append("<dt>Site</dt>");
-                $dl.append($("<dd></dd>").text(site));
-
-                $dl.append("<dt>Category</dt>");
-                $dl.append($("<dd></dd>").text(category));
-
-                $dl.append("<dt>Terms & conditions</dt>");
-                $dl.append($("<dd></dd>").html(terms));
-
-                $msg.prependTo('#js-post-category-messages');
-            },
-            asset_not_found: function() {
-                $('.js-street-entertainment-message').remove();
-            }
-        }
-    }
+    { category: 'Signs and bollards', subcategories: [ '2' ], subcategory_id: '#form_featuretypecode', item: 'street nameplate', layers: [ 46 ] }
 ];
 
 $.each(layer_data, function(i, o) {
     var layers_added = [];
-    var attr = o.attr || 'central_asset_id';
-    var outFields = o.outFields || attr;
+    var attr = 'central_asset_id';
     var params = $.extend(true, {}, defaults, {
         asset_category: o.category,
         asset_item: o.item,
         http_options: {
             params: {
-                outFields: outFields
+                outFields: attr
             }
         },
         attributes: {}
@@ -292,11 +249,6 @@ $.each(layer_data, function(i, o) {
         };
     } else {
         params.attributes[attr] = attr;
-    }
-
-    if (o.actions) {
-        params.select_action = true;
-        params.actions = o.actions;
     }
 
     $.each(o.layers, function(i, l) {

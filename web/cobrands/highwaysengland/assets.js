@@ -66,11 +66,11 @@ fixmystreet.assets.add(defaults, {
             fixmystreet.message_controller.road_found(layer, feature, function(feature) {
                 if (feature.attributes.area_name.indexOf('DBFO') === -1) {
                     $('#js-top-message').show();
-                    $('.js-reporting-page--category').removeClass('hidden-js');
+                    $('#form_category_row').show();
                     return true;
                 } else {
                     $('#js-top-message').hide();
-                    $('.js-reporting-page--category').addClass('hidden-js');
+                    $('#form_category_row').hide();
                     return false;
                 }
             }, '#js-dbfo-road');
@@ -78,7 +78,7 @@ fixmystreet.assets.add(defaults, {
         not_found: function(layer) {
           fixmystreet.message_controller.road_not_found(layer);
           $('#js-top-message').hide();
-          $('.js-reporting-page--category').addClass('hidden-js');
+          $('#form_category_row').hide();
         }
     }
 });

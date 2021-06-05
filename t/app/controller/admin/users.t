@@ -685,9 +685,7 @@ subtest "Removing account from admin" => sub {
     $user->discard_changes;
     is $user->name, '', 'Name gone';
     is $user->password, '', 'Password gone';
-    is $user->email, 'removed-' . $user->id . '@example.org', 'Email gone';
-    $mech->get_ok( '/admin/report_edit/' . $user->problems->first->id );
-    $mech->content_contains("name='username' value=''>");
+    is $user->email, 'removed-' . $user->id . '@example.org', 'Email gone'
 };
 
 subtest "can view list of user's alerts" => sub {

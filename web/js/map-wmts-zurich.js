@@ -4,55 +4,99 @@
 
 // From 'fullExtent' from http://www.gis.stadt-zuerich.ch/maps/rest/services/tiled95/LuftbildHybrid/MapServer?f=pjson
 fixmystreet.maps.layer_bounds = new OpenLayers.Bounds(
-    2480237, // W
-    1062032, // S
-    2846837, // E
-    1315832); // N
+    2672499, // W
+    1238999, // S
+    2689999, // E
+    1256999); // N
 
 fixmystreet.maps.matrix_ids = [
   {
-    "scaleDenominator": 256000,
+    "matrixHeight": 7,
+    "scaleDenominator": 241904.761905,
     "identifier": "0",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 13
   },
   {
-    "scaleDenominator": 128000,
+    "matrixHeight": 14,
+    "scaleDenominator": 120952.380952,
     "identifier": "1",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 25
   },
   {
-    "scaleDenominator": 64000,
+    "matrixHeight": 28,
+    "scaleDenominator": 60476.1904761,
     "identifier": "2",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 49
   },
   {
-    "scaleDenominator": 32000,
+    "matrixHeight": 56,
+    "scaleDenominator": 30238.0952382,
     "identifier": "3",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 97
   },
   {
-    "scaleDenominator": 16000,
+    "matrixHeight": 111,
+    "scaleDenominator": 15119.0476189,
     "identifier": "4",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 194
   },
   {
-    "scaleDenominator": 8000,
+    "matrixHeight": 222,
+    "scaleDenominator": 7559.52380964,
     "identifier": "5",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 388
   },
   {
-    "scaleDenominator": 4000,
+    "matrixHeight": 443,
+    "scaleDenominator": 3779.76190464,
     "identifier": "6",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 776
   },
   {
-    "scaleDenominator": 2000,
+    "matrixHeight": 886,
+    "scaleDenominator": 1889.8809525,
     "identifier": "7",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 1551
   },
   {
-    "scaleDenominator": 1000,
+    "matrixHeight": 1772,
+    "scaleDenominator": 944.940476071,
     "identifier": "8",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 3101
   },
   {
-    "scaleDenominator": 500,
+    "matrixHeight": 3544,
+    "scaleDenominator": 472.470238214,
     "identifier": "9",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 6201
   },
   {
-    "scaleDenominator": 250,
+    "matrixHeight": 7087,
+    "scaleDenominator": 236.235118929,
     "identifier": "10",
+    "tileWidth": 512,
+    "tileHeight": 512,
+    "matrixWidth": 12402
   }
 ];
 
@@ -68,7 +112,11 @@ fixmystreet.maps.matrix_ids = [
 
         /* Admin dragging of pin */
         if (fixmystreet.page == 'admin') {
-            fixmystreet.maps.admin_drag(pin_dragged, true);
+            if ($.browser.msie) {
+                $(window).load(function() { fixmystreet.maps.admin_drag(pin_dragged, true); });
+            } else {
+                fixmystreet.maps.admin_drag(pin_dragged, true);
+            }
         }
     });
 

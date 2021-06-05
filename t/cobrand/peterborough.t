@@ -14,23 +14,13 @@ my $params = {
 };
 my $peterborough = $mech->create_body_ok(2566, 'Peterborough City Council', $params);
 
-my $staffuser = $mech->create_user_ok('counciluser@example.com', name => 'Council User', from_body => $peterborough);
-
 subtest 'open311 request handling', sub {
     FixMyStreet::override_config {
         STAGING_FLAGS => { send_reports => 1 },
         ALLOWED_COBRANDS => ['peterborough' ],
         MAPIT_URL => 'http://mapit.uk/',
     }, sub {
-        my $contact = $mech->create_contact_ok(body_id => $peterborough->id, category => 'Trees', email => 'TREES',
-            extra => { _fields => [
-                { description => 'emergency', code => 'emergency', required => 'true', variable => 'true' },
-                { description => 'private land', code => 'private_land', required => 'true', variable => 'true' },
-                { description => 'Light', code => 'PCC-light', required => 'true', automated => 'hidden_field' },
-                { description => 'CSC Ref', code => 'PCC-skanska-csc-ref', required => 'false', variable => 'true', },
-                { description => 'Tree code', code => 'colour', required => 'True', automated => 'hidden_field' },
-            ] },
-        );
+        my $contact = $mech->create_contact_ok(body_id => $peterborough->id, category => 'Trees', email => 'TREES');
         my ($p) = $mech->create_problems_for_body(1, $peterborough->id, 'Title', { category => 'Trees', latitude => 52.5608, longitude => 0.2405, cobrand => 'peterborough' });
         $p->push_extra_fields({ name => 'emergency', value => 'no'});
         $p->push_extra_fields({ name => 'private_land', value => 'no'});
@@ -113,14 +103,13 @@ subtest "bartec report with no gecode handled correctly" => sub {
     };
 };
 
-my $report;
 subtest "extra bartec params are sent to open311" => sub {
     FixMyStreet::override_config {
         STAGING_FLAGS => { send_reports => 1 },
         MAPIT_URL => 'http://mapit.uk/',
         ALLOWED_COBRANDS => 'peterborough',
     }, sub {
-        ($report) = $mech->create_problems_for_body(1, $peterborough->id, 'Title', {
+        my ($p) = $mech->create_problems_for_body(1, $peterborough->id, 'Title', {
             category => 'Bins',
             latitude => 52.5608,
             longitude => 0.2405,
@@ -137,19 +126,16 @@ subtest "extra bartec params are sent to open311" => sub {
                 } ]
             },
             extra => {
-                contributed_by => $staffuser->id,
-                external_status_code => 'EXT',
                 _fields => [
                     { name => 'site_code', value => '12345', },
-                    { name => 'PCC-light', value => 'light-ref', },
                 ],
             },
         } );
 
         my $test_data = FixMyStreet::Script::Reports::send();
 
-        $report->discard_changes;
-        ok $report->whensent, 'Report marked as sent';
+        $p->discard_changes;
+        ok $p->whensent, 'Report marked as sent';
 
         my $req = $test_data->{test_req_used};
         my $cgi = CGI::Simple->new($req->content);
@@ -160,9 +146,8 @@ subtest "extra bartec params are sent to open311" => sub {
 };
 
 subtest 'Dashboard CSV extra columns' => sub {
-    $report->update({
-        state => 'unable to fix',
-    });
+    my $staffuser = $mech->create_user_ok('counciluser@example.com', name => 'Council User',
+        from_body => $peterborough, password => 'password');
     $mech->log_in_ok( $staffuser->email );
     FixMyStreet::override_config {
         MAPIT_URL => 'http://mapit.uk/',
@@ -170,8 +155,8 @@ subtest 'Dashboard CSV extra columns' => sub {
     }, sub {
         $mech->get_ok('/dashboard?export=1');
     };
-    $mech->content_contains('"Reported As","Staff User",USRN,"Nearest address","External ID","External status code",Light,"CSC Ref"');
-    $mech->content_like(qr/"No further action",.*?,peterborough,,[^,]*counciluser\@example.com,12345,"12 A Street, XX1 1SZ",248,EXT,light-ref,/);
+    $mech->content_contains('"Reported As",USRN,"Nearest address"');
+    $mech->content_contains('peterborough,,12345,"12 A Street, XX1 1SZ"');
 };
 
 

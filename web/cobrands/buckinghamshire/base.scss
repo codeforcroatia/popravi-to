@@ -125,6 +125,16 @@ dl dt {
     }
 }
 
+a#geolocate_link {
+  color: $bucks_links;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $link-hover-color;
+  }
+}
+
 label {
   @extend %bold-font;
 }

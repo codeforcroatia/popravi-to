@@ -55,7 +55,7 @@ fixmystreet.assets.add(defaults, {
     actions: {
         found: function(layer, feature) {
             if (fixmystreet.assets.selectedFeature()) {
-                $('.js-reporting-page--highways').remove();
+                $('#highways').remove();
                 return;
             }
             var current_road_name = $('#highways strong').first().text();
@@ -70,7 +70,7 @@ fixmystreet.assets.add(defaults, {
                     non_he_selected();
                 }
             } else {
-                $('.js-reporting-page--highways').remove();
+                $('#highways').remove();
                 add_highways_warning(new_road_name);
             }
         },
@@ -79,7 +79,7 @@ fixmystreet.assets.add(defaults, {
                 fixmystreet.body_overrides.remove_only_send();
                 fixmystreet.body_overrides.do_not_send('Highways England');
             }
-            $('.js-reporting-page--highways').remove();
+            $('#highways').remove();
         }
     }
 });
@@ -87,19 +87,28 @@ fixmystreet.assets.add(defaults, {
 function regenerate_category(he_flag) {
     if (!fixmystreet.reporting_data) return;
 
-    var he_input = $('#form_category_fieldset input[value*="Highways England"]');
+    var old_category = $("#form_category").val();
+
+    // Restart the category dropdown from the original data (not all of it as
+    // we keep subcategories the same)
+    var select = $(fixmystreet.reporting_data.category).filter('select');
     if (he_flag) {
-        he_input.prop('checked', true).trigger('change', [ 'no_event' ]);
-        $('.js-reporting-page--category').addClass('js-reporting-page--skip');
+        var select1 = select.find('> option:first-child')[0].outerHTML;
+        var select2 = select.find('optgroup[label*="Highways England"]').html();
+        $('#form_category').html(select1 + select2);
     } else {
-        $('.js-reporting-page--category').removeClass('js-reporting-page--skip');
-        var old_category = $('#form_category_fieldset input:checked');
-        if (old_category.val() == 'Highways England') {
-            old_category[0].checked = false;
-        }
-        he_input.parent('div').hide();
+        select.find('optgroup[label*="Highways England"]').remove();
+        select = select.html();
+        $('#form_category').html(select);
     }
-    $('.js-reporting-page--next').prop('disabled', false);
+    if ($("#form_category option[value=\"" + old_category + "\"]").length) {
+        $("#form_category").val(old_category);
+    }
+
+    // Recalculate the category groups
+    var old_category_group = $('#category_group').val() || $('#filter_group').val();
+    $('#category_group').remove();
+    fixmystreet.set_up.category_groups(old_category_group, true);
 }
 
 function he_selected() {
@@ -119,7 +128,6 @@ function non_he_selected() {
 function add_highways_warning(road_name) {
   var $warning = $('<div class="box-warning" id="highways"><p>It looks like you clicked on the <strong>' + road_name + '</strong> which is managed by <strong>Highways England</strong>. ' +
                    'Does your report concern something on this road, or somewhere else (e.g a road crossing it)?<p></div>');
-  var $page = $('<div data-page-name="highwaysengland" class="js-reporting-page js-reporting-page--active js-reporting-page--highways"></div>');
   var $radios = $('<p class="segmented-control segmented-control--radio"></p>');
 
     $('<input>')
@@ -146,12 +154,7 @@ function add_highways_warning(road_name) {
         .addClass('btn')
         .appendTo($radios);
     $radios.appendTo($warning);
-    $warning.wrap($page);
-    $page = $warning.parent();
-    $page.append('<button type="button" class="btn btn--block js-reporting-page--next" disabled>Continue</button>');
-
-    $('.js-reporting-page').first().before($page);
-    $page.nextAll('.js-reporting-page').removeClass('js-reporting-page--active');
+    $('.change_location').after($warning);
     he_selected();
 }
 

@@ -1,6 +1,8 @@
+[% SET bodyclass = 'waste' %]
+
 [% USE date(format = '%A, %-d~~~ %B') ~%]
-[% PROCESS 'waste/header.html' %]
-[% PROCESS 'govuk/fields.html' ~%]
+[% PROCESS 'waste/govuk/fields.html' ~%]
+[% INCLUDE header.html %]
 
 [% PROCESS errors %]
 [% SET data = form.saved_data ~%]
@@ -60,7 +62,7 @@
 
 </dl>
 
-<form class="waste" method="post">
+<form method="post">
     [% PROCESS form %]
 </form>
 </div>

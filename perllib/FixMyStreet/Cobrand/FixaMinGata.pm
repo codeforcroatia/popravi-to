@@ -182,8 +182,7 @@ sub state_groups_inspect {
 }
 
 sub always_view_body_contribute_details {
-    my ( $self, $contributed_as ) = @_;
-    return $contributed_as eq '';
+    return 1;
 }
 
 # Average responsiveness will only be calculated if a body

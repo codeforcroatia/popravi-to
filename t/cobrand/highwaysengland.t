@@ -27,7 +27,7 @@ ok $r->{error}, "searching for lowecase road only generates error";
 my $mech = FixMyStreet::TestMech->new;
 my $highways = $mech->create_body_ok(2234, 'Highways England');
 
-$mech->create_contact_ok(email => 'highways@example.com', body_id => $highways->id, category => 'Pothole', group => 'Highways England');
+$mech->create_contact_ok(email => 'highways@example.com', body_id => $highways->id, category => 'Pothole');
 
 FixMyStreet::override_config {
     ALLOWED_COBRANDS => 'highwaysengland',
@@ -86,11 +86,6 @@ FixMyStreet::override_config {
         $mech->content_lacks('fixmystreet&#64;example.org', "Doesn't mention (escaped) global CONTACT_EMAIL");
         $mech->content_contains('highwaysengland&#64;example.org', "Does mention cobrand contact_email") or diag $mech->content;
     };
-
-    subtest 'check not in a group' => sub {
-        my $j = $mech->get_ok_json('/report/new/ajax?latitude=52.236251&longitude=-0.892052&w=1');
-        is $j->{subcategories}, undef;
-    }
 };
 
 subtest 'Dashboard CSV extra columns' => sub {
@@ -132,9 +127,9 @@ subtest 'Dashboard CSV extra columns' => sub {
     }, sub {
         $mech->get_ok('/dashboard?export=1');
     };
-    $mech->content_contains('URL","Device Type","Site Used","Reported As","Area name","How you found us"');
-    $mech->content_contains('http://highwaysengland.example.org/report/' . $problem1->id .',desktop,highwaysengland,,"South West","Social media"');
-    $mech->content_contains('http://highwaysengland.example.org/report/' . $problem2->id .',mobile,fixmystreet,,"Area 7","Search engine"');
+    $mech->content_contains('URL","Device Type","Reported As","Area name","How you found us","Site Used"');
+    $mech->content_contains('http://highwaysengland.example.org/report/' . $problem1->id .',desktop,,"South West","Social media",highwaysengland');
+    $mech->content_contains('http://highwaysengland.example.org/report/' . $problem2->id .',mobile,,"Area 7","Search engine",fixmystreet');
 };
 
 done_testing();

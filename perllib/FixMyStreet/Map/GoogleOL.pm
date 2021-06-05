@@ -5,11 +5,13 @@
 # Email: matthew@mysociety.org; WWW: http://www.mysociety.org/
 
 package FixMyStreet::Map::GoogleOL;
-use Moo;
-extends 'FixMyStreet::Map::OSM';
+use parent 'FixMyStreet::Map::OSM';
 
-has '+map_type' => ( default => '' );
-has '+map_template' => ( default => 'google-ol' );
+use strict;
+
+sub map_type { '' }
+
+sub map_template { 'google-ol' }
 
 sub map_javascript {
     my $google_maps_url = "https://maps.googleapis.com/maps/api/js?v=3";

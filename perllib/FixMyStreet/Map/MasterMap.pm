@@ -3,12 +3,14 @@
 # A combination of FMS OS maps and our own tiles
 
 package FixMyStreet::Map::MasterMap;
+use base 'FixMyStreet::Map::FMS';
 
-use Moo;
-extends 'FixMyStreet::Map::FMS';
+use strict;
 
-has '+zoom_levels' => ( default => 7 );
-has '+default_zoom' => ( default => 4 );
+use constant ZOOM_LEVELS => 7;
+use constant DEFAULT_ZOOM => 4;
+
+sub map_template { 'fms' }
 
 sub map_javascript { [
     '/vendor/OpenLayers/OpenLayers.wfs.js',

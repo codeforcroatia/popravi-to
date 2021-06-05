@@ -42,7 +42,9 @@ $mech->create_contact_ok(body_id => $body->id, category => 'Flooding in the road
 $mech->create_contact_ok(body_id => $body->id, category => 'Flytipping', email => "UniformFLY");
 my $da = $mech->create_contact_ok(body_id => $body->id, category => 'Dead animal', email => "ANIM");
 $mech->create_contact_ok(body_id => $body->id, category => 'Street cleaning and litter', email => "STREET");
-$mech->create_contact_ok(body_id => $body->id, category => 'Something dangerous', email => "DANG", group => 'Danger things');
+my $category = $mech->create_contact_ok(body_id => $body->id, category => 'Something dangerous', email => "DANG");
+$category->set_extra_metadata(group => 'Danger things');
+$category->update;
 
 $da->set_extra_fields({
     code => 'message',
@@ -233,16 +235,6 @@ FixMyStreet::override_config {
         $mech->get_ok('/report/new/ajax?latitude=51.466707&longitude=0.181108');
         $mech->content_contains('http://public.example.org/dead_animals');
         $mech->content_lacks('http://staff.example.org/dead_animals');
-    };
-
-    subtest 'private comments field' => sub {
-        my $user = $mech->log_in_ok('cs@example.org');
-        $user->update({ from_body => $body, is_superuser => 1, name => 'Staff User' });
-        for my $permission ( 'contribute_as_another_user', 'contribute_as_anonymous_user', 'contribute_as_body' ) {
-            $user->user_body_permissions->create({ body => $body, permission_type => $permission });
-        }
-        $mech->get_ok('/report/new?longitude=0.15356&latitude=51.45556');
-        $mech->content_contains('name="private_comments"');
     };
 };
 

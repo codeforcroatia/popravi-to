@@ -1,6 +1,0 @@
-BEGIN;
-
-ALTER TABLE alert
-    DROP COLUMN parameter3;
-
-COMMIT;

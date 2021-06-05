@@ -301,16 +301,10 @@ sub oidc_callback: Path('/auth/OIDC') : Args(0) {
     $c->detach('oauth_failure') unless $id_token;
 
     # sanity check the token audience is us...
-    unless ($id_token->payload->{aud} eq $c->cobrand->feature('oidc_login')->{client_id}) {
-        $c->log->info("Social::oidc_callback invalid id_token: expected aud to be " . $c->cobrand->feature('oidc_login')->{client_id} . " but it was " . $id_token->payload->{aud});
-        $c->detach('/page_error_500_internal_error', ['invalid id_token']);
-    }
+    $c->detach('/page_error_500_internal_error', ['invalid id_token']) unless $id_token->payload->{aud} eq $c->cobrand->feature('oidc_login')->{client_id};
 
     # check that the nonce matches what we set in the user session
-    unless ($id_token->payload->{nonce} eq $c->session->{oauth}{nonce}) {
-        $c->log->info("Social::oidc_callback invalid id_token: expected nonce to be " . $c->session->{oauth}{nonce} . " but it was " . $id_token->payload->{nonce});
-        $c->detach('/page_error_500_internal_error', ['invalid id_token']);
-    }
+    $c->detach('/page_error_500_internal_error', ['invalid id_token']) unless $id_token->payload->{nonce} eq $c->session->{oauth}{nonce};
 
     if (my $domains = $c->cobrand->feature('oidc_login')->{allowed_domains}) {
         # Check that the hd payload is present in the token and matches the

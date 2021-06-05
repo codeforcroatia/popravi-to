@@ -2,19 +2,19 @@
 # Bing maps on FixMyStreet, using OpenLayers.
 
 package FixMyStreet::Map::Bing;
+use base 'FixMyStreet::Map::OSM';
 
-use Moo;
-extends 'FixMyStreet::Map::OSM';
+use strict;
 
-has '+map_type' => ( default => '' );
-
-has '+copyright' => ( default => '' );
+sub map_type { '' }
 
 sub map_javascript { [
     '/vendor/OpenLayers/OpenLayers.fixmystreet.js',
     '/js/map-OpenLayers.js',
     '/js/map-bing-ol.js',
 ] }
+
+sub copyright { '' }
 
 sub get_quadkey {
     my ($self, $x, $y, $z) = @_;

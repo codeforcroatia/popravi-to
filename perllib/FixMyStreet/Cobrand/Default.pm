@@ -1137,13 +1137,10 @@ pressed in the front end, rather than whenever a username is not provided.
 =cut
 
 sub allow_anonymous_reports {
-    my ($self, $category_name, $lookup) = @_;
+    my ($self, $category_name) = @_;
 
     $category_name ||= $self->{c}->stash->{category};
-    return 0 unless $category_name;
-
-    return $lookup->{$category_name} if defined $lookup->{$category_name};
-    if ( $self->can('body') and $self->body ) {
+    if ( $category_name && $self->can('body') and $self->body ) {
         my $category_rs = FixMyStreet::DB->resultset("Contact")->search({
             body_id => $self->body->id,
             category => $category_name
@@ -1207,7 +1204,7 @@ sub state_groups_inspect {
     [
         [ $rs->display('confirmed'), [ grep { $_ ne 'planned' } FixMyStreet::DB::Result::Problem->open_states ] ],
         @fixed ? [ $rs->display('fixed'), [ 'fixed - council' ] ] : (),
-        [ $rs->display('closed'), [ FixMyStreet::DB::Result::Problem->closed_states ] ],
+        [ $rs->display('closed'), [ grep { $_ ne 'closed' } FixMyStreet::DB::Result::Problem->closed_states ] ],
     ]
 }
 
@@ -1360,13 +1357,10 @@ Emergency message, if one has been set in the admin.
 
 sub emergency_message {
     my $self = shift;
-    my $type = shift;
     return unless $self->can('body');
     my $body = $self->body;
     return unless $body;
-    my $field = 'emergency_message';
-    $field .= "_$type" if $type;
-    FixMyStreet::Template::SafeString->new($body->get_extra_metadata($field));
+    FixMyStreet::Template::SafeString->new($body->get_extra_metadata('emergency_message'));
 }
 
 1;

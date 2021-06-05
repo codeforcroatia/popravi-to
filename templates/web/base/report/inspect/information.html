@@ -10,16 +10,10 @@
             (<a href="[% c.uri_for_action( 'admin/reports/edit', [ problem.id ] ) %]">[% loc('admin') %]</a>)
           [% END %]
         </p>
-        [% IF permissions.report_inspect AND (problem.user.phone OR problem.user.email) %]
+        [% IF permissions.report_inspect AND problem.user.phone %]
           <p>
-          [% IF problem.user.phone %]
             <strong>[% loc('Phone Reporter:') %]</strong>
-            <a href="tel:[% problem.user.phone %]">[% problem.user.phone_display %]</a>
-          [% END %]
-          [% IF problem.user.email %]
-            <strong>[% loc('Email:') %]</strong>
-            <a href="mailto:[% problem.user.email %]">[% problem.user.email %]</a>
-          [% END %]
+            <a href="tel:[% problem.user.phone | html %]">[% problem.user.phone_display | html %]</a>
           </p>
         [% END %]
         <p>

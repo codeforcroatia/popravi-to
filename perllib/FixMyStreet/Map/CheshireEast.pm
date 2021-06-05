@@ -1,10 +1,10 @@
 package FixMyStreet::Map::CheshireEast;
+use base 'FixMyStreet::Map::OSM';
 
-use Moo;
+use strict;
 use Utils;
-extends 'FixMyStreet::Map::OSM';
 
-has '+min_zoom_level' => ( default => 7 );
+use constant MIN_ZOOM_LEVEL => 7;
 
 sub map_javascript { [
     '/vendor/OpenLayers/OpenLayers.wfs.js',

@@ -5,13 +5,13 @@
 # Email: matthew@mysociety.org; WWW: http://www.mysociety.org/
 
 package FixMyStreet::Map::OSM::StreetView;
+use base 'FixMyStreet::Map::OSM';
 
-use Moo;
-extends 'FixMyStreet::Map::OSM';
+use strict;
 
-has '+zoom_levels' => ( default => 6 );
+use constant ZOOM_LEVELS => 6;
 
-has '+map_type' => ( default => '' );
+sub map_type { '' }
 
 sub map_javascript { [
     '/vendor/OpenLayers/OpenLayers.fixmystreet.js',
@@ -19,8 +19,12 @@ sub map_javascript { [
     '/js/map-streetview.js',
 ] }
 
-has '+base_tile_url' => ( default => 'os.openstreetmap.org/sv' );
+sub base_tile_url {
+    return 'os.openstreetmap.org/sv';
+}
 
-has '+copyright' => ( default => 'Contains OS data &copy; Crown copyright and database right 2016' );
+sub copyright {
+    'Contains OS data &copy; Crown copyright and database right 2016';
+}
 
 1;

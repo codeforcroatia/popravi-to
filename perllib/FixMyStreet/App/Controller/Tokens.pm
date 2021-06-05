@@ -80,9 +80,8 @@ sub confirm_alert : Path('/A') {
     my $auth_token = $c->forward( 'load_auth_token', [ $token_code, 'alert' ] );
 
     # Load the alert
-    my $data = $auth_token->data;
-    my $alert_id = $data->{id};
-    $c->stash->{confirm_type} = $data->{type};
+    my $alert_id = $auth_token->data->{id};
+    $c->stash->{confirm_type} = $auth_token->data->{type};
     my $alert = $c->model('DB::Alert')->find( { id => $alert_id } )
       || $c->detach('token_error');
     $c->stash->{alert} = $alert;
@@ -98,21 +97,7 @@ sub confirm_alert : Path('/A') {
     }
 
     if (!$alert->confirmed && $c->stash->{confirm_type} ne 'unsubscribe') {
-        my $user = $alert->user;
-        my $email = $user->email;
-        if ($data->{old_user_id}) {
-            # Were logged in as old_user_id, want to switch to $user
-            my $old_user = $c->model('DB::User')->find({ id => $data->{old_user_id} });
-            if ($old_user) {
-                $old_user->adopt($user);
-                $user = $old_user;
-                $user->email($email);
-                $user->email_verified(1);
-                $user->update;
-            }
-        }
-
-        $c->authenticate( { email => $user->email, email_verified => 1 }, 'no_password' );
+        $c->authenticate( { email => $alert->user->email, email_verified => 1 }, 'no_password' );
         $c->set_session_cookie_expire(0);
     }
 

@@ -11,24 +11,13 @@ my $ukc = Test::MockModule->new('FixMyStreet::Cobrand::UKCouncils');
 $ukc->mock('_fetch_features', sub {
     my ($self, $cfg, $x, $y) = @_;
     is $y, 238194, 'Correct latitude';
-    return [
-        {
-            properties => { streetref1 => 'Road ID' },
-            geometry => {
-                type => 'LineString',
-                coordinates => [ [ $x-2, $y+2 ], [ $x+2, $y+2 ] ],
-            }
-        },
-        # regression test to ensure that a closer feature with no streetref1
-        # isn't picked for NSGRef.
-        {
-            properties => { streetref1 => '' },
-            geometry => {
-                type => 'LineString',
-                coordinates => [ [ $x-1, $y-1 ], [ $x+1, $y-1 ] ],
-            }
-        },
-    ];
+    return [{
+        properties => { streetref1 => 'Road ID' },
+        geometry => {
+            type => 'LineString',
+            coordinates => [ [ $x-1, $y-1 ], [ $x+1, $y+1 ] ],
+        }
+    }];
 });
 
 my $mech = FixMyStreet::TestMech->new;
@@ -71,25 +60,16 @@ FixMyStreet::override_config {
     };
 
     subtest 'Correct area_code and NSGRef parameters for Open311' => sub {
-        $report->set_extra_fields({ name => 'UnitID', value => 'Asset 123' });
-        $report->update;
         my $test_data = FixMyStreet::Script::Reports::send();
         my $req = $test_data->{test_req_used};
         my $c = CGI::Simple->new($req->content);
         is $c->param('service_code'), 'BRIDGES';
         is $c->param('attribute[area_code]'), 'Area1';
         is $c->param('attribute[NSGRef]'), 'Road ID';
-        is $c->param('attribute[title]'),  $report->title;
-        (my $c_description = $c->param('attribute[description]')) =~ s/\r\n/\n/g;
-        is $c_description, $report->detail . "\n\nUnit ID: Asset 123";
-        is $c->param('attribute[report_url]'),  "http://centralbedfordshire.example.org/report/" . $report->id;
-        is $c->param('attribute[UnitID]'), undef, 'Unit ID not included as attribute';
-        like $c->param('description'), qr/Unit ID: Asset 123/, 'But is included in description';
 
         $mech->email_count_is(1);
         $report->discard_changes;
         like $mech->get_text_body_from_email, qr/reference number is @{[$report->external_id]}/;
-        unlike $report->detail, qr/Unit ID: Asset 123/, 'Asset ID not left in description';
     };
 
     subtest 'External ID is shown on report page' => sub {
@@ -176,21 +156,6 @@ subtest 'check geolocation overrides' => sub {
         my $res = $cobrand->disambiguate_location($test->{query});
         is $res->{town}, $test->{town}, "Town matches $test->{town}";
     }
-};
-
-
-subtest 'Dashboard CSV extra columns' => sub {
-    my $staffuser = $mech->create_user_ok('counciluser@example.com', name => 'Council User',
-        from_body => $body, password => 'password');
-    $mech->log_in_ok( $staffuser->email );
-    FixMyStreet::override_config {
-        MAPIT_URL => 'http://mapit.uk/',
-        ALLOWED_COBRANDS => 'centralbedfordshire',
-    }, sub {
-        $mech->get_ok('/dashboard?export=1');
-    };
-    $mech->content_contains('"Site Used","Reported As",CRNo');
-    $mech->content_contains('centralbedfordshire,,' . $report->external_id);
 };
 
 
