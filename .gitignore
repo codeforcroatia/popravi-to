@@ -4,6 +4,10 @@
 ._*
 .DS_Store
 
+# Configuraton
+general.yml
+general.yml-*
+
 # Compiled templates
 *.ttc
 
