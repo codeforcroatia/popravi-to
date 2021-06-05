@@ -1,0 +1,37 @@
+[%
+    SET bodyclass = 'mappage';
+    PROCESS "report/photo-js.html";
+    PROCESS "maps/${map.type}.html" IF problems.size;
+    INCLUDE 'header.html', title = loc('Your shortlist')
+%]
+
+[% IF problems.size %]
+    [% map_html | safe %]
+    </div>
+    <div id="map_sidebar">
+        <div id="side">
+[% ELSE %]
+    <div id="map_sidebar">
+        <div id="skipped-map">
+[% END %]
+
+<h1>[% loc('Your shortlist') %]</h1>
+
+[% IF ! has_content %]
+[% loc('You haven&rsquo;t shortlisted any reports yet.') %]
+[% END %]
+
+<section class="full-width">
+[% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 shortlist = 1 %]
+<div class="js-pagination">
+[% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
+</div>
+<div id="js-reports-list">
+[% INCLUDE 'my/_problem-list.html' shortlist = 1 %]
+</div>
+</section>
+
+        </div>
+    </div>
+
+[% INCLUDE 'footer.html' %]

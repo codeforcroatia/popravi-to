@@ -1,0 +1,47 @@
+[% body_name = body.name | html;
+   INCLUDE 'admin/header.html' title=tprintf(loc('Council contacts for %s'), body_name) -%]
+
+[% BLOCK highlightchanged_yesno %]
+[%- output = loc('No') %]
+[%- IF new.$value %][% output = loc('Yes') %][% END %]
+[%- IF old && old.$value != new.$value %]<strong>[% output %]</strong>[% ELSE %][% output %][% END %]
+[%- END %]
+
+[% BLOCK highlightchanged %]
+[%- IF old && old.$value != new.$value %]<strong>[% new.$value %]</strong>[% ELSE %][% new.$value %][% END %]
+[%- END %]
+<p>
+<em>[% updated %]</em>
+</p>
+
+<p>
+[% IF example_pc %]
+<a href="[% c.uri_for_email( '/around', { pc => example_pc } ) %]" class="admin-offsite-link">[% tprintf( loc('Example postcode %s'), example_pc ) | html %]</a>
+[% END %]
+</p>
+
+[% INCLUDE 'admin/bodies/contact-form.html' %]
+
+<h2>[% loc('History') %]</h2>
+<table border="1">
+    <tr>
+        <th>[% loc('When edited') %]</th>
+        <th>[% loc('Email') %]</th>
+        <th>[% loc('State') %]</th>
+        <th>[% loc('Editor') %]</th>
+        <th>[% loc('Note') %]</th>
+    </tr>
+    [%- prev = '' %]
+    [%- WHILE ( contact = history.next ) %]
+    <tr>
+        <td>[% contact.whenedited.ymd _ ' ' _ contact.whenedited.hms %]</td>
+        <td>[% PROCESS highlightchanged old=prev new=contact value='email' %]</td>
+        <td>[% PROCESS highlightchanged old=prev new=contact value='state' %]</td>
+        <td>[% contact.editor | html %]</td>
+        <td>[% contact.note | html %]</td>
+    </tr>
+        [%- prev = contact %]
+    [%- END %]
+</table>
+
+[% INCLUDE 'admin/footer.html' %]

@@ -1,0 +1,15 @@
+[%
+    SET bodyclass = bodyclass || 'fullwidthpage';
+    SET admin = 1;
+    INCLUDE 'header.html' bodyclass = bodyclass _ ' admin';
+%]
+<style type="text/css">
+dt { clear: left; float: left; font-weight: bold; }
+dd { margin-left: 8em !important; }
+.adminhidden { color: #666666; }
+.error { color: red; }
+select { width: auto; }
+.sm { font-size: smaller; }
+</style>
+
+[% INCLUDE 'admin/navigation.html' UNLESS bodyclass.match('mappage') %]

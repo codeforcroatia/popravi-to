@@ -1,0 +1,18 @@
+<!-- report/update/form_user.html -->
+[% PROCESS 'report/form/user.html' type='update' %]
+
+<div class="hidden-js js-new-report-user-shown">
+    <div class="hidden-nojs form-section-preview">
+        <h2 class="form-section-heading">[% loc('Your update') %]</h2>
+        <p class="js-form-section-preview" data-source="#form_update"></p>
+        <button type="button" class="btn btn--block js-new-report-user-hide">[% loc('Edit your update') %]</button>
+    </div>
+
+  [% IF c.user_exists %]
+    [% PROCESS "report/update/form_user_loggedin.html" type='update' %]
+  [% ELSE %]
+    [% PROCESS "report/form/user_loggedout.html" type='update' object=update %]
+  [% END %]
+
+</div>
+<!-- /report/update/form_user.html -->

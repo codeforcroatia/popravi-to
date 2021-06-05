@@ -1,0 +1,74 @@
+[%
+    DEFAULT bodyclass = 'mappage';
+    PROCESS "report/photo-js.html";
+    PROCESS "maps/${map.type}.html";
+
+    problem_title = tprintf('%s - %s', problem.title_safe, loc('Viewing a problem'));
+    INCLUDE 'header.html'
+        title = problem_title
+        rss = [ tprintf(loc('Updates to this problem, %s', "%s is the site name"), site_name), "/rss/$problem.id" ]
+        robots = 'index, nofollow';
+%]
+
+[% map_html | safe %]
+</div>
+
+<div id="map_sidebar">
+
+[% IF two_column_sidebar %]
+  <div class="two_column_sidebar">
+[% END %]
+
+  <div id="side-report">
+
+[% IF login_success %]
+    <p class='form-success'>[% loc('You have successfully signed in; please check and confirm your details are accurate:') %]</p>
+    [% INCLUDE 'report/update-form.html' %]
+    [% SET shown_form = 1 %]
+[% ELSIF oauth_failure %]
+    <p class="form-error">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
+    [% INCLUDE 'report/update-form.html' %]
+    [% SET shown_form = 1 %]
+[% ELSIF oauth_need_email %]
+    <p class="form-error">
+        [% loc('Please note your update has <strong>not yet been posted</strong>.') %]
+        [% loc('We need your email address, please give it below.') %]
+    </p>
+    [% INCLUDE 'report/update-form.html' %]
+    [% SET shown_form = 1 %]
+[% END %]
+
+[% INCLUDE 'report/_main.html' %]
+
+[% IF problem.duplicate_of %]
+    [% INCLUDE 'report/duplicate-no-updates.html' hide_header = 1 %]
+[% END %]
+
+[% TRY %][% INCLUDE 'report/_message_manager.html' %][% CATCH file %][% END %]
+[% INCLUDE 'report/display_tools.html' %]
+[% TRY %][% INCLUDE 'report/sharing.html' %][% CATCH file %][% END %]
+[% INCLUDE 'report/updates.html' %]
+
+[% IF problem.duplicate_of %]
+    [% INCLUDE 'report/duplicate-no-updates.html' %]
+[% ELSIF problem.extra.closed_updates %]
+    <p>[% loc('This report is now closed to updates.') %]
+       [% tprintf(loc('You can <a href="%s">make a new report in the same location</a>.'),
+              c.uri_for( '/report/new', { longitude => longitude, latitude => latitude } )
+          ) %]
+    </p>
+[% ELSIF NOT shown_form  %]
+    [% PROCESS 'report/update-form-wrapper.html' %]
+[% END %]
+
+  </div>
+
+  [% second_column | safe %]
+
+[% IF two_column_sidebar %]
+  </div>
+[% END %]
+
+</div>
+
+[% INCLUDE 'footer.html' %]
