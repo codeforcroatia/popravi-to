@@ -1,19 +1,132 @@
-[% pre_container_extra = PROCESS 'around/postcode_form.html' %]
-[% SET bodyclass = 'frontpage fullwidthpage' %]
-[% INCLUDE 'header.html', title = '', inline_css = 1 %]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-[% IF error %]
-    <p class="form-error">[% error %]</p>
-[% END %]
+[% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
+[% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+  
+    <link rel="stylesheet" type="text/css" href="[% base_css %]">
+    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48em)">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Popravi.to</title>
+</head>
+<body>
+    <header class="header">
+        <picture class="logo">
+            <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+            <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
+            <img src="/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+        </picture>
+        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu"></button>
+        <nav class="menu visually-hidden">
+            <ul class="menu-list">
+                <li class="menu-item"><a href="" tabindex="0" aria-label="all reports">Sve prijave</a></li>
+                <li class="menu-item"><a href="" tabindex="0" aria-label="notifications">Obavijesti</a></li>
+                <li class="menu-item"><a href="" tabindex="0" aria-label="help">Pomoć</a></li>
+                <li class="menu-item"><a href="" tabindex="0" aria-label="sign in">Prijavi se</a></li>
+            </ul>
+            <form action="" class="button-link">
+                <input class="button report-issue-button" tabindex="0" aria-label="report problem" type="submit" value="Prijavi problem"/>
+            </form>
+        </nav>
+    </header>
 
-[% TRY %][% PROCESS 'front/pre-steps.html' %][% CATCH file %][% END %]
+    <main>
+        <section class="central-content">
+            <div class="mobile-hero-images">
+                <picture class="hero-image">
+                    <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-left.svg">
+                    <img src="#" alt="">
+                </picture>
+                <picture class="hero-image">
+                    <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-right.svg">
+                    <img src="#" alt="">
+                </picture>
+            </div>
+            <h1 class="central-title">Prijavi ili pregledaj lokalni problem</h1>
+            <form class="search">
+                <span class="search-icon-button"></span>
+                <input type="text" class="search-input" placeholder="Upiši naziv ulice ili mjesto">
+                <button class="search-button" type="submit" aria-label="search" tabindex="0"></button>
+            </form>
+            <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon"></span>Koristi moju trenutnu lokaciju</a>
+        </section>
+        <section class="report-steps-section">
+            <h1 class="report-title">Kako prijaviti problem</h1>
+            <ol class="report-steps">
+                <li class="report-step" aria-label="upisi ulicu" tabindex="0">Upiši ulicu ili poštanski broj</li>
+                <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">Lociraj problem na mapi</li>
+                <li class="report-step" aria-label="opisi problem" tabindex="0">Opiši detalje problema i dodaj sliku</li>
+                <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">Prijavu ćemo poslati na pravu adresu <br> (nadležnu upravu)</li>
+            </ol>
+        </section>
+        <section class="report-steps-section report-steps-section-two">
+            <h1 class="report-title">Problemi ukupno</h1>
+            <ul class="report-statistics">
+                <li class="report-stat-item">
+                    <p class="report-stat-num" tabindex="0" aria-label="">273</p>
+                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
+                </li>
+                <li class="report-stat-item">
+                    <p class="report-stat-num" tabindex="0" aria-label="">95</p>
+                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>AŽURIRANO</p>
+                </li>
+                <li class="report-stat-item">
+                    <p class="report-stat-num" tabindex="0" aria-label="">110</p>
+                    <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>RIJEŠENO</p>
+                </li>
+            </ul>
+        </section>
+    </main>
 
-<div class="tablewrapper">
-    <div id="front-howto">
-        [% INCLUDE 'index-steps.html' %]
-    </div>
-
-    [% INCLUDE 'front/recent.html' %]
-</div>
-
-[% INCLUDE 'footer.html' pagefooter = 'yes' %]
+    <footer class="footer">
+        <div class="footer-desc">
+            <picture class="logo">
+                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="Popravi.to logo">
+            </picture>
+            <p class="footer-text">
+                Popravi.to je online alat napravljen u svrhu poboljšanja javnih politika i inkluzivnom odlučivanju, 
+                te kako bi građanima pružio mehanizme za prijavu problema lokalnoj administraciji te nadzoru 
+                njihovog rješavanja u svojoj sredini.
+            </p>
+            <form action="" class="button-link-footer">
+                <input class="button report-issue-button-footer" tabindex="0" aria-label="report problem" type="submit" value="Prijavi problem"/>
+            </form>
+        </div>
+        <nav>
+            <ul class="menu-list-footer">
+                <li class="menu-item menu-item-footer"><a href="" tabindex="0" aria-label="all reports">Sve prijave</a></li>
+                <li class="menu-item menu-item-footer"><a href="" tabindex="0" aria-label="notifications">Obavijesti</a></li>
+                <li class="menu-item menu-item-footer"><a href="" tabindex="0" aria-label="help">Pomoć</a></li>
+                <li class="menu-item menu-item-footer"><a href="" tabindex="0" aria-label="sign in">Prijavi se</a></li>
+            </ul>
+        </nav>
+        <div>
+            <p class="footer-text">Powered by</p>
+            <picture class="fixmystreet-logo">
+                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg" alt="FixMyStreet logo">
+            </picture> 
+            <p class="footer-text">S ljubavlju</p>
+            <picture class="fixmystreet-logo">
+                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
+            </picture> 
+        </div>
+        <div>
+            <p class="footer-text footer-socials">Pronađi nas na</p>
+            <nav>
+                <ul class="socials">
+                    <li class="footer-social-item"><a href="" tabindex="0" aria-label="GitHub"><span class="github-link"></span></a></li>
+                    <li class="footer-social-item"><a href="" tabindex="0" aria-label="Twitter"><span class="twitter-link"></span></a></li>
+                    <li class="footer-social-item"><a href="" tabindex="0" aria-label="Facebook"><span class="facebook-link"></span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

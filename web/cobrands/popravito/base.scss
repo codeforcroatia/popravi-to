@@ -1,4 +1,8 @@
-@import "./_colours";
+@import "../sass/h5bp";
+@import "_colours";
+@import "../sass/mixins";
+
+//@import "../sass/base";
 
 $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
@@ -283,4 +287,3 @@ li.report-step::marker {
     display: flex;
     padding: 0;
 }
-
