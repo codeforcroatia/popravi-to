@@ -39,6 +39,7 @@ inc/
 _Inline/
 *.pyc
 docker-compose.override.yml
+/commonlib/
 
 # Ignore theme develop directory used in docker (root directory)
 /popravito/
