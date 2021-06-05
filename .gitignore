@@ -40,6 +40,9 @@ _Inline/
 *.pyc
 docker-compose.override.yml
 
+# Ignore theme develop directory used in docker (root directory)
+/popravito/
+
 # JS coverage
 /.nyc_output
 /coverage
