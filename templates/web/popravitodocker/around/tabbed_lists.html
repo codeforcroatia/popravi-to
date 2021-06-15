@@ -1,0 +1,15 @@
+[% INCLUDE "reports/_list-filters.html" %]
+
+<h2 class="hidden-js">[% loc('Reports') %]</h2>
+
+<div class="js-pagination">
+[% INCLUDE 'pagination.html' param = 'p' %]
+</div>
+
+<div id="js-reports-list">
+    [% INCLUDE "around/on_map_list_items.html" %]
+</div>
+
+<div class="js-pagination">
+[% INCLUDE 'pagination.html' param = 'p' %]
+</div>

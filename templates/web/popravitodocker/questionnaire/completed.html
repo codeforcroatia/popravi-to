@@ -1,0 +1,21 @@
+[% INCLUDE 'header.html', bodyclass = 'fullwidthpage', title = loc('Questionnaire') %]
+
+<div class="confirmation-header">
+
+  <h1>[% loc('Thank you for your feedback') %]</h1>
+
+  [% IF been_fixed == 'Unknown' %]
+    <p>[% loc('If you get some more information about the status of your problem, please come back to the site and leave an update.') %]</p>
+
+  [% ELSIF new_state == 'confirmed' OR (!new_state AND problem.is_open) OR (!new_state AND problem.is_closed) %]
+    [% INCLUDE 'questionnaire/completed-open.html' %]
+
+  [% ELSIF been_fixed == 'Yes' %]
+    <p>[% loc('Glad to hear it’s been fixed!') %]</p>
+
+  [% END %]
+
+</div>
+[% INCLUDE next_steps.html utm_content='questionnaire completed' %]
+
+[% INCLUDE 'footer.html' %]

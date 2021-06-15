@@ -1,0 +1,20 @@
+[% IF NOT bodyclass.match('mappage') %]
+[% TRY %][% PROCESS 'footer_extra.html' %][% CATCH file %][% END %]
+[% END %]
+
+[% PROCESS 'common_scripts.html' %]
+
+<!--[if lte IE 9]>
+  <script src="[% version('/vendor/history.polyfill.min.js') %]"></script>
+<![endif]-->
+[%
+scripts_seen = {};
+FOR script IN scripts;
+    script = script.0 ? script : [ script ];
+    NEXT IF scripts_seen.${script.0};
+    scripts_seen.${script.0} = 1;
+    ~%]
+    <script src="[% script.0 %]"
+        [%~ FOR attr IN script.1 %] [% attr.key %]="[% attr.value %]"[% END ~%]
+        ></script>
+[% END %]

@@ -1,0 +1,15 @@
+[% IF user.id ~%]
+    [% title = tprintf(loc('Editing user %d'), user.id ) ~%]
+[% ELSE ~%]
+    [% title = loc('Add user') ~%]
+[% END ~%]
+[% INCLUDE 'admin/header.html' title=title -%]
+[% PROCESS 'admin/report_blocks.html' %]
+
+[% INCLUDE status_message %]
+
+[% INCLUDE 'admin/users/form.html' %]
+
+[% INCLUDE 'admin/users/alerts.html' %]
+
+[% INCLUDE 'admin/footer.html' %]

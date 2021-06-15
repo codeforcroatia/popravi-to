@@ -1,0 +1,18 @@
+<!-- user_loggedout_email.html -->
+[% IF c.cobrand.sms_authentication %]
+    [% SET username_label = loc('Your email or mobile') %]
+    [% SET username_type = 'text' %]
+[% ELSE %]
+    [% SET username_label = loc('Your email') %]
+    [% SET username_type = 'email' %]
+[% END %]
+[% SET username_field = (name == 'username_sign_in') ? 'username' : name ~%]
+
+<label for="form_[% name %]">[% username_label %]</label>
+[% IF field_errors.$name %]
+    <p class='form-error'>[% field_errors.$name %]</p>
+[% END %]
+<input type="[% username_type %]" name="[% username_field %]" id="form_[% name %]"
+       value="[% c.get_param(username_field) %]"
+    class="form-control required">
+<!-- /user_loggedout_email.html -->

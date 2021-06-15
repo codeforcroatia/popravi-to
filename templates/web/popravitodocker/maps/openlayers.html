@@ -1,0 +1,75 @@
+[% IF map.clickable %]
+    [% map.img_type = 'input type="image"' %]
+[% ELSE %]
+    [% map.img_type = 'img' %]
+[% END %]
+
+<input type="hidden" name="zoom" value="[% map.zoom %]">
+<div id="js-map-data"
+[%- IF c.config.STAGING_SITE %]
+    data-staging=1
+[%- END %]
+[%- UNLESS c.cobrand.call_hook('hide_areas_on_reports') %]
+    data-area="[% map.area.join(',') %]"
+[%- END %]
+    data-latitude=[% map.latitude %]
+    data-longitude=[% map.longitude %]
+[% IF map.zoomToBounds -%]
+    data-zoomToBounds=1
+[%- END %]
+[% IF map.zoom -%]
+    data-zoom=[% map.zoom %]
+[%- END %]
+    data-pin_prefix='[% c.config.ADMIN_BASE_URL IF admin %][% c.cobrand.path_to_pin_icons %]'
+    data-pin_new_report_colour='[% c.cobrand.pin_new_report_colour %]'
+    data-numZoomLevels=[% map.numZoomLevels %]
+    data-zoomOffset=[% map.zoomOffset %]
+    data-map_type="[% map.map_type %]"
+[% IF include_key -%]
+    data-key='[% c.config.BING_MAPS_API_KEY %]'
+[%- END -%]
+[% IF list_of_names_as_string -%]
+    data-bodies='[% list_of_names_as_string | html %]'
+[%- END -%]
+>
+</div>
+<div id="map_box" aria-hidden="true">
+    [% pre_map %]
+    <div id="map">
+      [% IF noscript_map_template == 'maps/noscript_map_base_wmx.html' %]
+          [% INCLUDE 'maps/noscript_map_base_wmx.html' js = 1 %]
+      [% ELSE %]
+          [% INCLUDE 'maps/noscript_map.html' js = 1 %]
+      [% END %]
+    </div>
+    [% IF map.copyright %]
+    <div class="olControlAttribution" style="position: absolute;">[% map.copyright | safe %]</div>
+    [% END %]
+    <img id="loading-indicator" class="hidden" aria-hidden="true" src="/i/loading.svg" alt="Loading...">
+
+<div class="map-links">
+  [% IF map_type_toggle %]
+    [% IF c.config.BING_MAPS_API_KEY OR c.cobrand.moniker == 'zurich' %]
+      [% aerial = c.req.params.aerial %]
+      [% aerial = 1 IF c.cobrand.moniker == 'zurich' AND NOT c.req.params.aerial.defined %]
+      [% IF aerial %]
+        <a class="map-layer-toggle roads" rel="nofollow" href="[% c.uri_with( { aerial => 0 } ) %]">[% loc('Road map') %]</a>
+      [% ELSE %]
+        <a class="map-layer-toggle aerial" rel="nofollow" href="[% c.uri_with( { aerial => 1 } ) %]">[% loc('Aerial map') %]</a>
+      [% END %]
+    [% END %]
+  [% END %]
+
+  [% IF page == "around" %]
+    [% IF c.req.params.no_pins %]
+      <a class="map-pins-toggle" rel="nofollow" href="[% c.uri_with( { no_pins => 0 } ) %]">[% loc('Show pins') %]</a>
+    [% ELSE %]
+      <a class="map-pins-toggle" rel="nofollow" href="[% c.uri_with( { no_pins => 1 } ) %]">[% loc('Hide pins') %]</a>
+    [% END %]
+  [% END %]
+</div>
+
+[%# May be filled by JS e.g. around filters, or Expand map ~%]
+<p class="sub-map-links" id="sub_map_links">
+    [% map_sub_links | safe %]
+</p>

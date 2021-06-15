@@ -1,0 +1,12 @@
+[% INCLUDE 'header.html' title=loc('Summary') bodyclass='fullwidthpage' %]
+
+<h1>[% loc('Summary') %]</h1>
+
+<dl>
+    <dt>Version</dt>
+    <dd>[% git_version || 'unknown' %]</dd>
+</dl>
+
+[% INCLUDE 'status/stats.html' %]
+
+[% INCLUDE 'footer.html' %]
