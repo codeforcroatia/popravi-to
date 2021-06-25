@@ -1,5 +1,4 @@
-@import "_colours";
-//@import "../sass/layout";
+@import "./_colours";
 
 $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
@@ -10,12 +9,20 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
 .header {
     display: flex;
     align-items: center;
-    padding-top: 1.7rem;
+    padding: 1.3rem 0 1.3rem 0;
+    position: inherit;
+    box-shadow: none;
+    z-index: 5;
 }
 
 .logo {
     padding-left: 7.5rem;
     padding-top: 0;
+
+    
+    @media only screen and (min-width: 769px) and (max-width: 1010px){
+        padding-left: 2rem;
+    }
 }
 
 .logo img {
@@ -25,8 +32,21 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
 
 .menu {
     display: flex;
-    position: fixed;
+    position: absolute;
     right: 7.5rem;
+    padding: 0;
+    background-color: transparent;
+    z-index: 0;
+    height: auto;
+    margin-top: 0;
+
+    @media only screen and (min-width: 850px) and (max-width: 1010px){
+        right: 2rem;
+    }
+
+    @media only screen and (min-width: 769px) and (max-width: 849px){
+        right: -3rem;
+    }
 }
 
 .menu-list {
@@ -34,7 +54,20 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
 }
 
 .menu-item {
-    padding: 0 2.5rem;
+    padding: 1.5rem 2.5rem;
+    margin-bottom: 0;
+
+    @media only screen and (min-width: 769px) and (max-width: 1228px){
+        padding: 1.5rem 1rem;
+    }
+}
+
+.header .menu-item:hover {
+    border-bottom: 2px solid black;
+}
+
+.header .menu-item:active {
+    border-bottom: 2px solid black;
 }
 
 .mobile-menu-button {
@@ -47,6 +80,10 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
     font-weight: 800;
     font-size: 5rem;
     max-width: 60%;
+
+    @media only screen and (max-width: 1100px){
+        max-width: 100%;
+    }
 }
 
 .central-content {
@@ -56,10 +93,19 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
 
 .search {
     margin: 3rem 1.5rem 0 1.5rem;
+    padding-right: 5rem;
 }
 
 .search-input {
-    width: auto;
+    max-width: 60%;
+
+    @media only screen and (max-width: 1100px){
+        max-width: 100%;
+    }
+}
+
+.mobile-hero-images {
+    padding-top: 0;
 }
 
 .report-steps-section {
@@ -67,6 +113,19 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
     justify-content: flex-start;
     margin: 2.5rem 7.5rem 2.5rem 7.5rem;
     padding: 2.5rem 0 2.5rem 0;
+
+    @media only screen and (min-width: 1456px) {
+        justify-content: space-between;
+    }
+
+    @media only screen and (max-width: 1038px){
+        display: block;
+        justify-content: center;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 950px){
+        margin: 2.5rem 0 2.5rem 5rem;
+    }
 }
 
 .report-steps-section-two {
@@ -75,12 +134,35 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
 .report-steps {
     display: flex;
     flex-flow: column wrap;
-    max-height: 100px;
+    max-height: 150px;
     margin: 0 8rem 0 8rem;
+
+    @media only screen and (min-width: 1452px){
+        margin-right:350px;
+    }
+
+    @media only screen and (min-width:1365px) and (max-width:1446px){
+        margin-right: 250px;
+    }
+
+    @media only screen and (max-width: 1339px){
+        flex-flow: row;
+        margin: 0;
+        align-self: center;
+    }
+
+    @media only screen and (max-width: 1038px){
+        padding-top: 1.6rem;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 989px){
+        flex-flow: column wrap;
+    }
 }
 
 .report-step {
     margin: 0 2.5rem 0 2.5rem;
+    padding-bottom: 2rem;
 }
 
 .report-stat-num {
@@ -105,6 +187,14 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
     display: flex;
     justify-content: space-between;
     padding: 3rem 7.5rem 3rem 7.5rem;
+
+    @media only screen and (min-width: 769px) and (max-width: 844px){
+        width: 100%;
+    }
+
+    @media only screen and (max-width: 1174px) {
+        padding: 3rem 5rem 3rem 5rem;
+    }
 }
 
 .footer-desc {
@@ -112,16 +202,721 @@ $primary: url('../images/hero-desktop.svg') no-repeat right;
 }
 .report-issue-button-footer {
     margin-bottom: 0;
+    margin-top: 2rem;
 }
 
 .menu-item-footer {
     padding-bottom: 1rem;
+    padding-top: 0;
 }
 
 .menu-list-footer {
     margin-bottom: 0;
+    margin-top: 0;
 }
 
 .footer-socials {
-    margin-top: 0.7rem;
+    margin-top: 0;
+}
+
+.popravi-logo img {
+    display: initial;
+}
+
+.faq-footer {
+
+    @media only screen and (max-height: 880px) {
+        margin-top: 30rem;
+    }
+}
+
+.profil-footer {
+    margin-top: 25rem;
+}
+
+.poweredby {
+
+    @media only screen and (min-width: 768px) and (max-width: 1000px) {
+        padding-right: 2rem;
+    }
+}
+
+/* register and login */
+
+.register-container {
+    box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+}
+
+.misc-logo {
+    display: none;
+}
+
+.form-bottom-part {
+    position: initial;
+    bottom: auto;
+    margin: 0;
+    width: auto;
+    padding-top: 2rem;
+}
+
+/* report problem */
+
+.instructions-container .location-link {
+    color: #746AB6;
+    margin-bottom: 3rem;
+    display: flex;
+    margin-left: 0;
+}
+
+.primary-button {
+    background-color: $primary;
+    color: white;
+    display: flex;
+    padding: 0.75rem 2rem;
+    float: right;
+    margin: 0;
+}
+
+.arrow-right {
+    background: url('../images/ic-arrow-right.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-left: 0.6rem;
+    align-self: center;
+}
+
+.report-section {
+    margin: 2.7rem 7.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+
+    @media only screen and (max-width: 1200px){
+        margin: 1.7rem 3rem;
+    }
+}
+
+.map {
+    border-radius: 20px;
+    width: auto;
+    vertical-align: initial;
+    position: inherit;
+}
+
+.instructions-container {
+    margin-right: 3.5rem;
+}
+
+.continue-container {
+    position: initial;
+    z-index: 0;
+    width: auto;
+    float: right;
+}
+
+.continue-container-two {
+    position: initial;
+}
+
+.instructions-container h1, p {
+    margin: auto;
+}
+
+.instructions-container .page-title-smaller {
+    margin: auto;
+}
+
+.instructions-container .page-text {
+    margin: auto;
+}
+
+.bar, .bar2, .bar3, .bar4 {
+    height: 20px;
+    background-color: transparent;
+}
+
+.bar {
+    width: auto;
+    background: url('../images/progress_1.svg') no-repeat left;
+    display: block;
+}
+
+.bar2 {
+    width: auto;
+    background: url('../images/progress_2.svg') no-repeat left;
+    display: block;
+}
+
+.bar3 {
+    width: auto;
+    background: url('../images/progress_3.svg') no-repeat left;
+    display: block;
+}
+
+.bar4 {
+    width: auto;
+    background: url('../images/progress_4.svg') no-repeat left;
+    display: block;
+}
+
+.dropdowns {
+    margin: 2.5rem 0;
+}
+
+.report-title-input {
+    margin-bottom: 0;
+}
+
+.primary-button-two {
+    margin: 0;
+}
+
+.description-container {
+    margin: 1.5rem 0 0 0;
+}
+
+.show-name-public-button {
+    border: 0;
+    background-color: transparent;
+    background: url('../images/name-public.svg') no-repeat center;
+    display: block;
+    width: 193px;
+    height: 24px;
+    margin-bottom: 4rem;
+}
+
+.modal p {
+    margin-bottom: 2rem;
+}
+
+.modal {
+    height: auto;
+}
+
+.modal-container {
+    position: fixed; 
+    z-index: 8; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.register-button-two {
+    position: initial;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+/* contact page */
+
+.contact-info {
+    margin: 3rem 0 3rem 0;
+}
+
+.contact-section {
+    padding: 0 7.5rem 7.5rem 7.5rem;
+    display: flex;
+
+    @media only screen and (max-width: 1000px){
+        padding: 0 1.5rem 7.5rem 1.5rem;
+    }
+
+    @media only screen and (max-width: 840px) {
+        width: 100%;
+    }
+}
+
+.contact-section h1 {
+    padding: 0;
+}
+
+.form-misc button {
+    margin: 2.5rem 0 8rem 0;
+}
+
+.contact-us {
+    max-width: 50%;
+    margin-right: 4rem;
+}
+
+.contact-message {
+    max-width: 50%;
+    margin-left: 4rem;
+    margin-top: 1.2rem;
+}
+
+.page-divider-1 {
+   opacity: 0;
+}
+
+.page-divider-2 {
+    opacity: 0.1;
+    border: 1px solid #000000;
+    margin: 1.5rem 0 1.5rem 0;
+}
+
+/* profil */
+
+.central-section-two-col {
+    display: flex;
+}
+
+.two-col-left {
+    max-width: 40%;
+    padding: 0 3rem 7.5rem 7.5rem;
+
+    @media only screen and (max-width: 900px){
+        padding: 0 3rem 3rem 3rem;
+    }
+}
+
+.two-col-left .page-subtitle {
+    padding: 3rem 0 0 0;
+    background-color: transparent;
+    text-transform: initial;
+}
+
+.arrow-down {
+    background: transparent;
+}
+
+.two-col-left *:not(:first-child) {
+    padding: 0;
+}
+
+.logout-profile-button {
+    margin: 0;
+}
+
+.two-col-right {
+    margin: 3rem 7rem 0 7rem;
+    width: calc(60% - 7rem);
+
+    @media only screen and (max-width: 900px){
+        margin: 3rem 0 0 3rem;
+    }
+
+    @media only screen and (max-width: 899) {
+        width: 65%;
+    }
+}
+
+.tabs {
+    flex-wrap: nowrap;
+    position: relative;
+}
+
+.radiotab:checked + .tab-label + .panel {
+    position: absolute;
+    margin-top: 7rem;
+}
+
+.tab-label {
+    margin-right: 2rem;
+    width: auto;
+    padding: 0;
+    text-transform: initial;
+    background-color: transparent;
+    color: #DAD6D3;
+}
+
+.radiotab:checked + .tab-label {
+    color: #1D1C1C;
+    border-bottom: 4px solid #1D1C1C;
+    padding-bottom: 0.8rem;
+}
+
+.no-reports .primary-button {
+    display: initial;
+    margin-top: 2rem;
+}
+
+.filters-and-view {
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.filters-container {
+    margin-top: 0;
+}
+
+.filtered-content-container {
+    margin: 3rem 0 0 0;
+}
+
+.filtered-content {
+    margin-bottom: 3rem;
+}
+
+.map-img img {
+    border-radius: 20px;
+    width: 100%;
+    //max-height: 50vh;
+    margin-bottom: 5rem;
+}
+
+.updates-container {
+    margin: 0;
+}
+
+/* report detail */
+
+.report-details-container {
+    margin: 2rem 7.5rem 6rem 7.5rem;
+    display: flex;
+    flex-direction: row;
+
+    @media only screen and (max-width: 1200px){
+        margin: 1.7rem 3rem;
+    }
+
+    @media only screen and (max-width: 850px){
+        width: 100%;
+    }
+}
+
+.report-details {
+    margin-right: 7.5rem;
+    width: 40%;
+
+    @media only screen and (max-width: 850px){
+        margin-right: 2rem;
+        width: 70%;
+    }
+}
+
+.report-details-container .map {
+    position: initial;
+
+    @media only screen and (max-width: 850px){
+        margin-top: 5rem;
+    }
+}
+
+.issue-details-container {
+    margin-top: 0;
+}
+
+.report-details-container-update {
+    display: flex;
+    margin: 2rem 7.5rem 6rem 7.5rem;
+}
+
+.report-details .register-button {
+    width: auto;
+    float: left;
+}
+
+.report-details-container-update .map {
+
+    @media only screen and (max-width: 850px){
+        margin-top: 5rem;
+    }
+}
+
+.report-details-container-update .report-details {
+    @media only screen and (max-width: 850px){
+        margin-right: 2rem;
+        width: 40%;
+    }
+}
+
+/* faq */
+
+.radiotab:checked + .text-bold-label {
+    border-left: 4px solid $orange;
+    padding: 0 0 0 0.7rem;
+    border-bottom: none;
+    width: auto;
+    top: 0;
+}
+
+.text-bold-label {
+    color: black;
+}
+
+.faq-tabs {
+    margin-top: 4rem;
+    height: 100vh;
+}
+
+.faq-tabs .faq-section label {
+    background-color: transparent;
+    padding: 0;
+}
+
+.faq-tabs .faq-section {
+    margin-bottom: 1.5rem;
+    padding: 0;
+}
+
+.faq-tabs .faq-section .faq-article {
+    display: none;
+    left: 420px;
+    position: absolute;
+    top: -4rem;
+    min-width: calc(50vw - 7rem);
+
+
+    @media only screen and (max-width: 890px) {
+        left: 380px;
+    }
+
+    @media only screen and (max-width: 975px) {
+        min-width: 60vw;
+    }
+
+    @media only screen and (min-width: 976px) and (max-width: 1000px) {
+        min-width: 40vw;
+    }
+}
+
+.faq-article .faq-ordered-list {
+    padding: 0 1.5rem;
+}
+
+/* notifications */
+
+.notifications {
+    justify-content: space-between;
+}
+
+.notification-marker {
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+}
+
+.notifications .contact-message {
+    width: 500px;
+    max-width: inherit;
+    margin-left: 0;
+}
+
+.notifications .contact-us {
+    margin-left: 0;
+    padding: 0;
+}
+
+.notifications .contact-section {
+    padding: 0 7.5rem 7.5rem 7.5rem;
+}
+
+.notifications .text-bold {
+    margin-bottom: 3rem;
+}
+
+.notification-type {
+    padding: 0;
+}
+
+.notification-marker .text-bold {
+    margin: 0 0 1rem 0;
+}
+
+/* all reports */
+
+.all-reports-container {
+    margin: 0 7.5rem 7.5rem 7.5rem;
+}
+
+.all-reports-container .text-bold {
+    margin-bottom: 0;
+}
+
+.all-reports-container .notification-marker {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+}
+
+.notification-marker-form-link {
+    width: 60%;
+}
+
+.notification-search-button-text, .notificaton-search-button-arrow {
+    display: none;
+}
+
+.notification-marker-form-link .search-button {
+    background: url('../images/icon-chevron-right.svg') no-repeat center;
+    background-color: black;
+    width: auto;
+    border-radius: 50%;
+    margin-top: 0;
+}
+
+.notification-marker-form-link {
+    display: initial;
+    align-self: center;
+}
+
+.notification-marker-form-link .search {
+    display: flex;
+}
+
+.notification-marker-form-link input {
+    max-width: 60%;
+}
+
+.notification-search-button-arrow {
+    background: none;
+}
+
+.all-reports-smaller {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6rem;
+}
+
+.all-reports-smaller:nth-of-type(2) {
+    @media only screen and (max-width: 850px) {
+        width: 95vw;
+    }
+}
+
+.all-reports-section {
+    display: flex;
+    margin-right: 7rem;
+    justify-content: space-between;
+    border-top: 2px solid black;
+    flex-wrap: wrap;
+    border-bottom: 0;
+
+    @media only screen and (max-width: 1315px) {
+        display: block;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        margin-right: 4rem;
+    }
+}
+
+.all-reports-section .report-stat-item {
+    align-self: flex-end;
+}
+
+.all-reports-container .report-statistics {
+    align-self: center;
+}
+
+.statistics-img img {
+    max-width: auto;
+    padding-top: 0;
+    flex: 0 0 100%;
+}
+
+.all-reports-section-smaller .report-stat-item {
+    background-color: #FAFAFA;
+    margin-bottom: 1.5rem;
+    padding: 2rem 5rem 2rem 5rem;
+
+    @media only screen and (max-width: 1000px) {
+        padding: 2rem;
+    }
+}
+
+.all-reports-section-smaller {
+    border-top: 2px solid black;
+    max-width: 30%;
+    border-bottom: 0;
+
+    @media only screen and (max-width: 1100px) {
+        margin: 0;
+    }
+}
+
+.all-reports-section-smaller .report-statistics {
+    display: block;
+    text-align: center;
+}
+
+.all-reports-section-smaller .report-stat-detail {
+    justify-content: center;
+}
+
+.all-reports-section-stats {
+    border-top: 2px solid black;
+    border-bottom: 0;
+}
+
+.all-reports-section-stats .page-text-light {
+    margin-top: 0.2rem;
+    margin-left: 0;
+    color: #917D6E;
+}
+
+.average-response-text {
+    margin-bottom: 0;
+}
+
+.all-reports-section-stats .reports-desc {
+    margin-bottom: 3rem;
+}
+
+.all-reports-type-item {
+    padding-bottom: 1.6rem;
+}
+
+.all-reports-stats-2 {
+    @media only screen and (min-width: 850px) and (max-width: 990px) {
+        width: 45%;
+    }
+}
+
+.all-reports-location {
+    margin: 3rem 7rem 0 7rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @media only screen and (max-width: 1200px) {
+        margin: 1.7rem 3rem;
+    }
+
+    @media only screen and (max-width: 850px) {
+        width: 100%;
+    }
+}
+
+.all-reports-location-section {
+    margin-right: 7.5rem;
+    width: 40%;
+
+    @media only screen and (max-width: 850px) {
+        width: 60%;
+    }
+}
+
+.all-reports-location .map-img img {
+    @media only screen and (max-width: 850px) {
+        margin-top: 4rem;
+    }
+}
+
+.all-reports-location .filters-and-view {
+    margin-top: 0;
+}
+
+.all-reports-location .map-img {
+    position: initial;
+}
+
+.all-reports-location .filtered-content-container {
+    margin: 3rem 0 0 0;
+}
+
+.filter-form {
+    padding-bottom: 8rem;
 }

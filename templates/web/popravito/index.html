@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-[% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
-[% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
-  
-    <link rel="stylesheet" type="text/css" href="[% base_css %]">
-    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48em)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/base.css">
+    <link rel="stylesheet" type="text/css" href="./css/layout.css" media="screen and (min-width:48.063em)">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <title>Popravi.to</title>
@@ -16,19 +13,20 @@
 <body>
     <header class="header">
         <picture class="logo">
-            <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-            <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
+            <source media="(max-width: 768px)" srcset="./images/popravi-logo-mobile.svg">
+            <source media="(min-width: 769px)" srcset="./images/popravi-logo-horizontal.svg">
             <img src="/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
         </picture>
-        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu"></button>
-        <nav class="menu visually-hidden">
+        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
+        <nav class="menu visually-hidden" id="menu-container">
             <ul class="menu-list">
                 <li class="menu-item"><a href="" tabindex="0" aria-label="all reports">Sve prijave</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="notifications">Obavijesti</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="help">Pomoć</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="sign in">Prijavi se</a></li>
+                <li class="menu-item visually-hidden"><a href="" tabindex="0" aria-label="my profile">Moj profil</a></li>
             </ul>
-            <form action="" class="button-link">
+            <form class="button-link">
                 <input class="button report-issue-button" tabindex="0" aria-label="report problem" type="submit" value="Prijavi problem"/>
             </form>
         </nav>
@@ -38,18 +36,18 @@
         <section class="central-content">
             <div class="mobile-hero-images">
                 <picture class="hero-image">
-                    <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-left.svg">
+                    <source media="(max-width: 768px)" srcset="./images/hero-mobile-left.svg">
                     <img src="#" alt="">
                 </picture>
                 <picture class="hero-image">
-                    <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-right.svg">
+                    <source media="(max-width: 768px)" srcset="./images/hero-mobile-right.svg">
                     <img src="#" alt="">
                 </picture>
             </div>
-            <h1 class="central-title">Prijavi ili pregledaj lokalni problem</h1>
+            <h1 class="central-title" id="title">Prijavi ili pregledaj lokalni problem</h1>
             <form class="search">
                 <span class="search-icon-button"></span>
-                <input type="text" class="search-input" placeholder="Upiši naziv ulice ili mjesto">
+                <input type="text" id="search" class="search-input" placeholder="Upiši naziv ulice ili mjesto">
                 <button class="search-button" type="submit" aria-label="search" tabindex="0"></button>
             </form>
             <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon"></span>Koristi moju trenutnu lokaciju</a>
@@ -84,16 +82,16 @@
 
     <footer class="footer">
         <div class="footer-desc">
-            <picture class="logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="Popravi.to logo">
+            <picture class="popravi-logo">
+                <source srcset="./images/popravi-logo-white.svg">
+                <img src="./images/popravi-logo-white.svg" alt="Popravi.to logo">
             </picture>
             <p class="footer-text">
                 Popravi.to je online alat napravljen u svrhu poboljšanja javnih politika i inkluzivnom odlučivanju, 
                 te kako bi građanima pružio mehanizme za prijavu problema lokalnoj administraciji te nadzoru 
                 njihovog rješavanja u svojoj sredini.
             </p>
-            <form action="" class="button-link-footer">
+            <form class="button-link-footer">
                 <input class="button report-issue-button-footer" tabindex="0" aria-label="report problem" type="submit" value="Prijavi problem"/>
             </form>
         </div>
@@ -105,16 +103,16 @@
                 <li class="menu-item menu-item-footer"><a href="" tabindex="0" aria-label="sign in">Prijavi se</a></li>
             </ul>
         </nav>
-        <div>
+        <div class="poweredby">
             <p class="footer-text">Powered by</p>
             <picture class="fixmystreet-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg" alt="FixMyStreet logo">
+                <source srcset="./images/fixmystreetlogo.svg">
+                <img src="./images/fixmystreetlogo.svg" alt="FixMyStreet logo">
             </picture> 
             <p class="footer-text">S ljubavlju</p>
             <picture class="fixmystreet-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
+                <source srcset="./images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
+                <img src="./images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
             </picture> 
         </div>
         <div>
@@ -128,5 +126,8 @@
             </nav>
         </div>
     </footer>
+
+    <script src="./scripts/menu.js"></script>
+    <script src="./scripts/homepage.js"></script>
 </body>
 </html>
