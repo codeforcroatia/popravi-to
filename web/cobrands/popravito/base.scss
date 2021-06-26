@@ -135,7 +135,7 @@ label[for="message"]{
 .mobile-menu-button {
     border: none;
     background-color: transparent;
-    background: url('../images/ic-menu.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-menu.svg') no-repeat center;
     width: 24px;
     height: 24px;
     position: fixed;
@@ -164,7 +164,7 @@ label[for="message"]{
 }
 
 .search-icon-button {
-    background: url('../images/Search.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/Search.svg') no-repeat center;
     border: none;
     background-color: transparent;
     width: 1.5rem;
@@ -184,7 +184,7 @@ label[for="message"]{
     border: none;
     border-radius: 50%;
     background: $orange;
-    background-image: url('../images/icon-chevron-right.svg');
+    background-image: url('[% c.cobrand.base_url %]/cobrands/popravito/images/icon-chevron-right.svg');
     background-repeat: no-repeat;
     background-position: center;
     padding: 1.6rem;
@@ -192,7 +192,7 @@ label[for="message"]{
 }
 
 .location-icon {
-    background: url('../images/ic-location.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-location.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -318,21 +318,21 @@ label[for="message"]{
 }
 
 .github-link {
-    background: url('../images/github.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/github.svg') no-repeat center;
     display: inline-block;
     height: 32px;
     width: 32px;
 }
 
 .twitter-link {
-    background: url('../images/twitter.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/twitter.svg') no-repeat center;
     display: inline-block;
     height: 32px;
     width: 32px;
 }
 
 .facebook-link {
-    background: url('../images/facebook.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/facebook.svg') no-repeat center;
     display: inline-block;
     height: 32px;
     width: 32px;
@@ -414,7 +414,7 @@ label[for="message"]{
 }
 
 .close-button {
-    background: url('../images/ic-close.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-close.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -441,7 +441,7 @@ label[for="message"]{
 .reveal-pass {
     border: 0;
     background-color: transparent;
-    background: url('../images/ic-show.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-show.svg') no-repeat center;
     display: block;
     width: 25px;
     height: 25px;
@@ -486,7 +486,7 @@ label[for="message"]{
 }
 
 .location-icon-purple {
-    background: url('../images/ic-location-purple.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-location-purple.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -503,7 +503,7 @@ label[for="message"]{
 }
 
 .arrow-right {
-    background: url('../images/ic-arrow-right.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
     width: 15px;
     height: 15px;
     display: block;
@@ -590,8 +590,7 @@ label[for="message"]{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none; 
-    background-image: url('../images/ic-dropdown-down.svg');
-    background-image: url(../images/ic-dropdown-down.svg);
+    background-image: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-dropdown-down.svg');
     background-repeat: no-repeat;
     background-position: right;
     background-origin: content-box;
@@ -616,7 +615,7 @@ label[for="message"]{
 }
 
 .arrow-left {
-    background: url('../images/ic-arrow-left.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-arrow-left.svg') no-repeat center;
     width: 15px;
     height: 15px;
     display: block;
@@ -643,7 +642,7 @@ label[for="message"]{
 }
 
 .details-button {
-    background: url('../images/ic_indicator_error.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic_indicator_error.svg') no-repeat center;
     width: 10px;
     height: 10px;
     display: block;
@@ -683,7 +682,7 @@ label[for="message"]{
 }
 
 .camera-icon {
-    background: url('../images/ic-camera.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-camera.svg') no-repeat center;
     width: 30px;
     height: 20px;
     display: block;
@@ -704,7 +703,7 @@ label[for="message"]{
 }
 
 .arrow-right-black {
-    background: url('../images/ic-arrow-right-black.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-arrow-right-black.svg') no-repeat center;
     width: 15px;
     height: 15px;
     display: block;
@@ -785,7 +784,7 @@ label[for="message"]{
 }
 
 .email-span-icon {
-    background: url('../images/send.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/send.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -793,7 +792,7 @@ label[for="message"]{
 }
 
 .address-span-icon {
-    background: url('../images/mail.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/mail.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -876,7 +875,7 @@ label[for="message"]{
 }
 
 .arrow-down {
-    background: url('../images/ic-dropdown-down.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-dropdown-down.svg') no-repeat center;
     width: 15px;
     height: 15px;
     display: block;
@@ -901,7 +900,7 @@ label[for="message"]{
 }
 
 .edit-info-icon {
-    background: url('../images/checkbox.svg') no-repeat right;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/checkbox.svg') no-repeat right;
     width: 30px;
     height: 30px;
     display: block;
@@ -910,7 +909,7 @@ label[for="message"]{
 }
 
 .logout-profile-button {
-    background: url('../images/logout.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/logout.svg') no-repeat center;
     width: 94px;
     height: 20px;
     display: block;
@@ -947,7 +946,7 @@ label[for="message"]{
 }
 
 .edit-button {
-    background: url('../images/edit.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/edit.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -1020,18 +1019,18 @@ label[for="message"]{
 
 .filter-icon {
     display: block;
-    background: url('../images/ic_filter.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic_filter.svg') no-repeat center;
     width: 15px;
     height: 15px;
     margin-right: 0.5rem;
 }
 
 .filter-icon:hover {
-    background: url('../images/ic_filter_orange.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic_filter_orange.svg') no-repeat center;
 }
 
 .filter-icon:active {
-    background: url('../images/ic_filter_orange.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic_filter_orange.svg') no-repeat center;
 }   
 
 .sort-form {
@@ -1069,13 +1068,13 @@ label[for="message"]{
 }
 
 .list-view-button {
-    background: url('../images/ic-list.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-list.svg') no-repeat center;
     display: block;
     width: 40px;
 }
 
 .map-view-button {
-    background: url('../images/ic-map.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-map.svg') no-repeat center;
     width: 40px;
     display: block;
 }
@@ -1111,7 +1110,7 @@ label[for="message"]{
 }
 
 .fix-icon {
-    background: url('../images/fix.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/fix.svg') no-repeat center;
     display: block;
     width: 30px;
     height: 30px;
@@ -1356,7 +1355,7 @@ label[for="message"]{
 }
 
 .rss-icon {
-    background: url('../images/ic-RSS.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-RSS.svg') no-repeat center;
     width: 16px;
     height: 16px;
     display: inline-flex;
@@ -1397,7 +1396,7 @@ label[for="message"]{
 }
 
 .notification-search-button-arrow {
-    background: url('../images/ic-arrow-right.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
     display: inline-block;
     width: 15px;
     height: 15px;
@@ -1575,7 +1574,7 @@ label[for="message"]{
 }
 
 .expand-icon {
-    background: url('../images/ic-plus.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-plus.svg') no-repeat center;
     display: block;
     width: 15px;
     height: 15px;
@@ -1594,7 +1593,7 @@ label[for="message"]{
 }
 
 .close-icon {
-    background: url('../images/ic-close.svg') no-repeat center;
+    background: url('[% c.cobrand.base_url %]/cobrands/popravito/images/ic-close.svg') no-repeat center;
     display: block;
     width: 15px;
     height: 15px;
