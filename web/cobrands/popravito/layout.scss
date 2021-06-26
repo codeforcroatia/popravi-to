@@ -2,7 +2,7 @@
 
 $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
-$primary: url('./cobrands/popravito/images/hero-desktop.svg') no-repeat right;
+$primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 /* header */ 
 
@@ -283,7 +283,7 @@ $primary: url('./cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 
 .arrow-right {
-    background: url('./cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
     width: 15px;
     height: 15px;
     display: block;
@@ -343,25 +343,25 @@ $primary: url('./cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .bar {
     width: auto;
-    background: url('./cobrands/popravito/images/progress_1.svg') no-repeat left;
+    background: url('/cobrands/popravito/images/progress_1.svg') no-repeat left;
     display: block;
 }
 
 .bar2 {
     width: auto;
-    background: url('./cobrands/popravito/images/progress_2.svg') no-repeat left;
+    background: url('/cobrands/popravito/images/progress_2.svg') no-repeat left;
     display: block;
 }
 
 .bar3 {
     width: auto;
-    background: url('./cobrands/popravito/images/progress_3.svg') no-repeat left;
+    background: url('/cobrands/popravito/images/progress_3.svg') no-repeat left;
     display: block;
 }
 
 .bar4 {
     width: auto;
-    background: url('./cobrands/popravito/images/progress_4.svg') no-repeat left;
+    background: url('/cobrands/popravito/images/progress_4.svg') no-repeat left;
     display: block;
 }
 
@@ -384,7 +384,7 @@ $primary: url('./cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .show-name-public-button {
     border: 0;
     background-color: transparent;
-    background: url('./cobrands/popravito/images/name-public.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/name-public.svg') no-repeat center;
     display: block;
     width: 193px;
     height: 24px;
@@ -562,7 +562,6 @@ $primary: url('./cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .map-img img {
     border-radius: 20px;
     width: 100%;
-    //max-height: 50vh;
     margin-bottom: 5rem;
 }
 
@@ -750,7 +749,7 @@ $primary: url('./cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 
 .notification-marker-form-link .search-button {
-    background: url('./cobrands/popravito/images/icon-chevron-right.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/icon-chevron-right.svg') no-repeat center;
     background-color: black;
     width: auto;
     border-radius: 50%;
