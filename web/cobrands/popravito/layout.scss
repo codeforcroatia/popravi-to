@@ -54,12 +54,15 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 
 .menu-item {
-    padding: 1.5rem 2.5rem;
-    margin-bottom: 0;
+    margin: 0 1.5rem;
 
     @media only screen and (min-width: 769px) and (max-width: 1228px){
         padding: 1.5rem 1rem;
     }
+}
+
+.menu-item a {
+    padding: 0 0.5rem;
 }
 
 .header .menu-item:hover {
@@ -79,7 +82,8 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .central-title {
     font-weight: 800;
     font-size: 5rem;
-    max-width: 60%;
+    max-width: 540px;
+    line-height: 5rem;
 
     @media only screen and (max-width: 1100px){
         max-width: 100%;
@@ -88,20 +92,17 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .central-content {
     background: $primary;
-    padding: 10rem 5.5rem 10rem 5.5rem;
+    padding: 8.5rem 5.5rem 8.5rem 5.5rem;
 }
 
 .search {
-    margin: 3rem 1.5rem 0 1.5rem;
+    margin: 3.5rem 1.5rem 0 1.5rem;
     padding-right: 5rem;
+    max-width: 540px;
 }
 
 .search-input {
-    max-width: 60%;
-
-    @media only screen and (max-width: 1100px){
-        max-width: 100%;
-    }
+    width: 100%;
 }
 
 .mobile-hero-images {
