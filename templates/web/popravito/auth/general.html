@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
+    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+
+    <link rel="stylesheet" type="text/css" href="[% base_css %]">
+    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    [% INCLUDE 'header.html', title = loc('Sign in or create an account') %]
+
+</head>
+<body>
+    <section class="register-container">
+        <div>
+            <picture class="logo misc-logo">
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+            </picture>
+            <button class="close-button" tabindex="0" aria-label="close form"></button>
+        </div>
+        <h1 class="page-title">[% loc('Sign in') %]</h1>
+
+        [% IF oauth_need_email %]
+            <p class="page-text-small">[% loc('We need your email address, please give it below.') %]</p>
+        [% END %]
+        [% IF oauth_failure %]
+            <p class="page-text-small">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
+        [% END %]
+
+        <form action="/auth" method="post" name="general_auth" class="credentials-form validate">
+            <input type="email" class="credentials-input" placeholder="Email adresa" tabindex="0" aria-label="email">
+            <div class="password-container">
+                <input type="password" class="credentials-input" placeholder="Lozinka" tabindex="0" aria-label="password">  
+                <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
+            </div>
+            <a class="misc-link" href="" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
+            <p class="page-text-small visually-hidden">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
+            <div class="form-bottom-part">
+                <button class="button register-button" type="submit" aria-label="register" tabindex="0" disabled="disabled">Prijava</button>
+                <span class="page-text">Nemaš račun?<a class="misc-link" href="" tabindex="0" aria-label="register"> Registriraj se</a></span>
+            </div>
+        </form>
+    </section>
+</body>
+</html>
