@@ -41,11 +41,11 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin-top: 0;
 
     @media only screen and (min-width: 850px) and (max-width: 1010px){
-        right: 2rem;
+        right: 1rem;
     }
 
     @media only screen and (min-width: 769px) and (max-width: 849px){
-        right: -3rem;
+        right: -7rem;
     }
 }
 
@@ -55,10 +55,6 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .menu-item {
     margin: 0 1.5rem;
-
-    @media only screen and (min-width: 769px) and (max-width: 1228px){
-        padding: 1.5rem 1rem;
-    }
 }
 
 .menu-item a {
@@ -133,18 +129,13 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     justify-content: space-between;
 }
 .report-steps {
-    display: flex;
-    flex-flow: column wrap;
-    max-height: 150px;
-    margin: 0 8rem 0 8rem;
-
-    @media only screen and (min-width: 1452px){
-        margin-right:350px;
-    }
-
-    @media only screen and (min-width:1365px) and (max-width:1446px){
-        margin-right: 250px;
-    }
+    //display: flex;
+    //flex-flow: column wrap;
+    //max-height: 150px;
+    //margin: 0 8rem 0 8rem;
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
 
     @media only screen and (max-width: 1339px){
         flex-flow: row;
@@ -162,8 +153,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 
 .report-step {
-    margin: 0 2.5rem 0 2.5rem;
-    padding-bottom: 2rem;
+    //margin: 0 2.5rem 0 2.5rem;
 }
 
 .report-stat-num {
@@ -172,10 +162,6 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .report-statistics {
     display: flex;
-}
-
-.report-stat-detail {
-    justify-content: initial;
 }
 
 .report-stat-item {

@@ -223,6 +223,8 @@ label[for="message"]{
     font-family: $headings-font;
     font-weight: 600;
     font-size: 2rem;
+    max-width: 384px;
+    line-height: 2.375rem;
 }
 
 .report-steps {
@@ -238,10 +240,10 @@ label[for="message"]{
     content: counter(inst);
     background-color: #F6F2EF;
     color: $col_big_numbers;
-    padding: 5px 15px 5px 15px;
+    padding: 0.313rem 1.25rem;
     font-family: $headings-font;
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 2.25rem;
     margin-right: 1.75rem;
     border-radius: 50%;
 }
@@ -261,11 +263,14 @@ label[for="message"]{
 .report-stat-detail {
     display: flex;
     justify-content: center;;
+    font-size: 0.75rem;
+    align-items: center;
+    color: #675F58;
 }
 
 .report-mark {
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
     margin-right: 0.5rem;
 }
 
