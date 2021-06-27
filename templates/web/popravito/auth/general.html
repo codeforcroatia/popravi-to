@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     
-    [% INCLUDE 'header.html', title = loc('Sign in or create an account') %]
+    [% INCLUDE 'header.html', title = loc('Prijavi se ili registriraj') %]
 
 </head>
 <body>
@@ -45,7 +45,9 @@
             <p class="page-text-small visually-hidden">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
             <div class="form-bottom-part">
                 <button class="button register-button" type="submit" aria-label="register" tabindex="0" disabled="disabled">Prijava</button>
-                <span class="page-text">Nemaš račun?<a class="misc-link" href="" tabindex="0" aria-label="register"> Registriraj se</a></span>
+                <span class="page-text">
+                    [% Nemaš račun? (loc('<a class="misc-link" href="%s" tabindex="0" aria-label="register">Registriraj se</a>'), '/auth/create') %]
+                </span>
             </div>
         </form>
     </section>

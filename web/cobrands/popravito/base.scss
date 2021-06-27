@@ -378,7 +378,7 @@ label[for="message"]{
     margin: auto;
     max-width: 100%;
     border-radius: 15px;
-    padding: 3rem;
+    padding: 3rem 2.5rem;
 }
 
 .page-title {
@@ -408,6 +408,8 @@ label[for="message"]{
     margin: 0 auto;
     padding: 0.75rem 2rem 0.75rem 2rem;
     width: 100%;
+    height: 56px;
+    font-size: 1rem;
 }
 
 .register-button:disabled {
@@ -444,7 +446,7 @@ label[for="message"]{
     display: block;
     border: none;
     float: right;
-    margin-top: 0.625rem;
+    margin-top: 1.5rem;
 }
 
 .misc-logo {
