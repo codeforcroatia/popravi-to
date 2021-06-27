@@ -25,11 +25,21 @@
         <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
         <nav class="menu visually-hidden" id="menu-container">
             <ul class="menu-list">
+
+                <!-- INSERT TEMPLATE FOR MAIN NAV ITEMS HERE-->
+
                 <li class="menu-item"><a href="" tabindex="0" aria-label="all reports">Sve prijave</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="notifications">Obavijesti</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="help">Pomoć</a></li>
-                <li class="menu-item"><a href="" tabindex="0" aria-label="sign in">Prijavi se</a></li>
-                <li class="menu-item visually-hidden"><a href="" tabindex="0" aria-label="my profile">Moj profil</a></li>
+                <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">Prijavi se</a></li>
+
+                [%~ IF c.user_exists ~%]
+                    [%~ INCLUDE navitem uri='/my' label=loc('Your account') ~%]
+                [%~ ELSE ~%]
+                    [%~ INCLUDE navitem uri='/auth' label=loc('Sign in') ~%]
+                [%~ END ~%]
+
+                <li class="menu-item visually-hidden"><a href="/my" tabindex="0" aria-label="my profile">Moj profil</a></li>
             </ul>
             <form class="button-link">
                 <input class="button report-issue-button" tabindex="0" aria-label="report problem" type="submit" value="Prijavi problem"/>
