@@ -46,7 +46,7 @@
             <div class="form-bottom-part">
                 <button class="button register-button" type="submit" aria-label="register" tabindex="0" disabled="disabled">Prijava</button>
                 <span class="page-text">
-                    Nemaš račun? [%(loc(<a class="misc-link" href="%s" tabindex="0" aria-label="register">Registriraj se</a>), '/auth/create') %]
+                    [% tprintf(loc('Nemaš račun? <a class="misc-link" href="%s" tabindex="0" aria-label="register">Registriraj se</a>'), '/auth/create') %]
                 </span>
             </div>
         </form>
