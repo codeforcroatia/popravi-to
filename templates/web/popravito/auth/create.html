@@ -22,7 +22,7 @@
                 <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
                 <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
             </picture>
-            <button class="close-button" tabindex="0" aria-label="close form"></button>
+            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
         <h1 class="page-title">Registracija</h1>
         <form class="credentials-form">
@@ -34,7 +34,7 @@
             <p class="page-text-small visually-hidden">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
             <div class="form-bottom-part">
                 <button class="button register-button" type="submit" aria-label="register" tabindex="0" disabled="disabled">Registriraj se</button>
-                <span class="page-text">Već si registriran?<a class="misc-link" href="" tabindex="0" aria-label="login"> Prijavi se</a></span>
+                <span class="page-text">Već si registriran? <a class="misc-link" href="/auth" tabindex="0" aria-label="login">Prijavi se</a></span>
             </div>
         </form>
     </section>
