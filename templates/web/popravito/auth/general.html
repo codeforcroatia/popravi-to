@@ -40,20 +40,42 @@
         <form action="/auth" method="post" name="general_auth" class="credentials-form validate">
             <input type="hidden" name="r" value="[% c.req.params.r | html %]">
 
+            [% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
+
+            [% IF c.cobrand.sms_authentication %]
+                [% SET username_label = loc('Your email or mobile') %]
+            [% ELSE %]
+                [% SET username_label = loc('Your email') %]
+            [% END %]
+
             <label class="n visually-hidden" for="username">[% username_label %]</label>
             [% IF loc_username_error %]
               <div class="form-error">[% loc_username_error %]</div>
             [% END %]
 
             <input type="email" class="credentials-input" id="username" name="username" value="[% username | html %]" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email">
+            
+            [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
+
+            <div id="form_sign_in">
+                [% IF oauth_need_email %]
+                  [% INCLUDE form_sign_in_no %]
+                  <input type="hidden" name="oauth_need_email" value="1">
+                [% ELSE %]
+                  [% INCLUDE form_sign_in_yes %]
+                  [% INCLUDE form_sign_in_no %]
+                [% END %]
+            </div>
+            
             <div class="password-container">
-                <input type="password" class="credentials-input" placeholder="Lozinka" tabindex="0" aria-label="password">  
+                <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
+                <input type="password" class="credentials-input" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
             </div>
-            <a class="misc-link" href="" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
-            <p class="page-text-small visually-hidden">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
+            <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
+            <p class="page-text-small form-error">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
             <div class="form-bottom-part">
-                <button class="button register-button" type="submit" aria-label="register" tabindex="0" disabled="disabled">Prijava</button>
+                <input class="button register-button" type="submit" aria-label="register" tabindex="0" value="Prijava">
                 <span class="page-text">Nemaš račun? <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">Registriraj se</a></span>
             </div>
         </form>
