@@ -59,6 +59,9 @@
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
             
             <div class="password-container">
+
+                [% loc_password_error = INCLUDE 'auth/_password_error.html' default='password' %]
+
                 <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
                 <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
