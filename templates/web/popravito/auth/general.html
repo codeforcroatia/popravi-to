@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     
-    [% INCLUDE 'header.html', title = loc('Prijavi se ili registriraj') %]
+    [% title = loc('Sign in or create an account') %]
 
 </head>
 <body>
@@ -24,7 +24,7 @@
                 <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
                 <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
             </picture>
-            <button class="close-button" tabindex="0" aria-label="close form"></button>
+            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
         <h1 class="page-title">Prijava</h1>
 
