@@ -28,6 +28,8 @@
         </div>
         <h1 class="page-title">Prijava</h1>
 
+        [% TRY %][% INCLUDE 'auth/_general_top.html' %][% CATCH file %][% END %]
+
         [% IF oauth_need_email %]
             <p class="page-text-small">[% loc('We need your email address, please give it below.') %]</p>
         [% END %]
@@ -54,16 +56,6 @@
             <input type="email" class="credentials-input" id="username" name="username" value="[% username | html %]" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email">
             
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
-
-            <div id="form_sign_in">
-                [% IF oauth_need_email %]
-                  [% INCLUDE form_sign_in_no %]
-                  <input type="hidden" name="oauth_need_email" value="1">
-                [% ELSE %]
-                  [% INCLUDE form_sign_in_yes %]
-                  [% INCLUDE form_sign_in_no %]
-                [% END %]
-            </div>
             
             <div class="password-container">
                 <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
