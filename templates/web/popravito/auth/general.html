@@ -28,8 +28,6 @@
         </div>
         <h1 class="page-title">Prijava</h1>
 
-        [% TRY %][% INCLUDE 'auth/_general_top.html' %][% CATCH file %][% END %]
-
         [% IF oauth_need_email %]
             <p class="page-text-small">[% loc('We need your email address, please give it below.') %]</p>
         [% END %]
