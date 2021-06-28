@@ -1,0 +1,11 @@
+[% IF username_error;
+    # other keys include fqdn, mxcheck if you'd like to write a custom error message
+    errors = {
+        missing_email = loc('Please enter your email'),
+        other_email = loc('Please check your email address is correct')
+    };
+    default = "email";
+    errors.$username_error || errors.$default;
+ELSIF sign_in_error;
+    loc('There was a problem with your login information.');
+END ~%]
