@@ -54,13 +54,13 @@
               <div class="form-error">[% loc_username_error %]</div>
             [% END %]
 
-            <input type="text" class="credentials-input form-control required" id="username" name="username" value="" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
+            <input type="text" class="credentials-input form-control required" id="username" name="username" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
             
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
             
             <div class="password-container">
                 <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
-                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
+                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
             </div>
             <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
