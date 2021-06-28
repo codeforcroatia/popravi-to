@@ -49,21 +49,21 @@
             [% END %]
 
             <label class="n visually-hidden" for="username">[% username_label %]</label>
+
             [% IF loc_username_error %]
               <div class="form-error">[% loc_username_error %]</div>
             [% END %]
 
-            <input type="email" class="credentials-input" id="username" name="username" value="[% username | html %]" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
+            <input type="email" class="credentials-input form-control required" id="username" name="username" value="[% username | html %]" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
             
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
             
             <div class="password-container">
                 <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
-                <input type="password" class="credentials-input" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
+                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
             </div>
             <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
-            <p class="page-text-small form-error">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
             <div class="form-bottom-part">
                 <input class="button register-button" type="submit" aria-label="register" tabindex="0" value="Prijava" name="sign_in_by_password" >
                 <span class="page-text">Nemaš račun? <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">Registriraj se</a></span>
