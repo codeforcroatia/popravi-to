@@ -405,6 +405,10 @@ label[for="message"]{
     color: $col_big_numbers;
 }
 
+.credentials-input:active {
+    border: 1px solid #1D1C1C;
+}
+
 .register-button {
     background-color: $primary;
     color: white;
@@ -507,6 +511,7 @@ label[for="message"]{
 .form-error {
     background-color: white;
     color: red;
+    font-size: 0.8rem;
 }
 
 /* report problem */
