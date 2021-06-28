@@ -3,7 +3,7 @@ const enableFormButton = function(){
 
     for (let i = 0; i < formElements.length; i++) {
         formElements[i].addEventListener("input", function() {
-            if (document.getElementById("username").value === "" && document.getElementById("password_sign_in").value === "") {
+            if (document.getElementById("username").value == "" && document.getElementById("password_sign_in").value == "") {
                 document.getElementById('signInButton').disabled = true
             } else {
                 document.getElementById('signInButton').disabled = false
