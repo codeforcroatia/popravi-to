@@ -54,7 +54,7 @@
               <div class="form-error">[% loc_username_error %]</div>
             [% END %]
 
-            <input type="text" class="credentials-input form-control required" id="username" name="username" value="[% username | html %]" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
+            <input type="text" class="credentials-input form-control required" id="username" name="username" value="" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
             
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
             
@@ -65,10 +65,12 @@
             </div>
             <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
             <div class="form-bottom-part">
-                <input class="button register-button" type="submit" aria-label="register" tabindex="0" value="Prijava" name="sign_in_by_password" >
+                <input class="button register-button disabled-button" type="submit" aria-label="register" tabindex="0" value="Prijava" name="sign_in_by_password" disabled="disabled">
                 <span class="page-text">Nemaš račun? <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">Registriraj se</a></span>
             </div>
         </form>
     </section>
+
+    <script src="[% c.cobrand.base_url %]/cobrands/popravito/enableFormButton.js"></script>
 </body>
 </html>
