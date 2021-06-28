@@ -28,6 +28,8 @@
         </div>
         <h1 class="page-title">Prijava</h1>
 
+        [% TRY %][% INCLUDE 'auth/_general_top.html' %][% CATCH file %][% END %]
+
         [% IF oauth_need_email %]
             <p class="page-text-small">[% loc('We need your email address, please give it below.') %]</p>
         [% END %]
@@ -36,7 +38,14 @@
         [% END %]
 
         <form action="/auth" method="post" name="general_auth" class="credentials-form validate">
-            <input type="email" class="credentials-input" placeholder="Email adresa" tabindex="0" aria-label="email">
+            <input type="hidden" name="r" value="[% c.req.params.r | html %]">
+
+            <label class="n visually-hidden" for="username">[% username_label %]</label>
+            [% IF loc_username_error %]
+              <div class="form-error">[% loc_username_error %]</div>
+            [% END %]
+
+            <input type="email" class="credentials-input" id="username" name="username" value="[% username | html %]" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email">
             <div class="password-container">
                 <input type="password" class="credentials-input" placeholder="Lozinka" tabindex="0" aria-label="password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
