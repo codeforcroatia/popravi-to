@@ -1,11 +1,11 @@
 const enableFormButton = function(){
-    var formElements = document.getElementsByClassName("disabled-button")
+    var formElements = document.getElementsByClassName("credentials-input")
     for (var i = 0; i < formElements.length; i++) {
-        formElements[i].addEventListener("click", function() {
+        formElements[i].addEventListener("change", function() {
             if (document.getElementById("username").value === "" && document.getElementById("password_sign_in").value === "") {
-                formElements[i].disabled = true
+                document.getElementById('signInButton').disabled = true
             } else {
-                formElements[i].disabled = false
+                document.getElementById('signInButton').disabled = false
             }
         })
     }
