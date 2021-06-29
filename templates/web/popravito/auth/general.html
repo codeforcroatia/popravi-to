@@ -39,35 +39,50 @@
 
         <form action="/auth" method="post" name="general_auth" class="credentials-form validate">
             <input type="hidden" name="r" value="[% c.req.params.r | html %]">
+            <div id="js-social-email-hide">
 
-            [% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
+                [% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
 
-            [% IF c.cobrand.sms_authentication %]
-                [% SET username_label = loc('Your email or mobile') %]
-            [% ELSE %]
-                [% SET username_label = loc('Your email') %]
-            [% END %]
+                [% IF c.cobrand.sms_authentication %]
+                    [% SET username_label = loc('Your email or mobile') %]
+                [% ELSE %]
+                    [% SET username_label = loc('Your email') %]
+                [% END %]
 
-            <label class="n visually-hidden" for="username">[% username_label %]</label>
+                <label class="n visually-hidden" for="username">[% username_label %]</label>
 
-            [% IF loc_username_error %]
-              <div class="form-error">[% loc_username_error %]</div>
-            [% END %]
+                [% IF loc_username_error %]
+                <div class="form-error">[% loc_username_error %]</div>
+                [% END %]
 
-            <input type="text" class="credentials-input form-control required" id="username" name="username" autocomplete="username" placeholder="Email adresa" tabindex="0" aria-label="email"
-            
-            [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
-            
-            <div class="password-container">
-                <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
-                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
-                <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
+                <input type="text" class="credentials-input form-control required" id="username" name="username" autocomplete="username" value="[% username | html %]" placeholder="Email adresa" tabindex="0" aria-label="email"
+                
+                [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
+                
+                <div class="password-container">
+                    <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
+                    <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="Lozinka" tabindex="0" aria-label="password">  
+                    <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
+                </div>
+                <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
+                <div class="form-bottom-part">
+                    <input class="button register-button disabled-button" type="submit" aria-label="register" tabindex="0" value="Prijava" name="sign_in_by_password" id="signInButton">
+                    <span class="page-text">Nemaš račun? <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">Registriraj se</a></span>
+                </div>
+
+                <div id="form_sign_in">
+                    [% IF oauth_need_email %]
+                    [% INCLUDE form_sign_in_no %]
+                    <input type="hidden" name="oauth_need_email" value="1">
+                    [% ELSE %]
+                    [% INCLUDE form_sign_in_yes %]
+                    [% INCLUDE form_sign_in_no %]
+                    [% END %]
+                </div>
+        
+                [% IF NOT oauth_need_email AND c.cobrand.social_auth_enabled %]
             </div>
-            <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">Zaboravljena lozinka?</a>
-            <div class="form-bottom-part">
-                <input class="button register-button disabled-button" type="submit" aria-label="register" tabindex="0" value="Prijava" name="sign_in_by_password" disabled="disabled" id="signInButton">
-                <span class="page-text">Nemaš račun? <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">Registriraj se</a></span>
-            </div>
+                [% END %]
         </form>
     </section>
 
