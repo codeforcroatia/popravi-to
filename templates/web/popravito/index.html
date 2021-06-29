@@ -185,18 +185,22 @@
             %]
 
             <ul class="report-statistics">
+                [% IF completed_text %]
+                    <li class="report-stat-item">
+                        <p class="report-stat-num" tabindex="0">[% tprintf( completed_text, decode(completed_n) ) %]</p>
+                        <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
+                    </li>
+                [% END %]
                 <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0" aria-label="">273</p>
-                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
-                </li>
-                <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0" aria-label="">95</p>
+                    <p class="report-stat-num" tabindex="0" aria-label="">[% tprintf( updates_text, decode(updates_n) ) %]</p>
                     <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>AŽURIRANO</p>
                 </li>
-                <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0" aria-label="">110</p>
-                    <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>RIJEŠENO</p>
-                </li>
+                [% IF fixed_text %]
+                    <li class="report-stat-item">
+                        <p class="report-stat-num" tabindex="0">[% tprintf( fixed_text, decode(fixed_n) ) %]</p>
+                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>RIJEŠENO</p>
+                    </li>
+                [% END %]
             </ul>
         </section>
     </main>
