@@ -1,3 +1,6 @@
+[% pre_container_extra = PROCESS 'around/postcode_form.html' %]
+[% SET bodyclass = 'frontpage fullwidthpage' %]
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +8,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta property="og:url" content="[% c.cobrand.base_url %][% c.req.uri.path %]">
+    <meta property="og:title" content="[% title || site_name %]">
+    <meta property="og:site_name" content="[% site_name %]">
+    [% IF c.req.uri.path == '/' %]<meta property="og:description" content="[% loc('Report, view, and discuss local street-related problems.') %]">[% END %]
+    <meta property="og:type" content="website">
+
     [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
     [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
 
     <link rel="stylesheet" type="text/css" href="[% base_css %]">
     <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+
+    <!--[if (lt IE 9)]>
+    <script src="[% version('/vendor/html5shiv.js') %]"></script>
+    <![endif]-->
+    <script nonce="[% csp_nonce %]">
+        (function(d,e,k){function m(b,n,a,l){var f=e.createElement("div");var c=e.body;c||(c=e.createElement("body"),c.fake=!0);if(parseInt(a,10))for(;a--;){var d=e.createElement("div");d.id=l?l[a]:"modernizr"+(a+1);f.appendChild(d)}a=e.createElement("style");a.type="text/css";a.id="smodernizr";(c.fake?c:f).appendChild(a);c.appendChild(f);a.styleSheet?a.styleSheet.cssText=b:a.appendChild(e.createTextNode(b));f.id="modernizr";if(c.fake){c.style.background="";c.style.overflow="hidden";var g=h.style.overflow;
+        h.style.overflow="hidden";h.appendChild(c)}b=n(f,b);c.fake?(c.parentNode.removeChild(c),h.style.overflow=g,h.offsetHeight):f.parentNode.removeChild(f);return!!b}k={_version:"3.11.4"};var g=function(){};g.prototype=k;g=new g;var h=e.documentElement,p=function(){var b=d.matchMedia||d.msMatchMedia;return b?function(d){return(d=b(d))&&d.matches||!1}:function(b){var a=!1;m("@media "+b+" { #modernizr { position: absolute; } }",function(b){a="absolute"===("getComputedStyle"in d?getComputedStyle(b):b.currentStyle).position});
+        return a}}();k.mq=p;d.Modernizr=g})(window,document);
+            var fixmystreet=fixmystreet||{};fixmystreet.page="[% page %]";fixmystreet.cobrand="[% c.cobrand.moniker %]";
+            (function(a){a=a.documentElement;a.className=a.className.replace(/\bno-js\b/,"js");var b=Modernizr.mq("(min-width: 48em)")?"desktop":"mobile";"IntersectionObserver"in window&&(a.className+=" lazyload");"mobile"==b&&(a.className+=' mobile[% " map-fullscreen only-map map-reporting" IF page == "around" || page == "new" %]')})(document);
+        </script>
+        
+        <script nonce="[% csp_nonce %]">
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+        </script>
+        
+        [% IF robots %]
+            <meta name="robots" content="[% robots %]">
+        [% ELSIF c.config.STAGING_SITE %]
+            <meta name="robots" content="noindex,nofollow">
+        [% END %]
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -24,10 +58,16 @@
         </picture>
         <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
         <nav class="menu visually-hidden" id="menu-container">
+            [% BLOCK navitem ~%]
+                <li [% liattrs | safe %]>
+                    [%~ IF c.req.uri.path == uri AND NOT always_url ~%]
+                        <span [% attrs | safe %]>[% label %]</span>
+                    [%~ ELSE ~%]
+                        <a href="[% uri %][% suffix IF suffix %]" [% attrs | safe %]>[% label %]</a>
+                    [%~ END ~%]
+                </li>
+            [%~ END %]
             <ul class="menu-list">
-
-                <!-- INSERT TEMPLATE FOR MAIN NAV ITEMS HERE-->
-
                 <li class="menu-item"><a href="" tabindex="0" aria-label="all reports">Sve prijave</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="notifications">Obavijesti</a></li>
                 <li class="menu-item"><a href="" tabindex="0" aria-label="help">Pomoć</a></li>
