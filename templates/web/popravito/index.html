@@ -185,13 +185,10 @@
             %]
 
             <ul class="report-statistics">
-                <div>[% tprintf( new_text, decode(new_n) ) %]</div>
-                [% IF completed_text %]
-                    <li class="report-stat-item">
-                        <p class="report-stat-num" tabindex="0">[% tprintf( decode(completed_n) ) %]</p>
-                        <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
-                    </li>
-                [% END %]
+                <li class="report-stat-item">
+                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
+                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
+                </li>
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0" aria-label="">[% tprintf( decode(updates_n) ) %]</p>
                     <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>AŽURIRANO</p>
