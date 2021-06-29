@@ -185,6 +185,7 @@
             %]
 
             <ul class="report-statistics">
+                <div>[% tprintf( new_text, decode(new_n) ) %]</div>
                 [% IF completed_text %]
                     <li class="report-stat-item">
                         <p class="report-stat-num" tabindex="0">[% tprintf( decode(completed_n) ) %]</p>
