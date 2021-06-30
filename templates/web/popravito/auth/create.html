@@ -1,12 +1,12 @@
-[% IF forgotten;
+[%
+IF forgotten;
     title = loc('Forgot password');
 ELSIF expired_password;
     title = loc('Password expired');
 ELSE;
     title = loc('Create an account');
 END;
-
-INCLUDE bodyclass='authpage' %]
+%]
 
 <!DOCTYPE html>
 <html lang="en">
