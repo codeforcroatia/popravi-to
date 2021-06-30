@@ -85,7 +85,6 @@ END;
                 <input type="password" class="credentials-input required form-control js-password-validate" placeholder="Lozinka" tabindex="0" aria-label="password" name="password_register" id="password_register" value="" autocomplete="new-password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>   
             </div>
-            <p class="page-text-small form-error">[% tprintf(loc('Your password should include %d or more characters.'), c.cobrand.password_minimum_length) %]</p> 
             <div class="form-bottom-part">
                 <input class="button register-button" type="submit" aria-label="register" tabindex="0"  name="sign_in_by_code" value="[% expired_password ? loc('Reset') : loc('Sign in') %]">
                 <span class="page-text">Već si registriran? <a class="misc-link" href="/auth" tabindex="0" aria-label="login">Prijavi se</a></span>
