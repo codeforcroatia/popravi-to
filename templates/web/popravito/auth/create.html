@@ -1,3 +1,13 @@
+[% IF forgotten;
+    title = loc('Forgot password');
+ELSIF expired_password;
+    title = loc('Password expired');
+ELSE;
+    title = loc('Create an account');
+END;
+
+INCLUDE bodyclass='authpage' %]
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +23,6 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>Registracija</title>
 </head>
 <body>
     <section class="register-container">
@@ -25,6 +34,22 @@
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
         <h1 class="page-title">Registracija</h1>
+        [% IF forgotten %]
+            <p>
+                [% IF c.cobrand.sms_authentication %]
+                    [% loc('Sign in by email or text, providing a new password. When you click the link in your email or enter the SMS authentication code, your password will be updated.') %]</p>
+                [% ELSE %]
+                    [% loc('Sign in by email instead, providing a new password. When you click the link in your email, your password will be updated.') %]
+                [% END %]
+            </p>
+            [% ELSIF expired_password %]
+            <p>
+                <a class="misc-link" href="/auth/sign_out">[% loc('Sign out') %]</a>
+            </p>
+            <p>
+                [% loc('Your password has expired, please create a new one below. When you click the link in your email, your password will be updated.') %]
+            </p>
+        [% END %]
         <form class="credentials-form">
             <input type="email" class="credentials-input" placeholder="Email adresa" tabindex="0" aria-label="email">
             <div class="password-container">
@@ -33,7 +58,7 @@
             </div>
             <p class="page-text-small visually-hidden">Lozinka mora sadržavati barem 8 slovnih znakova</p> 
             <div class="form-bottom-part">
-                <button class="button register-button" type="submit" aria-label="register" tabindex="0" disabled="disabled">Registriraj se</button>
+                <button class="button register-button" type="submit" aria-label="register" tabindex="0">Registriraj se</button>
                 <span class="page-text">Već si registriran? <a class="misc-link" href="/auth" tabindex="0" aria-label="login">Prijavi se</a></span>
             </div>
         </form>
