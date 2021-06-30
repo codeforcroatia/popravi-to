@@ -34,8 +34,9 @@ END;
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
         <h1 class="page-title">Registracija</h1>
+
         [% IF forgotten %]
-            <p>
+            <p class="page-text-instructions">
                 [% IF c.cobrand.sms_authentication %]
                     [% loc('Sign in by email or text, providing a new password. When you click the link in your email or enter the SMS authentication code, your password will be updated.') %]</p>
                 [% ELSE %]
@@ -50,8 +51,29 @@ END;
                 [% loc('Your password has expired, please create a new one below. When you click the link in your email, your password will be updated.') %]
             </p>
         [% END %]
-        <form class="credentials-form">
-            <input type="email" class="credentials-input" placeholder="Email adresa" tabindex="0" aria-label="email">
+
+        <form action="/auth/[% expired_password ? 'expired' : forgotten ? 'forgot' : 'create' %]" method="post" name="general_auth" class="credentials-form validate">
+            <input type="hidden" name="r" value="[% c.req.params.r | html %]">
+
+            [% IF NOT expired_password %]
+
+                [% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
+        
+                [% IF c.cobrand.sms_authentication %]
+                    [% SET username_label = loc('Your email or mobile') %]
+                [% ELSE %]
+                    [% SET username_label = loc('Your email') %]
+                [% END %]
+        
+                <label class="n visually-hidden" for="username">[% username_label %]</label>
+                [% IF loc_username_error %]
+                    <div class="form-error">[% loc_username_error %]</div>
+                [% END %]
+
+                <input type="email" class="credentials-input form-control required" placeholder="Email adresa" tabindex="0" aria-label="email" id="username" name="username" value="[% username | html %]" autofocus autocomplete="username">
+    
+            [% END %]
+
             <div class="password-container">
                 <input type="password" class="credentials-input" placeholder="Lozinka" tabindex="0" aria-label="password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>   
