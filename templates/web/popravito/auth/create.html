@@ -77,7 +77,7 @@ END;
 
             <div class="password-container">
                 <label class="visually-hidden" for="password_register">[% forgotten ? loc('New password:') : loc('Your password') %]</label>               
-                <input type="password" class="credentials-input required form-control js-password-validate" placeholder="Lozinka" tabindex="0" aria-label="password" name="password_register" id="password_register" value="" autocomplete="new-password">  
+                <input type="password" class="credentials-input required form-control js-password-validate" placeholder="[% forgotten ? loc('New password:') : loc('Password') %]" tabindex="0" aria-label="password" name="password_register" id="password_register" value="" autocomplete="new-password">  
                 <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>   
             </div>
             [% IF field_errors.password_register %]
