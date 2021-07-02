@@ -15,19 +15,31 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    
+
     <title>[% loc('Confirm account') %]</title>
 </head>
 <body>
     <section class="register-container">
+        [% IF token_not_found %]
+        [%# Shown whenever there's an invalid token, eg while confirming a report or logging in without a password %]
+
+    <div class="confirmation-header confirmation-header--failure">
+
+        <h1>[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
+        <p>[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
+
+    </div>
+
+    [% ELSE %]
+    
         <div>
             <picture class="logo misc-logo">
                 <source media="(max-width: 768px)" srcset="./images/popravi-logo-mobile.svg">
-                <img src="/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
             </picture>
-            <button class="close-button" tabindex="0" aria-label="close form"></button>
+            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
-        <h1 class="page-title">Potvrdite svoju email adresu</h1>
+        <h1 class="page-title"></h1>
         <p class="page-text page-text-left-aligned">Pogledajte svoj email sandučić i kliknite na poveznicu koju smo vam poslali na <span class="text-bold">ivana.horvat@email.com.</span>.</p>
         <p class="page-text page-text-left-aligned">Ukoliko ne možete pronaći mail provjerite svoj pretinac za neželjenu poštu (spam).</p>
         <form class="credentials-form">
