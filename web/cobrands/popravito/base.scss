@@ -1,8 +1,4 @@
-@import "../sass/h5bp";
-@import "_colours";
-@import "../sass/mixins";
-
-//@import "../sass/base";
+@import "./_colours";
 
 $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
@@ -12,6 +8,8 @@ $primary_b: none;
 body {
     font-family: $body-font;
     margin: 0;
+    overflow-x: hidden;
+    color: #1D1C1C;
 }
 
 ul {
@@ -21,6 +19,45 @@ ul {
 a {
     text-decoration: none;
     color: inherit;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer; 
+}
+
+input, textarea {
+    border: $primary_b;
+    border-radius: 16px;
+    background-color: #F6F2EF;
+    padding: 1.2rem 1.2rem 1.2rem 3rem;
+}
+
+input::placeholder {
+    color: $col_big_numbers;
+}
+
+label[for="name"]{
+    opacity: 0;
+}
+
+label[for="email"]{
+    opacity: 0;
+}
+
+label[for="phone"]{
+    opacity: 0;
+}
+
+label[for="message"]{
+    opacity: 0;
 }
 
 .visually-hidden {
@@ -38,6 +75,13 @@ a {
 
 .header {
     display: flex;
+    //width: 100%;
+    top: 0;
+    position: sticky;
+    background-color: white;
+    box-shadow: 0 1px 10px -6px black;
+    padding: 0.7rem;
+    z-index: 5;
 }
 
 .logo {
@@ -45,21 +89,35 @@ a {
 }
 
 .button {
-    padding: 0.5rem 2rem 0.5rem 2rem;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
     border-radius: 40px;
     border: none;
     background-color: transparent;
     font-family: $body-font;
     font-weight: 600;
+    font-size: 0.875rem;
 }
 
 .button:hover {
     cursor: pointer;
 }
 
+.menu {
+    margin-top: 62px;
+    position: fixed;
+    right: 0;
+    z-index: 4;
+    background-color: white;
+    padding: 0 1.5rem 0 1.5rem;
+    height: 300px;
+}
+
 .menu-item {
     font-family: $body-font;
     font-weight: 600;
+    padding: 0.2rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
 }
 
 .menu-list {
@@ -79,7 +137,7 @@ a {
 .mobile-menu-button {
     border: none;
     background-color: transparent;
-    background: url('../images/ic-menu.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/ic-menu.svg') no-repeat center;
     width: 24px;
     height: 24px;
     position: fixed;
@@ -99,6 +157,7 @@ a {
 
 .mobile-hero-images {
     text-align: center;
+    padding-top: 3rem;
 }
 
 .hero-image {
@@ -106,27 +165,15 @@ a {
     display: inline-block;
 }
 
-.search-input {
-    border: $primary_b;
-    border-radius: 16px;
-    background-color: #F6F2EF;
-    padding: 1.2rem 1.2rem 1.2rem 3rem;
-    width: 100%;
-}
-
-.search-input::placeholder{
-    color: $col_big_numbers;
-}
-
 .search-icon-button {
-    background: url('../images/Search.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/Search.svg') no-repeat center;
     border: none;
     background-color: transparent;
     width: 1.5rem;
     height: 1.5rem;
     position: absolute;
-    margin-top: 15px;
-    margin-left: 12px;
+    margin-top: 0.938rem;
+    padding-left: 1.54rem;
 }
 
 .search {
@@ -135,19 +182,25 @@ a {
     margin: 2rem 1.5rem 0 1.5rem;
 }
 
+.search-input::placeholder {
+    font-size: 1rem;
+}
+
 .search-button {
     border: none;
     border-radius: 50%;
     background: $orange;
-    background-image: url('../images/icon-chevron-right.svg');
+    background-image: url('/cobrands/popravito/images/icon-chevron-right.svg');
     background-repeat: no-repeat;
     background-position: center;
     padding: 1.6rem;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
+    width: 62px;
+    height: 62px;
 }
 
 .location-icon {
-    background: url('../images/ic-location.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/ic-location.svg') no-repeat center;
     width: 20px;
     height: 20px;
     display: block;
@@ -170,22 +223,33 @@ a {
     font-family: $headings-font;
     font-weight: 600;
     font-size: 2rem;
+    max-width: 384px;
+    line-height: 2.375rem;
 }
 
-li.report-step::marker {
+.report-steps {
+    list-style-type: none;
+}
+
+.report-step {
+    counter-increment: inst;
+    padding-bottom: 2rem;
+}
+
+.report-step::before {
+    content: counter(inst);
     background-color: #F6F2EF;
     color: $col_big_numbers;
-    padding: 1rem 0.8rem 1rem 0.8rem;
+    padding: 0.313rem 1.25rem;
     font-family: $headings-font;
     font-weight: 800;
-    font-size: 2rem;
-    border-radius: 50%;
+    font-size: 2.25rem;
     margin-right: 1.75rem;
+    border-radius: 50%;
 }
 
 .report-steps {
     display: block;
-    max-height: auto;
 }
 
 .report-stat-num {
@@ -198,11 +262,14 @@ li.report-step::marker {
 .report-stat-detail {
     display: flex;
     justify-content: center;;
+    font-size: 0.75rem;
+    align-items: center;
+    color: #675F58;
 }
 
 .report-mark {
-    width: 20px;
-    height: 20px;
+    width: 12px;
+    height: 12px;
     margin-right: 0.5rem;
 }
 
@@ -245,9 +312,21 @@ li.report-step::marker {
     padding-bottom: 1rem;
 }
 
+.footer .menu-item a {
+    padding: 0;
+}
+
 .menu-list-footer {
     margin-bottom: 4rem;
     padding: 0;
+}
+
+.footer-text-long-desc {
+    margin-top: 1.5rem;
+}
+
+.footer-text {
+    font-size: 0.875rem;
 }
 
 .footer-socials {
@@ -263,21 +342,21 @@ li.report-step::marker {
 }
 
 .github-link {
-    background: url('../images/github.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/github.svg') no-repeat center;
     display: inline-block;
     height: 32px;
     width: 32px;
 }
 
 .twitter-link {
-    background: url('../images/twitter.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/twitter.svg') no-repeat center;
     display: inline-block;
     height: 32px;
     width: 32px;
 }
 
 .facebook-link {
-    background: url('../images/facebook.svg') no-repeat center;
+    background: url('/cobrands/popravito/images/facebook.svg') no-repeat center;
     display: inline-block;
     height: 32px;
     width: 32px;
@@ -286,4 +365,1294 @@ li.report-step::marker {
 .socials {
     display: flex;
     padding: 0;
+}
+
+.fixmystreet-logo img {
+    padding: 1rem 0 2.5rem 0;
+}
+
+
+/* register and login */
+
+.register-container {
+    margin: auto;
+    max-width: 100%;
+    border-radius: 15px;
+    padding: 3rem 2.5rem;
+}
+
+.page-title {
+    font-family: $headings-font;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.credentials-input {
+    display: block;
+    border: $primary_b;
+    border-radius: 16px;
+    background-color: #F6F2EF;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    width: 92%;
+}
+
+.credentials-input::placeholder{
+    color: $col_big_numbers;
+}
+
+.credentials-input:active {
+    border: 1px solid #1D1C1C;
+    background-color: white;
+}
+
+.register-button {
+    background-color: $primary;
+    color: white;
+    display: block;
+    margin: 0 auto;
+    padding: 0.75rem 2rem 0.75rem 2rem;
+    width: 100%;
+    height: 56px;
+    font-size: 1rem;
+}
+
+.register-button:disabled {
+    opacity: 0.6;
+}
+
+.page-text {
+    font-weight: 400;
+    text-align: center;
+    display: block;
+    margin-top: 1.5rem;
+}
+
+.page-text-left-aligned {
+    text-align: left;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.misc-link {
+    font-weight: 600;
+}
+
+.misc-link-2 {
+    text-decoration: underline;
+}
+
+.close-button {
+    background: url('/cobrands/popravito/images/ic-close.svg') no-repeat center;
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: none;
+    float: right;
+    margin-top: 1.5rem;
+}
+
+.close-button:hover {
+    transform: scale(1.2);
+}
+
+.misc-logo {
+    padding: 0;
+}
+
+.form-bottom-part {
+    position: fixed;
+    bottom: 3rem;
+    margin: auto;
+    width: 82%;
+
+    @media only screen and (max-width: 450px){
+        width: 78%;
+    }
+}
+
+.reveal-pass {
+    border: 0;
+    background-color: transparent;
+    background: url('/cobrands/popravito/images/ic-show.svg') no-repeat center;
+    display: block;
+    width: 25px;
+    height: 25px;
+    right: 70px;
+    position: absolute;
+    margin-top: 15px;
+}
+
+.password-container {
+    display: flex;
+
+    @media only screen and (max-width: 518px){
+        margin-right: -0.8rem;
+    }
+}
+
+.page-text-small {
+    font-size: 0.8rem;
+    color: red;
+    margin-top: -10px;
+    margin-left: 20px;
+}
+
+.invalid-input {
+    border: 2px solid red;
+}
+
+.confirm-text {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.form-error {
+    background-color: white;
+    color: red;
+    font-size: 0.8rem;
+}
+
+.page-text-instructions {
+    margin-bottom: 2rem;
+}
+
+/* report problem */
+
+.page-title-smaller {
+    font-family: $headings-font;
+    font-size: 2rem;
+}
+
+.instructions-container .location-link {
+    display: none;
+}
+
+.location-icon-purple {
+    background: url('/cobrands/popravito/images/ic-location-purple.svg') no-repeat center;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-right: 0.875rem;
+}
+
+.primary-button {
+    background-color: $primary;
+    color: white;
+    display: flex;
+    padding: 0.75rem 2rem;
+    float: right;
+    margin: 1.8rem;
+}
+
+.arrow-right {
+    background: url('/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-left: 0.6rem;
+    align-self: center;
+}
+
+.report-section {
+    display: block;
+}
+
+.instructions-container {
+    margin: 0
+}
+
+.instructions-container .page-title-smaller {
+    margin: 1.5rem;
+}
+
+.instructions-container .page-text {
+    margin: 1.5rem;
+}
+
+.continue-container {
+    position: fixed;
+    z-index: 4;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.map img{
+    max-width: 100%;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: white;
+}
+
+.bar, .bar2, .bar3, .bar4 {
+    height: 4px;
+    background-color: #746AB6;
+}
+
+.bar {
+    width: 25%;
+}
+
+.bar2 {
+    width: 50%;
+}
+
+.bar3 {
+    width: 75%;
+}
+
+.bar4 {
+    width: 100%; 
+}
+
+.dropdowns {
+    display: flex;
+    flex-direction: column;
+    margin:2.5rem 1.5rem 0 1.5rem;
+}
+
+.dropdowns label, .report-label {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    margin-left: 0;
+}
+
+.dropdowns select {
+    margin-bottom: 1.5rem;
+    border: $primary_b;
+    border-radius: 16px;
+    background-color: #F6F2EF;
+    padding: 1.2rem;
+    color: $col_big_numbers;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+    background-image: url('/cobrands/popravito/images/ic-dropdown-down.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-origin: content-box;
+}
+
+.dropdowns select button {
+    border: none;
+    background-color: #F6F2EF;
+}
+
+.report-title-input {
+    padding: 1.2rem;
+    margin-bottom: 1.25rem;
+}
+
+.primary-button-two {
+    background-color: transparent;
+    color: black;
+    display: flex;
+    padding: 0.75rem 2rem;
+    margin: 1.8rem;
+}
+
+.arrow-left {
+    background: url('/cobrands/popravito/images/ic-arrow-left.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-right: 0.6rem;
+    align-self: center;
+}
+
+.report-details-small {
+    font-size: 0.875rem;
+    margin: 0 0 2rem 0;
+}
+
+.continue-container-two {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    bottom: 0;
+    position: absolute;
+
+    @media only screen and (max-height: 840px) {
+        bottom: auto;
+    }
+}
+
+.details-button {
+    background: url('/cobrands/popravito/images/ic_indicator_error.svg') no-repeat center;
+    width: 10px;
+    height: 10px;
+    display: block;
+    padding: 10px;
+    border-radius: 50%;
+    align-content: center;
+    align-self: center;
+    margin-top: -3px;
+    margin-left: 2px;
+}
+
+.description-container {
+    margin: 1.5rem;
+}
+
+.report-textarea {
+    padding: 1rem;
+    color: $col_big_numbers;
+}
+
+.report-details-smallest {
+    font-size: 0.7rem;
+    color: #675F58;
+    margin: 0.75rem 0 3rem 0;
+}
+
+.upload-photo-button {
+    background-color: transparent;
+    border: 1px solid #DAD6D3;
+    border-radius: 15px;
+    padding: 1rem 3rem 1rem 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+    font-weight: 600;
+}
+
+.camera-icon {
+    background: url('/cobrands/popravito/images/ic-camera.svg') no-repeat center;
+    width: 30px;
+    height: 20px;
+    display: block;
+    margin-right: 0.6rem;
+    margin-top: -3px;
+}
+
+.personal-data label {
+    opacity: 0;
+}
+
+.personal-data {
+    margin-bottom: 2rem;
+}
+
+.personal-data input {
+    width: calc(100% - 48px);
+}
+
+.arrow-right-black {
+    background: url('/cobrands/popravito/images/ic-arrow-right-black.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-left: 0.6rem;
+    align-self: center;
+}
+
+.primary-button-three {
+    background-color: transparent;
+    color: black;
+    display: flex;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.show-name-public-button {
+    display: none;
+}
+
+/* report details modal */
+
+.modal {
+    background-color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 9;
+}
+
+.modal p {
+    margin: 0;
+}
+
+.register-button-two {
+    bottom: 0;
+    position: fixed;
+    margin-bottom: 2.5rem;
+    width: calc(100% - 96px)
+}
+
+.report-successful-logo img {
+    padding: 3rem 7rem 4rem 7rem;
+    display: block;
+    margin: 0 auto;
+}
+
+.modal .page-title {
+    text-align: center;
+}
+
+/* contact page */
+
+.contact-info {
+    margin: 2rem 0 2rem 0;
+}
+
+.contact-section {
+    padding: 0 1.5rem 7.5rem 1.5rem;
+    display: block;
+}
+
+.contact-section .primary-button {
+    margin-bottom: 0;
+}
+
+.contact-section .page-divider {
+    margin: 1rem 0 1rem 0;
+}
+
+.page-text-misc {
+    color: #675F58;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: flex;
+    margin-bottom: 0.7rem;
+}
+
+.email-span-icon {
+    background: url('/cobrands/popravito/images/send.svg') no-repeat center;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-right: 0.875rem;
+}
+
+.address-span-icon {
+    background: url('/cobrands/popravito/images/mail.svg') no-repeat center;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-right: 0.875rem;
+}
+
+.form-misc button {
+    float: none;
+    margin: 4rem 0 7rem 0;
+}
+
+.form-misc .report-title-input {
+    width: calc(100% - 48px);
+}
+
+.form-misc .report-textarea {
+    width: calc(100% - 48px);
+}
+
+.form-misc .report-label {
+    margin-bottom: 0;
+}
+
+.page-subtitle {
+    font-family: $headings-font;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+.form-misc input[type="radio"] {
+    margin-bottom: 1.25rem;
+}
+
+.contact-us .page-text-left-aligned {
+    margin-left: 0;
+}
+
+.page-divider {
+    opacity: 0.1;
+    border: 1px solid #000000;
+    margin: 3rem 0 3rem 0;
+}   
+
+
+.page-divider-2 {
+    opacity: 0;
+}
+
+.page-divider-1 {
+    opacity: 0.1;
+    border: 1px solid #000000;
+    margin: 3rem 0 3rem 0;
+}
+
+/* profil */
+
+.central-section-two-col {
+    display: block;
+}
+
+.two-col-left {
+    background-color: #FAFAFA;
+    padding-bottom: 3rem;
+}
+
+.two-col-left .report-details-small {
+    margin: 2rem 0 0.7rem 0;
+}
+
+.two-col-left .page-text-left-aligned {
+    margin-left: 0;
+}
+
+.two-col-left .page-subtitle {
+    padding: 0.875rem;
+    background-color: #F6F2EF;
+    text-transform: uppercase;
+    display: flex;
+    margin: 0;
+}
+
+.arrow-down {
+    background: url('/cobrands/popravito/images/ic-dropdown-down.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-right: 0.6rem;
+    align-self: center;
+    position: absolute;
+    right: 20px;
+}
+
+.arrow-down-tab {
+    margin-top: 0.7rem;
+    display: initial;
+}
+
+.two-col-left .misc-link {
+    display: flex;
+    justify-content: space-between;
+}
+
+.two-col-left .misc-link:first-of-type {
+    color: $orange;
+}
+
+.edit-info-icon {
+    background: url('/cobrands/popravito/images/checkbox.svg') no-repeat right;
+    width: 30px;
+    height: 30px;
+    display: block;
+    align-self: center;
+    float: right;
+}
+
+.logout-profile-button {
+    background: url('/cobrands/popravito/images/logout.svg') no-repeat center;
+    width: 94px;
+    height: 20px;
+    display: block;
+    border: 0;
+    background-color: transparent;
+    margin: 0 1.5rem 0 1.5rem;
+}
+
+.two-col-left *:not(:first-child) {
+    padding: 0 1.5rem 0 1.5rem;
+}
+
+.notifications-form input {
+    float: right;
+}
+
+.notifications-form .notifs-type-label {
+    color: black;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding-left: 0;
+}
+
+.notifs-div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-left: 0;
+}
+
+.notifs-div:nth-of-type(2) {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.edit-button {
+    background: url('/cobrands/popravito/images/edit.svg') no-repeat center;
+    width: 20px;
+    height: 20px;
+    display: block;
+    border: 0;
+    background-color: transparent;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.radiotab {
+    position: fixed;
+    opacity: 0;
+  }
+  
+.tab-label {
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.875rem;
+    text-transform: uppercase;
+    margin: 0;
+    background-color: #F6F2EF;
+}
+  
+.panel {
+    display: none;
+    width: 100%;
+  }
+  
+.radiotab:checked + .tab-label + .panel {
+    display: block;
+}
+
+.no-reports .primary-button {
+    float: none;
+    display: block;
+    margin: 0 auto
+}
+
+.no-reports {
+    text-align: center;
+    margin: 5rem 0 5rem 0;
+}
+
+.sort-form .page-text-misc {
+    text-transform: initial;
+}
+
+.filters-container {
+    display: flex;
+}
+
+.filter-button {
+    border: none;
+    background-color: transparent;
+    font-size: 0.75rem;
+    display: flex;
+    font-weight: 600;
+    margin-right: 2rem;
+}
+
+.filter-icon {
+    display: block;
+    background: url('/cobrands/popravito/images/ic_filter.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    margin-right: 0.5rem;
+}
+
+.filter-icon:hover {
+    background: url('/cobrands/popravito/images/ic_filter_orange.svg') no-repeat center;
+}
+
+.filter-icon:active {
+    background: url('/cobrands/popravito/images/ic_filter_orange.svg') no-repeat center;
+}   
+
+.sort-form {
+    display: flex;
+}
+
+.sort-form select {
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    align-self: baseline;
+    margin-left: 0.5rem;
+    margin-top: 2px;
+    font-weight: 600;
+    background-color: transparent;
+}
+
+.list-view-button, .map-view-button {
+    border: none;
+    background-color: transparent;
+    border-radius: 8px;
+    margin-top: -20px;
+    opacity: 0.6;
+}
+
+.list-view-button:active {
+    background-color: #F6F2EF;
+    opacity: 1;
+}
+
+.list-view-button:hover {
+    background-color: #F6F2EF;
+    opacity: 1;
+}
+
+.list-view-button {
+    background: url('/cobrands/popravito/images/ic-list.svg') no-repeat center;
+    display: block;
+    width: 40px;
+}
+
+.map-view-button {
+    background: url('/cobrands/popravito/images/ic-map.svg') no-repeat center;
+    width: 40px;
+    display: block;
+}
+
+.map-view-button:active {
+    background-color: #F6F2EF;
+    opacity: 1;
+}
+
+.map-view-button:hover {
+    background-color: #F6F2EF;
+    opacity: 1;
+}
+
+.view-container {
+    display: flex;
+}
+
+.filters-and-view {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 3rem 0 2rem 2rem;
+}
+
+.filters-container {
+    margin-top: 2rem;
+}
+
+.filtered-content .page-text-left-aligned {
+    font-size: 1rem;
+    display: flex;
+    margin-top: 1.5rem;
+}
+
+.fix-icon {
+    background: url('/cobrands/popravito/images/fix.svg') no-repeat center;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
+}
+
+.page-text-light {
+    color: #917D6E;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -20px;
+    margin-left: 45px;
+}
+
+.filtered-content-container {
+    margin: 3rem 1.5rem 3rem 1.5rem;
+}
+
+.filtered-content {
+    margin-bottom: 3rem;
+}
+
+.filtered-content .page-text-light {
+    border-bottom: 1px solid #DAD6D3;
+    padding-bottom: 1rem;
+}
+
+.map-img img {
+    width: 100%;
+}
+
+.updates-container {
+   margin: 3rem 1.5rem 3rem 1.5rem;
+}
+
+.updates-content .page-text-left-aligned {
+    font-size: 1rem;
+}
+
+.updates-content .page-text-light {
+    margin-top: -10px;
+    margin-left: 0;
+    border-bottom: 1px solid #DAD6D3;
+    padding-bottom: 1rem;
+}
+
+.updates-content .page-text-light :not(.issue-date) {
+    text-decoration: underline;
+}
+
+/* report detail */
+
+.report-details-container {
+    margin: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.report-details-container {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.report-details .report-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.update-link {
+    display: flex;
+    font-size: 0.8rem;
+    align-self: center;
+}
+
+.update-link span {
+    color: $orange;
+    margin-left: .7rem;
+}
+
+.fix-icon-detail {
+    margin-bottom: -1rem;
+}
+
+.issue-details-container .misc-link {
+    font-size: 0.875rem;
+}
+
+.issue-details-container .page-text-left-aligned {
+    font-size: 0.875rem;
+}
+
+.report-img {
+    margin-right: 1.25rem;
+}
+
+.img-gallery-container {
+    border-bottom: 1px solid #DAD6D3;
+    padding-bottom: 2.5rem;
+}
+
+.report-details-container .updates-container {
+    margin: 2rem 0 2rem 0;
+}
+
+.report-details-container .map {
+    position: absolute;
+    top: 14rem;
+}
+
+.issue-details-container {
+    margin-top: 14rem;
+}
+
+.report-details-container-update {
+    margin: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.report-details .dropdowns {
+    margin: 0;
+}
+
+.report-details .description-container {
+    margin: 1.5rem 0 0 0;
+}
+
+/* faq */
+
+.text-bold-label {
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: black;
+}
+
+.radiotab:checked + .text-bold-label {
+    font-weight: 700;
+}
+
+.faq-tabs {
+    display: block;
+    position: relative;
+}
+
+.faq-tabs .faq-section {
+    display: block;
+    padding: 0;
+}
+
+.faq-tabs .faq-section label {
+    cursor: pointer;
+    display: block;
+    background-color: #F6F2EF;
+    padding: 0.75rem 1.5rem;
+}
+
+.faq-tabs .faq-section .faq-article {
+    display: none;
+    left: 0;
+    background-color: white;
+    padding: 1rem 1.5rem;
+}
+
+.faq-tabs input[name="tabs"]:checked ~ .faq-article {
+    display: block;
+}
+
+.faq-tabs .page-subtitle {
+    background-color: transparent;
+}
+
+.faq-tabs .page-subtitle {
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.faq-tabs .text-bold {
+    margin-bottom: 1.5rem;
+    padding: 0;
+}
+
+.faq-tabs .page-text-left-aligned {
+    padding: 0;
+    margin-bottom: 2.5rem;
+}
+
+.faq-article .faq-ordered-list {
+    padding: 0 1.5rem;
+}
+
+/* notifications */
+
+.notification-marker {
+    background-color: #E5E1FE;
+    padding: 2rem 2.5rem;
+    margin-top: 3rem;
+}
+
+.notification-marker .text-bold {
+    font-size: 1.3rem;
+}
+
+.notification-marker input {
+    background-color: white;
+    width: 100%;
+}
+
+.notification-marker button {
+    background-color: black;
+}
+
+.notification-marker .search {
+    margin: 0;
+    padding: 0;
+}
+
+.notification-marker .location-link {
+    color: black;
+    margin: 1.5rem 0 0 0;
+}
+
+.notifications {
+    padding: 0;
+}
+
+.notifications .contact-us {
+    padding: 0 1.5rem;
+}
+
+.notifications .text-bold {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.notifications .misc-link {
+    margin-bottom: 1.2rem;
+}
+
+.notification-type {
+    padding: 1.5rem 1.5rem 7.5rem 1.5rem;
+}
+
+.notification-type .primary-button {
+    margin-top: 2rem;
+}
+
+.rss-icon {
+    background: url('/cobrands/popravito/images/ic-RSS.svg') no-repeat center;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    float: right;
+}
+
+/* all reports */
+
+.all-reports-container h1.text-bold {
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+}
+
+.all-reports-container .notification-marker {
+    margin-top: 0;
+    margin-bottom: 2.2rem;
+}
+
+.notification-marker-form-link {
+    display: block;
+}
+
+.notification-marker-form-link .search-button {
+    background-color: black;
+    background-image: none;
+    color: white;
+    border-radius: 40px;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.notification-marker-form-link .search {
+    display: block;
+}
+
+.notification-marker-form-link input {
+    width: calc(100% - 50px);
+}
+
+.notification-search-button-arrow {
+    background: url('/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 0.6rem;
+    margin-bottom: -3px;
+}
+
+.all-reports-section .page-subtitle {
+    font-size: 2.2rem;
+}
+
+.all-reports-section {
+    display: block;
+    margin: 0 1.5rem 5rem 1.5rem;
+    border-bottom: 2px solid black;
+}
+
+.all-reports-section .report-stat-num {
+    font-size: 2.2rem;
+}
+
+.all-reports-section .report-statistics {
+    display: flex;
+    padding: 0;
+}
+
+.all-reports-section .report-stat-item {
+    padding-right: 2rem;
+}
+
+.statistics-img img {
+    max-width: 100%;
+    padding-top: 1.5rem;
+}
+
+.all-reports-section-smaller .page-subtitle {
+    font-size: 2.2rem;
+}
+
+.all-reports-section-smaller .report-stat-num {
+    font-size: 2.2rem;
+}
+
+.all-reports-section-smaller {
+    margin: 0 1.5rem 0 1.5rem;
+    border-bottom: 2px solid black;
+}
+
+.all-reports-section-smaller .report-statistics {
+    text-align: left;
+    padding: 0;
+}
+
+.all-reports-section-smaller .report-stat-detail {
+    justify-content: left;
+}
+
+.all-reports-section-smaller .report-stat-item {
+    margin-bottom: 2.5rem;
+}
+
+.all-reports-section-stats {
+    margin: 0 1.5rem 0 1.5rem;
+    border-bottom: 2px solid black;
+}
+
+.all-reports-section-stats .page-subtitle {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.all-reports-section-stats .page-text-left-aligned {
+    margin-bottom: 0;
+}
+
+.all-reports-section-stats .text-bold {
+    font-size: 1rem;
+}
+
+.all-reports-section-stats .page-text-light {
+    margin-top: 0.2rem;
+    margin-left: 0;
+    color: #A8ADB2;
+}
+
+.all-reports-section-stats .avg-time {
+    text-decoration: none;
+    margin-top: -1rem;
+    color: black;
+}
+
+.all-reports-stat-item {
+    border-bottom: 1px solid #DAD6D3;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.average-response-text {
+    font-weight: 700;
+    color: $primary;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+}
+
+.all-reports-type-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.all-reports-type-item .page-text-left-aligned {
+    display: flex;
+    align-self: center;
+    margin-left: 0;
+}
+
+.all-reports-type-item .text-bold {
+    margin-right: 0;
+}
+
+.reports-stats-unordered-list {
+    padding-left: 0;
+}
+
+.reports-stats-ordered-list {
+    padding-left: 1.5rem;
+}
+
+.all-reports-stats-2 {
+    border-bottom: 0;
+}
+
+.all-reports-location {
+    margin: 0 1.5rem 5rem 1.5rem;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.all-reports-location .filters-and-view {
+    margin: 12rem 0 0 0;
+}
+
+.all-reports-location .map-img {
+    position: absolute;
+    top: 11rem;
+}
+
+.all-reports-location .filtered-content-container {
+    margin: 0;
+}
+
+.filter-form {
+    margin-top: 2rem;
+}
+
+.filter-form .page-text-light {
+    margin-left: 0;
+    margin-bottom: 1.6rem;
+    color: #675F58;
+}
+
+.filter-form input[type="checkbox"] {
+    margin-bottom: 1.2rem;
+}
+
+.category-button {
+    border: none;
+    background-color: transparent;
+    font-weight: 600;
+    display: flex;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    width: 300px;
+}
+
+.expand-icon {
+    background: url('/cobrands/popravito/images/ic-plus.svg') no-repeat center;
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin-right: 0.6rem;
+    margin-left: 0;
+}
+
+.category-checkboxes {
+    padding-left: 1.5rem;
+}
+
+.save-and-close-button {
+    background: transparent;
+    border: none;
+    display: flex;
+}
+
+.close-icon {
+    background: url('/cobrands/popravito/images/ic-close.svg') no-repeat center;
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin-left: 0.8rem;
+}
+
+.mark-as-solved input {
+    margin-top: 2.2rem;
+}
+
+.mark-as-solved .details-button {
+    display: inline;
+}
+
+.mark-as-solved {
+    margin-bottom: 3rem;
 }
