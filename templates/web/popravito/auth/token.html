@@ -19,7 +19,19 @@
     <title>[% loc('Confirm account') %]</title>
 </head>
 <body>
-    <section class="register-container">
+    [% IF token_not_found %]
+        [%# Shown whenever there's an invalid token, eg while confirming a report or logging in without a password %]
+
+        <div class="confirmation-header confirmation-header--failure">
+
+            <h1>[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
+            <p>[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
+
+        </div>
+
+    [% ELSE %]
+
+    <section class="register-container confirmation-header confirmation-header--inbox">
         <div>
             <picture class="logo misc-logo">
                 <source media="(max-width: 768px)" srcset="./images/popravi-logo-mobile.svg">
@@ -27,15 +39,28 @@
             </picture>
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
-        <h1 class="page-title"></h1>
-        <p class="page-text page-text-left-aligned">Pogledajte svoj email sandučić i kliknite na poveznicu koju smo vam poslali na <span class="text-bold">ivana.horvat@email.com.</span>.</p>
-        <p class="page-text page-text-left-aligned">Ukoliko ne možete pronaći mail provjerite svoj pretinac za neželjenu poštu (spam).</p>
+
+        [% IF c.config.SIGNUPS_DISABLED %]
+            <h1 class="page-title">[% loc("Nearly done!") %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc("If there's a user associated with the address you entered, we've sent a confirmation email. 
+                Click the link in that email to sign in.") %]
+            </p>
+            <p class="page-text page-text-left-aligned">[% loc("Can&rsquo;t find our email? Check your spam folder&nbsp;&ndash; that&rsquo;s the solution 99% of the time.") %]</p>
+
+        [% ELSE %]
+            <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc("Click the link in our confirmation email to sign in.") %]</p>
+        
+        [% END %]
+
         <form class="credentials-form">
             <div class="form-bottom-part">
-                <span class="page-text text-bold confirm-text">Niste dobili email?</span>
-                <button class="button register-button" type="submit" aria-label="send again" tabindex="0">Pošalji ponovno</button>
+                <span class="page-text text-bold confirm-text"> [% loc("Can&rsquo;t find our email?) %]</span>
+                <button class="button register-button" type="submit" aria-label="send again" tabindex="0">[% loc('Try again') %]</button>
             </div>
         </form>
     </section>
+
+    [% END %]
 </body>
 </html>
