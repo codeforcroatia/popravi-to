@@ -136,7 +136,7 @@
             </ol>
         </section>
         <section class="report-steps-section report-steps-section-two">
-            <h1 class="report-title">Problemi ukupno</h1>
+            <h1 class="report-title">[% loc('Problems in total') %]</h1>
 
             [% USE Number.Format %]
 
@@ -187,16 +187,16 @@
             <ul class="report-statistics">
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
+                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true">[% loc('REPORTED') %]</span></p>
                 </li>
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>AŽURIRANO</p>
+                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true">[% loc('UPDATED') %]</span></p>
                 </li>
                 [% IF fixed_text %]
                     <li class="report-stat-item">
                         <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
-                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>RIJEŠENO</p>
+                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true">[% loc('FIXED') %]</span></p>
                     </li>
                 [% END %]
             </ul>
