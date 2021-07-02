@@ -75,8 +75,9 @@
         <picture class="logo">
             <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
             <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
-            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
         </picture>
+        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo">[% site_name %]</a>
         <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
         <nav class="menu visually-hidden" id="menu-container">
             [% BLOCK navitem ~%]
@@ -187,16 +188,16 @@
             <ul class="report-statistics">
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true">[% loc('REPORTED') %]</span></p>
+                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
                 </li>
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true">[% loc('UPDATED') %]</span></p>
+                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>[% loc('UPDATED') %]</p>
                 </li>
                 [% IF fixed_text %]
                     <li class="report-stat-item">
                         <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
-                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true">[% loc('FIXED') %]</span></p>
+                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>[% loc('FIXED') %]</p>
                     </li>
                 [% END %]
             </ul>
