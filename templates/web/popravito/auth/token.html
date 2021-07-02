@@ -24,8 +24,8 @@
 
     <div class="confirmation-header confirmation-header--failure">
 
-        <h1>[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
-        <p>[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
+        <h1 class="page-title">[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
+        <p class="page-text page-text-left-aligned">[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
 
     </div>
 
@@ -39,9 +39,21 @@
             </picture>
             <button class="close-button" tabindex="0" aria-label="close form"></button>
         </div>
-        <h1 class="page-title">Potvrdite svoju email adresu</h1>
-        <p class="page-text page-text-left-aligned">Pogledajte svoj email sandučić i kliknite na poveznicu koju smo vam poslali na <span class="text-bold">ivana.horvat@email.com.</span>.</p>
-        <p class="page-text page-text-left-aligned">Ukoliko ne možete pronaći mail provjerite svoj pretinac za neželjenu poštu (spam).</p>
+
+        [% IF c.config.SIGNUPS_DISABLED %]
+
+            <h1 class="page-title">[% loc("Nearly done!") %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc("If there's a user associated with the address you entered, we've sent a confirmation email.") %]</p>
+            <p class="page-text page-text-left-aligned">[% loc("Click the link in that email to sign in.") %]</p>
+
+        [% ELSE %]
+
+            <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc("Click the link in our confirmation email to sign in.") %]</p>
+        
+        [% END %]
+  
+        <p class="page-text page-text-left-aligned">[% loc("Can&rsquo;t find our email? Check your spam folder&nbsp;&ndash; that&rsquo;s the solution 99% of the time.") %]</p>
         <form class="credentials-form">
             <div class="form-bottom-part">
                 <span class="page-text text-bold confirm-text">Niste dobili email?</span>
