@@ -23,15 +23,13 @@
         [%# Shown whenever there's an invalid token, eg while confirming a report or logging in without a password %]
 
         <div class="confirmation-header confirmation-header--failure">
-
-            <h1>[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
-            <p>[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
-
+            <h1 class="page-title">[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
         </div>
 
     [% ELSE %]
 
-    <section class="register-container confirmation-header confirmation-header--inbox">
+    <div class="register-container">
         <div>
             <picture class="logo misc-logo">
                 <source media="(max-width: 768px)" srcset="./images/popravi-logo-mobile.svg">
@@ -40,26 +38,28 @@
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
 
-        [% IF c.config.SIGNUPS_DISABLED %]
+        <div class="confirmation-header confirmation-header--inbox">
+            [% IF c.config.SIGNUPS_DISABLED %]
+
             <h1 class="page-title">[% loc("Nearly done!") %]</h1>
-            <p class="page-text page-text-left-aligned">[% loc("If there's a user associated with the address you entered, we've sent a confirmation email. 
-                Click the link in that email to sign in.") %]
-            </p>
+            <p class="page-text page-text-left-aligned">[% loc("If there's a user associated with the address you entered, we've sent a confirmation email. Click the link in that email to sign in.") %]</p>
             <p class="page-text page-text-left-aligned">[% loc("Can&rsquo;t find our email? Check your spam folder&nbsp;&ndash; that&rsquo;s the solution 99% of the time.") %]</p>
 
-        [% ELSE %]
-            <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
-            <p class="page-text page-text-left-aligned">[% loc("Click the link in our confirmation email to sign in.") %]</p>
-        
-        [% END %]
+            [% ELSE %]
 
-        <form class="credentials-form">
-            <div class="form-bottom-part">
-                <span class="page-text text-bold confirm-text"> [% loc("Can&rsquo;t find our email?) %]</span>
-                <button class="button register-button" type="submit" aria-label="send again" tabindex="0">[% loc('Try again') %]</button>
-            </div>
-        </form>
-    </section>
+                <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
+                <p class="page-text page-text-left-aligned">[% loc("Click the link in our confirmation email to sign in.") %]</p>
+            
+            [% END %]
+
+            <form class="credentials-form">
+                <div class="form-bottom-part">
+                    <span class="page-text text-bold confirm-text"> [% loc("Can&rsquo;t find our email?) %]</span>
+                    <button class="button register-button" type="submit" aria-label="send again" tabindex="0">[% loc('Try again') %]</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     [% END %]
 </body>
