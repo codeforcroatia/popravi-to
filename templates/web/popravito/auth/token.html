@@ -34,10 +34,10 @@
     <section class="register-container">
         <div>
             <picture class="logo misc-logo">
-                <source media="(max-width: 768px)" srcset="./images/popravi-logo-mobile.svg">
-                <img src="/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
             </picture>
-            <button class="close-button" tabindex="0" aria-label="close form"></button>
+            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
 
         [% IF c.config.SIGNUPS_DISABLED %]
