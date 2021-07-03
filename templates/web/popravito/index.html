@@ -119,13 +119,24 @@
                     <img src="#" alt="">
                 </picture>
             </div>
-            <h1 class="central-title" id="title">[% loc('Report, view, or discuss local problems') %]</h1>
-            <form class="search">
-                <span class="search-icon-button"></span>
-                <input type="text" id="search" class="search-input" placeholder="Upiši naziv ulice ili mjesto">
-                <button class="search-button" type="submit" aria-label="search" tabindex="0"></button>
-            </form>
-            <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+
+            [% pre_container_extra | safe %]
+
+            [% UNLESS possible_location_matches %]
+
+                <h1 class="central-title" id="title">[% loc('Report, view, or discuss local problems') %]</h1>
+
+            [% END %]
+
+            [% 
+                question = c.cobrand.enter_postcode_text || loc('Enter a nearby street name and area'); 
+            %]
+                <form class="search">
+                    <span class="search-icon-button"></span>
+                    <input type="text" id="search" class="search-input" placeholder="Upiši naziv ulice ili mjesto">
+                    <input class="search-button" type="submit" aria-label="search" tabindex="0">
+                </form>
+                <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
         </section>
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
