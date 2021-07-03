@@ -162,12 +162,23 @@
                 [% END %]
 
         </section>   
-                                           
-        [% IF error %]
-            <p class="form-error">[% error %]</p>
-        [% END %]
+               
+        <div class="container">
+            <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
 
-        [% PROCESS 'front/emergency-message.html' %]
+                [% IF error %]
+                    <p class="form-error">[% error %]</p>
+                [% END %]
+
+                    [% PROCESS 'front/emergency-message.html' %]
+                    [% emergency_message = c.cobrand.emergency_message %]
+                    [% IF emergency_message %]
+                        <div class="emergency-message">
+                            [% emergency_message | html_para %]
+                        </div>
+                    [% END %]  
+            </div>
+        </div>
 
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
