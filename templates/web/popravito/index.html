@@ -147,31 +147,20 @@
                     [% END %]
 
                 </form>
+
                 [%~ SET link_params = {
                         geolocate = 1
                     };
                     IF c.get_param('filter_category'); link_params.filter_category = c.get_param('filter_category'); END;
                     IF c.get_param('filter_group'); link_params.filter_group = c.get_param('filter_group'); END;
                 %]
+
                 <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
                 
                 [% UNLESS possible_location_matches OR location_error_pc_lookup %]
                     [% INCLUDE 'around/_postcode_form_post.html' %]
                 [% END %]
-
-                [% IF error %]
-                <p class="form-error">[% error %]</p>
-            [% END %]
-    
-            [% PROCESS 'front/pre-steps.html' %]
-            [% PROCESS 'front/emergency-message.html' %]
-            [% emergency_message = c.cobrand.emergency_message %]
-            [% IF emergency_message %]
-                <div class="emergency-message">
-                    [% emergency_message | html_para %]
-                </div>
-            [% END %] 
-              
+                
         </section>
 
         <section class="report-steps-section">
