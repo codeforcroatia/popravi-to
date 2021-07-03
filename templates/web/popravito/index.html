@@ -133,7 +133,7 @@
                     <span class="search-icon-button"></span>
                     <label for="pc" class="visually-hidden">[% question %]:</label>
                     <input type="text" class="search-input" placeholder="Upiši naziv ulice ili mjesto" name="pc" value="[% pc | html %]" id="pc" size="10" maxlength="200" required aria-describedby="pc-hint">
-                    <input class="search-button" type="submit" aria-label="search" tabindex="0" [% attr | safe %]>
+                    <input class="search-button" type="submit" aria-label="search" tabindex="0" value="">
 
                     [% IF partial_token %]
                         <input type="hidden" name="partial" value="[% partial_token.token %]">
@@ -159,6 +159,19 @@
                     [% INCLUDE 'around/_postcode_form_post.html' %]
                 [% END %]
         </section>
+
+        [% IF error %]
+            <p class="form-error">[% error %]</p>
+        [% END %]
+
+        [% PROCESS 'front/pre-steps.html' %]
+        [% PROCESS 'front/emergency-message.html' %]
+        [% emergency_message = c.cobrand.emergency_message %]
+        [% IF emergency_message %]
+            <div class="emergency-message">
+                [% emergency_message | html_para %]
+            </div>
+        [% END %]   
 
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
