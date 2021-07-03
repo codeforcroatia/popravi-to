@@ -199,6 +199,10 @@ label[for="message"]{
     height: 62px;
 }
 
+.search-button:hover {
+    cursor: pointer;
+}
+
 .location-icon {
     background: url('/cobrands/popravito/images/ic-location.svg') no-repeat center;
     width: 20px;

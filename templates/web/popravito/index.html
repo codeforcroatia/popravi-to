@@ -167,6 +167,17 @@
             <p class="form-error">[% error %]</p>
         [% END %]
 
+        [% PROCESS 'front/pre-steps.html' %]
+        <!-- front/pre-steps.html START -->
+        [% PROCESS 'front/emergency-message.html' %]
+        <!-- front/emergency-message.html START -->
+        [% emergency_message = c.cobrand.emergency_message %]
+        [% IF emergency_message %]
+        <div class="emergency-message">
+            [% emergency_message | html_para %]
+        </div>
+        [% END %]  
+
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
             <ol class="report-steps">
