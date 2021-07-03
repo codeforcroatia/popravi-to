@@ -158,20 +158,21 @@
                 [% UNLESS possible_location_matches OR location_error_pc_lookup %]
                     [% INCLUDE 'around/_postcode_form_post.html' %]
                 [% END %]
+
+                [% IF error %]
+                <p class="form-error">[% error %]</p>
+            [% END %]
+    
+            [% PROCESS 'front/pre-steps.html' %]
+            [% PROCESS 'front/emergency-message.html' %]
+            [% emergency_message = c.cobrand.emergency_message %]
+            [% IF emergency_message %]
+                <div class="emergency-message">
+                    [% emergency_message | html_para %]
+                </div>
+            [% END %] 
+              
         </section>
-
-        [% IF error %]
-            <p class="form-error">[% error %]</p>
-        [% END %]
-
-        [% PROCESS 'front/pre-steps.html' %]
-        [% PROCESS 'front/emergency-message.html' %]
-        [% emergency_message = c.cobrand.emergency_message %]
-        [% IF emergency_message %]
-            <div class="emergency-message">
-                [% emergency_message | html_para %]
-            </div>
-        [% END %]   
 
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
