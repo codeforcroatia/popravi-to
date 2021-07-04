@@ -1,141 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
-    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+[% IF location_error %]
+    [% INCLUDE 'around/location_error.html' %]
+[% END %]
 
-    <link rel="stylesheet" type="text/css" href="[% base_css %]">
-    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+[% IF possible_location_matches %]
+    <h1 class="page-title-smaller">[% loc('We found more than one match for that location.') %]</h1>
+    <ul class="pc_alternatives">
+    [% FOREACH match IN possible_location_matches %]
+        <li class="page-text-left-aligned multiple-item">
+        [% IF match.icon %]
+            <img src="[% match.icon %]" alt="">
+        [% END %]
+            <a href="/around?lat=[% match.latitude | uri %]&amp;lon=[% match.longitude | uri ~%]
+            [%~ IF c.get_param('category') %]&amp;category=[% c.get_param('category') | uri %][% END ~%]
+            [%~ IF c.get_param('filter_category') %]&amp;filter_category=[% c.get_param('filter_category') | uri %][% END ~%]
+            [%~ IF c.get_param('filter_group') %]&amp;filter_group=[% c.get_param('filter_group') | uri %][% END %]">[% match.address | html %]</a>
+        </li>
+    [% END %]
+</ul>
+<p class="page-text page-text-left-aligned">[% loc('We show up to ten matches, please try a different search if yours is not here.') %]</p>
+[% END %]
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>[% loc('Reporting a problem') %]</title>
-</head>
-<body>
-    <header class="header">
-        <picture class="logo">
-            <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-            <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
-            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
-        </picture>
-        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="visually-hidden">[% site_name %]</a>
-        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
-        <nav class="menu visually-hidden" id="menu-container">
-            [% BLOCK navitem ~%]
-                <li [% liattrs | safe %]>
-                    [%~ IF c.req.uri.path == uri AND NOT always_url ~%]
-                        <span [% attrs | safe %]>[% label %]</span>
-                    [%~ ELSE ~%]
-                        <a href="[% uri %][% suffix IF suffix %]" [% attrs | safe %]>[% label %]</a>
-                    [%~ END ~%]
-                </li>
-            [%~ END %]
-            <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
-
-                [%~ IF c.user_exists ~%]
-                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
-                [%~ ELSE ~%]
-                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
-                [%~ END ~%]
-            </ul>
-            <form class="button-link">
-                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
-            </form>
-        </nav>
-    </header>
-    <main>
-        <div class="error-multiple-section">
-            [% IF location_error %]
-                [% INCLUDE 'around/location_error.html' %]
-            [% END %]
-
-            [% IF possible_location_matches %]
-                <h1 class="page-title-smaller">[% loc('We found more than one match for that location.') %]</h1>
-                <ul class="pc_alternatives">
-                [% FOREACH match IN possible_location_matches %]
-                    <li class="page-text-left-aligned multiple-item">
-                    [% IF match.icon %]
-                        <img src="[% match.icon %]" alt="">
-                    [% END %]
-                        <a href="/around?lat=[% match.latitude | uri %]&amp;lon=[% match.longitude | uri ~%]
-                        [%~ IF c.get_param('category') %]&amp;category=[% c.get_param('category') | uri %][% END ~%]
-                        [%~ IF c.get_param('filter_category') %]&amp;filter_category=[% c.get_param('filter_category') | uri %][% END ~%]
-                        [%~ IF c.get_param('filter_group') %]&amp;filter_group=[% c.get_param('filter_group') | uri %][% END %]">[% match.address | html %]</a>
-                    </li>
-              [% END %]
-            </ul>
-            <p class="page-text page-text-left-aligned">[% loc('We show up to ten matches, please try a different search if yours is not here.') %]</p>
-            [% END %]
-
-            [% IF partial_token %]
-            <p style="margin-top: 0; color: #cc0000;">
-                <img align="right" src="[% partial_report.photos.first.url_temp %]" hspace="5">
-                [% loc("Thanks for uploading your photo. We now need to locate your problem, so please enter a nearby street name or postcode in the box above&nbsp;:") %]
-            </p>
-            [% END %]
-
-
-        </div>       
-    </main>
-    <footer class="footer">
-        <div class="footer-desc">
-            <picture class="popravi-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="[% site_name %]">
-            </picture>
-            <p class="footer-text footer-text-long-desc">
-                Popravi.to je online alat napravljen u svrhu poboljšanja javnih politika i inkluzivnom odlučivanju, 
-                te kako bi građanima pružio mehanizme za prijavu problema lokalnoj administraciji te nadzoru 
-                njihovog rješavanja u svojoj sredini.
-            </p>
-            <form class="button-link-footer">
-                <button formaction="/_report" class="button report-issue-button-footer" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
-            </form>
-        </div>
-        <nav>
-            <ul class="menu-list-footer [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item menu-item-footer"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                <li class="menu-item menu-item-footer"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help"></a>[%- loc('Help') -%]</li>
-    
-                [%~ IF c.user_exists ~%]
-                    <li class="menu-item menu-item-footer"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
-                [%~ ELSE ~%]
-                    <li class="menu-item menu-item-footer"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
-                [%~ END ~%]
-    
-            </ul>
-        </nav>
-        <div class="poweredby">
-            <p class="footer-text">[% loc('Powered by') %]</p>
-            <picture class="fixmystreet-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg" alt="FixMyStreet logo">
-            </picture> 
-            <p class="footer-text">[% loc('With love') %]</p>
-            <picture class="fixmystreet-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
-            </picture> 
-        </div>
-        <div>
-            <p class="footer-text footer-socials">[% loc('Find us on') %]</p>
-            <nav>
-                <ul class="socials">
-                    <li class="footer-social-item"><a href="https://github.com/codeforcroatia" tabindex="0" aria-label="GitHub"><span class="github-link"></span></a></li>
-                    <li class="footer-social-item"><a href="https://twitter.com/PopraviTo" tabindex="0" aria-label="Twitter"><span class="twitter-link"></span></a></li>
-                    <li class="footer-social-item"><a href="https://www.facebook.com/Popravi.to" tabindex="0" aria-label="Facebook"><span class="facebook-link"></span></a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>
-    <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
-</body>
-</html>
+[% IF partial_token %]
+<p style="margin-top: 0; color: #cc0000;">
+    <img align="right" src="[% partial_report.photos.first.url_temp %]" hspace="5">
+    [% loc("Thanks for uploading your photo. We now need to locate your problem, so please enter a nearby street name or postcode in the box above&nbsp;:") %]
+</p>
+[% END %]
