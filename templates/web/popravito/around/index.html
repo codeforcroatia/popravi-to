@@ -1,3 +1,5 @@
+[% SET bodyclass = 'frontpage fullwidthpage aroundpage' ~%]
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,6 +54,7 @@
     </header>
     <main>
         <div class="error-multiple-section">
+            [% INCLUDE 'around/_main.html' %]
         </div>       
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
