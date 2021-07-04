@@ -122,6 +122,10 @@
 
             [% INCLUDE 'around/postcode_form.html' %]
 
+            [% IF error %]
+                <p class="form-error main-page-form-err">[% error %]</p>
+            [% END %]
+            
         </section> 
               
         <section class="report-steps-section">
