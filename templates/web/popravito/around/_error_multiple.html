@@ -1,7 +1,3 @@
-[% IF location_error %]
-    [% INCLUDE 'around/location_error.html' %]
-[% END %]
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +16,7 @@
     <title>[% loc('Reporting a problem') %]</title>
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="site-header">
         <picture class="logo">
             <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
             <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
@@ -81,6 +77,11 @@
                 [% loc("Thanks for uploading your photo. We now need to locate your problem, so please enter a nearby street name or postcode in the box above&nbsp;:") %]
             </p>
             [% END %]
+
+            [% IF location_error %]
+                [% INCLUDE 'around/location_error.html' %]
+            [% END %]
+
         </div>       
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
