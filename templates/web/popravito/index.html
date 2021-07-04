@@ -75,8 +75,9 @@
         <picture class="logo">
             <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
             <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
-            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
         </picture>
+        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="visually-hidden">[% site_name %]</a>
         <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
         <nav class="menu visually-hidden" id="menu-container">
             [% BLOCK navitem ~%]
@@ -89,19 +90,19 @@
                 </li>
             [%~ END %]
             <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">Sve prijave</a></li>
-                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">Obavijesti</a></li>
-                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">Pomoć</a></li>
+                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
+                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
+                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
 
                 [%~ IF c.user_exists ~%]
-                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">Moj profil</a></li>
+                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
                 [%~ ELSE ~%]
-                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">Prijavi se</a></li>
+                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
                 [%~ END ~%]
 
             </ul>
             <form class="button-link">
-                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">Prijavi problem</button>
+                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
             </form>
         </nav>
     </header>
@@ -118,25 +119,31 @@
                     <img src="#" alt="">
                 </picture>
             </div>
-            <h1 class="central-title" id="title">Prijavi ili pregledaj lokalni problem</h1>
-            <form class="search">
-                <span class="search-icon-button"></span>
-                <input type="text" id="search" class="search-input" placeholder="Upiši naziv ulice ili mjesto">
-                <button class="search-button" type="submit" aria-label="search" tabindex="0"></button>
-            </form>
-            <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon"></span>Koristi moju trenutnu lokaciju</a>
-        </section>
+
+            [% INCLUDE 'around/postcode_form.html' %]
+
+            <div class="container">
+                <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
+                            
+                    [% IF error %]
+                        <p class="form-error main-page-form-err">[% error %]</p>
+                    [% END %]
+    
+                </div>
+            </div>
+
+        </section>             
         <section class="report-steps-section">
-            <h1 class="report-title">Kako prijaviti problem</h1>
+            <h1 class="report-title">[% loc('How to report a problem') %]</h1>
             <ol class="report-steps">
-                <li class="report-step" aria-label="upisi ulicu" tabindex="0">Upiši ulicu ili poštanski broj</li>
-                <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">Lociraj problem na mapi</li>
-                <li class="report-step" aria-label="opisi problem" tabindex="0">Opiši detalje problema i dodaj sliku</li>
-                <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">Prijavu ćemo poslati na pravu adresu (nadležnu upravu)</li>
+                <li class="report-step" aria-label="upisi ulicu" tabindex="0">[% loc('Enter a nearby street name and area') %]</li>
+                <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">[% loc('Locate the problem on a map of the area') %]</li>
+                <li class="report-step" aria-label="opisi problem" tabindex="0">[% loc('Enter details of the problem') %]</li>
+                <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">[% loc('We send it to the council on your behalf') %]</li>
             </ol>
         </section>
         <section class="report-steps-section report-steps-section-two">
-            <h1 class="report-title">Problemi ukupno</h1>
+            <h1 class="report-title">[% loc('Problems in total') %]</h1>
 
             [% USE Number.Format %]
 
@@ -187,16 +194,16 @@
             <ul class="report-statistics">
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>PRIJAVLJENO</p>
+                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
                 </li>
                 <li class="report-stat-item">
                     <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>AŽURIRANO</p>
+                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>[% loc('UPDATED') %]</p>
                 </li>
                 [% IF fixed_text %]
                     <li class="report-stat-item">
                         <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
-                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>RIJEŠENO</p>
+                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>[% loc('FIXED') %]</p>
                     </li>
                 [% END %]
             </ul>
@@ -207,7 +214,7 @@
         <div class="footer-desc">
             <picture class="popravi-logo">
                 <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="Popravi.to logo">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="[% site_name %]">
             </picture>
             <p class="footer-text footer-text-long-desc">
                 Popravi.to je online alat napravljen u svrhu poboljšanja javnih politika i inkluzivnom odlučivanju, 
@@ -215,37 +222,37 @@
                 njihovog rješavanja u svojoj sredini.
             </p>
             <form class="button-link-footer">
-                <button formaction="/_report" class="button report-issue-button-footer" tabindex="0" aria-label="report problem">Prijavi problem</button>
+                <button formaction="/_report" class="button report-issue-button-footer" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
             </form>
         </div>
         <nav>
             <ul class="menu-list-footer [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item menu-item-footer"><a href="/reports" tabindex="0" aria-label="all reports">Sve prijave</a></li>
-                <li class="menu-item menu-item-footer"><a href="/alert" tabindex="0" aria-label="notifications">Obavijesti</a></li>
-                <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help">Pomoć</a></li>
+                <li class="menu-item menu-item-footer"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
+                <li class="menu-item menu-item-footer"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
+                <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help"></a>[%- loc('Help') -%]</li>
     
                 [%~ IF c.user_exists ~%]
-                    <li class="menu-item menu-item-footer"><a href="/my" tabindex="0" aria-label="my profile">Moj profil</a></li>
+                    <li class="menu-item menu-item-footer"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
                 [%~ ELSE ~%]
-                    <li class="menu-item menu-item-footer"><a href="/auth" tabindex="0" aria-label="sign in">Prijavi se</a></li>
+                    <li class="menu-item menu-item-footer"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
                 [%~ END ~%]
     
             </ul>
         </nav>
         <div class="poweredby">
-            <p class="footer-text">Powered by</p>
+            <p class="footer-text">[% loc('Powered by') %]</p>
             <picture class="fixmystreet-logo">
                 <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg">
                 <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg" alt="FixMyStreet logo">
             </picture> 
-            <p class="footer-text">S ljubavlju</p>
+            <p class="footer-text">[% loc('With love') %]</p>
             <picture class="fixmystreet-logo">
                 <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
                 <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
             </picture> 
         </div>
         <div>
-            <p class="footer-text footer-socials">Pronađi nas na</p>
+            <p class="footer-text footer-socials">[% loc('Find us on') %]</p>
             <nav>
                 <ul class="socials">
                     <li class="footer-social-item"><a href="https://github.com/codeforcroatia" tabindex="0" aria-label="GitHub"><span class="github-link"></span></a></li>

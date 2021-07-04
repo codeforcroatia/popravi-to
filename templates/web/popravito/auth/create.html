@@ -8,6 +8,8 @@ ELSE;
 END;
 %]
 
+[% SET bodyclass = 'authpage' %]
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,11 +31,11 @@ END;
         <div>
             <picture class="logo misc-logo">
                 <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="Popravi.to logo">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
             </picture>
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
-        <h1 class="page-title">Registracija</h1>
+        <h1 class="page-title">[% title %]</h1>
 
         [% IF forgotten %]
             <p class="page-text-instructions">
@@ -71,7 +73,7 @@ END;
                     <div class="form-error">[% loc_username_error %]</div>
                 [% END %]
 
-                <input type="email" class="credentials-input form-control required" placeholder="Email adresa" tabindex="0" aria-label="email" id="username" name="username" value="[% username | html %]" autofocus autocomplete="username">
+                <input type="email" class="credentials-input form-control required" placeholder="[% loc('Email address') %]" tabindex="0" aria-label="email" id="username" name="username" value="[% username | html %]" autofocus autocomplete="username">
     
             [% END %]
 
@@ -85,7 +87,7 @@ END;
             [% END %]
             <div class="form-bottom-part">
                 <input class="button register-button" type="submit" aria-label="register" tabindex="0"  name="sign_in_by_code" value="[% expired_password ? loc('Reset') : loc('Sign in') %]">
-                <span class="page-text">Već si registriran? <a class="misc-link" href="/auth" tabindex="0" aria-label="login">Prijavi se</a></span>
+                <span class="page-text">[% loc('Already registered?') %]<a class="misc-link" href="/auth" tabindex="0" aria-label="login"> [% loc('Sign in') %]</a></span>
             </div>
         </form>
     </section>

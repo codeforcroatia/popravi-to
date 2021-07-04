@@ -1,0 +1,66 @@
+[% SET bodyclass = 'authpage' %]
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
+    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+
+    <link rel="stylesheet" type="text/css" href="[% base_css %]">
+    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <title>[% loc('Confirm account') %]</title>
+</head>
+<body>
+    [% IF token_not_found %]
+    [%# Shown whenever there's an invalid token, eg while confirming a report or logging in without a password %]
+
+    <div class="confirmation-header confirmation-header--failure">
+
+        <h1 class="page-title">[% loc('Sorry, that wasn&rsquo;t a valid link') %]</h1>
+        <p class="page-text page-text-left-aligned">[% loc('The link might have expired, or maybe you didn&rsquo;t quite copy and paste it correctly.') %]</p>
+
+    </div>
+
+    [% ELSE %]
+
+    <section class="register-container">
+        <div>
+            <picture class="logo misc-logo">
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+            </picture>
+            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
+        </div>
+
+        [% IF c.config.SIGNUPS_DISABLED %]
+
+            <h1 class="page-title">[% loc("Nearly done!") %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc("If there's a user associated with the address you entered, we've sent a confirmation email.") %]</p>
+            <p class="page-text page-text-left-aligned">[% loc("Click the link in that email to sign in.") %]</p>
+
+        [% ELSE %]
+
+            <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
+            <p class="page-text page-text-left-aligned">[% loc("Click the link in our confirmation email to sign in.") %]</p>
+        
+        [% END %]
+  
+        <p class="page-text page-text-left-aligned">[% loc("Can&rsquo;t find our email? Check your spam folder&nbsp;&ndash; that&rsquo;s the solution 99% of the time.") %]</p>
+        <form class="credentials-form">
+            <div class="form-bottom-part">
+                <span class="page-text text-bold confirm-text">[% loc("Can&rsquo;t find our email?") %]</span>
+                <button class="button register-button" type="submit" aria-label="send again" tabindex="0">[% loc('Send again') %]</button>
+            </div>
+        </form>
+    </section>
+    [% END %]
+</body>
+</html>

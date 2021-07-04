@@ -29,7 +29,7 @@ a:hover {
     cursor: pointer;
 }
 
-button {
+button:hover {
     cursor: pointer; 
 }
 
@@ -197,6 +197,10 @@ label[for="message"]{
     margin-left: 0.5rem;
     width: 62px;
     height: 62px;
+}
+
+.search-button:hover {
+    cursor: pointer;
 }
 
 .location-icon {
@@ -1655,4 +1659,20 @@ label[for="message"]{
 
 .mark-as-solved {
     margin-bottom: 3rem;
+}
+
+.error-multiple-section, .front-main-form-container {
+    margin: 0 1.5rem;
+}
+
+.multiple-item {
+    padding-bottom: 1rem;
+}
+
+.pc_alternatives {
+    padding-left: 0;
+}
+
+.main-page-form-err {
+    padding: 1.5rem 2rem;
 }

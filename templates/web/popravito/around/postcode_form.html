@@ -1,0 +1,42 @@
+[% UNLESS possible_location_matches %]
+
+<h1 class="central-title" id="title">[% loc('Report, view, or discuss local problems') %]</h1>
+
+[% END %]
+
+[% 
+    question = c.cobrand.enter_postcode_text || loc('Enter a nearby street name and area'); 
+%]
+
+<form class="search js-geolocate" action="[% c.uri_for('/around') %]" method="get" name="postcodeForm" id="postcodeForm">
+    <span class="search-icon-button"></span>
+    <label for="pc" class="visually-hidden">[% question %]:</label>
+    <p class="form-hint visually-hidden" id="pc-hint">[% tprintf(loc('e.g. ‘%s’ or ‘%s’'), c.cobrand.example_places) %]</p> 
+    <input type="text" class="search-input" placeholder="Upiši naziv ulice ili mjesto" name="pc" value="[% pc | html %]" id="pc" size="10" maxlength="200" required aria-describedby="pc-hint">
+    <input class="search-button" type="submit" aria-label="search" tabindex="0" value="">
+
+    [% IF partial_token %]
+        <input type="hidden" name="partial" value="[% partial_token.token %]">
+    [% END %]
+
+    [% IF c.get_param('filter_category') OR c.get_param('filter_group') %]
+        <input type="hidden" name="filter_category" value="[% c.get_param('filter_category') | html %]">
+        <input type="hidden" name="filter_group" value="[% c.get_param('filter_group') | html %]">
+    [% ELSIF c.user_exists AND c.user.categories.size %]
+        <input type="hidden" name="filter_category" value="[% c.user.categories_string | html %]">
+    [% END %]
+
+</form>
+
+[%~ SET link_params = {
+        geolocate = 1
+    };
+    IF c.get_param('filter_category'); link_params.filter_category = c.get_param('filter_category'); END;
+    IF c.get_param('filter_group'); link_params.filter_group = c.get_param('filter_group'); END;
+%]
+
+<a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+
+[% UNLESS possible_location_matches OR location_error_pc_lookup %]
+    [% INCLUDE 'around/_postcode_form_post.html' %]
+[% END %]
