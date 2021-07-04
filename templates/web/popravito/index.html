@@ -132,6 +132,7 @@
                 <form class="search js-geolocate" action="[% c.uri_for('/around') %]" method="get" name="postcodeForm" id="postcodeForm">
                     <span class="search-icon-button"></span>
                     <label for="pc" class="visually-hidden">[% question %]:</label>
+                    <p class="form-hint visually-hidden" id="pc-hint">[% tprintf(loc('e.g. ‘%s’ or ‘%s’'), c.cobrand.example_places) %]</p> 
                     <input type="text" class="search-input" placeholder="Upiši naziv ulice ili mjesto" name="pc" value="[% pc | html %]" id="pc" size="10" maxlength="200" required aria-describedby="pc-hint">
                     <input class="search-button" type="submit" aria-label="search" tabindex="0" value="">
 
