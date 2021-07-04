@@ -121,13 +121,13 @@
             </div>
 
             [% INCLUDE 'around/postcode_form.html' %]
+
+            [% IF error %]
+                <p class="form-error main-page-form-err">[% error %]</p>
+            [% END %]
             
         </section> 
-        
-        [% IF error %]
-            <p class="form-error">[% error %]</p>
-        [% END %]
-        
+              
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
             <ol class="report-steps">
