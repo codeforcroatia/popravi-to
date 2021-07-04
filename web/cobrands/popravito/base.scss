@@ -1661,6 +1661,10 @@ label[for="message"]{
     margin-bottom: 3rem;
 }
 
-.error-multiple-section {
+.error-multiple-section, .front-main-form-container {
     margin: 0 1.5rem;
+}
+
+.multiple-item {
+    padding-bottom: 1rem;
 }

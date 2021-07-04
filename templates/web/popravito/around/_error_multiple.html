@@ -58,10 +58,10 @@
     <main>
         <div class="error-multiple-section">
             [% IF possible_location_matches %]
-            <p class="page-text page-text-left-aligned">[% loc('We found more than one match for that location.') %]</p>
+            <h1 class="page-title-smaller">[% loc('We found more than one match for that location.') %]</h1>
             <ul class="pc_alternatives">
               [% FOREACH match IN possible_location_matches %]
-                <li>
+                <li class="page-text-left-aligned multiple-item">
                   [% IF match.icon %]
                     <img src="[% match.icon %]" alt="">
                   [% END %]
@@ -75,6 +75,7 @@
             <p class="page-text page-text-left-aligned">[% loc('We show up to ten matches, please try a different search if yours is not here.') %]</p>
             [% END %]
         </div>
+        <div id="front-main" class="front-main-form-container"></div>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 </body>
