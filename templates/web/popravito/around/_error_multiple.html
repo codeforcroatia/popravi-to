@@ -1,7 +1,3 @@
-[% IF location_error %]
-    [% INCLUDE 'around/location_error.html' %]
-[% END %]
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,6 +52,10 @@
     </header>
     <main>
         <div class="error-multiple-section">
+            [% IF location_error %]
+                [% INCLUDE 'around/location_error.html' %]
+            [% END %]
+
             [% IF possible_location_matches %]
                 <h1 class="page-title-smaller">[% loc('We found more than one match for that location.') %]</h1>
                 <ul class="pc_alternatives">
@@ -80,6 +80,7 @@
                 [% loc("Thanks for uploading your photo. We now need to locate your problem, so please enter a nearby street name or postcode in the box above&nbsp;:") %]
             </p>
             [% END %]
+
 
         </div>       
     </main>
