@@ -1,5 +1,5 @@
 [% IF location_error %]
-    [% INCLUDE 'around/location_error.html' %]
+    <p class="form-error main-page-form-err">[% location_error | safe %]</p>
 [% END %]
 
 [% IF possible_location_matches %]
