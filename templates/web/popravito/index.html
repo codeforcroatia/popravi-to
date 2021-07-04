@@ -122,18 +122,17 @@
 
             [% INCLUDE 'around/postcode_form.html' %]
 
-        </section> 
-              
-        <div class="container">
-            <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
-                        
-                [% IF error %]
-                    <p class="form-error main-page-form-err">[% error %]</p>
-                [% END %]
-
-            </div>
-        </div>
+            <div class="container">
+                <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
+                            
+                    [% IF error %]
+                        <p class="form-error main-page-form-err">[% error %]</p>
+                    [% END %]
     
+                </div>
+            </div>
+
+        </section>             
         <section class="report-steps-section">
             <h1 class="report-title">[% loc('How to report a problem') %]</h1>
             <ol class="report-steps">
