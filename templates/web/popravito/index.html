@@ -72,12 +72,13 @@
 </head>
 <body>
     <header class="header">
-        <picture class="logo">
-            <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-            <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
-            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
-        </picture>
-        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="visually-hidden">[% site_name %]</a>
+        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="visually-hidden">
+            <picture class="logo">
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+            </picture>
+        </a>
         <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
         <nav class="menu visually-hidden" id="menu-container">
             [% BLOCK navitem ~%]
@@ -229,7 +230,7 @@
             <ul class="menu-list-footer [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
                 <li class="menu-item menu-item-footer"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
                 <li class="menu-item menu-item-footer"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help"></a>[%- loc('Help') -%]</li>
+                <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
     
                 [%~ IF c.user_exists ~%]
                     <li class="menu-item menu-item-footer"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
