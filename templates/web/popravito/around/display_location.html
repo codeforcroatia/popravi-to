@@ -104,8 +104,6 @@
 
         [% END %]
 
-        [% map_html | safe %]
-
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container" id="side">
                 <div class="progress-bar">
@@ -119,7 +117,7 @@
                 [% END %]
 
                 <div class="continue-container">
-                    <input type="submit" class="button primary-button" tabindex="0" aria-label="continue to next step" value='Nastavi'>
+                    <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
                 </div> 
                 
                 [% IF allow_creation %]
@@ -133,8 +131,12 @@
                     </div>
                 [% END %]
             </div> 
-        </div>
 
+            <div class="map">
+                [% map_html | safe %]
+            </div>
+        </div>
+        
         [% IF allow_creation %]
         </form>
         [% END %]
