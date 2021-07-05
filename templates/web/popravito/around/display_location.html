@@ -112,7 +112,7 @@
                 <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
 
                 [% IF allow_creation %]
-                    <p class="page-text page-text-left-aligned">[% loc( 'Click map to report a problem' ) %]</p>
+                    <p class="page-text page-text-left-aligned">[% loc( 'Click the map or drag the pin to adjust the location') %]</p>
                     <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon-purple"></span>[% loc('Use my current location') %]</a>
                 [% END %]
 
