@@ -30,9 +30,6 @@
     PROCESS "report/photo-js.html";
     PROCESS "maps/${map.type}.html";
 
-    # Only used by Zurich
-    TRY; sidebar_html = PROCESS 'report/new/sidebar.html' js = 1 report.used_map = 1; CATCH file; END;
-
     SET bodyclass = 'mappage';
     SET rss = [ tprintf(loc('Recent local problems, %s', "%s is the site name"), site_name), rss_url ];
     SET extra_js = [];
@@ -55,6 +52,8 @@
 
     <link rel="stylesheet" type="text/css" href="[% base_css %]">
     <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <title>[% loc('Viewing a location') %]</title>
 </head>
@@ -95,11 +94,11 @@
     </header>
     <main>
         <div class="report-section">
-            <div class="instructions-container">
+            <div class="instructions-container mobile-map-banner" id="map_sidebar">
                 <div class="progress-bar">
                     <div class="bar"></div>
                   </div>
-                <h1 class="page-title-smaller">Označi lokaciju</h1>
+                <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
                 <p class="page-text page-text-left-aligned">Označi problem na karti ili pomakni pin da odgovara lokaciji problema</p>
                 <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon-purple"></span>Koristi moju trenutnu lokaciju</a>
                 <div class="continue-container">
