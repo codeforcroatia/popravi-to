@@ -111,16 +111,8 @@
                   </div>
                 <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
 
-                [%~ SET link_params = {
-                    geolocate = 1
-                };
-                    IF c.get_param('filter_category'); link_params.filter_category = c.get_param('filter_category'); END;
-                    IF c.get_param('filter_group'); link_params.filter_group = c.get_param('filter_group'); END;
-                %]
-
                 [% IF allow_creation %]
                     <p class="page-text page-text-left-aligned">[% loc( 'Click the map or drag the pin to adjust the location') %]</p>
-                    <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon-purple"></span>[% loc('Use my current location') %]</a>
                     [% TRY %][% INCLUDE 'around/extra_text.html' %][% CATCH file %][% END %]
                 [% END %]
 

@@ -35,7 +35,7 @@
     IF c.get_param('filter_group'); link_params.filter_group = c.get_param('filter_group'); END;
 %]
 
-<a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location" style="display: block;"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+<a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
 
 [% UNLESS possible_location_matches OR location_error_pc_lookup %]
     [% INCLUDE 'around/_postcode_form_post.html' %]
