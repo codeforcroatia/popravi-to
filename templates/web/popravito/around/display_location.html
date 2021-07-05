@@ -93,22 +93,59 @@
         </nav>
     </header>
     <main>
-        <div class="report-section">
-            <div class="instructions-container mobile-map-banner" id="map_sidebar">
+        <div class="report-section" id="map_sidebar">
+            <div class="instructions-container mobile-map-banner" id="side">
                 <div class="progress-bar">
                     <div class="bar"></div>
                   </div>
+
+                  [% IF allow_creation %]
+
+                  <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm" enctype="multipart/form-data" class="validate" novalidate>
+                      <input type="hidden" name="token" value="[% csrf_token %]">
+                      <input type="hidden" name="pc" value="[% pc | html %]">
+                  
+                      <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
+                      <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
+                  
+                      [% IF c.get_param('filter_group') %]
+                          <input type="hidden" name="filter_group" id="filter_group" value="[% c.get_param('filter_group') | html %]">
+                      [% END %]
+
+                  [% END %]
+                  
+                    [% map_html | safe %]
+
                 <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
-                <p class="page-text page-text-left-aligned">Označi problem na karti ili pomakni pin da odgovara lokaciji problema</p>
-                <a class="location-link" href="" tabindex="0" aria-label="use my location"><span class="location-icon-purple"></span>Koristi moju trenutnu lokaciju</a>
+
+                [% IF allow_creation %]
+                    <p class="page-text page-text-left-aligned">Označi problem na karti ili pomakni pin da odgovara lokaciji problema</p>
+                    <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+                [% END %]
+
                 <div class="continue-container">
                     <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
-                </div>       
+                </div> 
+                
+                [% IF allow_creation %]
+                    <div style="display:none" id="side-form">
+                        <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
+                    [% INCLUDE "report/new/fill_in_details_form.html"
+                        js = 1,
+                        report.used_map = 1
+                        report.name = c.user.name
+                    %]
+                    </div>
+                [% END %]
+
+            [% IF allow_creation %]
+                </form>
+            [% END %]
             </div>  
-            <picture class="map">
+            <!--<picture class="map">
                 <source srcset="./images/map.png">
                 <img src="/images/map.png" alt="Karta">
-            </picture>
+            </picture>-->
         </div>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
