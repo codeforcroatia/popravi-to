@@ -130,13 +130,13 @@
                     %]
                     </div>
                 [% END %]
-
-                [% map_html | safe %]
-
-            [% IF allow_creation %]
-                </form>
-            [% END %]
             </div>  
+
+            [% map_html | safe %]
+
+        [% IF allow_creation %]
+        </form>
+        [% END %]
         </div>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
