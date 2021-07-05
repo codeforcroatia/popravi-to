@@ -113,13 +113,11 @@
                       [% END %]
 
                   [% END %]
-                  
-                    [% map_html | safe %]
 
                 <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
 
                 [% IF allow_creation %]
-                    <p class="page-text page-text-left-aligned">Označi problem na karti ili pomakni pin da odgovara lokaciji problema</p>
+                    <p class="page-text page-text-left-aligned">[% loc( 'Click map to report a problem' ) %]</p>
                     <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
                 [% END %]
 
@@ -142,10 +140,8 @@
                 </form>
             [% END %]
             </div>  
-            <!--<picture class="map">
-                <source srcset="./images/map.png">
-                <img src="/images/map.png" alt="Karta">
-            </picture>-->
+            
+            [% map_html | safe %]
         </div>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
