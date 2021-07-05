@@ -89,32 +89,31 @@
         </nav>
     </header>
     <main>
+        [% IF allow_creation %]
+
+        <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm" enctype="multipart/form-data" class="validate" novalidate>
+            <input type="hidden" name="token" value="[% csrf_token %]">
+            <input type="hidden" name="pc" value="[% pc | html %]">
+        
+            <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
+            <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
+        
+            [% IF c.get_param('filter_group') %]
+                <input type="hidden" name="filter_group" id="filter_group" value="[% c.get_param('filter_group') | html %]">
+            [% END %]
+
+        [% END %]
+
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container mobile-map-banner" id="side">
                 <div class="progress-bar">
                     <div class="bar"></div>
                   </div>
-
-                  [% IF allow_creation %]
-
-                  <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm" enctype="multipart/form-data" class="validate" novalidate>
-                      <input type="hidden" name="token" value="[% csrf_token %]">
-                      <input type="hidden" name="pc" value="[% pc | html %]">
-                  
-                      <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
-                      <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
-                  
-                      [% IF c.get_param('filter_group') %]
-                          <input type="hidden" name="filter_group" id="filter_group" value="[% c.get_param('filter_group') | html %]">
-                      [% END %]
-
-                  [% END %]
-
                 <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
 
                 [% IF allow_creation %]
                     <p class="page-text page-text-left-aligned">[% loc( 'Click map to report a problem' ) %]</p>
-                    <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+                    <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon-purple"></span>[% loc('Use my current location') %]</a>
                 [% END %]
 
                 <div class="continue-container">
@@ -132,12 +131,12 @@
                     </div>
                 [% END %]
 
+                [% map_html | safe %]
+
             [% IF allow_creation %]
                 </form>
             [% END %]
             </div>  
-            
-            [% map_html | safe %]
         </div>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
