@@ -104,8 +104,10 @@
 
         [% END %]
 
+        [% map_html | safe %]
+
         <div class="report-section" id="map_sidebar">
-            <div class="instructions-container mobile-map-banner" id="side">
+            <div class="instructions-container" id="side">
                 <div class="progress-bar">
                     <div class="bar"></div>
                   </div>
@@ -117,7 +119,7 @@
                 [% END %]
 
                 <div class="continue-container">
-                    <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
+                    <input type="submit" class="button primary-button" tabindex="0" aria-label="continue to next step" value='Nastavi'>
                 </div> 
                 
                 [% IF allow_creation %]
@@ -130,16 +132,12 @@
                     %]
                     </div>
                 [% END %]
-            </div>  
-
-            <div class="map">
-                [% map_html | safe %]
-            </div>
+            </div> 
+        </div>
 
         [% IF allow_creation %]
         </form>
         [% END %]
-        </div>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 
