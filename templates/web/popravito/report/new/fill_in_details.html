@@ -81,7 +81,7 @@
             <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
 
         [% IF report.used_map %]
-        
+
         <div class="map">[% map_html | safe %]</div>  
 
         <div class="report-section" id="map_sidebar">
@@ -102,29 +102,3 @@
 </body>
 </html>
 
-<div class="progress-bar">
-    <div class="bar2"></div>
-    </div>
-<h1 class="page-title-smaller">Odaberi kategoriju</h1>
-<div class="dropdowns">
-    <label for="category">Kategorija</label>
-    <select name="category" tabindex="0" aria-label="category" id="category">
-        <option value="Odaberi kategoriju">Odaberi kategoriju</option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-    </select> 
-    <select name="podkategorija" disabled="disabled" tabindex="0" aria-label="subcategory">
-        <option value="Odaberi podkategoriju">Odaberi podkategoriju</option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-    </select> 
-    <label for="report-title">Naziv problema <span class="details-button" tabindex="0" aria-label="details"></span></label>
-    <p class="report-details-small">Kako bi prijavu poslije lakše pronašao/la u svojoj listi daj problemu kratki naziv</p>
-    <input class="report-title-input" type="text" name="report-title" id="report-title" tabindex="0" aria-label="report title" placeholder="Naziv problema">
-</div>
-<div class="continue-container-two">
-    <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
-    <button class="button primary-button hidden-nojs js-reporting-page--next" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
-</div>       
