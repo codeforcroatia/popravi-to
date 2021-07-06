@@ -64,40 +64,38 @@
     </header>
     <main>
         [% IF report.used_map %]
+
         <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
 
         [% ELSE %]
-            
+
         <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
             <input type="hidden" name="skipped" value="1">
-            
-        [% END %]
-            
-                <input type="hidden" name="token" value="[% csrf_token %]">
-                <input type="hidden" name="pc" value="[% pc | html %]">
-                <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
-                <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
-            
-              [% IF report.used_map %]
-                [% map_html | safe %]
-            
-                <div id="map_sidebar">
-                    <div id="skipped-map">
-              [% END %]
 
+        [% END %]
+
+            <input type="hidden" name="token" value="[% csrf_token %]">
+            <input type="hidden" name="pc" value="[% pc | html %]">
+            <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
+            <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
+
+        [% IF report.used_map %]
+            [% map_html | safe %]
+
+            </div>
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container" id="side-form">
                 <div class="progress-bar">
                     <div class="bar2"></div>
-                  </div>
+                    </div>
                 <h1 class="page-title-smaller">Odaberi kategoriju</h1>
                 <div class="dropdowns">
                     <label for="category">Kategorija</label>
                     <select name="category" tabindex="0" aria-label="category" id="category">
-                      <option value="Odaberi kategoriju">Odaberi kategoriju</option>
-                      <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
+                        <option value="Odaberi kategoriju">Odaberi kategoriju</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
                     </select> 
                     <select name="podkategorija" disabled="disabled" tabindex="0" aria-label="subcategory">
                         <option value="Odaberi podkategoriju">Odaberi podkategoriju</option>
@@ -131,24 +129,24 @@
 
         [% ELSE %]
 
-        <div id="map_sidebar">
-            <div id="skipped-map">
-      [% END %]
-    
-            <div id="report-a-problem-main">
-                <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
-                [% IF login_success %]
-                [% PROCESS 'report/new/login_success_form.html' %]
-                [% ELSIF oauth_need_email %]
-                [% PROCESS 'report/new/oauth_email_form.html' %]
-                [% ELSE %]
-                [% PROCESS 'report/new/fill_in_details_form.html' %]
-                [% END %]
+            <div id="map_sidebar">
+                <div id="skipped-map">
+
+        [% END %]
+
+                    <div id="report-a-problem-main">
+                        <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
+                    [% IF login_success %]
+                        [% PROCESS 'report/new/login_success_form.html' %]
+                    [% ELSIF oauth_need_email %]
+                        [% PROCESS 'report/new/oauth_email_form.html' %]
+                    [% ELSE %]
+                        [% PROCESS 'report/new/fill_in_details_form.html' %]
+                    [% END %]
+                    </div>
+
+                </div>
             </div>
-    
-            </div>
-        </div>
-        </form>
         </form>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
