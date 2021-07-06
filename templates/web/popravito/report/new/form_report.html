@@ -16,9 +16,19 @@
 
     [% PROCESS "report/new/category_wrapper.html" %]
     [% TRY %][% PROCESS 'report/new/after_category.html' %][% CATCH file %][% END %]
-
-    <div class="continue-container-two">
-        <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
-        <button class="button primary-button hidden-nojs js-reporting-page--next" tabindex="0" aria-label="continue to next step">[% ' disabled' IF disable_form_message %]>[% loc('Continue') %]<span class="arrow-right"></span></button>
-    </div>  
 </div>
+
+<div data-page-name="subcategory" class="js-reporting-page js-reporting-page--subcategory js-reporting-page--skip[% ' hidden-nojs' UNLESS filter_group %]">
+    <div id="form_subcategory_row">
+      [% IF NOT js %]
+        [% PROCESS report/new/subcategories.html %]
+      [% END %]
+    </div>
+
+    <div class="js-post-category-messages"></div>
+</div>
+
+<div class="continue-container-two">
+    <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
+    <button class="button primary-button hidden-nojs js-reporting-page--next" tabindex="0" aria-label="continue to next step">[% ' disabled' IF disable_form_message %][% loc('Continue') %]<span class="arrow-right"></span></button>
+</div>  
