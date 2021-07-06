@@ -108,8 +108,8 @@
                     <input class="report-title-input" type="text" name="report-title" id="report-title" tabindex="0" aria-label="report title" placeholder="Naziv problema">
                 </div>
                 <div class="continue-container-two">
-                    <button class="button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>Povratak</button>
-                    <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
+                    <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
+                    <button class="button primary-button hidden-nojs js-reporting-page--next" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
                 </div>       
             </div>  
             <picture class="map">
@@ -135,7 +135,6 @@
         [% END %]
 
                     <div id="report-a-problem-main">
-                        <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
                     [% IF login_success %]
                         [% PROCESS 'report/new/login_success_form.html' %]
                     [% ELSIF oauth_need_email %]
