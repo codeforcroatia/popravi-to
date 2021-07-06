@@ -79,6 +79,8 @@
             <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
             <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
 
+        [% IF report.used_map %]
+        
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container" id="side-form">
                 <div class="progress-bar">
@@ -109,12 +111,11 @@
                 </div>       
             </div>  
 
-            [% IF report.used_map %]
             <div class="map">
                 [% map_html | safe %]
             </div>  
             </div> 
-             
+
             <section class="modal-container visually-hidden">
                 <section class="modal register-container">
                     <button class="close-button" tabindex="0" aria-label="close form"></button>
