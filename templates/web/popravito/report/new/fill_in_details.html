@@ -66,12 +66,12 @@
         [% IF report.used_map %]
         <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
 
-            [% ELSE %]
+        [% ELSE %]
             
-            <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
-                <input type="hidden" name="skipped" value="1">
+        <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
+            <input type="hidden" name="skipped" value="1">
             
-            [% END %]
+        [% END %]
             
                 <input type="hidden" name="token" value="[% csrf_token %]">
                 <input type="hidden" name="pc" value="[% pc | html %]">
@@ -149,7 +149,7 @@
             </div>
         </div>
         </form>
-
+        </form>
     </main>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 </body>
