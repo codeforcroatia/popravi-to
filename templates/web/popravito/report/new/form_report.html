@@ -1,0 +1,24 @@
+[% SET form_show_category_only = NOT category || field_errors.category || disable_form_message || have_disable_qn_to_answer %]
+[% TRY %][% PROCESS 'report/new/_form_labels.html' %][% CATCH file %][% END %]
+[% PROCESS 'report/new/form_public_councils_text.html' ~%]
+
+<!-- report/new/form_report.html -->
+[% INCLUDE 'report/new/form_after_heading.html' %]
+
+[% IF field_errors.bodies %]
+    <p class='form-error'>[% field_errors.bodies %]</p>
+[% END %]
+
+<div data-page-name="category" class="js-reporting-page js-reporting-page--category js-reporting-page--active">
+  [% IF public_councils_text_at_top %]
+    [% INCLUDE public_councils_text %]
+  [% END %]
+
+    [% PROCESS "report/new/category_wrapper.html" %]
+    [% TRY %][% PROCESS 'report/new/after_category.html' %][% CATCH file %][% END %]
+
+    <div class="continue-container-two">
+        <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
+        <button class="button primary-button hidden-nojs js-reporting-page--next" tabindex="0" aria-label="continue to next step">[% ' disabled' IF disable_form_message %]>[% loc('Continue') %]<span class="arrow-right"></span></button>
+    </div>  
+</div>

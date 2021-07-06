@@ -86,6 +86,9 @@
 
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container" id="side-form">
+                <div class="progress-bar">
+                    <div class="bar2"></div>
+                  </div>
 
         [% ELSE %]
 
@@ -95,7 +98,6 @@
         [% END %]
 
             <div id="report-a-problem-main">
-                <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
                 [% IF login_success %]
                     [% PROCESS 'report/new/login_success_form.html' %]
                 [% ELSIF oauth_need_email %]
