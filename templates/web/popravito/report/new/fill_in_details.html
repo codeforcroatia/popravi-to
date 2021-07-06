@@ -1,0 +1,111 @@
+[%
+    # Only used by Zurich
+    TRY; sidebar_html = PROCESS 'report/new/sidebar.html'; CATCH file; END;
+
+    SET bodyclass = '';
+    SET bodyclass = 'mappage';
+    SET bodyclass = bodyclass _ " with-notes" IF sidebar_html;
+    SET extra_js = [];
+    PROCESS "report/photo-js.html";
+    PROCESS "maps/${map.type}.html" IF report.used_map;
+%]
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
+    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+
+    <link rel="stylesheet" type="text/css" href="[% base_css %]">
+    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+
+    <title>[% loc('Reporting a problem') %]</title>
+</head>
+<body>
+    <header class="header">
+        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="logo">
+            <picture>
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+            </picture>
+        </a>
+        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
+        <nav class="menu visually-hidden" id="menu-container">
+            [% BLOCK navitem ~%]
+                <li [% liattrs | safe %]>
+                    [%~ IF c.req.uri.path == uri AND NOT always_url ~%]
+                        <span [% attrs | safe %]>[% label %]</span>
+                    [%~ ELSE ~%]
+                        <a href="[% uri %][% suffix IF suffix %]" [% attrs | safe %]>[% label %]</a>
+                    [%~ END ~%]
+                </li>
+            [%~ END %]
+            <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
+                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
+                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
+                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
+
+                [%~ IF c.user_exists ~%]
+                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
+                [%~ ELSE ~%]
+                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
+                [%~ END ~%]
+            </ul>
+            <form class="button-link">
+                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
+            </form>
+        </nav>
+    </header>
+    <main>
+        <div class="report-section">
+            <div class="instructions-container">
+                <div class="progress-bar">
+                    <div class="bar2"></div>
+                  </div>
+                <h1 class="page-title-smaller">Odaberi kategoriju</h1>
+                <div class="dropdowns">
+                    <label for="category">Kategorija</label>
+                    <select name="category" tabindex="0" aria-label="category" id="category">
+                      <option value="Odaberi kategoriju">Odaberi kategoriju</option>
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> 
+                    <select name="podkategorija" disabled="disabled" tabindex="0" aria-label="subcategory">
+                        <option value="Odaberi podkategoriju">Odaberi podkategoriju</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select> 
+                    <label for="report-title">Naziv problema <span class="details-button" tabindex="0" aria-label="details"></span></label>
+                    <p class="report-details-small">Kako bi prijavu poslije lakše pronašao/la u svojoj listi daj problemu kratki naziv</p>
+                    <input class="report-title-input" type="text" name="report-title" id="report-title" tabindex="0" aria-label="report title" placeholder="Naziv problema">
+                </div>
+                <div class="continue-container-two">
+                    <button class="button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>Povratak</button>
+                    <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
+                </div>       
+            </div>  
+            <picture class="map">
+                <source media="(min-width: 769px)" srcset="./images/map.png">
+                <img src="#" alt="">
+            </picture>
+            <section class="modal-container visually-hidden">
+                <section class="modal register-container">
+                    <button class="close-button" tabindex="0" aria-label="close form"></button>
+                    <h1 class="modal-title">Opis problema</h1>
+                    <p class="page-text-left-aligned">Opišite problem sa što više korisnih detalja kako bi olakšali rješavanje problema. Precizno opišite lokaciju, vrstu problema te koliko je dugo prisutan.<br>
+                        Npr. “od 1.3.2021. ne radi ulična svjetiljka na uglu Selske i Ozaljske ulice”</p>
+                    <button class="button register-button register-button-two" tabindex="0" aria-label="ok">Ok</button>
+                </section>
+            </section>
+        </div>
+    </main>
+    <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
+</body>
+</html>
