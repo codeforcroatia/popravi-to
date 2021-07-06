@@ -94,6 +94,17 @@
 
         [% END %]
 
+            <div id="report-a-problem-main">
+                <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
+                [% IF login_success %]
+                    [% PROCESS 'report/new/login_success_form.html' %]
+                [% ELSIF oauth_need_email %]
+                    [% PROCESS 'report/new/oauth_email_form.html' %]
+                [% ELSE %]
+                    [% PROCESS 'report/new/fill_in_details_form.html' %]
+                [% END %]
+            </div>  
+
             </div>
         </div>
         </form>
