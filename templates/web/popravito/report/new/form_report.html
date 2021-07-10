@@ -17,9 +17,8 @@
     [% PROCESS "report/new/category_wrapper.html" %]
     [% TRY %][% PROCESS 'report/new/after_category.html' %][% CATCH file %][% END %]
 
-    <button class="button primary-button hidden-nojs js-reporting-page--next"
+    <button class="btn btn--block btn--final hidden-nojs js-reporting-page--next"
         [% ' disabled' IF disable_form_message %]>[% loc('Continue') %]</button>
-
 </div>
 
 <div data-page-name="subcategory" class="js-reporting-page js-reporting-page--subcategory js-reporting-page--skip[% ' hidden-nojs' UNLESS filter_group %]">
