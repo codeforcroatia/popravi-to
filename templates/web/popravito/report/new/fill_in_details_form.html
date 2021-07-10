@@ -1,0 +1,32 @@
+[% PROCESS 'report/new/form_heading.html' %]
+
+[% TRY %][% INCLUDE 'report/new/roads_message.html' %][% CATCH file %][% END %]
+
+<fieldset>
+    <div id="problem_form">
+
+[% IF report.used_map %]
+    <ul class="change_location visually-hidden">
+        <li class="change_location__map">[% loc('Click the map or drag the pin to adjust the location') %]</li>
+        <li class="change_location__search">[% loc('Or <a href="/">search for a different location</a>') %]</li>
+    </ul>
+[% END %]
+
+<div id="js-top-message">
+    [% PROCESS 'report/new/top_message.html' %]
+</div>
+
+[% IF report.used_map && partial_token %]
+    <p id="unknown">[% loc('Please note your report has <strong>not yet been sent</strong>. Choose a category and add further information below, then submit.') %]</p>
+[% END %]
+[% IF oauth_failure %]
+    <p class="form-error">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
+[% END %]
+
+[% INCLUDE 'errors.html' %]
+
+        [% PROCESS 'report/new/form_report.html' %]
+        [% PROCESS 'report/new/form_user.html' %]
+
+    </div>
+</fieldset>
