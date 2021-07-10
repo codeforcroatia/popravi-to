@@ -17,10 +17,9 @@
     [% PROCESS "report/new/category_wrapper.html" %]
     [% TRY %][% PROCESS 'report/new/after_category.html' %][% CATCH file %][% END %]
 
-    <div class="continue-container-two">
-        <button class="button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>Povratak</button>
-        <button class="button primary-button hidden-nojs js-reporting-page--next" tabindex="0" aria-label="continue to next step">[% loc('Continue') %]<span class="arrow-right"></span></button>
-    </div> 
+    <button class="button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
+    <button class="button primary-button btn hidden-nojs js-reporting-page--next"
+        [% ' disabled' IF disable_form_message %]>[% loc('Continue') %]</button>
 
 </div>
 
