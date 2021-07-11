@@ -48,14 +48,10 @@
 
         </div>
 
-        <div data-page-name="details" class="js-reporting-page[% ' hidden-nojs' IF form_show_category_only %]">
+        <div data-page-name="details" class="js-reporting-page">
             [% UNLESS public_councils_text_at_top %]
               [% INCLUDE public_councils_text %]
             [% END %]
-          
-              [% INCLUDE 'report/new/form_title.html' %]
-          
-              [% TRY %][% PROCESS 'report/new/after_title.html' %][% CATCH file %][% END %]
           
               [% DEFAULT form_detail_label = loc('Explain what’s wrong') %]
               <label for="form_detail">[% form_detail_label %]</label>
