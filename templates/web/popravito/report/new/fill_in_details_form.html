@@ -30,14 +30,19 @@
         [% END %]
 
         <div data-page-name="category" class="js-reporting-page js-reporting-page--category js-reporting-page--active">
-            
+           
             [% IF public_councils_text_at_top %]
                 [% INCLUDE public_councils_text %]
             [% END %]
         
             [% PROCESS "report/new/category_wrapper.html" %]
             [% TRY %][% PROCESS 'report/new/after_category.html' %][% CATCH file %][% END %]
-           
+        
+            <div class="continue-container-two">
+                <button class="js-back button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
+                <button class="hidden-nojs js-reporting-page--next button primary-button" tabindex="0" aria-label="continue to next step"
+                [% ' disabled' IF disable_form_message %]>[% loc('Continue') %]<span class="arrow-right"></span></button>
+            </div>      
         </div>
         <div data-page-name="subcategory" class="js-reporting-page js-reporting-page--subcategory js-reporting-page--skip[% ' hidden-nojs' UNLESS filter_group %]">
             <div id="form_subcategory_row">
@@ -47,15 +52,12 @@
             </div>
         
             <div class="js-post-category-messages"></div>
-           
             <div class="continue-container-two">
                 <button class="js-back button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
-                <button class="hidden-nojs js-reporting-page--next button primary-button" tabindex="0" aria-label="continue to next step"
-                [% ' disabled' IF disable_form_message %]>[% loc('Continue') %]<span class="arrow-right"></span></button>
+                <button class="hidden-nojs js-reporting-page--next button primary-button" tabindex="0" aria-label="continue to next step">[% loc('Continue') %]<span class="arrow-right"></span></button>
             </div>   
         </div>
         
-        [% PROCESS "report/new/duplicate_suggestions.html" %]
 
     </div>
 </fieldset>
