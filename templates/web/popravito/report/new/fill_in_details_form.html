@@ -37,6 +37,8 @@
         
             [% PROCESS "report/new/category_wrapper.html" %]
             [% TRY %][% PROCESS 'report/new/after_category.html' %][% CATCH file %][% END %]
+
+            [% INCLUDE 'report/new/form_title.html' %]
              
         </div>
 
