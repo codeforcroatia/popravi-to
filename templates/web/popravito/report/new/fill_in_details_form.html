@@ -49,36 +49,19 @@
         </div>
 
         <div data-page-name="details" class="js-reporting-page">
-            [% UNLESS public_councils_text_at_top %]
-              [% INCLUDE public_councils_text %]
-            [% END %]
-          
-              [% DEFAULT form_detail_label = loc('Explain what’s wrong') %]
-              <label for="form_detail">[% form_detail_label %]</label>
-          
-              [%# You can prevent a hint being printed by setting form_detail_placeholder to a Falsey value %]
-            [% IF NOT form_detail_placeholder.defined %]
-              [% SET form_detail_placeholder = loc('e.g. ‘This pothole has been here for two months and…’') %]
-            [% END %]
-          
-            [% IF contact_detail_hint %]
-              <p class="form-hint" id="detail-hint">[% contact_detail_hint %]</p>
-            [% ELSIF form_detail_placeholder %]
-              <p class="form-hint" id="detail-hint">[% form_detail_placeholder %]</p>
-            [% END %]
-          
+            <label for="form_detail">[% loc('Details') %]</label>
             [% IF field_errors.detail %]
-              <p class='form-error'>[% field_errors.detail %]</p>
+                <p class='form-error'>[% field_errors.detail %]</p>
             [% END %]
-          
-              <textarea class="form-control" rows="7" cols="26" name="detail" id="form_detail" [% IF form_detail_placeholder %]aria-describedby="detail-hint"[% END %][% field_required %]>[% report.detail | html %]</textarea>
-          
-              [% TRY %][% PROCESS 'report/new/inline-tips.html' %][% CATCH file %][% END %]
-          
-              <div class="js-reporting-page--single-hidden">
-                  [% PROCESS report/form/user.html type='report' %]
-              </div>
-          </div>
+            <textarea class="form-control" rows="7" cols="26" name="detail" id="form_detail" required>[% report.detail | html %]</textarea>
+        
+            <div class="continue-container-two">
+                <button class="js-back button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
+                <button class="hidden-nojs js-reporting-page--next button primary-button" tabindex="0" aria-label="continue to next step"
+                [% ' disabled' IF disable_form_message %]>[% loc('Continue') %]<span class="arrow-right"></span></button>
+            </div> 
+
+        </div>
 
     </div>
 </fieldset>
