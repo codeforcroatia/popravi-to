@@ -55,6 +55,9 @@
             [% END %]
             <textarea class="form-control" rows="7" cols="26" name="detail" id="form_detail" required>[% report.detail | html %]</textarea>
         
+            [% PROCESS 'report/form/photo_upload.html' %]
+            [% PROCESS 'report/new/after_photo.html' %]
+
             <div class="continue-container-two">
                 <button class="js-back button primary-button-two" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
                 <button class="hidden-nojs js-reporting-page--next button primary-button" tabindex="0" aria-label="continue to next step"
