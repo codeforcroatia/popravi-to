@@ -1,4 +1,4 @@
-/*var fixmystreet = fixmystreet || {};
+var fixmystreet = fixmystreet || {};
 
 fixmystreet.pageController = {
     toPage: function(page, opts) {
@@ -103,6 +103,3 @@ fixmystreet.pageController = {
         $('.js-reporting-page--active').after($div);
     }
 };
-*/
-
-alert('assets js imported')
