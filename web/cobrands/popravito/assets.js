@@ -103,3 +103,5 @@ fixmystreet.pageController = {
         $('.js-reporting-page--active').after($div);
     }
 };
+
+alert('asset')
