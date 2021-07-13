@@ -1,6 +1,7 @@
-[% PROCESS 'footer_extra_js_base.html' cobrand_js=1 validation=1 %]
+[% PROCESS 'footer_extra_js_base.html' cobrand_js=1 %]
 [% IF bodyclass.match('mappage');
     scripts.push( version('/cobrands/fixmystreet/assets.js') );
+    scripts.push( version('/cobrands/fixmystreet/fixmystreet.js') );
     scripts.push(
         version('/vendor/OpenLayers.Projection.OrdnanceSurvey.js'),
     );

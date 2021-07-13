@@ -266,19 +266,7 @@
 
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
   
-    [% PROCESS 'common_scripts.html' %]
-
-    [%
-    scripts_seen = {};
-    FOR script IN scripts;
-        script = script.0 ? script : [ script ];
-        NEXT IF scripts_seen.${script.0};
-        scripts_seen.${script.0} = 1;
-        ~%]
-        <script src="[% script.0 %]"
-            [%~ FOR attr IN script.1 %] [% attr.key %]="[% attr.value %]"[% END ~%]
-            ></script>
-    [% END %]       
+    [% INCLUDE 'common_footer_tags.html' %]
 </body>
 </html>
 
