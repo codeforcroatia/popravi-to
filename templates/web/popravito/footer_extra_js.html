@@ -1,8 +1,6 @@
 [% PROCESS 'footer_extra_js_base.html' highways=1 cobrand_js=1 validation=1 roadworks=1  %]
-[% IF bodyclass.match('mappage');
+[% 
+IF bodyclass.match('mappage');
     scripts.push( version('/cobrands/fixmystreet/assets.js') );
-    scripts.push( version('/cobrands/fixmystreet/fixmystreet.js') );
-    scripts.push(
-        version('/vendor/OpenLayers.Projection.OrdnanceSurvey.js'),
-    );
-END %]
+END 
+%]
