@@ -1,0 +1,138 @@
+[%
+    SET html_att = ' lang="' _ lang_code _ '"';
+    # For a right-to-left language, use the following line in your own header:
+    # SET html_att = html_att _ ' dir="rtl"';
+-%]
+
+
+<!DOCTYPE html>
+<!--[if IE 9]>   <html class="no-js ie9"[% html_att | safe %]><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js"[% html_att | safe %]><!--<![endif]-->
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandHeldFriendly" content="true">
+    <meta name="mobileoptimized" content="0">
+
+    <meta property="og:url" content="[% c.cobrand.base_url %][% c.req.uri.path %]">
+    <meta property="og:title" content="[% title || site_name %]">
+    <meta property="og:site_name" content="[% site_name %]">
+    [% IF c.req.uri.path == '/' %]<meta property="og:description" content="[% loc('Report, view, and discuss local street-related problems.') %]">[% END %]
+    <meta property="og:type" content="website">
+
+    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
+    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
+
+    <link rel="stylesheet" type="text/css" href="[% base_css %]">
+    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    [% SET start = c.config.ADMIN_BASE_URL IF admin %]
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="manifest" href="/.well-known/manifest.webmanifest">
+    [% IF manifest_theme %]
+        <meta name='theme-color' content='[% manifest_theme.theme_colour %]'>
+        [% FOREACH icon IN manifest_theme.icons %]
+            <link rel="apple-touch-icon" sizes="[% icon.sizes %]" href="[% icon.src %]">
+        [% END %]
+    [% END %]
+
+    [% IF csrf_token %]
+    <meta content="[% csrf_token %]" name="csrf-token" />
+    [% END %]
+
+    <!--[if (lt IE 9)]>
+        <script src="[% version('/vendor/html5shiv.js') %]"></script>
+    <![endif]-->
+    <script nonce="[% csp_nonce %]">
+    (function(d,e,k){function m(b,n,a,l){var f=e.createElement("div");var c=e.body;c||(c=e.createElement("body"),c.fake=!0);if(parseInt(a,10))for(;a--;){var d=e.createElement("div");d.id=l?l[a]:"modernizr"+(a+1);f.appendChild(d)}a=e.createElement("style");a.type="text/css";a.id="smodernizr";(c.fake?c:f).appendChild(a);c.appendChild(f);a.styleSheet?a.styleSheet.cssText=b:a.appendChild(e.createTextNode(b));f.id="modernizr";if(c.fake){c.style.background="";c.style.overflow="hidden";var g=h.style.overflow;
+    h.style.overflow="hidden";h.appendChild(c)}b=n(f,b);c.fake?(c.parentNode.removeChild(c),h.style.overflow=g,h.offsetHeight):f.parentNode.removeChild(f);return!!b}k={_version:"3.11.4"};var g=function(){};g.prototype=k;g=new g;var h=e.documentElement,p=function(){var b=d.matchMedia||d.msMatchMedia;return b?function(d){return(d=b(d))&&d.matches||!1}:function(b){var a=!1;m("@media "+b+" { #modernizr { position: absolute; } }",function(b){a="absolute"===("getComputedStyle"in d?getComputedStyle(b):b.currentStyle).position});
+    return a}}();k.mq=p;d.Modernizr=g})(window,document);
+        var fixmystreet=fixmystreet||{};fixmystreet.page="[% page %]";fixmystreet.cobrand="[% c.cobrand.moniker %]";
+        (function(a){a=a.documentElement;a.className=a.className.replace(/\bno-js\b/,"js");var b=Modernizr.mq("(min-width: 48em)")?"desktop":"mobile";"IntersectionObserver"in window&&(a.className+=" lazyload");"mobile"==b&&(a.className+=' mobile[% " map-fullscreen only-map map-reporting" IF page == "around" || page == "new" %]')})(document);
+    </script>
+
+    <script nonce="[% csp_nonce %]">
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js');
+        });
+    }
+    </script>
+
+    [% IF robots %]
+        <meta name="robots" content="[% robots %]">
+    [% ELSIF c.config.STAGING_SITE %]
+        <meta name="robots" content="noindex,nofollow">
+    [% END %]
+
+    [% IF rss %]
+        <link rel="alternate" type="application/rss+xml" title="[% rss.0 %]" href="[% rss.1 %]">
+    [% END %]
+
+    <title>
+        [% tprintf('%s :: ', title) IF title %]
+        [% site_name -%]
+    </title>
+
+    [% IF bodyclass.match('frontpage') %]
+        <link rel="prefetch" href="[% version('/js/validation_rules.js') %]">
+    [%~ IF NOT c.user_exists OR NOT (c.user.from_body OR c.user.is_superuser) %]
+        <link rel="prefetch" href="[% version('/vendor/jquery-2.2.4.min.js') %]">
+    [%~ END %]
+        <link rel="prefetch" href="[% version('/vendor/jquery.multi-select.min.js') %]">
+        <link rel="prefetch" href="[% version('/vendor/jquery.validate.min.js') %]">
+        <link rel="prefetch" href="[% version('/cobrands/fixmystreet/fixmystreet.js') %]">
+    [% END %]
+    [% IF NOT bodyclass.match('mappage') %]
+        [% FOR script IN map_js.merge(c.cobrand.call_hook('map_js_extra')) %]
+            <link rel="prefetch" href="[% IF script.match('^/'); version(script); ELSE; script; END %]">
+        [% END %]
+        <link rel="prefetch" href="[% version('/cobrands/fixmystreet/map.js') %]">
+        <link rel="prefetch" href="[% version('/vendor/dropzone.min.js') %]">
+        <link rel="prefetch" href="[% version('/vendor/fancybox/jquery.fancybox-1.3.4.pack.js') %]">
+    [% END %]           
+</head>
+
+[% TRY %][% PROCESS 'set_body_class.html' %][% CATCH file %][% END %]
+
+<body>
+    <header class="header">
+        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="logo">
+            <picture>
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
+                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+            </picture>
+        </a>
+        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
+        <nav class="menu visually-hidden" id="menu-container">
+            [% BLOCK navitem ~%]
+                <li [% liattrs | safe %]>
+                    [%~ IF c.req.uri.path == uri AND NOT always_url ~%]
+                        <span [% attrs | safe %]>[% label %]</span>
+                    [%~ ELSE ~%]
+                        <a href="[% uri %][% suffix IF suffix %]" [% attrs | safe %]>[% label %]</a>
+                    [%~ END ~%]
+                </li>
+            [%~ END %]
+            <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
+                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
+                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
+                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
+
+                [%~ IF c.user_exists ~%]
+                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
+                [%~ ELSE ~%]
+                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
+                [%~ END ~%]
+
+            </ul>
+            <form class="button-link">
+                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
+            </form>
+        </nav>
+    </header>

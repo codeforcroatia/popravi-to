@@ -1,272 +1,166 @@
 [% pre_container_extra = PROCESS 'around/postcode_form.html' %]
 [% SET bodyclass = 'frontpage fullwidthpage' %]
+[% INCLUDE 'header.html', title = '', inline_css = 1 %]
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta property="og:url" content="[% c.cobrand.base_url %][% c.req.uri.path %]">
-    <meta property="og:title" content="[% title || site_name %]">
-    <meta property="og:site_name" content="[% site_name %]">
-    [% IF c.req.uri.path == '/' %]<meta property="og:description" content="[% loc('Report, view, and discuss local street-related problems.') %]">[% END %]
-    <meta property="og:type" content="website">
-
-    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
-    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
-
-    <link rel="stylesheet" type="text/css" href="[% base_css %]">
-    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
-
-    <!--[if (lt IE 9)]>
-    <script src="[% version('/vendor/html5shiv.js') %]"></script>
-    <![endif]-->
-    <script nonce="[% csp_nonce %]">
-        (function(d,e,k){function m(b,n,a,l){var f=e.createElement("div");var c=e.body;c||(c=e.createElement("body"),c.fake=!0);if(parseInt(a,10))for(;a--;){var d=e.createElement("div");d.id=l?l[a]:"modernizr"+(a+1);f.appendChild(d)}a=e.createElement("style");a.type="text/css";a.id="smodernizr";(c.fake?c:f).appendChild(a);c.appendChild(f);a.styleSheet?a.styleSheet.cssText=b:a.appendChild(e.createTextNode(b));f.id="modernizr";if(c.fake){c.style.background="";c.style.overflow="hidden";var g=h.style.overflow;
-        h.style.overflow="hidden";h.appendChild(c)}b=n(f,b);c.fake?(c.parentNode.removeChild(c),h.style.overflow=g,h.offsetHeight):f.parentNode.removeChild(f);return!!b}k={_version:"3.11.4"};var g=function(){};g.prototype=k;g=new g;var h=e.documentElement,p=function(){var b=d.matchMedia||d.msMatchMedia;return b?function(d){return(d=b(d))&&d.matches||!1}:function(b){var a=!1;m("@media "+b+" { #modernizr { position: absolute; } }",function(b){a="absolute"===("getComputedStyle"in d?getComputedStyle(b):b.currentStyle).position});
-        return a}}();k.mq=p;d.Modernizr=g})(window,document);
-            var fixmystreet=fixmystreet||{};fixmystreet.page="[% page %]";fixmystreet.cobrand="[% c.cobrand.moniker %]";
-            (function(a){a=a.documentElement;a.className=a.className.replace(/\bno-js\b/,"js");var b=Modernizr.mq("(min-width: 48em)")?"desktop":"mobile";"IntersectionObserver"in window&&(a.className+=" lazyload");"mobile"==b&&(a.className+=' mobile[% " map-fullscreen only-map map-reporting" IF page == "around" || page == "new" %]')})(document);
-        </script>
-        
-        <script nonce="[% csp_nonce %]">
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js');
-            });
-        }
-        </script>
-        
-        [% IF robots %]
-            <meta name="robots" content="[% robots %]">
-        [% ELSIF c.config.STAGING_SITE %]
-            <meta name="robots" content="noindex,nofollow">
-        [% END %]
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>
-        [% tprintf('%s :: ', title) IF title %]
-        [% site_name -%]
-    </title>
-
-    [% IF bodyclass.match('frontpage') %]
-        <link rel="prefetch" href="[% version('/js/validation_rules.js') %]">
-    [%~ IF NOT c.user_exists OR NOT (c.user.from_body OR c.user.is_superuser) %]
-        <link rel="prefetch" href="[% version('/vendor/jquery-2.2.4.min.js') %]">
-    [%~ END %]
-        <link rel="prefetch" href="[% version('/vendor/jquery.multi-select.min.js') %]">
-        <link rel="prefetch" href="[% version('/vendor/jquery.validate.min.js') %]">
-        <link rel="prefetch" href="[% version('/cobrands/fixmystreet/fixmystreet.js') %]">
-    [% END %]
-    [% IF NOT bodyclass.match('mappage') %]
-        [% FOR script IN map_js.merge(c.cobrand.call_hook('map_js_extra')) %]
-            <link rel="prefetch" href="[% IF script.match('^/'); version(script); ELSE; script; END %]">
-        [% END %]
-        <link rel="prefetch" href="[% version('/cobrands/fixmystreet/map.js') %]">
-        <link rel="prefetch" href="[% version('/vendor/dropzone.min.js') %]">
-        <link rel="prefetch" href="[% version('/vendor/fancybox/jquery.fancybox-1.3.4.pack.js') %]">
-    [% END %]           
-</head>
-<body>
-    <header class="header">
-        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="logo">
-            <picture>
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-                <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+<main>
+    <section class="central-content">
+        <div class="mobile-hero-images">
+            <picture class="hero-image">
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-left.svg">
+                <img src="#" alt="">
             </picture>
-        </a>
-        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
-        <nav class="menu visually-hidden" id="menu-container">
-            [% BLOCK navitem ~%]
-                <li [% liattrs | safe %]>
-                    [%~ IF c.req.uri.path == uri AND NOT always_url ~%]
-                        <span [% attrs | safe %]>[% label %]</span>
-                    [%~ ELSE ~%]
-                        <a href="[% uri %][% suffix IF suffix %]" [% attrs | safe %]>[% label %]</a>
-                    [%~ END ~%]
-                </li>
-            [%~ END %]
-            <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
+            <picture class="hero-image">
+                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-right.svg">
+                <img src="#" alt="">
+            </picture>
+        </div>
 
-                [%~ IF c.user_exists ~%]
-                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
-                [%~ ELSE ~%]
-                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
-                [%~ END ~%]
+        [% INCLUDE 'around/postcode_form.html' %]
 
-            </ul>
-            <form class="button-link">
-                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
-            </form>
-        </nav>
-    </header>
-
-    <main>
-        <section class="central-content">
-            <div class="mobile-hero-images">
-                <picture class="hero-image">
-                    <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-left.svg">
-                    <img src="#" alt="">
-                </picture>
-                <picture class="hero-image">
-                    <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-right.svg">
-                    <img src="#" alt="">
-                </picture>
-            </div>
-
-            [% INCLUDE 'around/postcode_form.html' %]
-
-            <div class="container">
-                <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
-                            
-                    [% IF error %]
-                        <p class="form-error main-page-form-err">[% error %]</p>
-                    [% END %]
-    
-                </div>
-            </div>
-
-        </section>             
-        <section class="report-steps-section">
-            <h1 class="report-title">[% loc('How to report a problem') %]</h1>
-            <ol class="report-steps">
-                <li class="report-step" aria-label="upisi ulicu" tabindex="0">[% loc('Enter a nearby street name and area') %]</li>
-                <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">[% loc('Locate the problem on a map of the area') %]</li>
-                <li class="report-step" aria-label="opisi problem" tabindex="0">[% loc('Enter details of the problem') %]</li>
-                <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">[% loc('We send it to the council on your behalf') %]</li>
-            </ol>
-        </section>
-        <section class="report-steps-section report-steps-section-two">
-            <h1 class="report-title">[% loc('Problems in total') %]</h1>
-
-            [% USE Number.Format %]
-
-            [%
-                stats = c.cobrand.front_stats_data();
-
-                new_text =
-                    stats.recency == '1 week'
-                    ? nget(
-                        "<big>%s</big> report in past week",
-                        "<big>%s</big> reports in past week",
-                        stats.new
-                    )
-                    : nget(
-                        "<big>%s</big> report recently",
-                        "<big>%s</big> reports recently",
-                        stats.new
-                    );
-                
-            IF stats.completed.defined;
-                completed_text = nget(
-                    "<big>%s</big> completed in past month",
-                    "<big>%s</big> completed in past month",
-                    stats.completed
-                );
-                completed_n = stats.completed | format_number;
-            END;
-
-            IF stats.fixed.defined;
-                fixed_text = nget(
-                    "<big>%s</big> fixed in past month",
-                    "<big>%s</big> fixed in past month",
-                    stats.fixed
-                );
-                fixed_n = stats.fixed | format_number;
-            END;
-                
-                updates_text = nget(
-                    "<big>%s</big> update on reports",
-                    "<big>%s</big> updates on reports",
-                    stats.updates
-                );
-
-                new_n = stats.new | format_number;
-                updates_n = stats.updates | format_number;
-            %]
-
-            <ul class="report-statistics">
-                <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
-                </li>
-                <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>[% loc('UPDATED') %]</p>
-                </li>
-                [% IF fixed_text %]
-                    <li class="report-stat-item">
-                        <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
-                        <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>[% loc('FIXED') %]</p>
-                    </li>
+        <div class="container">
+            <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
+                        
+                [% IF error %]
+                    <p class="form-error main-page-form-err">[% error %]</p>
                 [% END %]
-            </ul>
-        </section>
-    </main>
 
-    <footer class="footer">
-        <div class="footer-desc">
-            <picture class="popravi-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="[% site_name %]">
-            </picture>
-            <p class="footer-text footer-text-long-desc">
-                Popravi.to je online alat napravljen u svrhu poboljšanja javnih politika i inkluzivnom odlučivanju, 
-                te kako bi građanima pružio mehanizme za prijavu problema lokalnoj administraciji te nadzoru 
-                njihovog rješavanja u svojoj sredini.
-            </p>
-            <form class="button-link-footer">
-                <button formaction="/_report" class="button report-issue-button-footer" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
-            </form>
+            </div>
         </div>
+
+    </section>             
+    <section class="report-steps-section">
+        <h1 class="report-title">[% loc('How to report a problem') %]</h1>
+        <ol class="report-steps">
+            <li class="report-step" aria-label="upisi ulicu" tabindex="0">[% loc('Enter a nearby street name and area') %]</li>
+            <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">[% loc('Locate the problem on a map of the area') %]</li>
+            <li class="report-step" aria-label="opisi problem" tabindex="0">[% loc('Enter details of the problem') %]</li>
+            <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">[% loc('We send it to the council on your behalf') %]</li>
+        </ol>
+    </section>
+    <section class="report-steps-section report-steps-section-two">
+        <h1 class="report-title">[% loc('Problems in total') %]</h1>
+
+        [% USE Number.Format %]
+
+        [%
+            stats = c.cobrand.front_stats_data();
+
+            new_text =
+                stats.recency == '1 week'
+                ? nget(
+                    "<big>%s</big> report in past week",
+                    "<big>%s</big> reports in past week",
+                    stats.new
+                )
+                : nget(
+                    "<big>%s</big> report recently",
+                    "<big>%s</big> reports recently",
+                    stats.new
+                );
+            
+        IF stats.completed.defined;
+            completed_text = nget(
+                "<big>%s</big> completed in past month",
+                "<big>%s</big> completed in past month",
+                stats.completed
+            );
+            completed_n = stats.completed | format_number;
+        END;
+
+        IF stats.fixed.defined;
+            fixed_text = nget(
+                "<big>%s</big> fixed in past month",
+                "<big>%s</big> fixed in past month",
+                stats.fixed
+            );
+            fixed_n = stats.fixed | format_number;
+        END;
+            
+            updates_text = nget(
+                "<big>%s</big> update on reports",
+                "<big>%s</big> updates on reports",
+                stats.updates
+            );
+
+            new_n = stats.new | format_number;
+            updates_n = stats.updates | format_number;
+        %]
+
+        <ul class="report-statistics">
+            <li class="report-stat-item">
+                <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
+                <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
+            </li>
+            <li class="report-stat-item">
+                <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
+                <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>[% loc('UPDATED') %]</p>
+            </li>
+            [% IF fixed_text %]
+                <li class="report-stat-item">
+                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
+                    <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>[% loc('FIXED') %]</p>
+                </li>
+            [% END %]
+        </ul>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-desc">
+        <picture class="popravi-logo">
+            <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg">
+            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-white.svg" alt="[% site_name %]">
+        </picture>
+        <p class="footer-text footer-text-long-desc">
+            Popravi.to je online alat napravljen u svrhu poboljšanja javnih politika i inkluzivnom odlučivanju, 
+            te kako bi građanima pružio mehanizme za prijavu problema lokalnoj administraciji te nadzoru 
+            njihovog rješavanja u svojoj sredini.
+        </p>
+        <form class="button-link-footer">
+            <button formaction="/_report" class="button report-issue-button-footer" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
+        </form>
+    </div>
+    <nav>
+        <ul class="menu-list-footer [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
+            <li class="menu-item menu-item-footer"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
+            <li class="menu-item menu-item-footer"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
+            <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
+
+            [%~ IF c.user_exists ~%]
+                <li class="menu-item menu-item-footer"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
+            [%~ ELSE ~%]
+                <li class="menu-item menu-item-footer"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
+            [%~ END ~%]
+
+        </ul>
+    </nav>
+    <div class="poweredby">
+        <p class="footer-text">[% loc('Powered by') %]</p>
+        <picture class="fixmystreet-logo">
+            <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg">
+            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg" alt="FixMyStreet logo">
+        </picture> 
+        <p class="footer-text">[% loc('With love') %]</p>
+        <picture class="fixmystreet-logo">
+            <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
+            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
+        </picture> 
+    </div>
+    <div>
+        <p class="footer-text footer-socials">[% loc('Find us on') %]</p>
         <nav>
-            <ul class="menu-list-footer [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item menu-item-footer"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                <li class="menu-item menu-item-footer"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                <li class="menu-item menu-item-footer"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
-    
-                [%~ IF c.user_exists ~%]
-                    <li class="menu-item menu-item-footer"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
-                [%~ ELSE ~%]
-                    <li class="menu-item menu-item-footer"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
-                [%~ END ~%]
-    
+            <ul class="socials">
+                <li class="footer-social-item"><a href="https://github.com/codeforcroatia" tabindex="0" aria-label="GitHub"><span class="github-link"></span></a></li>
+                <li class="footer-social-item"><a href="https://twitter.com/PopraviTo" tabindex="0" aria-label="Twitter"><span class="twitter-link"></span></a></li>
+                <li class="footer-social-item"><a href="https://www.facebook.com/Popravi.to" tabindex="0" aria-label="Facebook"><span class="facebook-link"></span></a></li>
             </ul>
         </nav>
-        <div class="poweredby">
-            <p class="footer-text">[% loc('Powered by') %]</p>
-            <picture class="fixmystreet-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fixmystreetlogo.svg" alt="FixMyStreet logo">
-            </picture> 
-            <p class="footer-text">[% loc('With love') %]</p>
-            <picture class="fixmystreet-logo">
-                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/logo-codeforcroatia@2x-9665f208026f97e9dc0515e26d50d29ee4d6213ebca2316c73768864b862c72a.svg" alt="Code for Croatia logo">
-            </picture> 
-        </div>
-        <div>
-            <p class="footer-text footer-socials">[% loc('Find us on') %]</p>
-            <nav>
-                <ul class="socials">
-                    <li class="footer-social-item"><a href="https://github.com/codeforcroatia" tabindex="0" aria-label="GitHub"><span class="github-link"></span></a></li>
-                    <li class="footer-social-item"><a href="https://twitter.com/PopraviTo" tabindex="0" aria-label="Twitter"><span class="twitter-link"></span></a></li>
-                    <li class="footer-social-item"><a href="https://www.facebook.com/Popravi.to" tabindex="0" aria-label="Facebook"><span class="facebook-link"></span></a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
-  
-    [% INCLUDE 'common_footer_tags.html' %]
+<script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
+
+[% INCLUDE 'common_footer_tags.html' %]
 </body>
 </html>
 
