@@ -33,62 +33,13 @@
     SET bodyclass = 'mappage';
     SET rss = [ tprintf(loc('Recent local problems, %s', "%s is the site name"), site_name), rss_url ];
     SET extra_js = [];
+    INCLUDE 'header.html',
+        title  => loc('Viewing a location')
+        robots => 'noindex,nofollow';
     allow_creation = !c.cobrand.only_authed_can_create || (c.user && c.user.from_body);
 %]
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
-    [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
 
-    <link rel="stylesheet" type="text/css" href="[% base_css %]">
-    <link rel="stylesheet" type="text/css" href="[% layout_css %]" media="screen and (min-width:48.063em)">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-    <title>[% loc('Viewing a location') %]</title>
-</head>
-<body>
-    <header class="header">
-        <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="logo">
-            <picture>
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-                <source media="(min-width: 769px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-horizontal.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
-            </picture>
-        </a>
-        <button class="mobile-menu-button" tabindex="0" aria-label="mobile menu" id="mobile-menu"></button>
-        <nav class="menu visually-hidden" id="menu-container">
-            [% BLOCK navitem ~%]
-                <li [% liattrs | safe %]>
-                    [%~ IF c.req.uri.path == uri AND NOT always_url ~%]
-                        <span [% attrs | safe %]>[% label %]</span>
-                    [%~ ELSE ~%]
-                        <a href="[% uri %][% suffix IF suffix %]" [% attrs | safe %]>[% label %]</a>
-                    [%~ END ~%]
-                </li>
-            [%~ END %]
-            <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
-
-                [%~ IF c.user_exists ~%]
-                    <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
-                [%~ ELSE ~%]
-                    <li class="menu-item"><a href="/auth" tabindex="0" aria-label="sign in">[%- loc('Sign in') -%]</a></li>
-                [%~ END ~%]
-            </ul>
-            <form class="button-link">
-                <button formaction="/_report" class="button report-issue-button" tabindex="0" aria-label="report problem">[%- loc('Report a problem') -%]</button>
-            </form>
-        </nav>
-    </header>
     <main>
         [% IF allow_creation %]
 
