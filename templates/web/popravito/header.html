@@ -121,22 +121,9 @@
             [%~ END %]
             <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
                 <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                
-                [%~
-                    IF pc;
-                        pc_uri = pc | uri;
-                        pc_suffix = "/list?pc=" _ pc_uri;
-                    END;
-
-                    <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
-                ~%]
-
+                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
                 <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
 
-                [%~ UNLESS hide_privacy_link ~%]
-                    [%~ INCLUDE navitem uri=c.cobrand.privacy_policy_url label=loc('Privacy') liattrs='class="nav-menu__item--privacy"' ~%]
-                [%~ END ~%]
-                
                 [%~ IF c.user_exists ~%]
                     <li class="menu-item"><a href="/my" tabindex="0" aria-label="my profile">[%- loc('Your account') -%]</a></li>
                 [%~ ELSE ~%]
