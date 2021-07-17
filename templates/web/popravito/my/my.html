@@ -5,79 +5,65 @@
     INCLUDE 'header.html', title = loc('Your Reports')
 %]
 
-    <main>
-        <div class="central-section-two-col">
-            <div class="two-col-left">
-                <div class="my-info-container">
-                    <h1 class="page-subtitle">[% loc('Your account') %] <span class="arrow-down"></span></h1>
-                    [% IF flash_message %]
-                        <p class="form-success">[% flash_message %]</p>
-                    [% END %]
-                </div>   
-                <form method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
-                    <input type="hidden" name="token" value="[% csrf_token %]">
-                <ul>
-                <li>[% loc('Name:') %] [% c.user.name %]
-                <li>[% loc('Email:') %] [% c.user.email OR '-' %]
-                    <p class="my-account-buttons my-account-buttons--email">
-                      [% IF NOT c.user.email %]
-                        <a href="/auth/change_email">[% loc('Add') %]</a>
-                      [% ELSIF c.user.email_verified %]
-                        <a href="/auth/change_email">[% loc('Change') %]</a>
-                      [% ELSE %]
-                        <a href="/auth/verify/email">[% loc('Verify') %]</a>
-                        <a href="/auth/change_email">[% loc('Change') %]</a>
-                      [% END %]
-                    </p>
-                <li>[% loc('Phone:') %] [% c.user.phone_display OR '-' %]
-                    <p class="my-account-buttons">
-                      [% IF NOT c.user.phone %]
-                        <a href="/auth/change_phone">[% loc('Add') %]</a>
-                      [% ELSIF c.user.phone_verified %]
-                        <a href="/auth/change_phone">[% loc('Change') %]</a>
-                      [% ELSE %]
-                       [% IF c.cobrand.sms_authentication %]
-                        <a href="/auth/verify/phone">[% loc('Verify') %]</a>
-                       [% END %]
-                        <a href="/auth/change_phone">[% loc('Change') %]</a>
-                      [% END %]
-                    </p>
-                [% current_pref = c.user.get_extra_metadata('update_notify') %]
-                <li>[% loc('Receive update notifications by') %]:
-                    <p class="segmented-control segmented-control--radio">
-                      [% IF c.user.email_verified %]
-                        <input type="radio" name="update_notify" id="update_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
-                        <label class="btn" for="update_notify_email">[% loc('Email') %]</label>
-                      [% END %]
-                      [% IF c.user.phone_verified AND c.cobrand.sms_authentication %]
-                        <input type="radio" name="update_notify" id="update_notify_phone" value="phone"[% ' checked' IF current_pref == 'phone' %]>
-                        <label class="btn" for="update_notify_phone">[% loc('Phone') %]</label>
-                      [% END %]
-                        <input type="radio" name="update_notify" id="update_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
-                        <label class="btn" for="update_notify_none">[% loc('None') %]</label>
-                    </p>
-                </li>
-                [% current_pref = c.user.get_extra_metadata('alert_notify') %]
-                <li>[% loc('Receive alert notifications by') %]:
-                    <p class="segmented-control segmented-control--radio">
-                      [% IF c.user.email_verified %]
-                        <input type="radio" name="alert_notify" id="alert_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
-                        <label class="btn" for="alert_notify_email">[% loc('Email') %]</label>
-                      [% END %]
-                        <input type="radio" name="alert_notify" id="alert_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
-                        <label class="btn" for="alert_notify_none">[% loc('None') %]</label>
-                    </p>
-                    <p>
-                        <input class="btn btn--block" type="submit" value="[% loc('Update') %]">
-                    </p>
-                </li>
-                </ul>
-                </form>
-                <hr class="page-divider">
-                <button class="logout-profile-button" tabindex="0" aria-label="logout"></button>
-            </div>
-        </div>
-    </main>
+<form method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
+    <input type="hidden" name="token" value="[% csrf_token %]">
+<ul>
+<li>[% loc('Name:') %] [% c.user.name %]
+<li>[% loc('Email:') %] [% c.user.email OR '-' %]
+    <p class="my-account-buttons my-account-buttons--email">
+      [% IF NOT c.user.email %]
+        <a href="/auth/change_email">[% loc('Add') %]</a>
+      [% ELSIF c.user.email_verified %]
+        <a href="/auth/change_email">[% loc('Change') %]</a>
+      [% ELSE %]
+        <a href="/auth/verify/email">[% loc('Verify') %]</a>
+        <a href="/auth/change_email">[% loc('Change') %]</a>
+      [% END %]
+    </p>
+<li>[% loc('Phone:') %] [% c.user.phone_display OR '-' %]
+    <p class="my-account-buttons">
+      [% IF NOT c.user.phone %]
+        <a href="/auth/change_phone">[% loc('Add') %]</a>
+      [% ELSIF c.user.phone_verified %]
+        <a href="/auth/change_phone">[% loc('Change') %]</a>
+      [% ELSE %]
+       [% IF c.cobrand.sms_authentication %]
+        <a href="/auth/verify/phone">[% loc('Verify') %]</a>
+       [% END %]
+        <a href="/auth/change_phone">[% loc('Change') %]</a>
+      [% END %]
+    </p>
+[% current_pref = c.user.get_extra_metadata('update_notify') %]
+<li>[% loc('Receive update notifications by') %]:
+    <p class="segmented-control segmented-control--radio">
+      [% IF c.user.email_verified %]
+        <input type="radio" name="update_notify" id="update_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
+        <label class="btn" for="update_notify_email">[% loc('Email') %]</label>
+      [% END %]
+      [% IF c.user.phone_verified AND c.cobrand.sms_authentication %]
+        <input type="radio" name="update_notify" id="update_notify_phone" value="phone"[% ' checked' IF current_pref == 'phone' %]>
+        <label class="btn" for="update_notify_phone">[% loc('Phone') %]</label>
+      [% END %]
+        <input type="radio" name="update_notify" id="update_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
+        <label class="btn" for="update_notify_none">[% loc('None') %]</label>
+    </p>
+</li>
+[% current_pref = c.user.get_extra_metadata('alert_notify') %]
+<li>[% loc('Receive alert notifications by') %]:
+    <p class="segmented-control segmented-control--radio">
+      [% IF c.user.email_verified %]
+        <input type="radio" name="alert_notify" id="alert_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
+        <label class="btn" for="alert_notify_email">[% loc('Email') %]</label>
+      [% END %]
+        <input type="radio" name="alert_notify" id="alert_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
+        <label class="btn" for="alert_notify_none">[% loc('None') %]</label>
+    </p>
+    <p>
+        <input class="btn btn--block" type="submit" value="[% loc('Update') %]">
+    </p>
+</li>
+</ul>
+</form>
 
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 </body>
