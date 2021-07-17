@@ -12,27 +12,26 @@
                     <h1 class="page-subtitle">[% loc('Your account') %] <span class="arrow-down"></span></h1>
                     [% IF flash_message %]
                         <p class="form-success">[% flash_message %]</p>
-                    [% END %]   
+                    [% END %]
+                </div>      
+                <p class="report-details-small">Ime i prezime</p>
+                <div class="info-item">   
+                    <p class="page-text-left-aligned text-bold">Ivana Horvat</p>
+                    <button class="edit-button" tabindex="0" aria-label="edit"></button>
                 </div>
-                <form class="notifications-form" method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
-                    <input type="hidden" name="token" value="[% csrf_token %]">
-                    <p class="report-details-small">[% loc('Name:') %]</p>
-                    <div class="info-item">   
-                        <p class="page-text-left-aligned text-bold">[% c.user.name %]</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
-                    </div>
-                    <p class="report-details-small">[% loc('Email:') %]</p>
-                    <div class="info-item">
-                        <p class="page-text-left-aligned text-bold">[% c.user.email %]</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
-                    </div>
-                    <p class="report-details-small">Telefon</p>
-                    <div class="info-item">
-                        <p class="page-text-left-aligned text-bold">-</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
-                    </div>                
-                    <a class="misc-link" href="" tabindex="0" aria-label="change password">Promjeni lozinku</a>
-                    <hr class="page-divider">
+                <p class="report-details-small">Email</p>
+                <div class="info-item">
+                    <p class="page-text-left-aligned text-bold">ivana.horvat@email.com</p>
+                    <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                </div>
+                <p class="report-details-small">Telefon</p>
+                <div class="info-item">
+                    <p class="page-text-left-aligned text-bold">-</p>
+                    <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                </div>                
+                <a class="misc-link" href="" tabindex="0" aria-label="change password">Promjeni lozinku</a>
+                <hr class="page-divider">
+                <form class="notifications-form">
                     <div class="notifs-div">
                         <label for="email-notifs" class="notifs-type-label">Primaj obavijesti putem emaila</label>
                     <input type="checkbox" name="email-notifs" value="email-notifs" id="email-notifs" tabindex="0" aria-label="email notifications">
