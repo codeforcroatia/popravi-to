@@ -1,0 +1,49 @@
+[%
+    SET bodyclass = 'mappage';
+    PROCESS "report/photo-js.html";
+    PROCESS "maps/${map.type}.html" IF problems.size;
+    INCLUDE 'header.html', title = loc('Your Reports')
+%]
+
+    <main>
+        <div class="central-section-two-col">
+            <div class="two-col-left">
+                <div class="my-info-container">
+                    <h1 class="page-subtitle">[% loc('Your account') %] <span class="arrow-down"></span></h1>
+                </div>                
+                <p class="report-details-small">Ime i prezime</p>
+                <div class="info-item">   
+                    <p class="page-text-left-aligned text-bold">Ivana Horvat</p>
+                    <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                </div>
+                <p class="report-details-small">Email</p>
+                <div class="info-item">
+                    <p class="page-text-left-aligned text-bold">ivana.horvat@email.com</p>
+                    <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                </div>
+                <p class="report-details-small">Telefon</p>
+                <div class="info-item">
+                    <p class="page-text-left-aligned text-bold">-</p>
+                    <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                </div>                
+                <a class="misc-link" href="" tabindex="0" aria-label="change password">Promjeni lozinku</a>
+                <hr class="page-divider">
+                <form class="notifications-form">
+                    <div class="notifs-div">
+                        <label for="email-notifs" class="notifs-type-label">Primaj obavijesti putem emaila</label>
+                    <input type="checkbox" name="email-notifs" value="email-notifs" id="email-notifs" tabindex="0" aria-label="email notifications">
+                    </div>
+                    <div class="notifs-div">
+                        <label for="alert-notifs" class="notifs-type-label">Receive alert notifications</label>
+                        <input type="checkbox" name="alert-notifs" value="alert-notifs" id="alert-notifs" tabindex="0" aria-label="alert-notifs">
+                    </div>
+                </form>
+                <hr class="page-divider">
+                <button class="logout-profile-button" tabindex="0" aria-label="logout"></button>
+            </div>
+        </div>
+    </main>
+
+    <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
+</body>
+</html>
