@@ -19,7 +19,6 @@
                     <p class="report-details-small">[% loc('Name:') %]</p>
                     <div class="info-item">   
                         <p class="page-text-left-aligned text-bold">[% c.user.name %]</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
                     </div>
                     <p class="report-details-small">[% loc('Email:') %]</p>
                     <div class="info-item">
@@ -35,13 +34,25 @@
                                 <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_email'" type="button"></button>
                             [% END %]
                             </div>
-                        </p>
-                        
+                        </p>                       
                     </div>
-                    <p class="report-details-small">Telefon</p>
+                    <p class="report-details-small">[% loc('Phone:') %]</p>
                     <div class="info-item">
-                        <p class="page-text-left-aligned text-bold">-</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                        <p class="page-text-left-aligned text-bold">
+                            [% c.user.phone_display OR '-' %]
+                            <div>
+                                [% IF NOT c.user.phone %]
+                                <a href="/auth/change_phone">[% loc('Add') %]</a>
+                                [% ELSIF c.user.phone_verified %]
+                                <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
+                                [% ELSE %]
+                                [% IF c.cobrand.sms_authentication %]
+                                    <a href="/auth/verify/phone">[% loc('Verify') %]</a>
+                                [% END %]
+                                <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
+                                [% END %]
+                            </div>
+                        </p>                      
                     </div>                
                     <a class="misc-link" href="" tabindex="0" aria-label="change password">Promjeni lozinku</a>
                     <hr class="page-divider">
