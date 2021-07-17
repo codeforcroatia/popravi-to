@@ -16,15 +16,27 @@
                 </div>
                 <form class="notifications-form" method="post">
                     <input type="hidden" name="token" value="[% csrf_token %]">
-                    <p class="report-details-small">Ime i prezime</p>
+                    <p class="report-details-small">[% loc('Name:') %]</p>
                     <div class="info-item">   
-                        <p class="page-text-left-aligned text-bold">Ivana Horvat</p>
+                        <p class="page-text-left-aligned text-bold">[% c.user.name %]</p>
                         <button class="edit-button" tabindex="0" aria-label="edit"></button>
                     </div>
-                    <p class="report-details-small">Email</p>
+                    <p class="report-details-small">[% loc('Email:') %]</p>
                     <div class="info-item">
-                        <p class="page-text-left-aligned text-bold">ivana.horvat@email.com</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
+                        <p class="page-text-left-aligned text-bold">
+                            [% c.user.email OR '-' %]
+                            <div>
+                            [% IF NOT c.user.email %]
+                                <a href="/auth/change_email">[% loc('Add') %]</a>
+                            [% ELSIF c.user.email_verified %]
+                            <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_email'" type="button"></button>
+                            [% ELSE %]
+                                <a href="/auth/verify/email">[% loc('Verify') %]</a>
+                                <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_email'" type="button"></button>
+                            [% END %]
+                            </div>
+                        </p>
+                        
                     </div>
                     <p class="report-details-small">Telefon</p>
                     <div class="info-item">
