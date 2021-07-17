@@ -16,31 +16,7 @@
                 </div>   
                 <form class="notifications-form" method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
                     <input type="hidden" name="token" value="[% csrf_token %]">
-                    <p class="report-details-small">Ime i prezime</p>
-                    <div class="info-item">   
-                        <p class="page-text-left-aligned text-bold">Ivana Horvat</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
-                    </div>
-                    <p class="report-details-small">Email</p>
-                    <div class="info-item">
-                        <p class="page-text-left-aligned text-bold">ivana.horvat@email.com</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
-                    </div>
-                    <p class="report-details-small">Telefon</p>
-                    <div class="info-item">
-                        <p class="page-text-left-aligned text-bold">-</p>
-                        <button class="edit-button" tabindex="0" aria-label="edit"></button>
-                    </div>                
-                    <a class="misc-link" href="" tabindex="0" aria-label="change password">Promjeni lozinku</a>
-                    <hr class="page-divider">
-                    <div class="notifs-div">
-                        <label for="email-notifs" class="notifs-type-label">Primaj obavijesti putem emaila</label>
-                    <input type="checkbox" name="email-notifs" value="email-notifs" id="email-notifs" tabindex="0" aria-label="email notifications">
-                    </div>
-                    <div class="notifs-div">
-                        <label for="alert-notifs" class="notifs-type-label">Receive alert notifications</label>
-                        <input type="checkbox" name="alert-notifs" value="alert-notifs" id="alert-notifs" tabindex="0" aria-label="alert-notifs">
-                    </div>
+                    
                 </form>
                 <hr class="page-divider">
                 <button class="logout-profile-button" tabindex="0" aria-label="logout"></button>
