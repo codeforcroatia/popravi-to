@@ -5,6 +5,16 @@
     INCLUDE 'header.html', title = loc('Your Reports')
 %]
 
+[% IF problems.size %]
+    [% map_html | safe %]
+    </div>
+    <div id="map_sidebar">
+        <div id="side">
+[% ELSE %]
+    <div id="map_sidebar">
+        <div id="skipped-map">
+[% END %]
+
     <main>
         <div class="central-section-two-col">
             <div class="two-col-left">
