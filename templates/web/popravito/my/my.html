@@ -11,7 +11,7 @@
                 <div class="my-info-container">
                     <h1 class="page-subtitle">[% loc('Your account') %] <span class="arrow-down"></span></h1>
                     [% IF flash_message %]
-                    <p class="form-success">[% flash_message %]</p>
+                        <p class="form-success">[% flash_message %]</p>
                     [% END %]   
                 </div>  
                 <p class="report-details-small">[% loc('Name:') %]</p>
@@ -21,18 +21,7 @@
                 </div>
                 <p class="report-details-small">[% loc('Email:') %]</p>
                 <div class="info-item">
-                    <p class="page-text-left-aligned text-bold">[% c.user.email OR '-' %]
-                        <p class="my-account-buttons my-account-buttons--email">
-                          [% IF NOT c.user.email %]
-                            <a href="/auth/change_email">[% loc('Add') %]</a>
-                          [% ELSIF c.user.email_verified %]
-                            <a href="/auth/change_email">[% loc('Change') %]</a>
-                          [% ELSE %]
-                            <a href="/auth/verify/email">[% loc('Verify') %]</a>
-                            <a href="/auth/change_email">[% loc('Change') %]</a>
-                          [% END %]
-                        </p>
-                    </p>
+                    <p class="page-text-left-aligned text-bold">[% c.user.email %]</p>
                     <button class="edit-button" tabindex="0" aria-label="edit"></button>
                 </div>
                 <p class="report-details-small">Telefon</p>
