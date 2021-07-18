@@ -42,18 +42,19 @@
                             [% c.user.phone_display OR '-' %]
                             <div>
                                 [% IF NOT c.user.phone %]
-                                    <a href="/auth/change_phone">[% loc('Add') %]</a>
+                                    <a class="add-verify-link" href="/auth/change_phone">[% loc('Add') %]</a>
                                 [% ELSIF c.user.phone_verified %]
                                 <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
                                 [% ELSE %]
                                 [% IF c.cobrand.sms_authentication %]
-                                    <a href="/auth/verify/phone">[% loc('Verify') %]</a>
+                                    <a class="add-verify-link" href="/auth/verify/phone">[% loc('Verify') %]</a>
                                 [% END %]
                                 <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
                                 [% END %]
                             </div>
                         </p>                      
                     </div>   
+                    
                     [% IF c.session.oauth.change_password_uri %]     
                         <a class="misc-link" href="[% c.session.oauth.change_password_uri | html %]" tabindex="0" aria-label="change password">[% loc('Change password') %]</a>
                     [% ELSE %]
@@ -65,6 +66,11 @@
                     [%~ END ~%]
                         </a>
                     [% END %]
+                    [% IF c.user AND (c.user.from_body OR c.user.is_superuser) %]
+                        <a class="misc-link" href="/auth/generate_token">[% loc('Security') %]</a>
+                    [% END %]
+                        <a class="misc-link" href="/auth/sign_out">[% loc('Sign out') %]</a>
+
                         <hr class="page-divider">
                
                     <div class="notifs-div">
