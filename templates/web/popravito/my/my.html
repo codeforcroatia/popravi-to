@@ -42,7 +42,7 @@
                             [% c.user.phone_display OR '-' %]
                             <div>
                                 [% IF NOT c.user.phone %]
-                                <a href="/auth/change_phone">[% loc('Add') %]</a>
+                                    <a href="/auth/change_phone">[% loc('Add') %]</a>
                                 [% ELSIF c.user.phone_verified %]
                                 <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
                                 [% ELSE %]
