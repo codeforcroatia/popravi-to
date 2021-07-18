@@ -54,7 +54,7 @@
                             </div>
                         </p>                      
                     </div>   
-                    
+
                     [% IF c.session.oauth.change_password_uri %]     
                         <a class="misc-link" href="[% c.session.oauth.change_password_uri | html %]" tabindex="0" aria-label="change password">[% loc('Change password') %]</a>
                     [% ELSE %]
@@ -66,10 +66,6 @@
                     [%~ END ~%]
                         </a>
                     [% END %]
-                    [% IF c.user AND (c.user.from_body OR c.user.is_superuser) %]
-                        <a class="misc-link" href="/auth/generate_token">[% loc('Security') %]</a>
-                    [% END %]
-                        <a class="misc-link" href="/auth/sign_out">[% loc('Sign out') %]</a>
 
                         <hr class="page-divider">
                
@@ -82,8 +78,12 @@
                         <input type="checkbox" name="alert-notifs" value="alert-notifs" id="alert-notifs" tabindex="0" aria-label="alert-notifs">
                     </div>
                 </form>
-                <hr class="page-divider">
-                <button class="logout-profile-button" tabindex="0" aria-label="logout"></button>
+                <hr class="page-divider">   
+
+                [% IF c.user AND (c.user.from_body OR c.user.is_superuser) %]
+                    <a class="misc-link" href="/auth/generate_token">[% loc('Security') %]</a>
+                [% END %]
+                <button class="logout-profile-button" onclick="location.href='/auth/sign_out'" tabindex="0" aria-label="logout">[% loc('Sign out') %]</button>
             </div>
         </div>
     </main>
