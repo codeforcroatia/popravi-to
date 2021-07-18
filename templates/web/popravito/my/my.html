@@ -67,11 +67,15 @@
                         </a>
                     [% END %]
 
-                        <hr class="page-divider">
+                    <hr class="page-divider">
                
+                    [% current_pref = c.user.get_extra_metadata('update_notify') %]
+
                     <div class="notifs-div">
-                        <label for="email-notifs" class="notifs-type-label">Primaj obavijesti putem emaila</label>
-                    <input type="checkbox" name="email-notifs" value="email-notifs" id="email-notifs" tabindex="0" aria-label="email notifications">
+                        [% IF c.user.email_verified %]
+                            <label for="update_notify_email" class="notifs-type-label">[% loc('Receive notifications via email') %]</label>
+                            <input type="checkbox" tabindex="0" aria-label="email notifications" name="update_notify" id="update_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
+                        [% END %]
                     </div>
                     <div class="notifs-div">
                         <label for="alert-notifs" class="notifs-type-label">Receive alert notifications</label>
