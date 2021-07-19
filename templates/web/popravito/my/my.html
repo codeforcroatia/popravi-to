@@ -100,13 +100,34 @@
                         [% IF ! has_content %]
                         <div class="no-reports">
                             <picture class="empty-data-icon">
-                                <source srcset="./images/undraw_No_data_re_kwbl-1.svg">
+                                <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/undraw_No_data_re_kwbl-1.svg">
                                 <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/undraw_No_data_re_kwbl-1.svg" alt="">
                             </picture>
                             <p class="page-text">[% loc('You haven&rsquo;t created any reports yet.') %]</p>
                             <button class="button primary-button" tabindex="0" aria-label="report issue" onclick="location.href='/_report'" type="button">[% loc('Report a problem now') %]</button>
                         </div>
                         [% END %]
+                        <div class="with-reports">
+                            <div class="filters-and-view">
+                                <div class="filters-container">
+                                    <button class="filter-button" tabindex="0" aria-label="filter"><span class="filter-icon"></span>Filtriraj</button>
+                                    <button form="filterForm" type="submit" class="save-and-close-button visually-hidden" tabindex="0" aria-label="close and save"><span>Zatvori i spremi</span><span class="close-icon"></span></button>
+                                    <form class="sort-form">
+                                        <label for="sort" class="page-text-misc">Sortiraj po:</label>
+                                        <select name="sort" id="sort">
+                                        <option value="kategorija">Kategoriji</option>
+                                        <option value="datum">Datumu prijave</option>
+                                        </select>
+                                    </form>
+                                </div>
+                                <div class="view-container">
+                                    <button class="list-view-button" tabindex="0" aria-label="list view"></button>
+                                    <button class="map-view-button" tabindex="0" aria-label="map view"></button>
+                                </div>
+                            </div>
+                            <div class="filtered-content-container">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
