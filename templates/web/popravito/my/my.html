@@ -98,7 +98,7 @@
                     <label class="page-subtitle tab-label" for="tab-one">[% loc('Your reports') %] (<span id="numOfReports"></span>) <span class="arrow-down arrow-down-tab"></span></label>
                     <div class="panel" tabindex="1">
                         [% IF ! has_content %]
-                        <div class="no-reports">
+                        <div class="no-reports visually-hidden"> <!--remember to remove this and put an IF ELSE END-->
                             <picture class="empty-data-icon">
                                 <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/undraw_No_data_re_kwbl-1.svg">
                                 <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/undraw_No_data_re_kwbl-1.svg" alt="">
@@ -106,7 +106,7 @@
                             <p class="page-text">[% loc('You haven&rsquo;t created any reports yet.') %]</p>
                             <button class="button primary-button" tabindex="0" aria-label="report issue" onclick="location.href='/_report'" type="button">[% loc('Report a problem now') %]</button>
                         </div>
-                        [% ELSE %]
+                        [% END %]
                         <div class="with-reports">
                             <div class="filters-and-view">
                                 <div class="filters-container">
@@ -126,10 +126,20 @@
                                 </div>
                             </div>
                             <div class="filtered-content-container">
+                                <div class="filtered">
+                                    <section class="full-width">
+                                        [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
+                                        <div class="js-pagination">
+                                        [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
+                                        </div>
+                                        <div id="js-reports-list">
+                                            [% INCLUDE 'my/_problem-list.html' %]
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    [% END %]
                 </div>
             </div>
         </div>
