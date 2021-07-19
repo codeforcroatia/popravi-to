@@ -106,7 +106,7 @@
                             <p class="page-text">[% loc('You haven&rsquo;t created any reports yet.') %]</p>
                             <button class="button primary-button" tabindex="0" aria-label="report issue" onclick="location.href='/_report'" type="button">[% loc('Report a problem now') %]</button>
                         </div>
-                        [% END %]
+                        [% ELSE %]
                         <div class="with-reports">
                             <div class="filters-and-view">
                                 <div class="filters-container">
@@ -129,6 +129,7 @@
                             </div>
                         </div>
                     </div>
+                    [% END %]
                 </div>
             </div>
         </div>
