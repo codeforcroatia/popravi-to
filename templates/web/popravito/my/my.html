@@ -56,12 +56,12 @@
                     [% IF c.session.oauth.change_password_uri %]     
                         <a class="misc-link change-pass-link" href="[% c.session.oauth.change_password_uri | html %]" tabindex="0" aria-label="change password">[% loc('Change password') %]</a>
                     [% ELSE %]
-                        <a class="misc-link" href="/auth/change_password" tabindex="0" aria-label="change password">
-                    [%~ IF c.user.password ~%]
-                        [% loc('Change password') %]
-                    [%~ ELSE ~%]
-                        [% loc('Set password') %]
-                    [%~ END ~%]
+                        <a class="misc-link change-pass-link" href="/auth/change_password" tabindex="0" aria-label="change password">
+                            [%~ IF c.user.password ~%]
+                                [% loc('Change password') %]
+                            [%~ ELSE ~%]
+                                [% loc('Set password') %]
+                            [%~ END ~%]
                         </a>
                     [% END %]
 
@@ -91,6 +91,24 @@
                     <a class="misc-link" href="/auth/generate_token">[% loc('Security') %]</a>
                 [% END %]
                 <button class="button logout-button" onclick="location.href='/auth/sign_out'" tabindex="0" aria-label="logout"><span class="logout-profile-button"></span>[% loc('Sign out') %]</button>
+            </div>
+            <div class="two-col-right">
+                <div class="tabs">
+                    <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-one" checked="checked">
+                    <label class="page-subtitle tab-label" for="tab-one">[% loc('Your reports') %](<span id="numOfReports"></span>) <span class="arrow-down arrow-down-tab"></span></label>
+                    <div class="panel" tabindex="1">
+                        [% IF ! has_content %]
+                        <div class="no-reports visually-hidden">
+                            <picture class="empty-data-icon">
+                                <source srcset="./images/undraw_No_data_re_kwbl-1.svg">
+                                <img src="./images/undraw_No_data_re_kwbl-1.svg" alt="">
+                            </picture>
+                            <p class="page-text">[% loc('You haven&rsquo;t created any reports yet.') %]</p>
+                            <button class="button primary-button" tabindex="0" aria-label="report issue">[% loc('Report a problem now') %]</button>
+                        </div>
+                        [% END %]
+                    </div>
+                </div>
             </div>
         </div>
     </main>
