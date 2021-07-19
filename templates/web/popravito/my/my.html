@@ -92,7 +92,7 @@
                 [% IF c.user AND (c.user.from_body OR c.user.is_superuser) %]
                     <a class="misc-link" href="/auth/generate_token">[% loc('Security') %]</a>
                 [% END %]
-                <button class="logout-profile-button" onclick="location.href='/auth/sign_out'" tabindex="0" aria-label="logout"></button>
+                <button onclick="location.href='/auth/sign_out'" tabindex="0" aria-label="logout"><span class="logout-profile-button"></span>[% loc('Sign out') %]</button>
             </div>
         </div>
     </main>
