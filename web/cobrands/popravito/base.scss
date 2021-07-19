@@ -1178,6 +1178,11 @@ label[for="message"]{
     margin-top: 1.5rem;
 }
 
+.filter-and-sort-form {
+    display: flex;
+    justify-content: space-between;
+}
+
 .fix-icon {
     background: url('/cobrands/popravito/images/fix.svg') no-repeat center;
     display: block;
