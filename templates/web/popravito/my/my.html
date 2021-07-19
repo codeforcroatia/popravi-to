@@ -85,12 +85,6 @@
                             <label for="alert_notify_email" class="notifs-type-label">Receive alert notifications</label>
                             <input type="checkbox" tabindex="0" aria-label="alert-notifs" name="alert_notify" id="alert_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
                         [% END %]
-                        [% IF c.user.phone_verified AND c.cobrand.sms_authentication %]
-                            <input type="checkbox" name="update_notify" id="update_notify_phone" value="phone"[% ' checked' IF current_pref == 'phone' %]>
-                            <label class="notifs-type-label" for="update_notify_phone">[% loc('Phone') %]</label>
-                        [% END %]
-                            <input type="checkbox" name="update_notify" id="update_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
-                            <label class="notifs-type-label" for="update_notify_none">[% loc('None') %]</label>
                     </div>
                 </form>
                 <hr class="page-divider">   
