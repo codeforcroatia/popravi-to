@@ -109,33 +109,16 @@
                         [% END %]
                         <div class="with-reports">
                             <div class="filters-and-view">
-                                <div class="filters-container">
-                                    <button class="filter-button" tabindex="0" aria-label="filter"><span class="filter-icon"></span>Filtriraj</button>
-                                    <button form="filterForm" type="submit" class="save-and-close-button visually-hidden" tabindex="0" aria-label="close and save"><span>Zatvori i spremi</span><span class="close-icon"></span></button>
-                                    <form class="sort-form">
-                                        <label for="sort" class="page-text-misc">Sortiraj po:</label>
-                                        <select name="sort" id="sort">
-                                        <option value="kategorija">Kategoriji</option>
-                                        <option value="datum">Datumu prijave</option>
-                                        </select>
-                                    </form>
-                                </div>
-                                <div class="view-container">
-                                    <button class="list-view-button" tabindex="0" aria-label="list view"></button>
-                                    <button class="map-view-button" tabindex="0" aria-label="map view"></button>
-                                </div>
+                                [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
                             </div>
                             <div class="filtered-content-container">
                                 <div class="filtered">
-                                    <section class="full-width">
-                                        [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
-                                        <div class="js-pagination">
+                                    <div class="js-pagination">
                                         [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
-                                        </div>
-                                        <div id="js-reports-list">
-                                            [% INCLUDE 'my/_problem-list.html' %]
-                                        </div>
-                                    </section>
+                                    </div>
+                                    <div id="js-reports-list">
+                                        [% INCLUDE 'my/_problem-list.html' %]
+                                    </div>
                                 </div>
                             </div>
                         </div>
