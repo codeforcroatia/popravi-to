@@ -960,15 +960,21 @@ label[for="message"]{
     align-self: center;
     float: right;
 }
+.logout-button {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    margin: 0.5rem 1.5rem 0 0;
+}
 
 .logout-profile-button {
-    background: url('/cobrands/popravito/images/ic-logout.svg') no-repeat center;
-    width: 94px;
+    background: url('/cobrands/popravito/images/ic-logout.svg') no-repeat left;
+    width: 20px;
     height: 20px;
-    display: block;
+    display: inline-flex;
     border: 0;
     background-color: transparent;
-    margin: 0 1.5rem 0 1.5rem;
+    padding-right: 0.8rem;
 }
 
 .two-col-left *:not(:first-child) {
