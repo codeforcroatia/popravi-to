@@ -65,7 +65,7 @@ END;
     [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
         <div class="item-list__description">[% problem.detail | html %]</div>
     [% END %]
-        <small>[% PROCESS 'report/_item_small.html' %]</small>
+    <p class="page-text-light"><span>Subcategory</span><span>[% PROCESS 'report/_item_small.html' %]</span></p>
 
     [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
         <div class="item-list__item__metadata">
