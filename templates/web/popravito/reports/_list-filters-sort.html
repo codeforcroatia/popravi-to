@@ -10,5 +10,5 @@
         <option value="updated-asc"[% ' selected' IF sort_key == 'updated-asc' %]>[% loc('Least recently updated') %]</option>
         <option value="comments-desc"[% ' selected' IF sort_key == 'comments-desc' %]>[% loc('Most commented') %]</option>
     </select>
-    <input type="submit" name="filter_update" value="[% loc('Go') %]">
+    <button type="submit" name="filter_update" class="save-and-close-button" tabindex="0" aria-label="close and save"><span>[% loc('Save and close') %]</span><span class="close-icon"></span></button>
 </p>
