@@ -63,7 +63,7 @@ END;
   [% END ~%]
 
     [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
-        <div class="item-list__description [% IF page == 'my' %]visually-hidden">[% problem.detail | html %]</div>
+        <div class="item-list__description visually-hidden">[% problem.detail | html %]</div>
     [% END %]
     <p class="page-text-light"><span>Subcategory</span><span>[% PROCESS 'report/_item_small.html' %]</span></p>
 
