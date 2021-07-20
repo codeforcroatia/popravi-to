@@ -71,7 +71,7 @@ END;
     <p class="page-text-light"><span>Subcategory</span><span>[% PROCESS 'report/_item_small.html' %]</span></p>
 
     [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
-        <div class="item-list__item__metadata visually-hidden">
+        <div class="item-list__item__metadata [% IF page == 'my' %]visually-hidden[% END %]">
             <div>
                 <h4>[% loc('Report ID:') %]</h4>
                 <p>[% problem.id %]</p>
@@ -122,7 +122,7 @@ END;
     [%# The around page list is already contained within the new report form %]
     [% item_action.replace('("shortlist-[^"]*)', '$1-' _ problem.id) | safe %]
   [% ELSE ~%]
-    <form method="post" action="/my/planned/change" class="visually-hidden">
+    <form method="post" action="/my/planned/change" class="[% IF page == 'my' %]visually-hidden[% END %]">
         <input type="hidden" name="id" value="[% problem.id %]">
         <input type="hidden" name="token" value="[% csrf_token %]">
         [% item_action | safe %]
