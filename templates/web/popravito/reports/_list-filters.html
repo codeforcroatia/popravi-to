@@ -33,7 +33,7 @@
     <form method="get" action="" class="filter-and-sort-form">
 [% END %]
 
-        <p class="report-list-filters">
+        <p class="report-list-filters sort-form">
             [% tprintf(loc('<label for="statuses" class="filter-button"><span class="filter-icon"></span>Filter</label> %s', "The first %s is a dropdown of all/fixed/etc, the second is a dropdown of categories"), mark_safe(select_status), mark_safe(select_category)) %]
             <button type="submit" name="filter_update" class="save-and-close-button" tabindex="0" aria-label="close and save"><span>[% loc('Save and close') %]</span><span class="close-icon"></span></button>
         </p>
