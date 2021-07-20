@@ -1,12 +1,41 @@
 [% select_status = PROCESS 'reports/_list-filter-status.html' %]
 
+[%# We want to only select things that match all filters, if filters are provided ~%]
+[% BLOCK category_options %]
+    [% FOR cat IN categories %]
+      [% SET cat_safe = mark_safe(cat.category) %]
+        <option value="[% cat.category %]"[% ' selected' IF ( filter_category.size OR filter_group ) AND ( NOT filter_category.size OR filter_category.$cat_safe ) AND ( NOT filter_group OR filter_group == group.name ) %]>
+            [% cat.category_display %]
+            [%~ IF cat.get_extra_metadata('help_text') %] ([% cat.get_extra_metadata('help_text') %])[% END ~%]
+        </option>
+    [% END %]
+[% END %]
+
+
+[% select_category = BLOCK %]
+  [% IF filter_categories.size %]
+    [% SET filter_group = c.get_param('filter_group') %]
+    <select class="form-control js-multiple" name="filter_category" id="filter_categories" multiple data-all="[% loc('Everything') %]">
+      [% FOR group IN category_groups %]
+        [% IF group.name %]<optgroup label="[% group.name %]">[% END %]
+          [% INCLUDE category_options categories=group.categories %]
+        [% IF group.name %]</optgroup>[% END %]
+      [% END %]
+    </select>
+  [% ELSE %]
+    [% loc('Everything') %]
+  [% END %]
+[% END %]
+
+<div class="report-list-filters-wrapper">
+
 [% IF use_form_wrapper %]
     <form method="get" action="" class="filter-and-sort-form">
 [% END %]
 
         <p class="report-list-filters">
-            [% tprintf(loc('<label for="statuses">Filter</label> %s', "The first %s is a dropdown of all/fixed/etc, the second is a dropdown of categories"), mark_safe(select_status), mark_safe(select_category)) %]
-            <input type="submit" name="filter_update" value="[% loc('Close and save') %]" class="save-and-close-button" tabindex="0" aria-label="close and save">
+            [% tprintf(loc('<label for="statuses">Filter</label> %s reports <label for="filter_categories">about</label> %s', "The first %s is a dropdown of all/fixed/etc, the second is a dropdown of categories"), mark_safe(select_status), mark_safe(select_category)) %]
+            <input type="submit" name="filter_update" value="[% loc('Close and save') %]" class="save-and-close-button visually-hidden" tabindex="0" aria-label="close and save"><span class="close-icon"></span>
         </p>
 
         [% PROCESS 'reports/_list-filters-sort.html' %]
@@ -22,3 +51,5 @@
 [% IF use_form_wrapper %]
     </form>
 [% END %]
+
+</div>
