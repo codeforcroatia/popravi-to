@@ -1,0 +1,129 @@
+[% IF NOT report_blocks_included ~%]
+[% PROCESS 'admin/report_blocks.html' ~%]
+[% END ~%]
+
+[%
+
+SET relevant_staff = 1;
+SET category_safe = mark_safe(problem.category);
+SET is_user_category = user_categories.$category_safe;
+IF (assigned_users_only.$category_safe OR assigned_categories_only) AND NOT is_user_category;
+    SET relevant_staff = 0;
+END;
+
+~%]
+
+[% IF relevant_staff AND (c.user.has_permission_to('planned_reports', problem.bodies_str_ids) OR c.user.is_planned_report(problem)) ~%]
+    [% item_extra_class = "item-list__item--indented" ~%]
+    [% item_action = BLOCK ~%]
+      <input type="submit" value="1"
+        data-label-remove="[% loc('Remove from shortlist') %]"
+        data-label-add="[% loc('Add to shortlist') %]"
+      [% IF c.user.is_planned_report(problem) ~%]
+        name="shortlist-remove" title="[% loc('Remove from shortlist') %]" class="item-list__item__shortlist-remove"
+      [%~ ELSE ~%]
+        name="shortlist-add" title="[% IF problem.shortlisted_user %]
+            [%~ tprintf(loc('Shortlisted by %s'), problem.shortlisted_user.name) %]; [% END %]
+            [%~ loc('Add to shortlist') %]" class="item-list__item__shortlist-[% IF problem.shortlisted_user %]take[% ELSE %]add[% END %]"
+      [%~ END ~%]
+      >
+    [%~ END %]
+[% END %]
+
+[% IF shortlist %]
+    [% item_extra_class = "item-list__item--indented item-list__item--act-and-sort" %]
+    [% item_action = BLOCK %]
+        [% item_action | safe %]
+        <input type="submit" name="shortlist-up" value="[% loc('Up one') %]" title="[% loc('Up one') %]" class="item-list__item__shortlist-up" [% IF loop.first %]disabled[% END %]>
+        <input type="submit" name="shortlist-down" value="[% loc('Down one') %]" title="[% loc('Down one') %]" class="item-list__item__shortlist-down" [% IF loop.last %]disabled[% END %]>
+    [% END %]
+[% END %]
+
+[%~ TRY ~%]
+  [% PROCESS 'report/_item_extra_class.html' %]
+[%~ CATCH file ~%]
+[%~ END ~%]
+
+<li class="item-list__item item-list--reports__item [% item_extra_class %]"
+    data-report-id="[% problem.id | html %]" data-lastupdate="[% problem.lastupdate %]" id="report-[% problem.id | html %]">
+<a href="[% c.cobrand.relative_url_for_report( problem ) %][% problem.url %]">
+  [% TRY ~%]
+    [% PROCESS 'report/_item_photo_title.html' ~%]
+  [% CATCH file ~%]
+    [% IF problem.photo %]
+        <noscript class="loading-lazy">
+            <img loading="lazy" class="img" height="60" width="90" src="[% problem.photos.first.url_fp %]" alt="">
+        </noscript>
+    [% END %]
+      [% TRY %]
+        [% PROCESS 'report/_item_heading.html' %]
+      [% CATCH file %]
+        <h3 class="item-list__heading page-text-left-aligned text-bold"><span class="fix-icon"></span>[% problem.title | html %]</h3>
+      [% END %]
+  [% END ~%]
+
+    [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
+        <div class="item-list__description">[% problem.detail | html %]</div>
+    [% END %]
+        <small>[% PROCESS 'report/_item_small.html' %]</small>
+
+    [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
+        <div class="item-list__item__metadata">
+            <div>
+                <h4>[% loc('Report ID:') %]</h4>
+                <p>[% problem.id %]</p>
+            </div>
+          [% IF problem.local_coords %]
+            <div>
+                <h4>[% loc('Easting/Northing:') %]</h4>
+                <p>[% problem.local_coords.0 %], [% problem.local_coords.1 %]</p>
+            </div>
+          [% END %]
+            <div>
+                <h4>[% loc('Latitude/Longitude:') %]</h4>
+                <p>[% problem.latitude %], [% problem.longitude %]</p>
+            </div>
+            <div>
+                <h4>[% loc('Category') %]</h4>
+                <p>[% (problem.category_display OR '-') | html %]</p>
+            </div>
+            <div>
+                <h4>[% loc('State') %]</h4>
+                <p>[% prettify_state(problem.state, 1) %]</p>
+            </div>
+            <div>
+                <h4>[% loc('Priority') %]</h4>
+                <p>[% problem.response_priority.name OR '-' %]</p>
+            </div>
+            <div>
+                <h4>[% loc('Extra details') %]</h4>
+                <p>[% problem.get_extra_metadata('detailed_information') | html %]</p>
+            </div>
+          [% SET fields = problem.get_extra_fields; IF fields.size %]
+          [% FOR f IN fields %]
+            <div>
+                <h4>[% f.name %]</h4>
+                <p>[% f.value %]</p>
+            </div>
+          [% END %]
+          [% END %]
+        </div>
+    [% END %]
+
+
+</a>
+[% IF item_action ~%]
+  [% IF page == 'report' ~%]
+    [%# We don't want to output shortlist on report page (in duplicate list) %]
+  [% ELSIF page == 'around' ~%]
+    [%# The around page list is already contained within the new report form %]
+    [% item_action.replace('("shortlist-[^"]*)', '$1-' _ problem.id) | safe %]
+  [% ELSE ~%]
+    <form method="post" action="/my/planned/change">
+        <input type="hidden" name="id" value="[% problem.id %]">
+        <input type="hidden" name="token" value="[% csrf_token %]">
+        [% item_action | safe %]
+    </form>
+  [% END ~%]
+[% END %]
+</li>
