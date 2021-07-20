@@ -117,7 +117,9 @@
                                         [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
                                     </div>
                                     <div id="js-reports-list">
-                                        [% INCLUDE 'my/_problem-list.html' %]
+                                        <section class="filtered-content">
+                                            [% INCLUDE 'my/_problem-list.html' %]
+                                        </section>
                                     </div>
                                 </div>
                             </div>

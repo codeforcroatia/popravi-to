@@ -1695,6 +1695,7 @@ label[for="message"]{
 }
 
 /* native styling */
+
 .error-multiple-section, .front-main-form-container {
     margin: 0 1.5rem;
 }
@@ -1713,4 +1714,8 @@ label[for="message"]{
 
 #report-a-problem-main fieldset {
     border: none;
+}
+
+.item-list--reports {
+    padding-left: 0;
 }
