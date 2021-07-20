@@ -30,31 +30,12 @@
 <div class="report-list-filters-wrapper">
 
 [% IF use_form_wrapper %]
-    <form method="get" action="" class="filter-and-sort-form">
+    <form method="get" action="" class="sort-form">
 [% END %]
 
         <p class="report-list-filters">
-            [% tprintf(loc('<label for="statuses">Filter</label> %s reports <label for="filter_categories">about</label> %s', "The first %s is a dropdown of all/fixed/etc, the second is a dropdown of categories"), mark_safe(select_status), mark_safe(select_category)) %]
+            [% tprintf(loc('<label for="statuses">Show</label> %s reports <label for="filter_categories">about</label> %s', "The first %s is a dropdown of all/fixed/etc, the second is a dropdown of categories"), mark_safe(select_status), mark_safe(select_category)) %]
             <input type="submit" name="filter_update" value="[% loc('Go') %]">
-        </p>
-
-        [% PROCESS 'reports/_list-filters-sort.html' %]
-
-        [% IF page == 'around' %]
-        <p id="show_old_reports_wrapper" class="report-list-filters[% ' hidden' UNLESS num_old_reports > 0 %]">
-            <label for="show_old_reports">[% loc('Show older reports') %]</label>
-            <input type="checkbox" name="show_old_reports" id="show_old_reports" value="1"[% ' checked' IF show_old_reports %]>
-            <input type="submit" name="filter_update" value="[% loc('Go') %]">
-        </p>
-        [% END %]
-
-[% IF use_form_wrapper %]
-    </form>
-[% END %]
-
-</div>
-
-            <button type="submit" name="filter_update" class="save-and-close-button" tabindex="0" aria-label="close and save"><span>[% loc('Save and close') %]</span><span class="close-icon"></span></button>
         </p>
 
         [% PROCESS 'reports/_list-filters-sort.html' %]
