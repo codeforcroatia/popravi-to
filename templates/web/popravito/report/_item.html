@@ -58,7 +58,7 @@ END;
       [% TRY %]
         [% PROCESS 'report/_item_heading.html' %]
       [% CATCH file %]
-        <p class="page-text-misc">[% (problem.category_display OR '-') | html %]</p>
+        <p class="page-text-misc my-page-category">[% (problem.category_display OR '-') | html %]</p>
         <h3 class="item-list__heading page-text-left-aligned text-bold"><span class="fix-icon"></span>[% problem.title | html %]</h3>
       [% END %]
   [% END ~%]
