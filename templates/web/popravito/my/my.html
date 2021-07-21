@@ -14,7 +14,7 @@
                         <p class="form-success">[% flash_message %]</p>
                     [% END %]
                 </div>
-                <form class="notifications-form" method="post">
+                <form class="notifications-form" method="post" >
                     <input type="hidden" name="token" value="[% csrf_token %]">
                     <p class="report-details-small">[% loc('Name:') %]</p>
                     <div class="info-item">   
@@ -123,6 +123,25 @@
                             </div>
                         </div>
                     </div>
+
+                    [% FOREACH u IN updates %]
+                        [% IF loop.first %]
+
+                        <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-two">
+                        <label class="page-subtitle tab-label" for="tab-two">[% loc('Your updates') %] (<span id="updates">[% updates.size %]</span>) <span class="arrow-down arrow-down-tab"></span></label>
+                        <div class="panel" tabindex="1">
+                            <div class="updates-container">
+                                <section class="updates-content">
+                                    <h2 class="page-text-left-aligned text-bold">Dodane fotografije</h2>
+                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>Rupa na cesti</span><span class="issue-date">8.6.2021.</span></a>
+                                    <h2 class="page-text-left-aligned text-bold">Promjena kategorije iz “Ostalo” u “Infrastruktura”</h2>
+                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>Rupa na cesti</span><span class="issue-date">8.6.2021.</span></a>
+                                </section>
+                            </div>
+                        </div>
+
+                        [% END %]
+                    [% END %]
                 </div>
             </div>
         </div>
