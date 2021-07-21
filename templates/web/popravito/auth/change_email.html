@@ -9,7 +9,7 @@ END
 -%]
 [% INCLUDE 'header.html' bodyclass = 'authpage' %]
 
-    <main class=".error-multiple-section">
+    <main class="error-multiple-section">
         <h1>[% title %]</h1>
 
         [% IF c.user.email_verified OR (c.user.email AND NOT verifying) %]
