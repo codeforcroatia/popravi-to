@@ -10,7 +10,7 @@ END
 [% INCLUDE 'header.html' bodyclass = 'authpage' %]
 
     <main class="error-multiple-section">
-        <h1>[% title %]</h1>
+        <h1 class="page-title">[% title %]</h1>
 
         [% IF c.user.email_verified OR (c.user.email AND NOT verifying) %]
         [% loc('Your email address') %]: [% c.user.email %]
@@ -40,10 +40,10 @@ END
                     [% loc('New email address:') %]
                 [% END %]
                 </label>
-                <input class="form-control" type="email" name="email" id="email" value="[% username | html %]">
+                <input class="form-control" type="email" name="email" id="email" value="[% username | html %]" placeholder="[% loc('Enter your new email here') %]">
             </div>
             <div class="final-submit">
-                <input type="submit" class="btn" value="[% title %]">
+                <input type="submit" class="button primary-button" value="[% title %]">
             </div>
 
             </fieldset>
