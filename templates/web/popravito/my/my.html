@@ -136,9 +136,7 @@
                                     param = 'u'
                                 %]
                                 <section class="updates-content">
-
                         [% END %]
-
                                     <div class="item-list__update-wrap">
                                         [% INCLUDE 'report/photo.html' object=u %]
                                         <h2 class="page-text-left-aligned text-bold"> 
@@ -146,11 +144,10 @@
                                         </h2>
                                         <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% u.problem.category | html %]</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
                                     </div>
-                                [% " </section>" IF loop.last %]
-                            </div>
-                        </div>
-
+                            [% "</section></div>" IF loop.last %]
+                    
                     [% END %]
+                        </div>
                 </div>
             </div>
         </div>
