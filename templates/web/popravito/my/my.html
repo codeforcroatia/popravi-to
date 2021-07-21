@@ -144,7 +144,7 @@
                                     <h2 class="page-text-left-aligned text-bold"> 
                                         <a href="[% u.url %]">[% u.text | staff_html_markup(u.extra) %]</a>
                                     </h2>
-                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>Rupa na cesti</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
+                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% (problem.category_display OR '-') | html %]</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
                                 [% "</div></section>" IF loop.last %]
                             </div>
                         </div>
