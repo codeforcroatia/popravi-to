@@ -21,7 +21,7 @@ END
         <form method="post" name="change_email">
             <input type="hidden" name="token" value="[% csrf_token %]">
 
-            <fieldset>
+            <fieldset class="change-info-fieldset">
             [% IF username_error;
                 errors = {
                     missing_email = loc('Please enter your email'),
@@ -33,7 +33,7 @@ END
             [% END %]
 
             <div class="form-field">
-                <label for="email">
+                <label for="email" class="visually-hidden">
                 [% IF NOT c.user.email_verified AND c.user.email AND verifying %]
                     [% loc('Email address') %]:
                 [% ELSE %]

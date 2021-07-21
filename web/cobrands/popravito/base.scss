@@ -1244,6 +1244,15 @@ label[for="message"]{
     margin-top: 3rem;
 }
 
+.change-info-fieldset {
+    border: none;
+    padding: 0 1.5rem;
+}
+
+.change-info-fieldset .primary-button {
+    float: none;
+}
+
 /* report detail */
 
 .report-details-container {
@@ -1727,3 +1736,4 @@ label[for="message"]{
 .item-list--reports {
     padding-left: 0;
 }
+
