@@ -147,11 +147,7 @@
 
                                     [% u.text | staff_html_markup(u.extra) %]
 
-                                    <p class="meta-2">
-                                        [% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]
-                                        &ndash;
-                                    </p>
-                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>Rupa na cesti</span><span class="issue-date">8.6.2021.</span></a>
+                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>Rupa na cesti</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
                                 [% "</div></section>" IF loop.last %]
                             </div>
                         </div>
