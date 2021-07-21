@@ -93,7 +93,7 @@
             <div class="two-col-right">
                 <div class="tabs">
                     <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-one" checked="checked">
-                    <label class="page-subtitle tab-label" for="tab-one">[% loc('Your reports') %] (<span id="numOfReports"></span>) <span class="arrow-down arrow-down-tab"></span></label>
+                    <label class="page-subtitle tab-label" for="tab-one">[% loc('Your reports') %] (<span id="numOfReports">[% problems.size %]</span>) <span class="arrow-down arrow-down-tab"></span></label>
                     <div class="panel" tabindex="1">
                         [% IF ! has_content %]
                         <div class="no-reports"> 
