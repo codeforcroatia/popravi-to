@@ -22,29 +22,29 @@ END
             <input type="hidden" name="token" value="[% csrf_token %]">
 
             <fieldset class="change-info-fieldset">
-            [% IF username_error;
-                errors = {
-                    missing_email = loc('Please enter your email'),
-                    other_email = loc('Please check your email address is correct')
-                };
-                loc_username_error = errors.$username_error || errors.other_email;
-            %]
-            <div class="form-error">[% loc_username_error %]</div>
-            [% END %]
-
-            <div class="form-field">
-                <label for="email" class="visually-hidden">
-                [% IF NOT c.user.email_verified AND c.user.email AND verifying %]
-                    [% loc('Email address') %]:
-                [% ELSE %]
-                    [% loc('New email address:') %]
+                [% IF username_error;
+                    errors = {
+                        missing_email = loc('Please enter your email'),
+                        other_email = loc('Please check your email address is correct')
+                    };
+                    loc_username_error = errors.$username_error || errors.other_email;
+                %]
+                <div class="form-error">[% loc_username_error %]</div>
                 [% END %]
-                </label>
-                <input class="form-control" type="email" name="email" id="email" value="[% username | html %]" placeholder="[% loc('Enter your new email here') %]">
-            </div>
-            <div class="final-submit">
-                <input type="submit" class="button primary-button" value="[% title %]">
-            </div>
+
+                <div class="form-field">
+                    <label for="email" class="visually-hidden">
+                    [% IF NOT c.user.email_verified AND c.user.email AND verifying %]
+                        [% loc('Email address') %]:
+                    [% ELSE %]
+                        [% loc('New email address:') %]
+                    [% END %]
+                    </label>
+                    <input class="form-control" type="email" name="email" id="email" value="[% username | html %]" placeholder="[% loc('Enter your new email here') %]">
+                </div>
+                <div class="final-submit">
+                    <input type="submit" class="button primary-button" value="[% title %]">
+                </div>
 
             </fieldset>
         </form>
