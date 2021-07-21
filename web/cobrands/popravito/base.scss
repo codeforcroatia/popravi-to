@@ -1246,11 +1246,14 @@ label[for="message"]{
 
 .change-info-fieldset {
     border: none;
-    padding: 0 1.5rem;
 }
 
 .change-info-fieldset .primary-button {
     float: none;
+}
+
+.change-info-fieldset .form-field {
+    padding: 1.5rem 0;
 }
 
 /* report detail */
