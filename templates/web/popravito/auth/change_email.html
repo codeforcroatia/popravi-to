@@ -9,7 +9,7 @@ END
 -%]
 [% INCLUDE 'header.html' bodyclass = 'authpage' %]
 
-    <main>
+    <main class=".error-multiple-section">
         <h1>[% title %]</h1>
 
         [% IF c.user.email_verified OR (c.user.email AND NOT verifying) %]
@@ -49,10 +49,10 @@ END
             </fieldset>
         </form>
 
-        </main>
+    </main>
     
     [% INCLUDE 'footer.html' %]
-    
+
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 </body>
 </html>
