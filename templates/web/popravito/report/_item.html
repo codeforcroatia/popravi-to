@@ -57,18 +57,15 @@ END;
     [% END %]
       [% TRY %]
         [% PROCESS 'report/_item_heading.html' %]
-      [% CATCH file %]
-        [% IF page == 'my' ~%]
-            <p class="page-text-misc my-page-category">[% (problem.category_display OR '-') | html %]</p>
-            <h3 class="item-list__heading page-text-left-aligned text-bold"><span class="fix-icon"></span>[% problem.title | html %]</h3>
-        [% END %]
+      [% CATCH file %]     
+        <h3 class="item-list__heading page-text-left-aligned text-bold"><span class="fix-icon"></span>[% problem.title | html %]</h3>     
       [% END %]
   [% END ~%]
 
     [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
         <div class="item-list__description [% IF page == 'my' %]visually-hidden[% END %]">[% problem.detail | html %]</div>
     [% END %]
-    <p class="page-text-light"><span>[% (problem.subcategory_display OR '-') %]</span><span>[% PROCESS 'report/_item_small.html' %]</span></p>
+    <p class="page-text-light"><span>[% (problem.category_display OR '-') %] / [% (problem.subcategory_display OR '-') %] </span><span>[% PROCESS 'report/_item_small.html' %]</span></p>
 
     [% IF relevant_staff AND c.user.has_permission_to('report_inspect', problem.bodies_str_ids) %]
         <div class="item-list__item__metadata [% IF page == 'my' %]visually-hidden[% END %]">
