@@ -1244,6 +1244,10 @@ label[for="message"]{
     margin-top: 3rem;
 }
 
+.change-body {
+    text-align: center;
+}
+
 .change-info-fieldset {
     border: none;
     padding: 0; 
@@ -1251,15 +1255,12 @@ label[for="message"]{
 
 .change-info-fieldset .primary-button {
     float: none;
-    margin: 0;
+    margin: 0 auto;
+    display: block;
 }
 
 .change-info-fieldset .form-field {
     padding: 1.5rem 0;
-}
-
-.change-info-fieldset .form-control {
-    width: 300px;
 }
 
 /* report detail */
