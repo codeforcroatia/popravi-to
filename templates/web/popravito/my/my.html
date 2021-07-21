@@ -142,11 +142,8 @@
                                 <div class="item-list__update-wrap">
                                     [% INCLUDE 'report/photo.html' object=u %]
                                     <h2 class="page-text-left-aligned text-bold"> 
-                                        <a href="[% u.url %]">[% u.problem.title | html %]</a>
+                                        <a href="[% u.url %]">[% u.text | staff_html_markup(u.extra) %]</a>
                                     </h2>
-
-                                    [% u.text | staff_html_markup(u.extra) %]
-
                                     <a class="page-text-light" tabindex="0" aria-label="category link"><span>Rupa na cesti</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
                                 [% "</div></section>" IF loop.last %]
                             </div>
