@@ -14,7 +14,7 @@
                         <p class="form-success">[% flash_message %]</p>
                     [% END %]
                 </div>
-                <form class="notifications-form" method="post" >
+                <form class="notifications-form" method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
                     <input type="hidden" name="token" value="[% csrf_token %]">
                     <p class="report-details-small">[% loc('Name:') %]</p>
                     <div class="info-item">   
