@@ -1291,6 +1291,17 @@ label[for="message"]{
     margin-top: 1rem;
 }
 
+.sort-form .filter-select {
+    font-weight: 600;
+    height: 200px;
+    width: 200px;
+}
+
+.sort-form .filter-select option {
+    font-weight: 600;
+    padding: 1rem 0;
+}
+
 /* report detail */
 
 .report-details-container {
