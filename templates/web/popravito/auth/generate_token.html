@@ -2,9 +2,8 @@
 INCLUDE 'header.html', title = loc('Security'), bodyclass = 'fullwidthpage'
 %]
 
-[% IF token_generated %]
-
 <main class="error-multiple-section change-body">
+    [% IF token_generated %]
     <div class="confirmation-header">
         <h1 class="page-title">[% loc('Your token has been generated') %]</h1>
 
@@ -83,8 +82,9 @@ INCLUDE 'header.html', title = loc('Security'), bodyclass = 'fullwidthpage'
     [% END %]
 
     </form>
-</main>
+    
 [% END %]
+</main>
 
 [% INCLUDE 'footer.html' %]
 
