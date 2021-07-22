@@ -1,4 +1,4 @@
-const toggleFilterModel = function(){
+const toggleFilter = function(){
     let filterButton = document.getElementById('filterButton')
 
     const toggleFilter = () => {
