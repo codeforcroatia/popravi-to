@@ -1287,6 +1287,7 @@ label[for="message"]{
     margin: 0 auto;
 }
 
+
 /* report detail */
 
 .report-details-container {
@@ -1723,6 +1724,8 @@ label[for="message"]{
     background: transparent;
     border: none;
     display: flex;
+    float: right;
+    margin-top: -10rem
 }
 
 .close-icon {
