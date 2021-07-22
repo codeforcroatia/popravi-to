@@ -1281,6 +1281,12 @@ label[for="message"]{
     width: 100%;
 }
 
+.new-pass-fieldset .primary-button {
+    float: none;
+    display: block;
+    margin: 0 auto;
+}
+
 /* report detail */
 
 .report-details-container {
