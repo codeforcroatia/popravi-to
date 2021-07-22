@@ -1263,6 +1263,21 @@ label[for="message"]{
     padding: 1.5rem 0;
 }
 
+.change-info-fieldset .new-pass-field {
+    display: flex;
+    align-items: center;
+}
+
+.new-pass-fieldset {
+    display: block;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.new-pass-fieldset input {
+    width: 100%;
+}
+
 /* report detail */
 
 .report-details-container {
