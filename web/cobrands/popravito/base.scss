@@ -1107,7 +1107,7 @@ label[for="message"]{
 }   
 
 .sort-form {
-    //display: flex;
+    margin: 0 2rem;
 }
 
 .sort-form select {
@@ -1287,6 +1287,9 @@ label[for="message"]{
     margin: 0 auto;
 }
 
+.sort-form .report-list-filters {
+    margin-top: 1rem;
+}
 
 /* report detail */
 
@@ -1780,3 +1783,6 @@ label[for="message"]{
     padding-left: 0;
 }
 
+.report-list-filters-wrapper {
+    margin-top: 1rem;
+}
