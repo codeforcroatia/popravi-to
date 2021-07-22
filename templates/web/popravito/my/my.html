@@ -107,7 +107,12 @@
                         [% END %]
                         <div class="with-reports">
                             <div class="filters-and-view">
-                                [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
+                                <div class="filters-container">
+                                    <button class="filter-button" tabindex="0" aria-label="filter"><span class="filter-icon"></span>[% loc('Filter') %]</button>
+                                    <div class="filtering-options-modal visually-hidden" id="filterModal">
+                                        [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
+                                    </div>
+                                </div>
                             </div>
                             <div class="filtered-content-container">
                                 <div class="filtered">
