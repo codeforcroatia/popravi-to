@@ -67,7 +67,7 @@ INCLUDE 'header.html', title = loc('Security'), bodyclass = 'fullwidthpage'
         [% END %]
         </p>
 
-    <h2>[% loc('Token') %]</h2>
+    <h2 class="page-subtitle">[% loc('Token') %]</h2>
 
         <input type="hidden" name="token" value="[% csrf_token %]">
 
@@ -82,7 +82,7 @@ INCLUDE 'header.html', title = loc('Security'), bodyclass = 'fullwidthpage'
     [% END %]
 
     </form>
-    
+
 [% END %]
 </main>
 
