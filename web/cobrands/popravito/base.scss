@@ -1725,7 +1725,13 @@ label[for="message"]{
     border: none;
     display: flex;
     float: right;
-    margin-top: -10rem
+    margin-top: -50px;
+    margin-right: 1.5rem;
+}
+
+.filter-select {
+    display: block;
+    margin-top: 1rem;
 }
 
 .close-icon {
