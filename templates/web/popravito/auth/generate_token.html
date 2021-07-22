@@ -40,7 +40,7 @@ INCLUDE 'header.html', title = loc('Security'), bodyclass = 'fullwidthpage'
     <div class="confirmation-header confirmation-header--phone">
         <h1 class="page-title">[% loc('Two-factor authentication') %]</h1>
 
-        <form action="[% c.uri_for_action('/auth/profile/generate_token') %]" method="post" name="generate_token">
+        <form action="[% c.uri_for_action('/auth/profile/generate_token') %]" method="post" name="generate_token" class="token-form">
             <input type="hidden" name="token" value="[% csrf_token %]">
             [% PROCESS 'auth/2fa/form-add.html' %]
         </form>
@@ -49,7 +49,7 @@ INCLUDE 'header.html', title = loc('Security'), bodyclass = 'fullwidthpage'
 
     <h1 class="page-subtitle">[% loc('Security') %]</h1>
 
-    <form action="[% c.uri_for_action('/auth/profile/generate_token') %]" method="post" name="generate_token">
+    <form action="[% c.uri_for_action('/auth/profile/generate_token') %]" method="post" name="generate_token" class="token-form">
 
     <h2 class="page-subtitle">[% loc('Two-factor authentication') %]</h2>
 

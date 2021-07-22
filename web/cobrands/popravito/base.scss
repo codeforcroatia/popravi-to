@@ -1303,6 +1303,20 @@ label[for="message"]{
     padding: 0.5rem 0;
 }
 
+.token-form {
+    text-align: center;
+}
+
+.token-form .primary-button {
+    float: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.token-form .page-subtitle {
+    margin-bottom: 0;
+}
+
 /* report detail */
 
 .report-details-container {
