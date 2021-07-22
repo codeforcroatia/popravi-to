@@ -35,7 +35,7 @@
 
         <p class="report-list-filters">
             [% tprintf(loc('<label for="statuses">Show</label> %s', "The first %s is a dropdown of all/fixed/etc, the second is a dropdown of categories"), mark_safe(select_status), mark_safe(select_category)) %]
-            <button form="filterForm" type="submit" name="filter_update" class="save-and-close-button visually-hidden" tabindex="0" aria-label="close and save"><span>[% loc('Close and save') %]</span><span class="close-icon"></span></button>
+            <button form="filterForm" type="submit" name="filter_update" class="save-and-close-button" tabindex="0" aria-label="close and save"><span>[% loc('Close and save') %]</span><span class="close-icon"></span></button>
         </p>
 
         [% PROCESS 'reports/_list-filters-sort.html' %]
