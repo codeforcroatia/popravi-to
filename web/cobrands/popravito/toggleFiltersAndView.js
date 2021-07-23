@@ -8,11 +8,13 @@ const toggleFiltersAndView = function(){
     }
 
     const toggleListView = () => {
-        alert('clicked')
+        document.getElementById('reportsContainer').classList.remove('visually-hidden')
+        document.getElementById('mapContainer').classList.add('visually-hidden')
     }
 
     const toggleMapView = () => {
-        alert('clicked')
+        document.getElementById('reportsContainer').classList.add('visually-hidden')
+        document.getElementById('mapContainer').classList.remove('visually-hidden')
     }
 
     filterButton.addEventListener('click', toggleFilter)

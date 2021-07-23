@@ -119,11 +119,11 @@
                                 [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
                             </div>
                             [% IF problems.size %]
-                                <div class="filtered-content-map-view">
+                                <div class="filtered-content-map-view visually-hidden" id="mapContainer">
                                         [% map_html | safe %]
                                     </div>
                             [% ELSE %]
-                                <div class="filtered-content-container visually-hidden">
+                                <div class="filtered-content-container" id="reportsContainer">
                                     <div class="filtered">
                                         <div class="js-pagination">
                                             [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
