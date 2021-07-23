@@ -2,9 +2,12 @@ const toggleFiltersAndView = function(){
     let filterButton = document.getElementById('filterButton')
         listButton = document.getElementById('listViewButton')
         mapButton = document.getElementById('mapViewButton')
+        saveCloseButton = document.querySelector('.save-and-close-button')
 
     const toggleFilter = () => {
         document.querySelector('#filterModal').classList.toggle('visually-hidden')
+        listButton.classList.add('visually-hidden')
+        mapButton.classList.add('visually-hidden')
     }
 
     const toggleListView = () => {
@@ -21,9 +24,15 @@ const toggleFiltersAndView = function(){
         listButton.classList.remove('list-map-active')
     }
 
+    const toggleSaveAndCloseFilters = () => {
+        listButton.classList.remove('visually-hidden')
+        mapButton.classList.remove('visually-hidden')
+    }
+
     filterButton.addEventListener('click', toggleFilter)
     listButton.addEventListener('click', toggleListView)
     mapButton.addEventListener('click', toggleMapView)
+    saveCloseButton.addEventListener('click', toggleSaveAndCloseFilters)
     
 }()
 
