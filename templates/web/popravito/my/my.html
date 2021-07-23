@@ -140,7 +140,7 @@
                         <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-two">
                         <label class="page-subtitle tab-label" for="tab-two">[% loc('Your updates') %] (<span id="updates">[% updates.size %]</span>) <span class="arrow-down arrow-down-tab"></span></label>
                         <div class="panel" tabindex="1">
-                            
+
                         [% FOREACH u IN updates %]
                         [% IF loop.first %]
                             <div class="updates-container">
@@ -158,9 +158,8 @@
                                         <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% u.problem.category | html %]</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
                                     </div>
                             [% "</section></div>" IF loop.last %]
-                    
-                    [% END %]
                         </div>
+                    [% END %]
                 </div>
             </div>
         </div>
