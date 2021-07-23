@@ -6,8 +6,8 @@ const toggleFiltersAndView = function(){
 
     const toggleFilter = () => {
         document.querySelector('#filterModal').classList.toggle('visually-hidden')
-        listButton.classList.add('visually-hidden')
-        mapButton.classList.add('visually-hidden')
+        listButton.classList.toggle('visually-hidden')
+        mapButton.classList.toggle('visually-hidden')
     }
 
     const toggleListView = () => {
