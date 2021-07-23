@@ -28,7 +28,7 @@ const toggleFiltersAndView = function(){
         setTimeout(function(){
             listButton.classList.remove('visually-hidden')
             mapButton.classList.remove('visually-hidden')
-        }, 1700)
+        }, 1300)
     }
 
     filterButton.addEventListener('click', toggleFilter)
