@@ -119,24 +119,23 @@
                                 [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
                             </div>
                             [% IF problems.size %]
-                                <div>
-                                    <div class="filtered-content-map-view">
+                                <div class="filtered-content-map-view">
+                                    <div class="map-my">
                                         [% map_html | safe %]
-                            [% ELSE %]
-                                <div id="map_sidebar">
-                                    <div class="filtered-content-container visually-hidden" id="skipped-map">
-                                        <div class="filtered">
-                                            <div class="js-pagination">
-                                                [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
-                                            </div>
-                                            <div id="js-reports-list">
-                                                <section class="filtered-content">
-                                                    [% INCLUDE 'my/_problem-list.html' %]
-                                                </section>
-                                            </div>
-                                        </div>                                 
-                            [% END %]
                                     </div>
+                            [% ELSE %]
+                                <div class="filtered-content-container visually-hidden">
+                                    <div class="filtered">
+                                        <div class="js-pagination">
+                                            [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
+                                        </div>
+                                        <div id="js-reports-list">
+                                            <section class="filtered-content">
+                                                [% INCLUDE 'my/_problem-list.html' %]
+                                            </section>
+                                        </div>
+                                    </div>                                 
+                            [% END %]
                                 </div>
                         </div>
                     </div>
