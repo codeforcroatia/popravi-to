@@ -122,7 +122,7 @@
                                 <div class="filtered-content-map-view visually-hidden" id="mapContainer">
                                         [% map_html | safe %]
                                     </div>
-                            [% ELSE %]
+                                </div>
                                 <div class="filtered-content-container" id="reportsContainer">
                                     <div class="filtered">
                                         <div class="js-pagination">
@@ -133,9 +133,14 @@
                                                 [% INCLUDE 'my/_problem-list.html' %]
                                             </section>
                                         </div>
-                                    </div>      
-                                [% END %]       
-                                </div>             
+                                    </div>   
+                                </div>      
+                                [% ELSE %]
+                                <div id="map_sidebar">
+                                    <div id="skipped-map">
+                            [% END %]   
+                                    </div>
+                                </div>
                         </div>
                     </div>
 
