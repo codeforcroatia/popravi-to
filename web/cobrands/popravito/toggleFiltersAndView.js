@@ -25,14 +25,15 @@ const toggleFiltersAndView = function(){
     }
 
     const toggleSaveAndCloseFilters = () => {
-        listButton.classList.remove('visually-hidden')
-        mapButton.classList.remove('visually-hidden')
+        setTimeout(function(){
+            listButton.classList.remove('visually-hidden')
+            mapButton.classList.remove('visually-hidden')
+        }, 1000)
     }
 
     filterButton.addEventListener('click', toggleFilter)
     listButton.addEventListener('click', toggleListView)
     mapButton.addEventListener('click', toggleMapView)
-    saveCloseButton.addEventListener('click', toggleSaveAndCloseFilters)
-    
+    saveCloseButton.addEventListener('click', toggleSaveAndCloseFilters)   
 }()
 
