@@ -42,10 +42,15 @@ const toggleFiltersAndView = function(){
         }, 1300)
     }
 
-    mqlMobile.addEventListener("change", toggleProfileTab)
+    mqlMobile.addEventListener('change', toggleProfileTab)
     filterButton.addEventListener('click', toggleFilter)
     listButton.addEventListener('click', toggleListView)
     mapButton.addEventListener('click', toggleMapView)
     saveCloseButton.addEventListener('click', toggleSaveAndCloseFilters)   
+
+    return {
+        toggleProfileTab: toggleProfileTab
+    }
 }()
 
+toggleFiltersAndView.toggleProfileTab()
