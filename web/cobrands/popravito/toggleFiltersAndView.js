@@ -1,8 +1,19 @@
 const toggleFiltersAndView = function(){
+
     let filterButton = document.getElementById('filterButton')
         listButton = document.getElementById('listViewButton')
         mapButton = document.getElementById('mapViewButton')
         saveCloseButton = document.querySelector('.save-and-close-button')
+
+    const mqlMobile = window.matchMedia("(max-width: 768px)")
+
+    const toggleProfileTab = () => {
+        if (mqlMobile.matches){    
+            document.getElementById('yourAccount').addEventListener('click', function(){
+                document.getElementById('accountPanel').classList.toggle('visually-hidden')
+            })
+        } 
+    }
 
     const toggleFilter = () => {
         document.querySelector('#filterModal').classList.toggle('visually-hidden')
@@ -31,6 +42,7 @@ const toggleFiltersAndView = function(){
         }, 1300)
     }
 
+    mqlMobile.addEventListener("change", toggleProfileTab)
     filterButton.addEventListener('click', toggleFilter)
     listButton.addEventListener('click', toggleListView)
     mapButton.addEventListener('click', toggleMapView)
