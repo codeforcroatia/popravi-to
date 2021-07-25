@@ -1813,7 +1813,18 @@ label[for="message"]{
     margin-top: 1rem;
 }
 
+.filtered-content-map-view .pin {
+    transform: scale(0.4);
+}
+
 .filtered-content-map-view #map_box {
     position: absolute;
     margin-top: 4rem;
+}
+
+.filtered-content-map-view #map img {
+
+    @media only screen and (max-width: 517px) {
+        width: 11rem;
+    }
 }
