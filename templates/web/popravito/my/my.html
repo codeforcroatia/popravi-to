@@ -141,11 +141,9 @@
 
                     <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-two">
                     <label class="page-subtitle tab-label" for="tab-two">[% loc('Your updates') %] (<span id="updates">[% updates.size %]</span>) <span class="arrow-down arrow-down-tab"></span></label>
-                    
-                    [% FOREACH u IN updates %]
-                    [% IF loop.first %]
-
                     <div class="panel" tabindex="1">
+                        [% FOREACH u IN updates %]
+                        [% IF loop.first %]
                         <div class="updates-container">
                             [% INCLUDE 'pagination.html',
                                 pager = updates_pager,
