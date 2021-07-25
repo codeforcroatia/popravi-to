@@ -1818,13 +1818,6 @@ label[for="message"]{
 }
 
 .filtered-content-map-view #map_box {
-    position: absolute;
     margin-top: 4rem;
-}
-
-.filtered-content-map-view #map img {
-
-    @media only screen and (max-width: 517px) {
-        width: 11rem;
-    }
+    position: fixed;
 }

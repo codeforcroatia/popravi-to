@@ -919,13 +919,10 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .filtered-content-map-view #map_box {
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     margin-top: 2rem;
 }
 
-.filtered-content-map-view .pin {
-    transform: scale(0.4);
-}
 
 /* 
 .report-section {
