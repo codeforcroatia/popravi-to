@@ -160,9 +160,8 @@
                                         <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% u.problem.category | html %]</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
                                     </div>
                             [% "</section></div>" IF loop.last %]
-                    
+                        </div>         
                     [% END %]
-                        </div>
                 </div>
             </div>
         </div>
