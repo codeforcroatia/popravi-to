@@ -1,5 +1,5 @@
 <p class="report-list-filters sortby-form">
-    <label for="sort" class="page-text-misc">[% loc('Sort by') %]</label>
+    <label for="sort" class="page-text-misc">[% loc('Sort by') %]<span class="arrow-down-dropdown"></span></label>
     <select class="form-control" name="sort" id="sort">
       [% IF shortlist %]
         <option value="shortlist"[% ' selected' IF sort_key == 'shortlist' %]>[% loc('Manual order') %]</option>

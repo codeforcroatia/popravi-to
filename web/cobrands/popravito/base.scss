@@ -1329,6 +1329,17 @@ label[for="message"]{
     margin-bottom: 2rem;
 }
 
+.arrow-down-dropdown {
+    background: url('/cobrands/popravito/images/ic-dropdown-down.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: inline-flex;
+    margin-right: 0.6rem;
+    align-self: center;
+    position: absolute;
+    right: 0;
+}
+
 /* report detail */
 
 .report-details-container {
@@ -1840,6 +1851,7 @@ label[for="message"]{
 .report-list-filters-wrapper .multi-select-menuitems {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2.5rem;
 }
 
 .report-list-filters-wrapper .multi-select-container {
