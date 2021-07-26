@@ -1095,6 +1095,16 @@ label[for="message"]{
     margin-right: 2rem;
 }
 
+.filter-button:active {
+    border-radius: 8px;
+    background-color: #F6F2EF;
+}
+
+.filter-button:hover {
+    border-radius: 8px;
+    background-color: #F6F2EF;
+}
+
 .filter-icon {
     display: block;
     background: url('/cobrands/popravito/images/ic_filter.svg') no-repeat center;
@@ -1836,12 +1846,12 @@ label[for="message"]{
     flex-direction: column;
 }
 
-.report-list-filters-wrapper .multi-select-menu {
-    margin-top: 1rem;
-}
-
 .report-list-filters-wrapper .multi-select-container {
     margin: 1.5rem 0 1.5rem 0;
+}
+
+.multi-select-menuitems input {
+    margin: 1.25rem 0 1.25rem 0;
 }
 
 .multi-select-presets input {
@@ -1855,5 +1865,6 @@ label[for="message"]{
     float: none;
     margin-top: 0;
     display: flex;
+    align-items: baseline;
 }
 
