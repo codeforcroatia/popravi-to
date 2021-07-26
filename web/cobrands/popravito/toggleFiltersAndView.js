@@ -16,8 +16,10 @@ const toggleFiltersAndView = function(){
 
     const toggleFilter = () => {
         document.querySelector('#filterModal').classList.toggle('visually-hidden')
-        listButton.classList.toggle('visually-hidden')
-        mapButton.classList.toggle('visually-hidden')
+        if (!mqlMobile.matches) {
+            listButton.classList.toggle('visually-hidden')
+            mapButton.classList.toggle('visually-hidden')
+        }
     }
 
     const toggleListView = () => {
