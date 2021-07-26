@@ -15,7 +15,7 @@
                     [% END %]
                 </div>
                 <div id="accountPanel">
-                    <form class="notifications-form" method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
+                    <form class="notifications-form" method="post" action="">
                         <input type="hidden" name="token" value="[% csrf_token %]">
                         <p class="report-details-small">[% loc('Name:') %]</p>
                         <div class="info-item">   
