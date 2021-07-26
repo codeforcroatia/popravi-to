@@ -1115,8 +1115,9 @@ label[for="message"]{
     margin: 0 2rem;
 }
 
-.sort-form select {
-    border: none;
+.sortby-form select {
+    border: 2px solid #1D1C1C;
+    border-radius: 16px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -1125,6 +1126,7 @@ label[for="message"]{
     margin-top: 2px;
     font-weight: 600;
     background-color: transparent;
+    padding: 0.5rem;
 }
 
 .list-view-button, .map-view-button {
@@ -1835,5 +1837,23 @@ label[for="message"]{
 }
 
 .report-list-filters-wrapper .multi-select-menu {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
+
+.report-list-filters-wrapper .multi-select-container {
+    margin: 1.5rem 0 1.5rem 0;
+}
+
+.multi-select-presets input {
+    margin: 1.25rem 0 1.25rem 0;
+}
+
+.report-list-filters-wrapper .sortby-form {
+    position: absolute;
+    right: 0;
+    top: 0;
+    float: none;
+    margin-top: 0;
+    display: flex;
+}
+
