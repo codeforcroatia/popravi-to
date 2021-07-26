@@ -1095,14 +1095,10 @@ label[for="message"]{
     margin-right: 2rem;
 }
 
-.filter-button:active {
+.filter-button:active, .filter-button:hover{
     border-radius: 8px;
     background-color: #F6F2EF;
-}
-
-.filter-button:hover {
-    border-radius: 8px;
-    background-color: #F6F2EF;
+    padding: 0.6rem;
 }
 
 .filter-icon {
@@ -1850,12 +1846,10 @@ label[for="message"]{
     margin: 1.5rem 0 1.5rem 0;
 }
 
-.multi-select-menuitems input {
+.multi-select-menuitems input, .multi-select-presets input  {
     margin: 1.25rem 0 1.25rem 0;
-}
-
-.multi-select-presets input {
-    margin: 1.25rem 0 1.25rem 0;
+    font-size: 0.825rem;
+    font-weight: 600;
 }
 
 .report-list-filters-wrapper .sortby-form {
@@ -1867,4 +1861,5 @@ label[for="message"]{
     display: flex;
     align-items: baseline;
 }
+
 
