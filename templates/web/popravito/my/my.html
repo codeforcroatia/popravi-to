@@ -139,34 +139,36 @@
                         </div>
                     </div>
 
-                    <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-two">
-                    <label class="page-subtitle tab-label" for="tab-two">[% loc('Your updates') %] (<span id="updates">[% updates.size %]</span>) <span class="arrow-down arrow-down-tab"></span></label>
-                    <div class="panel" tabindex="1">
-                        [% FOREACH u IN updates %]
+                    [% FOREACH u IN updates %]
                         [% IF loop.first %]
-                        <div class="updates-container">
-                            [% INCLUDE 'pagination.html',
-                                pager = updates_pager,
-                                param = 'u'
-                            %]
-                            <section class="updates-content">
-                    [% END %]
-                                <div class="item-list__update-wrap">
-                                    [% INCLUDE 'report/photo.html' object=u %]
-                                    <h2 class="page-text-left-aligned text-bold"> 
-                                        <a href="[% u.url %]">[% u.text | staff_html_markup(u.extra) %]</a>
-                                    </h2>
-                                    <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% u.problem.category | html %]</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
-                                </div>
-                        [% "</section></div>" IF loop.last %]
-                    [% END %]
-                    </div>
+
+                        <input class="radiotab" name="tabs" tabindex="1" type="radio" id="tab-two">
+                        <label class="page-subtitle tab-label" for="tab-two">[% loc('Your updates') %] (<span id="updates">[% updates.size %]</span>) <span class="arrow-down arrow-down-tab"></span></label>
+                        <div class="panel" tabindex="1">
+                            <div class="updates-container">
+                                [% INCLUDE 'pagination.html',
+                                    pager = updates_pager,
+                                    param = 'u'
+                                %]
+                                <section class="updates-content">
+                        [% END %]
+                                    <div class="item-list__update-wrap">
+                                        [% INCLUDE 'report/photo.html' object=u %]
+                                        <h2 class="page-text-left-aligned text-bold"> 
+                                            <a href="[% u.url %]">[% u.text | staff_html_markup(u.extra) %]</a>
+                                        </h2>
+                                        <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% u.problem.category | html %]</span><span class="issue-date">[% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]</span></a>
+                                    </div>
+                            [% "</section></div>" IF loop.last %]
+                        </div>          
+                        [% END %]                      
                 </div>
             </div>
         </div>
     </main>
 
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
+    <script src="[% c.cobrand.base_url %]/cobrands/fixmystreet/fixmystreet.js"></script>
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/toggleFiltersAndView.js"></script>
 </body>
 </html>
