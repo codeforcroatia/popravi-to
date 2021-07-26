@@ -3,7 +3,6 @@ const toggleFiltersAndView = function(){
     let filterButton = document.getElementById('filterButton')
         listButton = document.getElementById('listViewButton')
         mapButton = document.getElementById('mapViewButton')
-        saveCloseButton = document.querySelector('.save-and-close-button')
 
     const mqlMobile = window.matchMedia("(max-width: 768px)")
 
@@ -35,18 +34,10 @@ const toggleFiltersAndView = function(){
         listButton.classList.remove('list-map-active')
     }
 
-    const toggleSaveAndCloseFilters = () => {
-        setTimeout(function(){
-            listButton.classList.remove('visually-hidden')
-            mapButton.classList.remove('visually-hidden')
-        }, 1300)
-    }
-
     mqlMobile.addEventListener('change', toggleProfileTab)
     filterButton.addEventListener('click', toggleFilter)
     listButton.addEventListener('click', toggleListView)
-    mapButton.addEventListener('click', toggleMapView)
-    saveCloseButton.addEventListener('click', toggleSaveAndCloseFilters)   
+    mapButton.addEventListener('click', toggleMapView) 
 
     return {
         toggleProfileTab: toggleProfileTab
