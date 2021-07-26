@@ -1848,6 +1848,9 @@ label[for="message"]{
 
 .multi-select-menuitems input, .multi-select-presets input  {
     margin: 1.25rem 0 1.25rem 0;
+}
+
+.multi-select-menuitems label, .multi-select-presets label {
     font-size: 0.825rem;
     font-weight: 600;
 }
