@@ -1828,3 +1828,12 @@ label[for="message"]{
 .item-list--reports .item-list__heading {
     display: flex;
 }
+
+.report-list-filters-wrapper .multi-select-menuitems {
+    display: flex;
+    flex-direction: column;
+}
+
+.report-list-filters-wrapper .multi-select-menu {
+    margin-top: 1.5rem;
+}
