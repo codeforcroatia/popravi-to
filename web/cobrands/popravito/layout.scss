@@ -523,6 +523,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .filters-container {
     margin-top: 0;
+    align-items: center;
 }
 
 .filtered-content-container {
@@ -921,4 +922,9 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     width: 100vw;
     position: absolute;
     margin-top: 2rem;
+}
+
+.report-list-filters {
+    display: flex;
+    align-items: baseline;
 }
