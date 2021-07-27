@@ -7,6 +7,11 @@ $primary_b: none;
 $left: left;
 $right: right;
 
+@mixin svg-background-image($path) {
+    background-image: url("#{$path}.png");
+    background-image: url("#{$path}.svg"), none;
+}
+
 body {
     font-family: $body-font;
     margin: 0;
