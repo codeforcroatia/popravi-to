@@ -926,14 +926,12 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 */
 
 #map_box {
-    position: absolute;
+    position: relative;
     z-index: auto;
-    top: 4em;
-    bottom: 0;
-    right: 0;
-    left: 29em;
+    margin-top: 2em;
     width: auto;
-    height: auto;
+    height: 600px;
+    border-radius: 20px;
     margin: 0;
 }
 
