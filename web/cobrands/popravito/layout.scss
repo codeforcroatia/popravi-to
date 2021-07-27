@@ -927,11 +927,9 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 */
 
 .filtered-content-map-view #map_box {
-    position: absolute;
+    position: relative;
     z-index: auto;
     top: 4em;
-    right: 0;
-    left: 0;
     width: auto;
     height: 550px;
 }

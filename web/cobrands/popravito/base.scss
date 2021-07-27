@@ -1905,6 +1905,15 @@ label[for="message"]{
     position: absolute;
 }
 
+div .olMap {
+    z-index: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: default;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
 // The map's static image fallback is visible by default.
 // Hide it if javascript has loaded. (We show it again when
 // the page is printed.)
