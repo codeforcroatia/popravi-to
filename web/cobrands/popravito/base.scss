@@ -1091,6 +1091,7 @@ label[for="message"]{
 .filters-container {
     display: flex;
     max-width: 50vw;
+    align-items: center;
 }
 
 .filter-button {
@@ -1126,6 +1127,11 @@ label[for="message"]{
 
 .sort-form {
     margin: 0 2rem;
+}
+
+.sortby-form {
+    display: flex;
+    align-items: baseline;
 }
 
 .sortby-form select {
@@ -1890,6 +1896,12 @@ label[for="message"]{
 .item-list__heading .page-text-light {
     border-bottom: 1px solid #DAD6D3;
     padding-bottom: 1rem;
+}
+
+#map_box #map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
 // The map's static image fallback is visible by default.
