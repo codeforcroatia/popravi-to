@@ -448,6 +448,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .two-col-left {
     max-width: 40%;
     padding: 0 3rem 7.5rem 7.5rem;
+    height: 100vh;
 
     @media only screen and (max-width: 900px){
         padding: 0 3rem 3rem 3rem;
@@ -925,7 +926,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 */
 
-#map_box {
+.filtered-content-map-view #map_box {
     position: absolute;
     z-index: auto;
     top: 4em;
