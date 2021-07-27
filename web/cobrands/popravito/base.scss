@@ -1772,12 +1772,14 @@ label[for="message"]{
 }
 
 .save-and-close-button {
-    background: transparent;
+    /*background: transparent;
     border: none;
     display: flex;
     float: right;
     margin-top: -276px;
     margin-right: 1.5rem;
+    */
+    display: none;
 }
 
 .filter-select {
@@ -1845,6 +1847,8 @@ label[for="message"]{
 
 .item-list--reports .item-list__heading {
     display: flex;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .report-list-filters-wrapper .multi-select-menuitems {
