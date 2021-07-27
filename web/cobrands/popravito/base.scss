@@ -4,6 +4,8 @@ $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
 $primary_text: $headings-font;
 $primary_b: none;
+$left: left;
+$right: right;
 
 body {
     font-family: $body-font;
@@ -1892,28 +1894,28 @@ html.js #map .noscript {
     display: none;
   }
   
-  #fms_pan_zoom {
+#fms_pan_zoom {
     top: 0.5em;
     #{$right}: 0.5em;
-  
+
     .map-reporting & {
-      top: 2.75em; // make space for the semi-transparent "Place pin on map" bar
+        top: 2.75em; // make space for the semi-transparent "Place pin on map" bar
     }
-  }
-  
-  #fms_pan_zoom_panup,
-  #fms_pan_zoom_pandown,
-  #fms_pan_zoom_panleft,
-  #fms_pan_zoom_panright {
+}
+
+#fms_pan_zoom_panup,
+#fms_pan_zoom_pandown,
+#fms_pan_zoom_panleft,
+#fms_pan_zoom_panright {
     display: none;
-  }
-  
-  #fms_pan_zoom_panup,
-  #fms_pan_zoom_pandown,
-  #fms_pan_zoom_panleft,
-  #fms_pan_zoom_panright,
-  #fms_pan_zoom_zoomin,
-  #fms_pan_zoom_zoomout {
+}
+
+#fms_pan_zoom_panup,
+#fms_pan_zoom_pandown,
+#fms_pan_zoom_panleft,
+#fms_pan_zoom_panright,
+#fms_pan_zoom_zoomin,
+#fms_pan_zoom_zoomout {
     position: absolute;
     cursor: pointer;
     width: 36px;
@@ -1924,44 +1926,43 @@ html.js #map .noscript {
     background-size: 156px 72px;
     background-repeat: no-repeat;
     filter: none !important; // Override OpenLayers PNG handling of the navigation
-  }
-  
-  #fms_pan_zoom_panup {
+}
+
+#fms_pan_zoom_panup {
     background-position: 0 0;
     #{$right}: 30px;
     #{$left}: auto;
     top: 0;
-  }
-  #fms_pan_zoom_pandown {
+}
+#fms_pan_zoom_pandown {
     background-position: 0 -36px;
     #{$right}: 30px;
     #{$left}: auto;
     top: 72px;
-  }
-  #fms_pan_zoom_panleft {
+}
+#fms_pan_zoom_panleft {
     background-position: -36px 0;
     width: 48px;
     #{$right}: flip(48px, 0);
     #{$left}: auto;
     top: 36px;
-  }
-  #fms_pan_zoom_panright {
+}
+#fms_pan_zoom_panright {
     background-position: -36px -36px;
     width: 48px;
     #{$right}: flip(0, 48px);
     #{$left}: auto;
     top: 36px;
-  }
-  #fms_pan_zoom_zoomin {
+}
+#fms_pan_zoom_zoomin {
     background-position: -84px 0;
     padding-top: 44px;
     #{$right}: 0;
     top: 0;
-  }
-  #fms_pan_zoom_zoomout {
+}
+#fms_pan_zoom_zoomout {
     background-position: -120px 100%;
     padding-top: 44px;
     #{$right}: 0;
     top: 44px;
-  }
-  
+}
