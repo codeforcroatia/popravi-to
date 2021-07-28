@@ -44,7 +44,4 @@ const toggleFiltersAndView = function(){
 
 toggleFiltersAndView.toggleProfileTab()
 
-setTimeout(()=>{
-    window.dispatchEvent(new Event('resize'));
-    alert('resized')
-}, 1500);
+window.dispatchEvent(new Event('resize'));
