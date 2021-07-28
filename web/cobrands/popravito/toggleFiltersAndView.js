@@ -28,6 +28,7 @@ const toggleFiltersAndView = function(){
     const toggleMapView = () => {
         document.getElementById('reportsContainer').classList.add('visually-hidden')
         document.getElementById('mapContainer').classList.remove('visually-hidden')
+        window.dispatchEvent(new Event('resize'));
         mapButton.classList.add('list-map-active')
         listButton.classList.remove('list-map-active')
     }
@@ -44,4 +45,3 @@ const toggleFiltersAndView = function(){
 
 toggleFiltersAndView.toggleProfileTab()
 
-window.dispatchEvent(new Event('resize'));
