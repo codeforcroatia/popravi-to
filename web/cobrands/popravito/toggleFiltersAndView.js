@@ -46,4 +46,5 @@ toggleFiltersAndView.toggleProfileTab()
 
 setTimeout(()=>{
     window.dispatchEvent(new Event('resize'));
-},2500);
+    alert('resized')
+}, 1500);
