@@ -46,9 +46,6 @@ const toggleFiltersAndView = function(){
 
 toggleFiltersAndView.toggleProfileTab()
 
-
-var fixmystreet = fixmystreet || {};
-
 setTimeout(() => {
     fixmystreet.map.updateSize();
 }, 10000);
