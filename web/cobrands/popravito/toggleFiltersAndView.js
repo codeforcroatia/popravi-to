@@ -5,6 +5,12 @@ const toggleFiltersAndView = function(){
         mapButton = document.getElementById('mapViewButton')
 
     const mqlMobile = window.matchMedia("(max-width: 768px)")
+    
+    window.omap = this.map;
+
+    setTimeout(() => {
+        window.omap.updateSize();
+    }, 10000);
 
     const toggleProfileTab = () => {
         if (mqlMobile.matches){    
