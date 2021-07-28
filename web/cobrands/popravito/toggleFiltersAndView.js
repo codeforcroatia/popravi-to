@@ -28,6 +28,8 @@ const toggleFiltersAndView = function(){
     const toggleMapView = () => {
         document.getElementById('reportsContainer').classList.add('visually-hidden')
         document.getElementById('mapContainer').classList.remove('visually-hidden')
+        
+        //force a window resize event because the map doesn't fully load until the window gets resized
         window.dispatchEvent(new Event('resize'));
         mapButton.classList.add('list-map-active')
         listButton.classList.remove('list-map-active')
