@@ -97,10 +97,6 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     max-width: 540px;
 }
 
-.search-input {
-    width: 100%;
-}
-
 .mobile-hero-images {
     padding-top: 0;
 }
@@ -452,6 +448,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .two-col-left {
     max-width: 40%;
     padding: 0 3rem 7.5rem 7.5rem;
+    height: 100vh;
 
     @media only screen and (max-width: 900px){
         padding: 0 3rem 3rem 3rem;
@@ -527,6 +524,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .filters-container {
     margin-top: 0;
+    align-items: center;
 }
 
 .filtered-content-container {
@@ -547,12 +545,29 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin: 0;
 }
 
+.change-info-fieldset .form-control {
+    width: 300px;
+}
+
+/*.save-and-close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    float: none;
+    margin-top: 0;
+}
+*/
+
+.sort-form {
+    margin: 0;
+}
+
 /* report detail */
 
 .report-details-container {
     margin: 2rem 7.5rem 6rem 7.5rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
 
     @media only screen and (max-width: 1200px){
         margin: 1.7rem 3rem;
@@ -565,7 +580,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .report-details {
     margin-right: 7.5rem;
-    width: 40%;
+    width: 60%;
 
     @media only screen and (max-width: 850px){
         margin-right: 2rem;
@@ -902,3 +917,29 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin: 2.5rem 7rem;
 }
 
+/* native styling */
+
+.filtered-content-map-view #map_box {
+    position: relative;
+    z-index: auto;
+    top: 2em;
+    width: auto;
+    height: 600px;
+}
+
+#map_box #map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.report-list-filters {
+    display: flex;
+    align-items: baseline;
+}
+
+.report-details-container #map_box {
+    position: relative;
+    width: 500px;
+    height: 500px;
+}

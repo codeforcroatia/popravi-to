@@ -1,0 +1,28 @@
+<div class="dropdowns" id="form_category_row">
+    [% IF js %]
+        <fieldset id="form_category_fieldset"
+        [%~ IF c.user.from_body =%]
+          [%~ prefill_report = ( c.cobrand.prefill_report_fields_for_inspector && inspector ) || c.user.has_body_permission_to('report_prefill') %]
+          data-body="[% c.user.from_body.name %]" data-prefill="[% prefill_report %]"
+        [%~ END ~%]
+        >
+            <legend id="form_category_legend">[%~ form_category_label OR loc('Category') ~%]</legend>
+            [% loc('Loading...') %]
+        </fieldset>
+    [% ELSE %]
+        [% IF category_options.size %]
+            [% IF field_errors.category %]
+              <p class='form-error'>[% field_errors.category %]</p>
+            [% END %]
+            [% PROCESS "report/new/category.html" %]
+        [% END %]
+    [% END %]
+</div>
+    
+<div class="js-post-category-messages">
+    [% IF disable_form_message %]
+    <div id="js-category-stopper" class="box-warning" role="alert" aria-live="assertive">
+        [% disable_form_message | safe %]
+    </div>
+    [% END %]
+</div>
