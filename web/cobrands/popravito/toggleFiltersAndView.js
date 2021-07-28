@@ -4,6 +4,8 @@ const toggleFiltersAndView = function(){
         listButton = document.getElementById('listViewButton')
         mapButton = document.getElementById('mapViewButton')
 
+        fixmystreet.map.updateSize();
+
     const mqlMobile = window.matchMedia("(max-width: 768px)")
 
     const toggleProfileTab = () => {
@@ -44,8 +46,9 @@ const toggleFiltersAndView = function(){
 
 toggleFiltersAndView.toggleProfileTab()
 
-window.omap = this.map;
+
+var fixmystreet = fixmystreet || {};
 
 setTimeout(() => {
-    window.omap.updateSize();
+    fixmystreet.map.updateSize();
 }, 10000);
