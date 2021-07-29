@@ -50,8 +50,12 @@
     <p class="form-error js-moderation-error">[% error | safe %]</p>
   [% END %]
 
+    <picture class="fix-icon-detail">
+            <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fix-icon.png">
+            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fix-icon.png" alt="">
+    </picture>
   [% IF can_moderate_title %]
-    <h1 class="moderate-display">[% problem.title | html %]</h1>
+    <h1 class="moderate-display report-title">[% problem.title | html %]</h1>
     <div class="moderate-edit">
       [% IF problem.title != original.title %]
         <label>
@@ -59,10 +63,10 @@
             [% loc('Revert to original title') %]
         </label>
       [% END %]
-        <h1><input class="form-control" type="text" name="problem_title" value="[% (c.req.params.problem_title || problem.title) | html %]" data-original-value="[% original.title | html %]"></h1>
+        <h1 class="report-title"><input class="form-control" type="text" name="problem_title" value="[% (c.req.params.problem_title || problem.title) | html %]" data-original-value="[% original.title | html %]"></h1>
     </div>
   [% ELSE %]
-    <h1>[% problem.title | html %]</h1>
+    <h1 class="report-title">[% problem.title | html %]</h1>
   [% END %]
 
     <div class="moderate-edit">
