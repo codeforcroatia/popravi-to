@@ -1,0 +1,1103 @@
+.nav-menu--main a.report-a-problem-btn {
+  //background-color: #1D1C1C !important;
+}
+.nav-menu--main li:hover {
+  background-color: #1D1C1C !important;
+  color: #FFFFFF !important;
+  border-radius: 20px;
+  a {
+    color: #FFFFFF !important;
+  }
+}
+
+.nav-menu--main a.report-a-problem-btn {
+  background-color: unset !important;
+}
+@import "../sass/h5bp";
+@import "./_colours";
+@import "../sass/mixins";
+
+@import "../sass/_base";
+
+@font-face {
+  font-family: 'DarkerGrotesque-Bold';
+  src: url("fonts/DarkerGrotesque-Bold.ttf") format("ttf")
+  //,url("fonts/DarkerGrotesque-Bold.ttf") format("ttf")
+}
+
+@font-face {
+  font-family: 'DarkerGrotesque-SemiBold';
+  src: url("fonts/DarkerGrotesque-SemiBold.ttf") format("ttf")
+  //,url("fonts/DarkerGrotesque-SemiBold.ttf") format("ttf")
+}
+
+
+
+#site-logo {
+  img {
+    max-height: 40px;
+    max-width: 147px;
+  }
+  @include svg-background-image("/cobrands/popravito/images/popravi-logo-horizontal");
+  background-repeat: no-repeat;
+  background-size: 170px 60px;
+  height: 60px;
+  width: 170px;
+  padding: 0;
+  float: left;
+}
+
+#site-header {
+  background-color: white;
+  position: relative
+}
+
+#main-nav {
+  ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+.nav-menu {
+  li {
+    color: #1D1C1C !important;
+    font-family: $heading-font;
+    border: 0;
+    a, span {
+      color: #1D1C1C !important;
+      &:hover,
+      &:active,
+      &:focus {
+        color: #ffffff !important;
+        background-color: #1D1C1C !important;
+        border-radius: 40px;
+      }
+
+    }
+    //.report-a-problem-btn {
+    //  &:hover,
+    //  &:active,
+    //  &:focus {
+    //    color: #ffffff !important;
+    //    background-color: #1D1C1C !important;
+    //    border-radius: 40px;
+    //  }
+    //}
+  }
+}
+
+
+// Footer CSS
+#footer {
+  background-color: #1D1C1C;
+  margin-top: 10px;
+}
+.footer-flex {
+  padding-top: 48px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    li {
+      list-style-type: none;
+      font-size: 14px;
+      text-underline: none;
+      p {
+        margin: 0;
+        color: #ffffff !important;
+        font-weight: 400;
+        max-width: 384px;
+      }
+      a {
+        color: #ffffff !important;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+#footer-logo {
+  @include svg-background-image("/cobrands/popravito/images/popravi-logo-horizontalwhite");
+  height: 30px;
+  width: 124px;
+  margin-bottom: 24px;
+}
+
+.footer-button {
+  margin-top: 24px;
+  height: 40px;
+  max-width: 168px;
+  max-height: 40px;
+  background-color: #1D1C1C;
+  border: 1px solid #FFFFFF;
+  border-radius: 40px;
+  display: grid;
+  place-items: center;
+  a {
+    margin-top: 6px;
+  }
+}
+
+#fixmystreet-logo {
+  display: inline-block;
+  @include svg-background-image("/cobrands/popravito/images/fixmystreet");
+  width: 134px;
+  height: 26px;
+}
+
+#croatia-logo {
+  display: inline-block;
+  @include svg-background-image("/cobrands/popravito/images/codeforcroatia");
+  width: 72px;
+  height: 50px;
+}
+
+.footer-media {
+  width: 130px;
+  height: 34px;
+  a {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    height: 32px;
+    width: 32px;
+  }
+  &_github {
+    @include svg-background-image("/cobrands/popravito/images/github");
+  }
+  &_twitter {
+    @include svg-background-image("/cobrands/popravito/images/twitter");
+  }
+  &_facebook {
+    @include svg-background-image("/cobrands/popravito/images/facebook");
+  }
+}
+#flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+// homepage Numbers
+.big-numbers {
+  max-width: 600px;
+  display: flex;
+  color: #1D1C1C;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 130px;
+  li {
+    width: 222px;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 32px;
+  }
+  li::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: #F6F2EF;
+    border-radius: 48px;
+    color: #917D6E;
+    //margin-right: 48px;
+  }
+}
+
+// How to report sectiom
+.howtoreport {
+  color: #1D1C1C;
+  h2 {
+    color: inherit !important;
+    font-family: DarkerGrotesque-SemiBold;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 40px;
+    max-width: 400px;
+    white-space: nowrap;
+  }
+}
+#line {
+  height: 2px;
+  border: none;
+  background-color: #1D1C1C;
+}
+
+.reportproblem{
+  color: #1D1C1C !important;
+  margin-top: 40px;
+  padding-bottom: 160px;
+  h2{
+    font-family: DarkerGrotesque-SemiBold;
+    font-style: normal;
+    //font-weight: 600;
+    //font-size: 36px;
+    //line-height: 40px;
+    white-space: nowrap;
+  }
+  #front_stats {
+    margin-top: 20px;
+    max-width: 800px;
+    color: inherit;
+    div {
+      color: inherit;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      big {
+        font-family: Darker Grotesque;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 60px;
+        line-height: 60px;
+        color: inherit;
+      }
+    }
+  }
+}
+
+#front-main-container {
+  position: relative;
+}
+
+#front-main-container-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 346px;
+  h1 {
+    font-family: DarkerGrotesque-Bold;
+    font-style: normal;
+    font-weight: 800;
+    overflow-wrap: break-word;
+    text-align: left;
+    width: 400px;
+    font-size: 40px;
+    line-height: 80px;
+  }
+  h1,h2,form {
+    z-index: 2;
+  }
+}
+
+// Homepage image
+
+#homepage_header {
+  background-image: url("images/homepage_header.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  left: 228px;
+  bottom: 142px;
+  transform: scale(0.75);
+}
+
+#front-main #postcodeForm div {
+  border: none;
+  padding-bottom: 2px;
+  //justify-content: space-between;
+}
+
+.entercode {
+  background-color: #F6F2EF !important;
+  border-radius: 16px !important;
+  margin-right: 16px;
+}
+
+.entersub {
+  background-color: #F25410 !important;
+  border-radius: 40px !important;
+}
+
+
+#front-main a {
+  display: block !important;
+  text-decoration: none;
+  text-underline: none !important;
+  color: #675F58;
+}
+
+#front-main a:before {
+  display: inline-block;
+  @include svg-background-image("/cobrands/popravito/images/icon_location");
+  content: '';
+  width: 20px;
+  height: 20px;
+}
+
+#front-main a:hover {
+  text-decoration: none;
+  color: #1D1C1C;
+}
+
+// Alert Page
+.alertpage {
+  .alertsecond{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .content {
+    display: grid;
+    grid-template-columns: 550px 500px;
+    grid-template-row: 100px 200px 200px;
+    grid-auto-flow: row;
+    grid-template-areas:
+            "left1 right"
+            "left2 right"
+            "left3 right";
+    row-gap: normal;
+    column-gap: normal;
+
+    h1 {
+      grid-area: left1;
+    }
+
+    .alert1 {
+      grid-area: left2;
+    }
+
+    .alert2 {
+      grid-area: left3;
+
+    }
+    p {
+      grid-area: left1;
+      margin-bottom: 40px;
+    }
+
+    form {
+      grid-area: right;
+    }
+  }
+}
+
+.alertpage .content form {
+  background: #E5E1FE;
+  border-radius: 16px;
+  #geolocate_link {
+    display: inline-block !important;
+    text-decoration: none;
+    text-underline: none !important;
+    color: #1D1C1C;
+  }
+  #geolocate_link::before {
+    display: inline-block;
+    @include svg-background-image("/cobrands/popravito/images/icon_location");
+    content: '';
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+#alertlabel {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 32px;
+    color: #1D1C1C;
+}
+
+#alertinput {
+  margin-top: 20px;
+  .form-control {
+    background: #FFFFFF;
+    border-radius: 16px;
+  }
+
+  .entersub {
+    border: none !important;
+    background: #1D1C1C !important;
+    color: white;
+    border-radius: 40px;
+  }
+}
+
+.dashboard-item {
+  .labelled-line-chart {
+    display: grid;
+    grid-template-areas:
+            'span1 span2'
+            'dashboard dashboard';
+    span[data-datasetindex='0'] {
+      grid-area: span1;
+      position: relative;
+      top: 0 !important;
+      left: 0 !important;
+      &:before {
+        //display: block;
+        //back
+        background-image: url("images/orange-square-md.svg");
+        //@include svg-background-image("/cobrands/popravito/images/orange-square-md") !important;
+      }
+    }
+    span[data-datasetindex='1'] {
+      grid-area: span2;
+      position: relative;
+      top: 0 !important;
+      left: 0 !important;
+    }
+
+    div,canvas {
+      grid-area: dashboard;
+      position: relative;
+    }
+  }
+}
+
+// Dashboard
+
+.dashboard-search {
+  background-color: #E5E1FE;
+  border-radius: 16px;
+}
+
+.autocomplete__wrapper {
+  border-radius: 16px;
+}
+.autocomplete__hint, .autocomplete__input {
+  border-radius: 16px;
+  border-color: #fff;
+}
+
+.dashboard-search__submit {
+  border-radius: 40px;
+  max-width: 62px;
+  height: 62px;
+  input {
+    border-radius: 40px !important;
+  }
+}
+
+.dashboard-subheading {
+  border-bottom: 2px solid #000000;
+}
+
+.dashboard-ranking-table {
+  color: #149770;
+}
+
+.dashboard_council, dashboard_categories {
+  color: rgba(0,0,0,0.8);
+}
+
+.dashboard-sparklines {
+  display: flex;
+  justify-content: space-between;
+  div {
+    padding-top: 16px;
+    background-color: #fafafa;
+    border-radius: 16px;
+    //margin-right: 4px;
+    max-width: 120px;
+    max-height: 170px;
+  }
+}
+
+.labelled-sparkline {
+  span {
+    display: grid;
+    place-items: center;
+    color: #675F58;
+    margin-top: 0;
+    strong {
+      color: #1D1C1C !important;
+    }
+    strong:before{
+      //@include svg-background-image("/cobrands/popravito/images/");
+      content:'';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-size: 12px 12px;
+    }
+  }
+
+  span:before{
+    //background-image: ;
+  }
+}
+
+.labelled-line-chart {
+  span {
+    display: grid;
+    place-items: center;
+    color: #675F58;
+    strong {
+      font-size: 38px;
+      line-height: 40px;
+      color: #000 !important;
+    }
+  }
+}
+
+// Report problem page
+.report-a-problem-sidebar {
+  overflow: hidden;
+  //background-color: #fff;
+  //z-index: -2;
+}
+
+#map_box {
+  border-radius: 20px;
+}
+
+.mappage .footer-flex {
+  display: none;
+}
+
+.with-notes #map_sidebar {
+  background-image: none !important;
+  box-shadow: none;
+}
+
+.with-notes .sidebar, .with-notes #report-a-problem-sidebar {
+  display: none !important;
+}
+
+#report-a-problem-main {
+  h1 {
+    font-family: DarkerGrotesque-SemiBold;
+    font-size: 36px !important;
+    line-height: 38px !important;
+  }
+}
+
+.change_location {
+  &__map {
+    color: rgba(0,0,0, 0.85);
+    font-size: 16px;
+    line-height: 24px;
+  }
+  &__search {
+    @include svg-background-image("/cobrands/popravito/images/icon_location");
+    font-size: 14px;
+    line-height: 20px;
+    color: #746AB6;
+
+    &:before {
+      color: inherit;
+    }
+    a {
+      color: inherit;
+      &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.form-section-description {
+  display: none;
+}
+
+.form-control {
+  background-color: #F6F2EF;
+  border-radius: 16px;
+  border: none;
+  box-shadow: none;
+  height: 40px;
+}
+
+.description_tips {
+  display: none;
+}
+
+.dropzone {
+  display: grid;
+  place-items: center;
+}
+
+#side-form {
+  margin: auto;
+}
+
+//#title-hint {
+//  margin-bottom: 15px;
+//}
+
+#form_title, #form_detail, .dropzone {
+  margin-bottom: 40px;
+  margin-top: 15px;
+}
+
+.continuebutton {
+  background-color: inherit !important;
+  display: grid;
+  place-items: center;
+  button {
+    border-radius: 40px;
+    background: #149770;
+    color: #fff !important;
+    max-width: 140px;
+  }
+}
+
+.center {
+  display: grid;
+  place-items: center;
+}
+.editdetails {
+  > div {
+    background-color: transparent !important;
+    button {
+      background: transparent !important;
+      color: $primary_text !important;
+      border: none;
+      display: flex;
+      place-items: center;
+      margin-left: 76px;
+    }
+
+    button:before {
+      content: '';
+      @include svg-background-image("/cobrands/popravito/images/arrow_back");
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+    }
+  }
+}
+
+// Report page submit button
+.js-submit_register {
+  border-radius: 40px;
+  background: #149770;
+  color: #fff !important;
+  max-width: 140px;
+}
+
+.js-submit_register:hover {
+  background: #66DE93;
+  color: #fff !important;
+}
+
+.top-row-extras {
+  position: relative !important;
+}
+
+.hamburger {
+  right:16px;
+  top: 10px;
+  position: absolute !important;
+  display: block !important;
+  width: 35px !important;
+  cursor: pointer !important;
+  z-index: 99;
+
+  appearance: none !important;
+  background: none !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.hamburger .bar, .hamburger:after, .hamburger:before {
+  content: '';
+  display: block !important;
+  width: 100% !important;
+  height: 5px !important;
+  background-color: #1D1C1C !important;
+  margin: 6px 0px !important;
+  transition: 0.4s !important;
+}
+
+.hamburger.is-active:before {
+  transform: rotate(-45deg) translate(-8px, 6px) !important;
+}
+
+.hamburger.is-active:after {
+  transform: rotate(45deg) translate(-9px, -8px) !important;
+}
+
+.hamburger.is-active .bar {
+  opacity: 0;
+}
+
+// ---- Sign In ----
+.create-acc {
+  text-decoration: none;
+  color: #675F58 !important;
+}
+
+#form_sign_in {
+  p {
+    input[name='sign_in_by_password'] {
+      background-color: #149770 !important;
+      background: #149770 !important;
+      border: none !important;
+      margin-top: 16px;
+      border-radius: 40px;
+    }
+  }
+}
+
+input[name='sign_in_by_password'], .green-btn  {
+  background-color: #149770 !important;
+  background: #149770 !important;
+  border: none !important;
+  margin-top: 16px;
+  border-radius: 40px;
+}
+
+
+// ---- Contact Us ----
+.sticky-sidebar {
+  display: none;
+}
+
+#map_sidebar {
+  box-shadow: none !important;
+  #side {
+    //z-index: -2;
+  }
+}
+
+// ---- Profile ----
+
+
+.mappage.with-notes {
+  #map_box {
+    left: 32em !important;
+  }
+  #map_sidebar {
+    width: 30em !important;
+  }
+}
+.mymappage {
+  #map_box {
+    right: 23px !important;
+  }
+
+  .with-actions #map_sidebar {
+    max-width: 63% !important;
+  }
+
+  #map_sidebar {
+    width: 82em !important;
+
+    #side-inspect {
+      background: none !important;
+    }
+  }
+
+  .btn-primary {
+    background-color: #149770 !important;
+    background: #149770 !important;
+    border: none !important;
+  }
+
+  .profile {
+    display: grid !important;
+    grid-template-columns: 500px 1fr;
+    grid-template-areas:
+'account5 content5';
+
+    &__account {
+      grid-area: account5;
+      width: 100%;
+    }
+
+    &__content {
+      grid-area: content5;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-flow: column;
+      row-gap: normal;
+      column-gap: normal;
+      grid-template-areas:
+    'right1 right2'
+    'nav nav'
+    'content1 content1'
+    'content1 content1';
+      width: 100%;
+
+      button {
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+      }
+    }
+
+    ul {
+      li .my-account-buttons {
+        margin: 0 30px !important;
+      }
+    }
+  }
+
+  #profile__yourreports {
+    grid-area: content1;
+  }
+
+  #profile__yourupdates {
+    grid-area: content1;
+    display: none;
+    margin-top: 20px;
+  }
+
+  #profile__nav {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-height: 64px;
+    grid-area: nav;
+
+    &-menu {
+      @include svg-background-image("/cobrands/popravito/images/profile_menu");
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      height: 24px;
+      width: 24px;
+      margin: 20px 5px;
+      border-radius: 2px;
+      background-color: #F6F2EF;
+      cursor: pointer;
+    }
+
+    &-map {
+      @include svg-background-image("/cobrands/popravito/images/profile_map");
+      color: pink;
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      height: 24px;
+      width: 24px;
+      margin: 20px 5px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+  }
+
+  .my-account-buttons {
+    a {
+      border-radius: 4px;
+      text-decoration: none;
+      color: #1D1C1C;
+      background-color: #F6F2EF;
+    }
+  }
+
+  .displaynone {
+    display: none !important;
+  }
+
+  #yourreports {
+    grid-area: right1;
+    border-bottom: 4px solid #1D1C1C;
+    //color: #1D1C1C;
+  }
+
+  #yourupdates {
+    grid-area: right2;
+    color: #DAD6D3;
+  }
+
+  .item-list__item {
+    background-color: inherit !important;
+    border: none;
+    border-bottom: 1px solid #DAD6D3;
+  }
+}
+
+.big-green-banner {
+  color: #1D1C1C !important;
+}
+.grid {
+  display: grid;
+}
+
+@media (max-width: 768px) {
+  .nav-wrapper {
+    display: none !important;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .mobile-nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 100% !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    display: block !important;
+    z-index: 98 !important;
+    background-color: #fff !important;
+    padding-top: 70px !important;
+    transition: 0.4s;
+
+    a {
+      display: block !important;
+      text-align: center !important;
+      max-width: 200px !important;
+      margin: 0 auto 16px !important;
+      text-align: center !important;
+      padding: 12px 16px !important;
+      background-color: #f8f8fa !important;
+
+      color: #1D1C1C !important;
+      text-decoration: none !important;
+    }
+
+    a:hover {
+      background-color: #e5e6eb !important;
+    }
+  }
+
+  .mobile-nav.is-active {
+    left: 0 !important;
+  }
+
+
+  // ----Homepage Mobile ----
+  #front-main-container-flex{
+    padding-bottom: 20px;
+    h1 {
+      width: 270px;
+      font-size: 26px;
+      line-height: 48px;
+      margin-bottom: 0;
+      margin-top: 68px;
+
+    }
+  }
+
+  #homepage_header{
+    left:0;
+    background-image: url("images/homepage_header_mobile.png");
+    bottom: 68px;
+    transform: scale(0.8);
+  }
+
+  .howotoreport {
+    flex-direction: column;
+  }
+
+  .reportproblem {
+    flex-direction: column;
+    h2 {
+      margin-left: 20px;
+    }
+  }
+  // ---- Sing in Mobile ----
+  .dashboard-sparklines {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    div {
+      margin: 5px;
+    }
+  }
+
+  // ---- Alertpage Mobile ----
+  .alertpage {
+    .content {
+      grid-auto-flow: column;
+      grid-template-columns: 1fr;
+      //grid-template-row;
+      grid-template-areas:
+              'left1'
+              'left2'
+              'left3'
+              'right';
+      #alertform {
+        margin: auto !important;
+      }
+    }
+  }
+  // ---- Profile ----
+  #yourreports, #yourupdates, #profile__nav, #profile__yourreports, #profile__yourupdates {
+    max-width: 346px !important;
+  }
+  .accountprofile {
+    display: grid;
+    grid-template-columns: 1fr;
+    //place-items: center;
+    grid-template-areas:
+            'name'
+            'email'
+            'add'
+            'change1'
+            'verify'
+            'change2';
+    &_name {
+      grid-area: name;
+    }
+    &_email {
+      grid-area: email;
+    }
+    &_add {
+      grid-area: add;
+    }
+    &_change1 {
+      grid-area: change1;
+    }
+    &_verify {
+      grid-area: verify;
+    }
+    &_change2 {
+      grid-area: change2;
+    }
+  }
+
+  .mobile #map_box {
+    right: 0px !important;
+    max-width: 330px !important;
+    height: 10em !important;
+  }
+  #side {
+    max-width: 330px !important;
+  }
+  #map_sidebar {
+    max-width: 330px !important;
+  }
+  .profile {
+    max-width: 330px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+            'account5'
+            'content5' !important;
+    &__account {
+
+    }
+    &__content {
+      display: grid !important;
+      max-width: 330px !important;
+      grid-template-columns: 1fr !important;
+      grid-template-areas:
+            'right1'
+            'right2'
+            'nav'
+            'content1' !important;
+    }
+  }
+
+  // ---- Footer Mobile ----
+  .footer-flex {
+    flex-direction: column;
+  }
+
+
+}
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: none !important;
+  }
+}
