@@ -940,6 +940,10 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .report-details-container #map_box {
     position: relative;
-    width: 500px;
-    height: 500px;
+    width: 35rem;
+    height: 35rem;
+}
+
+.report-details-container .two_column_sidebar {
+    max-width: 50vw;
 }
