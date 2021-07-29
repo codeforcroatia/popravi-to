@@ -10,13 +10,13 @@
     [%- IF update_state == "" AND update.mark_open %][% global.last_state = 'confirmed' %][% END %]
 [% END %]
 
-<p class="meta-2">
+<p class="meta-2 page-text-light">
     [% INCLUDE meta_line %]
   [% IF c.user_exists AND c.user.id == update.user_id AND !update.anonymous AND NOT (c.user.from_body OR c.user.is_superuser) %]
     <small>(<a href="/my/anonymize?update=[% update.id | uri %]" class="js-hide-name">[% loc('Hide your name?') %]</a>)</small>
   [% END %]
   [% mlog = update.latest_moderation_log_entry(); IF mlog %]
-    <br /><a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</span></a>
+    <br /><span>[% problem.category %]</span><span class="issue-date">[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</span>
   [% END %]
   [% IF update.get_extra_metadata('open_from_questionnaire') %]
     <br />[% loc('Still open, via questionnaire') %]
