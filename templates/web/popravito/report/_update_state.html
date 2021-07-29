@@ -21,6 +21,8 @@
   [% IF update.get_extra_metadata('open_from_questionnaire') %]
     <br />[% loc('Still open, via questionnaire') %]
   [% END %]
-  <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% update.date %]</span></a>
+  [% mlog = update.latest_moderation_log_entry(); IF mlog %]
+  <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(%s, prettify_dt(mlog.whenedited)) %]</span></a>
+  [% END %]
 </p>
 
