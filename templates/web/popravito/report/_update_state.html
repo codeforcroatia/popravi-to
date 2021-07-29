@@ -22,7 +22,7 @@
     <br />[% loc('Still open, via questionnaire') %]
   [% END %]
   [% mlog = update.latest_moderation_log_entry(); IF mlog %]
-  <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(%s, prettify_dt(mlog.whenedited)) %]</span></a>
+  <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(prettify_dt(mlog.whenedited)) %]</span></a>
   [% END %]
 </p>
 
