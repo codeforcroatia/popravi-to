@@ -16,13 +16,10 @@
     <small>(<a href="/my/anonymize?update=[% update.id | uri %]" class="js-hide-name">[% loc('Hide your name?') %]</a>)</small>
   [% END %]
   [% mlog = update.latest_moderation_log_entry(); IF mlog %]
-    <br />[% tprintf(loc('Moderated by %s'), mlog.admin_user) %]
+    <br /><a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</span></a>
   [% END %]
   [% IF update.get_extra_metadata('open_from_questionnaire') %]
     <br />[% loc('Still open, via questionnaire') %]
-  [% END %]
-  [% mlog = update.latest_moderation_log_entry(); IF mlog %]
-  <a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(prettify_dt(mlog.whenedited)) %]</span></a>
   [% END %]
 </p>
 
