@@ -23,4 +23,4 @@
   [% END %]
 </p>
 
-<a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(loc('%s'), prettify_dt(mlog.whenedited)) %]</span></a>
+<a class="page-text-light" tabindex="0" aria-label="category link"><span>[% problem.category %]</span><span class="issue-date">[% tprintf(%s, prettify_dt(mlog.whenedited)) %]</span></a>
