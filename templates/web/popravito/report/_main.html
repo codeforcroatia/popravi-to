@@ -55,7 +55,7 @@
             <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fix-icon.png" alt="">
     </picture>
   [% IF can_moderate_title %]
-    <h1 class="moderate-display report-title">[% problem.title | html %]</h1>
+    <h1 class="moderate-display report-title">[% problem.title | html %] <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></h1>
     <div class="moderate-edit">
       [% IF problem.title != original.title %]
         <label>
