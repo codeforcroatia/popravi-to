@@ -30,7 +30,7 @@
             [% ELSE %]
                 [% INCLUDE 'report/photo.html' object=update %]
                 <div class="item-list__update-text">
-                    <div class="moderate-display">
+                    <div class="moderate-display page-text-left-aligned text-bold">
                         [% update.text | staff_html_markup(update.extra) %]
                     </div>
                     [% IF can_moderate %]
