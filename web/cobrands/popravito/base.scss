@@ -2001,3 +2001,21 @@ html.js #map .noscript {
 .updates-content .item-list--updates {
     padding-left: 0;
 }
+
+.update-img a span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 20px;
+    height: 0;
+    padding-top: 20px;
+    opacity: 0.5;
+    overflow: hidden;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 16px 16px;
+    background-image: url(/cobrands/fixmystreet/images/magnify.png);
+    background-image: url(/cobrands/fixmystreet/images/magnify.svg),none;
+}
