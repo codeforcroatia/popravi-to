@@ -2035,3 +2035,11 @@ html.js #map .noscript {
     left: 0;
     height: 330px;
 }
+
+.report-title input {
+    padding: 1.2rem;
+}
+
+.report-title input::placeholder {
+    color: $col_big_numbers;
+}
