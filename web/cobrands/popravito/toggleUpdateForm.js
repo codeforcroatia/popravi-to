@@ -6,6 +6,7 @@ const toggleUpdateForm = function(){
         const containersToBeHidden = [document.getElementsByClassName('problem-header'), document.getElementsByClassName('updates-content'), document.getElementsByClassName('shadow-wrap')]
         console.log(containersToBeHidden)
         containersToBeHidden.forEach(container => {
+            console.log(container)
             container.classList.add('visually-hidden')
         });
 
