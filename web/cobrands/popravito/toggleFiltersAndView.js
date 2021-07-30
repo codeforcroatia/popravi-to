@@ -1,10 +1,9 @@
 const toggleFiltersAndView = function(){
 
-    let filterButton = document.getElementById('filterButton')
+    const filterButton = document.getElementById('filterButton')
         listButton = document.getElementById('listViewButton')
         mapButton = document.getElementById('mapViewButton')
-
-    const mqlMobile = window.matchMedia("(max-width: 768px)")
+        mqlMobile = window.matchMedia("(max-width: 768px)")
 
     const toggleProfileTab = () => {
         if (mqlMobile.matches){    
