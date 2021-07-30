@@ -126,9 +126,9 @@
             <label for="moderation_reason">[% loc('Describe why you are moderating this') %]</label>
             <input type="text" class="form-control" name="moderation_reason" value="[% (c.req.params.moderation_reason || '') | html %]">
         </p>
-        <p>
-            <input type="submit" class="green-btn" value="[% loc('Save changes') %]">
-            <input type="button" class="hidden-nojs btn cancel" value="[% loc('Discard changes') %]">
+        <p class="save-discard-container">
+            <input type="submit" class="button primary-button" value="[% loc('Save changes') %]">
+            <input type="button" class="button discard-button" value="[% loc('Discard changes') %]">
         </p>
     </div>
   [% END %]
