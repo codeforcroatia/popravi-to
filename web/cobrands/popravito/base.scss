@@ -1410,7 +1410,7 @@ label[for="message"]{
 }
 
 .issue-details-container {
-    margin-top: 14rem;
+    margin-top: 400px;
 }
 
 .report-details-container-update {
@@ -1423,6 +1423,10 @@ label[for="message"]{
 
 .report-details .description-container {
     margin: 1.5rem 0 0 0;
+}
+
+.report-details-container .report-title {
+    max-width: 100%;
 }
 
 /* faq */
@@ -2022,4 +2026,12 @@ html.js #map .noscript {
 
 .report-details-container .item-list__update-text {
     padding: 1rem 0 1rem 0;
+}
+
+.report-details-container #map_box {
+    position: absolute;
+    top: 17rem;
+    width: 100%;
+    left: 0;
+    height: 330px;
 }
