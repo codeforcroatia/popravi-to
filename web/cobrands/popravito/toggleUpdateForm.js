@@ -3,13 +3,14 @@ const toggleUpdateForm = function(){
           updateForm = document.getElementById('update_form')
     
     const openUpdateForm = () => {
-        const containersToBeHidden = [document.getElementsByClassName('problem-header'), document.getElementsByClassName('updates-content'), document.getElementsByClassName('shadow-wrap')]
-        console.log(containersToBeHidden)
-        containersToBeHidden.forEach(container => {
-            console.log(container)
-            container.classList.add('visually-hidden')
-        });
+        const problemHeader = document.getElementsByClassName('problem-header')
+        const updatesContainer = document.getElementsByClassName('updates-content')
+        const rssContainer = document.getElementsByClassName('shadow-wrap')
 
+        problemHeader.classList.add('visually-hidden')
+        updatesContainer.classList.add('visually-hidden')
+        rssContainer.classList.add('visually-hidden')
+        
         updateForm.classList.remove('visually-hidden')
     }
 
