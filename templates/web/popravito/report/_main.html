@@ -90,16 +90,19 @@
 
     [% INCLUDE 'report/_support.html' %]
 
-    [% INCLUDE 'report/photo.html' object=problem %]
-
     <div class="issue-details-container">
         <p class="page-text-misc">[% loc('Category') %]</p>
         <p class="page-text-left-aligned">[% problem.category %]</p>
-        <br><br>
+        <br>
         <p class="page-text-misc">[% loc('Description') %]</p>
         <p class="page-text-left-aligned">[% problem.detail | add_links | html_para %]</p>
-        <br><br>
+        <br>
     </div>
+    <div class="img-gallery-container">
+      <p class="page-text-misc">[% loc('Photos') %]</p>
+      [% INCLUDE 'report/photo.html' object=problem %]
+      <br>
+    </div> 
 
   [% IF can_moderate %]
     <p class="moderate-edit">

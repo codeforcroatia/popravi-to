@@ -568,6 +568,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin: 2rem 7.5rem 6rem 7.5rem;
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between;
 
     @media only screen and (max-width: 1200px){
         margin: 1.7rem 3rem;
@@ -943,7 +944,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .report-details-container #map_box {
     position: relative;
-    width: 55rem;
+    width: 50rem;
     height: 35rem;
 }
 
@@ -951,6 +952,3 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     max-width: 50vw;
 }
 
-.report-details-container .updates-content {
-    margin-top: 1rem;
-}
