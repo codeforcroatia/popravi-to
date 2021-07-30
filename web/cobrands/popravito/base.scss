@@ -1410,7 +1410,7 @@ label[for="message"]{
 }
 
 .issue-details-container {
-    margin-top: 400px;
+    margin-top: 300px;
 }
 
 .report-details-container-update {
@@ -2084,4 +2084,8 @@ html.js #map .noscript {
     background-color: $primary;
     color: white;
     margin: 1rem 0 1rem 0;
+}
+
+.problem-header .primary-button {
+    margin: 0;
 }
