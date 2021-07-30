@@ -13,4 +13,4 @@ const toggleUpdateForm = function(){
     }
 
     toggleUpdateButton.addEventListener('click', openUpdateForm)
-}
+}()
