@@ -1431,12 +1431,13 @@ label[for="message"]{
 
 .save-discard-container {
     display: flex;
-    justify-content: space-between;
     align-items: baseline;
+    margin-top: 1rem;
 }
 
 .save-discard-container .discard-button {
     border: 1px solid #0e0e0e;
+    margin-left: 1.5rem;
 }
 
 /* faq */
@@ -2052,4 +2053,8 @@ html.js #map .noscript {
 
 .report-title input::placeholder {
     color: $col_big_numbers;
+}
+
+.moderate-display .btn--shortlisted {
+    font-weight: 700;
 }
