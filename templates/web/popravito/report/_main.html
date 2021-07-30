@@ -11,7 +11,7 @@
 
 <div class="problem-header clearfix
     [%~ ' show-moderation' IF show_moderation == 'report' ~%]
-    " data-lastupdate="[% problem.lastupdate %]">
+    " data-lastupdate="[% problem.lastupdate %]" id="problemHeader">
 
 [% IF permissions.planned_reports %]
 <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
