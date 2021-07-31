@@ -1372,6 +1372,7 @@ label[for="message"]{
     display: flex;
     font-size: 0.8rem;
     align-self: center;
+    float: right;
 }
 
 .update-link span {
@@ -1410,7 +1411,7 @@ label[for="message"]{
 }
 
 .issue-details-container {
-    margin-top: 300px;
+    margin-top: 350px;
 }
 
 .report-details-container-update {
