@@ -1372,7 +1372,7 @@ label[for="message"]{
     display: flex;
     font-size: 0.8rem;
     align-self: center;
-    float: right;
+    //float: right;
 }
 
 .update-link span {
@@ -2141,5 +2141,5 @@ html.js #map .noscript {
 .update-form-div .register-button {
     float: none;
     display: block;
-    margin: 1rem 0 1rem 0;
+    margin: 0 auto;
 }
