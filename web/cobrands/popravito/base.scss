@@ -2100,6 +2100,10 @@ html.js #map .noscript {
     padding: 0;
 }
 
+.update-form-div fieldset label {
+    display: block;
+}
+
 .update-form-div .checkbox-group {
     margin-top: 1rem;
 }
@@ -2113,9 +2117,10 @@ html.js #map .noscript {
     display: flex;
     justify-content: center;
     font-weight: 600;
+    margin-bottom: 3rem;
 }
 
-.report-details-container .updates-content .primary-button {
+.form-section-preview--next .primary-button {
     float: none;
-    margin: 0;
+    margin: 1rem 0 1rem 0;
 }
