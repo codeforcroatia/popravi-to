@@ -2095,6 +2095,10 @@ html.js #map .noscript {
     display: block;
 }
 
+.update-form-div input {
+    width: 93%;
+}
+
 .update-form-div fieldset {
     border: 0;
     padding: 0;
@@ -2102,10 +2106,6 @@ html.js #map .noscript {
 
 .update-form-div fieldset label {
     display: block;
-}
-
-.update-form-div fieldset input[type=checkbox] {
-    display: inline
 }
 
 .update-form-div .checkbox-group {
@@ -2126,5 +2126,16 @@ html.js #map .noscript {
 
 .form-section-preview--next .primary-button {
     float: none;
+    margin: 1rem 0 1rem 0;
+}
+
+.checkbox-group {
+    display: flex;
+    width: auto;
+}
+
+.update-form-div .register-button {
+    float: none;
+    display: block;
     margin: 1rem 0 1rem 0;
 }
