@@ -1,11 +1,11 @@
 const toggleUpdateForm = function(){
     const toggleUpdateButton = document.getElementById('updateReportButton')
-          updateForm = document.getElementById('update_form')
+        updateForm = document.querySelector('#update_form')
     
     const openUpdateForm = () => {
         const problemHeader = document.getElementById('problemHeader')
         const updatesContainer = document.getElementById('updatesContent')
-        const rssContainer = document.getElementsByClassName('shadow-wrap')
+        const rssContainer = document.querySelector('.shadow-wrap')
 
         problemHeader.classList.add('visually-hidden')
         updatesContainer.classList.add('visually-hidden')
