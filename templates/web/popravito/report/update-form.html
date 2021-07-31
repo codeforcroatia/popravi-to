@@ -6,10 +6,10 @@
     [% TRY %]
       [% INCLUDE 'report/_update-form-heading.html' %]
     [% CATCH file %]
-      <h2[% IF two_column_sidebar %] class="hidden-js"[% END %]>[% loc( 'Provide an update') %]</h2>
+      <h2 class="report-title" [% IF two_column_sidebar %] class="hidden-js"[% END %]>[% loc( 'Provide an update') %]</h2>
     [% END %]
 
-    <div class="general-notes">
+    <div class="general-notes visually-hidden">
         [% INCLUDE 'report/updates-sidebar-notes.html' %]
     </div>
   [% END %]
