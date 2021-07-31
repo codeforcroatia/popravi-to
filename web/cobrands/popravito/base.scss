@@ -2010,6 +2010,11 @@ html.js #map .noscript {
     top: 44px;
 }
 
+.js .hidden-js {
+    display: none;
+    visibility: hidden;
+}
+
 .moderate-edit {
     margin: 1rem 0 1rem 0;
 }
