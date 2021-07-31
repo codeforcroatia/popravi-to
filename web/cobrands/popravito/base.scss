@@ -2104,6 +2104,10 @@ html.js #map .noscript {
     display: block;
 }
 
+.update-form-div fieldset input[type=checkbox] {
+    display: inline
+}
+
 .update-form-div .checkbox-group {
     margin-top: 1rem;
 }

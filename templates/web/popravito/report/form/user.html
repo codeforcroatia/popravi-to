@@ -2,7 +2,7 @@
 <div class="[% IF type != 'report' %]js-new-report-user-hidden[% END %]
     form-section-preview form-section-preview--next
     [%~ ' hidden-nojs' IF c.user_exists OR NOT c.cobrand.social_auth_enabled %]">
-    <h2 class="form-section-heading form-section-heading--private hidden-nojs">
+    <h2 class="report-title form-section-heading form-section-heading--private hidden-nojs">
         [% loc('Next:') %] [% loc('Tell us about you') %]
     </h2>
 
