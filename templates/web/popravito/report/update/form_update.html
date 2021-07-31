@@ -10,7 +10,7 @@
 [% IF field_errors.update %]
     <div class='form-error'>[% field_errors.update %]</div>
 [% END %]
-<textarea rows="7" cols="30" name="update" class="report-textarea" id="form_update" required>[% update.text | html %]</textarea>
+<textarea rows="7" cols="30" name="update" class="report-textarea" id="form_update" required placeholder="[% loc('New description') %]">[% update.text | html %]</textarea>
 
 <div class="description-container">
     [% INCLUDE report/form/photo_upload.html %]
