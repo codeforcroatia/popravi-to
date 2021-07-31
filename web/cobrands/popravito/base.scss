@@ -2103,3 +2103,19 @@ html.js #map .noscript {
 .update-form-div .checkbox-group {
     margin-top: 1rem;
 }
+
+.description-container .dz-default.dz-message {
+    background-color: transparent;
+    border: 1px solid #DAD6D3;
+    border-radius: 15px;
+    padding: 1rem 3rem 1rem 3rem;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.updates-content .primary-button {
+    float: none;
+    margin: 0;
+}
