@@ -721,6 +721,7 @@ label[for="message"]{
 .report-textarea {
     padding: 1rem;
     color: $col_big_numbers;
+    width: 95%;
 }
 
 .report-details-smallest {
@@ -1255,7 +1256,7 @@ label[for="message"]{
 }
 
 .updates-content .page-text-light {
-    margin-top: -10px;
+    margin-top: 0.5rem;
     margin-left: 0;
     border-bottom: 1px solid #DAD6D3;
     padding-bottom: 1rem;
@@ -1372,6 +1373,7 @@ label[for="message"]{
     display: flex;
     font-size: 0.8rem;
     align-self: center;
+    //float: right;
 }
 
 .update-link span {
@@ -1410,7 +1412,7 @@ label[for="message"]{
 }
 
 .issue-details-container {
-    margin-top: 14rem;
+    margin-top: 420px;
 }
 
 .report-details-container-update {
@@ -1423,6 +1425,21 @@ label[for="message"]{
 
 .report-details .description-container {
     margin: 1.5rem 0 0 0;
+}
+
+.report-details-container .report-title {
+    max-width: 100%;
+}
+
+.save-discard-container {
+    display: flex;
+    align-items: baseline;
+    margin-top: 1rem;
+}
+
+.discard-button {
+    border: 1px solid #0e0e0e;
+    margin-left: 1.5rem;
 }
 
 /* faq */
@@ -1992,4 +2009,166 @@ html.js #map .noscript {
     padding-top: 44px;
     #{$right}: 0;
     top: 44px;
+}
+
+.js .hidden-js {
+    display: none;
+    visibility: hidden;
+}
+
+.moderate-edit {
+    display: none; // gets shown by javascript
+}
+  
+.show-moderation {
+    .moderate-edit {
+        display: block;
+    }
+    .moderate-display {
+        display: none;
+    }
+}
+
+.updates-content .item-list--updates {
+    padding-left: 0;
+}
+
+.update-img a span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 20px;
+    height: 0;
+    padding-top: 20px;
+    opacity: 0.5;
+    overflow: hidden;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 16px 16px;
+    background-image: url(/cobrands/fixmystreet/images/magnify.png);
+    background-image: url(/cobrands/fixmystreet/images/magnify.svg),none;
+}
+
+.report-details-container .item-list__update-text {
+    padding: 1rem 0 1rem 0;
+}
+
+.report-details-container #map_box {
+    position: absolute;
+    top: 230px;
+    width: 100%;
+    left: 0;
+    height: 330px;
+}
+
+.report-title input {
+    padding: 1.2rem;
+}
+
+.report-title input::placeholder {
+    color: $col_big_numbers;
+}
+
+.moderate-display .js-moderate {
+    font-weight: 700;
+}
+
+.btn--provide-update {
+    border: 1px solid #0e0e0e;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 40px;
+    border: none;
+    background-color: transparent;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.inspect-section p {
+    margin: 1rem 0 1rem 0;
+}
+
+.inspect-section .btn-primary {
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 40px;
+    border: none;
+    font-family: $body-font;
+    font-weight: 600;
+    font-size: 0.875rem;
+    background-color: $primary;
+    color: white;
+    margin: 1rem 0 1rem 0;
+}
+
+.problem-header .primary-button {
+    margin: 0;
+}
+
+.moderate-edit textarea {
+    display: block;
+}
+
+.update-form-div input {
+    width: 93%;
+}
+
+.update-form-div fieldset {
+    border: 0;
+    padding: 0;
+}
+
+.update-form-div fieldset label {
+    display: block;
+}
+
+.update-form-div .checkbox-group {
+    margin-top: 1rem;
+}
+
+.description-container .dz-default.dz-message {
+    background-color: transparent;
+    border: 1px solid #DAD6D3;
+    border-radius: 15px;
+    padding: 1rem 3rem 1rem 3rem;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 3rem;
+}
+
+.form-section-preview--next .primary-button {
+    float: none;
+    margin: 1rem 0 1rem 0;
+}
+
+.checkbox-group {
+    display: flex;
+    width: auto;
+}
+
+.update-form-div input[type=checkbox]{
+    width: auto;
+}
+
+.update-form-div .register-button {
+    float: none;
+    display: block;
+    margin: 2rem auto;
+}
+
+.form-section-preview .js-new-report-user-hide {
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 40px;
+    background-color: transparent;
+    font-family: $body-font;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: 1px solid #0e0e0e;
+}
+
+.moderate-display a {
+    text-decoration: underline;
 }
