@@ -1,7 +1,7 @@
 [% allow_creation = (!c.cobrand.only_authed_can_create || (c.user && c.user.from_body)) AND NOT c.cobrand.updates_disallowed(problem) %]
 [% RETURN IF NOT allow_creation %]
 
-<div id="update_form" class="update-form-div">
+<div id="update_form" class="update-form-div visually-hidden">
   [% IF NOT login_success AND NOT oauth_need_email %]
     [% TRY %]
       [% INCLUDE 'report/_update-form-heading.html' %]
