@@ -721,6 +721,7 @@ label[for="message"]{
 .report-textarea {
     padding: 1rem;
     color: $col_big_numbers;
+    width: 93%;
 }
 
 .report-details-smallest {
@@ -2131,7 +2132,7 @@ html.js #map .noscript {
     border: 1px solid #DAD6D3;
     border-radius: 15px;
     padding: 1rem 3rem 1rem 3rem;
-    width: 100%;
+    max-width: 100%;
     display: flex;
     justify-content: center;
     font-weight: 600;
@@ -2155,5 +2156,15 @@ html.js #map .noscript {
 .update-form-div .register-button {
     float: none;
     display: block;
-    margin: 0 auto;
+    margin: 2rem auto;
+}
+
+.js-form-section-preview .btn--block {
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 40px;
+    background-color: transparent;
+    font-family: $body-font;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: 1px solid #0e0e0e;
 }
