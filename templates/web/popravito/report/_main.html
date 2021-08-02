@@ -90,6 +90,7 @@
     [% END %]
 
     [% INCLUDE 'report/_support.html' %]
+    [% INCLUDE 'report/photo.html' object=problem %]
 
     <div class="issue-details-container">
         <p class="page-text-misc">[% loc('Category') %]</p>
@@ -101,7 +102,7 @@
     </div>
     <div class="img-gallery-container">
       <p class="page-text-misc">[% loc('Photos') %]</p>
-      [% INCLUDE 'report/photo.html' object=problem %]
+        
       <br>
     </div> 
 
