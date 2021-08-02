@@ -1,6 +1,8 @@
 <input type="hidden" name="submit_update" value="1">
 <input type="hidden" name="id" value="[% problem.id | html %]">
 
+[% INCLUDE report/form/photo_upload.html %]
+
 [% TRY %][% PROCESS 'report/update/before_update.html' %][% CATCH file %][% END %]
 
 <label for="form_update" class="page-text-misc">[% loc( 'Update' ) %]</label>
