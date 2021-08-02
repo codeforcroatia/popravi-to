@@ -90,8 +90,6 @@
     [% END %]
 
     [% INCLUDE 'report/_support.html' %]
-    [% INCLUDE 'report/photo.html' object=problem %]
-
     
     <div class="moderate-display">
       [% problem.detail | add_links | html_para %]
@@ -107,7 +105,7 @@
     </div>
     <div class="img-gallery-container">
       <p class="page-text-misc">[% loc('Photos') %]</p>
-        
+        [% INCLUDE 'report/photo.html' object=problem %]
       <br>
     </div> 
 
