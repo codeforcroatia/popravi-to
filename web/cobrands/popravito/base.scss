@@ -2016,7 +2016,16 @@ html.js #map .noscript {
 }
 
 .moderate-edit {
-    margin: 1rem 0 1rem 0;
+    display: none; // gets shown by javascript
+}
+  
+.show-moderation {
+    .moderate-edit {
+        display: block;
+    }
+    .moderate-display {
+        display: none;
+    }
 }
 
 .updates-content .item-list--updates {
