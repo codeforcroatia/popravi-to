@@ -8,9 +8,6 @@ const toggleUpdateForm = function(){
         updatesContainer = document.querySelector('.updates-content')
 
     const openUpdateForm = () => {
-        if (mqlMobile.matches){
-            mapContainer.classList.add('visually-hidden')
-        }
 
         problemHeader.classList.add('visually-hidden')
         updatesContainer.classList.add('visually-hidden')
@@ -18,6 +15,12 @@ const toggleUpdateForm = function(){
         updateForm.classList.remove('visually-hidden')
         toggleUpdateButton.classList.add('visually-hidden')
 
+    }
+
+    const hideMap = () => {
+        if (mqlMobile.matches){
+            mapContainer.classList.toggle('visually-hidden')
+        }
     }
 
     const closeUpdateForm = () => {
@@ -29,6 +32,6 @@ const toggleUpdateForm = function(){
     }
 
     toggleUpdateButton.addEventListener('click', openUpdateForm)
-    mqlMobile.addEventListener('change', openUpdateForm)
+    mqlMobile.addEventListener('change', hideMap)
     submitForm.addEventListener('click', closeUpdateForm)
 }()

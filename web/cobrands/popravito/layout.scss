@@ -198,6 +198,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 
 .faq-footer {
+    display: none;
 
     @media only screen and (max-height: 880px) {
         margin-top: 30rem;
