@@ -59,8 +59,6 @@
 
         [% END %]
 
-            [% map_html | safe %]
-
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container" id="side">
                 <div class="progress-bar">
@@ -96,6 +94,10 @@
                     </div>
                 [% END %]
             </div> 
+
+            <div class="map">
+                [% map_html | safe %]
+            </div>
         </div>
         
         [% IF allow_creation %]
