@@ -923,6 +923,12 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 /* native styling */
 
+#map_box {
+    width: 550px;
+    height: 500px;
+    position: relative;
+}
+
 .filtered-content-map-view #map_box {
     position: relative;
     z-index: auto;
@@ -981,8 +987,3 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     width: 100%;
 }
 
-.report-section #map_box {
-    width: 550px;
-    height: 500px;
-    position: relative;
-}
