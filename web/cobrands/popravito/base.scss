@@ -2011,11 +2011,6 @@ html.js #map .noscript {
     top: 44px;
 }
 
-.js .hidden-js {
-    display: none;
-    visibility: hidden;
-}
-
 .moderate-edit {
     display: none; // gets shown by javascript
 }
@@ -2171,6 +2166,11 @@ html.js #map .noscript {
 
 .moderate-display a {
     text-decoration: underline;
+}
+
+.js .hidden-js {
+    display: none;
+    visibility: hidden;
 }
 
 .js .js-reporting-page {
