@@ -30,15 +30,18 @@
     PROCESS "report/photo-js.html";
     PROCESS "maps/${map.type}.html";
 
+    # Only used by Zurich
+    TRY; sidebar_html = PROCESS 'report/new/sidebar.html' js = 1 report.used_map = 1; CATCH file; END;
+
     SET bodyclass = 'mappage';
     SET rss = [ tprintf(loc('Recent local problems, %s', "%s is the site name"), site_name), rss_url ];
     SET extra_js = [];
     INCLUDE 'header.html',
         title  => loc('Viewing a location')
         robots => 'noindex,nofollow';
+
     allow_creation = !c.cobrand.only_authed_can_create || (c.user && c.user.from_body);
 %]
-
 
     <main>
         [% IF allow_creation %]
@@ -55,6 +58,8 @@
             [% END %]
 
         [% END %]
+
+            [% map_html | safe %]
 
         <div class="report-section" id="map_sidebar">
             <div class="instructions-container" id="side">
@@ -91,10 +96,6 @@
                     </div>
                 [% END %]
             </div> 
-
-            <div class="map">
-                [% map_html | safe %]
-            </div>
         </div>
         
         [% IF allow_creation %]
@@ -103,7 +104,7 @@
     </main>
 
     [% INCLUDE 'footer.html' %]
-    
+
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 
 </body>
