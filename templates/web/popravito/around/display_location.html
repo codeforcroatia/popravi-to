@@ -81,9 +81,10 @@
 
                 <div class="continue-container">
                     <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
-                </div> 
-                
-                [% IF allow_creation %]
+                </div>                       
+            </div> 
+
+            [% IF allow_creation %]
                     <div style="display:none" id="side-form">
                         <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
                     [% INCLUDE "report/new/fill_in_details_form.html"
@@ -93,7 +94,6 @@
                     %]
                     </div>
                 [% END %]
-            </div> 
 
             [% map_html | safe %]
         </div>
