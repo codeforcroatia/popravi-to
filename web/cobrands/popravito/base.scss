@@ -2172,3 +2172,13 @@ html.js #map .noscript {
 .moderate-display a {
     text-decoration: underline;
 }
+
+.js .js-reporting-page {
+    display: none;
+    visibility: hidden;
+}
+
+.js .js-reporting-page--active {
+    display: block;
+    visibility: visible;
+}
