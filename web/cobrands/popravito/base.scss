@@ -2182,3 +2182,36 @@ html.js #map .noscript {
     display: block;
     visibility: visible;
 }
+
+.js .js-reporting-page--single .js-reporting-page {
+    display: block;
+    visibility: visible;
+}
+
+.js .js-reporting-page--single .js-reporting-page button {
+    display: none;
+}
+
+.js .js-reporting-page--single .js-reporting-page--single-hidden {
+    display: none;
+}
+
+.js .js-reporting-page--active {
+    display: block;
+    visibility: visible;
+}
+
+.no-js .js-back {
+    display: none;
+}
+
+// hide anything with this class if js is NOT working
+.no-js .hidden-nojs {
+    display: none !important;
+    visibility: hidden;
+  }
+
+.js-hide-if-public-category {
+    display: none;
+}
+  
