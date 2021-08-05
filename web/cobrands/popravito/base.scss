@@ -2168,12 +2168,12 @@ html.js #map .noscript {
     text-decoration: underline;
 }
 
+/*
 .js .hidden-js {
     display: none;
     visibility: hidden;
 }
 
-/*
 .js .js-reporting-page {
     display: none;
     visibility: hidden;
@@ -2210,10 +2210,10 @@ html.js #map .noscript {
     display: none;
 }
   
-*/
-
 // hide anything with this class if js is NOT working
 .no-js .hidden-nojs {
     display: none !important;
     visibility: hidden;
 }
+
+*/
