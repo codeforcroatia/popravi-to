@@ -2208,10 +2208,11 @@ html.js #map .noscript {
 }
 
 // hide anything with this class if js is NOT working
-.no-js .hidden-nojs {
+/*.no-js .hidden-nojs {
     display: none !important;
     visibility: hidden;
   }
+*/
 
 .js-hide-if-public-category {
     display: none;
