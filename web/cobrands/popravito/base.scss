@@ -2193,3 +2193,19 @@ html.js #map .noscript {
 .js-hide-if-public-category {
     display: none;
 }
+
+#side-form fieldset {
+    border: none;
+}
+
+#side-form .change_location {
+    display: none;
+}
+
+#side-form #js-top-message {
+    display: none;
+}
+
+#side-form #report-a-problem-sidebar {
+    display: none;
+}
