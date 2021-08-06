@@ -44,21 +44,21 @@
 [% END %]
 
 [% IF form_detail_placeholder %]
-    <p class="form-hint" id="detail-hint" class="page-text-left-aligned">[% form_detail_placeholder %]</p>
+    <p class="form-hint report-details-small" id="detail-hint">[% form_detail_placeholder %]</p>
 [% END %]
 
 [% IF field_errors.detail %]
     <p class='form-error'>[% field_errors.detail %]</p>
 [% END %]
 
-    <textarea class="form-control report-problem-textarea" rows="7" cols="26" name="detail" id="form_detail" [% IF form_detail_placeholder %]aria-describedby="detail-hint"[% END %][% field_required %]>[% report.detail | html %] placeholder="[% loc('Describe the problem') %]"</textarea>
+    <textarea class="form-control report-problem-textarea" rows="7" cols="26" name="detail" id="form_detail" placeholder="[% loc('Describe the problem') %]" [% IF form_detail_placeholder %]aria-describedby="detail-hint"[% END %][% field_required %]>[% report.detail | html %]</textarea>
 
 [% TRY %][% PROCESS 'report/new/inline-tips.html' %][% CATCH file %][% END %]
 
 [% IF c.cobrand.allow_photo_upload %]
     <input type="hidden" name="upload_fileid" value="[% upload_fileid %]">
     <label for="form_photo">
-        <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]">[% loc('Photo') %]</span>
+        <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]" class="summarise-title">[% loc('Photo') %]</span>
     </label>
 
   [% IF field_errors.photo %]
