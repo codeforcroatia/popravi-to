@@ -5,7 +5,6 @@
     </h2>
 
 [% IF c.user_exists OR NOT c.cobrand.social_auth_enabled %]
-[% IF page]
 <div class="continue-container-two">
   <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
   <button class="button primary-button hidden-nojs js-new-report-user-show" tabindex="0" aria-label="continue to next step">[% loc('Continue') %]<span class="arrow-right"></span></button>
