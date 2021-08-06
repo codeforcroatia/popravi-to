@@ -695,10 +695,15 @@ label[for="message"]{
     justify-content: space-evenly;
     bottom: 0;
     position: absolute;
+    display: none;
 
     @media only screen and (max-height: 840px) {
         bottom: auto;
     }
+}
+
+#side-form .continue-container-two {
+    display: block;
 }
 
 .details-button {
