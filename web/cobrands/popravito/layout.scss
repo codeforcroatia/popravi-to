@@ -990,6 +990,10 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .instructions-container .location-link {
     color: #746AB6;
     margin-bottom: 3rem;
-    display: flex;
+    display: flex !important;
     margin-left: 0;
+}
+
+#side-form {
+    max-width: 50%;
 }

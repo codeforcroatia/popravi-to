@@ -2028,22 +2028,32 @@ html.js #map .noscript {
     padding-left: 0;
 }
 
-.update-img a span {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: block;
-    width: 20px;
-    height: 0;
-    padding-top: 20px;
-    opacity: 0.5;
-    overflow: hidden;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: 16px 16px;
-    background-image: url(/cobrands/fixmystreet/images/magnify.png);
-    background-image: url(/cobrands/fixmystreet/images/magnify.svg),none;
+.update-img {
+    a {
+        display: block;
+        position: relative;
+
+        span {
+        position: absolute;
+        top: 0;
+        #{$right}: 0;
+        display: block;
+        width: 20px;
+        height: 0;
+        padding-top: 20px;
+        opacity: 0.5;
+        overflow: hidden;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 16px 16px;
+        @include svg-background-image('/cobrands/fixmystreet/images/magnify');
+        }
+
+        &:hover span {
+        opacity: 1;
+        }
+    }
 }
 
 .report-details-container .item-list__update-text {
@@ -2168,52 +2178,14 @@ html.js #map .noscript {
     text-decoration: underline;
 }
 
-/*
+// hide anything with this class if js is working
 .js .hidden-js {
     display: none;
     visibility: hidden;
-}
-
-.js .js-reporting-page {
-    display: none;
-    visibility: hidden;
-}
-
-.js .js-reporting-page--active {
-    display: block;
-    visibility: visible;
-}
-
-.js .js-reporting-page--single .js-reporting-page {
-    display: block;
-    visibility: visible;
-}
-
-.js .js-reporting-page--single .js-reporting-page button {
-    display: none;
-}
-
-.js .js-reporting-page--single .js-reporting-page--single-hidden {
-    display: none;
-}
-
-.js .js-reporting-page--active {
-    display: block;
-    visibility: visible;
-}
-
-.no-js .js-back {
-    display: none;
-}
-
-.js-hide-if-public-category {
-    display: none;
-}
+  }
   
 // hide anything with this class if js is NOT working
 .no-js .hidden-nojs {
     display: none !important;
     visibility: hidden;
 }
-
-*/
