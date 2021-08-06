@@ -344,8 +344,14 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin: 2.5rem 0;
 }
 
+.dropdowns select {
+    width: 100%;
+}
+
 .report-title-input {
-    margin-bottom: 0;
+    margin-bottom: 3rem;
+    display: block;
+    width: 100%;
 }
 
 .primary-button-two {
