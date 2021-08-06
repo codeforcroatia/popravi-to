@@ -691,7 +691,6 @@ label[for="message"]{
 .continue-container-two {
     background-color: white;
     width: 100%;
-    display: flex;
     justify-content: space-evenly;
     bottom: 0;
     position: absolute;
@@ -703,7 +702,15 @@ label[for="message"]{
 }
 
 #side-form .continue-container-two {
-    display: block;
+    display: flex;
+}
+
+#side-form .primary-button {
+    display: none;
+}
+
+#side-form .continue-container-two .primary-button {
+    display: flex;
 }
 
 .details-button {
