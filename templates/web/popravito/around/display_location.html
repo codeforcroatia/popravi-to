@@ -80,13 +80,13 @@
                 [% END %]
 
                 <div class="continue-container">
-                    <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
                     <button class="button primary-button" tabindex="0" aria-label="continue to next step" id="skip-this-step">[% loc('Continue') %]<span class="arrow-right"></span></button>
                 </div>                       
             </div> 
 
             [% IF allow_creation %]
-                    <div style="display:none" id="side-form">  
+                    <div style="display:none" id="side-form">
+                        <button class="button primary-button-two js-back problem-back problem-back--top" tabindex="0" aria-label="previous step"><span class="arrow-left"></span>[% loc('Back') %]</button>
                     [% INCLUDE "report/new/fill_in_details_form.html"
                         js = 1,
                         report.used_map = 1
