@@ -2228,3 +2228,15 @@ html.js #map .noscript {
 #side-form #report-a-problem-sidebar {
     display: none;
 }
+
+#problem_form .dz-default.dz-message {
+    background-color: transparent;
+    border: 1px solid #DAD6D3;
+    border-radius: 15px;
+    padding: 1rem 3rem 1rem 3rem;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 3rem;
+}
