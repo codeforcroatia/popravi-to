@@ -56,6 +56,9 @@
 [% TRY %][% PROCESS 'report/new/inline-tips.html' %][% CATCH file %][% END %]
 
 [% IF c.cobrand.allow_photo_upload %]
+
+[% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
+
     <input type="hidden" name="upload_fileid" value="[% upload_fileid %]">
     <label for="form_photo">
         <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]" class="summarise-title">[% loc('Photo') %]</span>
@@ -79,8 +82,6 @@
         <input type="file" name="photo3" id="form_photo3">
     </div>
 [% END %]
-
-[% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
 
 [% IF partial_token %]
     <input type="hidden" name="partial" value="[% partial_token.token %]">
