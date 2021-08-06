@@ -36,7 +36,7 @@
 [% TRY %][% PROCESS 'report/new/after_title.html' %][% CATCH file %][% END %]
 
 [% DEFAULT form_detail_label = loc('Explain what’s wrong') %]
-<label for="form_detail">[% form_detail_label %]</label>
+<label for="form_detail" class="summarise-title">[% form_detail_label %]<span class="details-button" tabindex="0" aria-label="details"></span></label>
 
 [%# You can prevent a hint being printed by setting form_detail_placeholder to a Falsey value %]
 [% IF NOT form_detail_placeholder.defined %]
@@ -44,14 +44,14 @@
 [% END %]
 
 [% IF form_detail_placeholder %]
-    <p class="form-hint" id="detail-hint">[% form_detail_placeholder %]</p>
+    <p class="form-hint" id="detail-hint" class="page-text-left-aligned">[% form_detail_placeholder %]</p>
 [% END %]
 
 [% IF field_errors.detail %]
     <p class='form-error'>[% field_errors.detail %]</p>
 [% END %]
 
-    <textarea class="form-control" rows="7" cols="26" name="detail" id="form_detail" [% IF form_detail_placeholder %]aria-describedby="detail-hint"[% END %][% field_required %]>[% report.detail | html %]</textarea>
+    <textarea class="form-control report-problem-textarea" rows="7" cols="26" name="detail" id="form_detail" [% IF form_detail_placeholder %]aria-describedby="detail-hint"[% END %][% field_required %]>[% report.detail | html %] placeholder="[% loc('Describe the problem') %]"</textarea>
 
 [% TRY %][% PROCESS 'report/new/inline-tips.html' %][% CATCH file %][% END %]
 
