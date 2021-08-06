@@ -2189,3 +2189,7 @@ html.js #map .noscript {
     display: none !important;
     visibility: hidden;
 }
+
+.js-hide-if-public-category {
+    display: none;
+}
