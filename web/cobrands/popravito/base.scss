@@ -67,6 +67,19 @@ label[for="message"]{
     opacity: 0;
 }
 
+
+img {
+    //do this otherwise IE will just not display
+    //any img without a height defined
+    height:auto;
+    max-width: 100%;
+  }
+
+  // So that map popups display correctly
+  #popup img {
+    max-width: none;
+}
+
 .visually-hidden {
     border: 0;
     clip: rect(0, 0, 0, 0);
@@ -2091,14 +2104,10 @@ html.js #map .noscript {
         }
     }
 }
-
-.item-list__item--expandable__actions {
-    clear: both; // clear floated .update-img images
-    @include flex-container();
-  
-    & > * {
-        @include flex(1); // Force equal width children
-    }
+.problem-header .update-img, .item-list .update-img {
+    float: right;
+    margin: 0.3em 0 0.5em 1em;
+    width: 33%;
 }
 
 .report-details-container .item-list__update-text {
