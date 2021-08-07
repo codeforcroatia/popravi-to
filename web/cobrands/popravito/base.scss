@@ -2257,6 +2257,7 @@ html.js #map .noscript {
 
 #side-form fieldset {
     border: none;
+    padding: 0;
 }
 
 #side-form .change_location {
@@ -2275,8 +2276,8 @@ html.js #map .noscript {
     background-color: transparent;
     border: 1px solid #DAD6D3;
     border-radius: 15px;
-    padding: 1rem 3rem 1rem 3rem;
-    max-width: 100%;
+    padding: 1rem 1.7rem;
+    width: 100%;
     display: flex;
     justify-content: center;
     font-weight: 600;
@@ -2291,4 +2292,24 @@ html.js #map .noscript {
 
 #problem_form .description_tips .do, #problem_form .description_tips .dont {
     padding: 0;
+}
+
+#problem_form .form-section-preview p {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+#problem_form h2 {
+    font-family: $headings-font;
+    font-size: 2rem;
+}
+
+#form_sign_in_yes label, #form_sign_in_no label {
+    display: block;
+    margin: 1rem 0;
+}
+
+#form_sign_in_yes input, #form_sign_in_no input {
+    width: calc(100% - 47px);
 }
