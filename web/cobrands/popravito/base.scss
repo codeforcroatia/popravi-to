@@ -2185,13 +2185,8 @@ html.js #map .noscript {
 
 .dz-default.dz-message:before {
     content: "";
-    position: absolute;
     width: 30px;
-    height: 20px;
-    top: 0;
-    bottom: 0;
     background: url('/cobrands/popravito/images/ic-camera.svg') no-repeat center;
-    left: 1.2rem;
 }
 
 .dz-default.dz-message span {
