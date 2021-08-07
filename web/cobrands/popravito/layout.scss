@@ -351,12 +351,12 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .report-title-input {
     margin-bottom: 0;
     display: block;
-    width: 100%;
+    width: calc(100% - 47px);
 }
 
 .report-problem-textarea {
     display: block;
-    width: 94%;
+    width: calc(100% - 65px);
 }
 
 .primary-button-two {

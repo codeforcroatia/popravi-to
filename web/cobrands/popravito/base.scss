@@ -2313,3 +2313,17 @@ html.js #map .noscript {
 #form_sign_in_yes input, #form_sign_in_no input {
     width: calc(100% - 47px);
 }
+
+#form_may_show_name {
+    width: auto;
+}
+
+label[for="form_may_show_name"] {
+    font-weight: 600;
+    font-size: 0.872rem;
+}
+
+#form_sign_in_yes #submitUpdate, #form_sign_in_no #submitUpdate {
+    margin: 4rem 0;
+    float:right;
+}
