@@ -2187,6 +2187,20 @@ html.js #map .noscript {
     margin-top: 1rem;
 }
 
+.dz-default.dz-message {
+    position: relative;
+}
+
+.dz-default.dz-message:before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: url('/cobrands/popravito/images/ic-camera.svg') no-repeat center;
+}
+
 .description-container .dz-default.dz-message {
     background-color: transparent;
     border: 1px solid #DAD6D3;
