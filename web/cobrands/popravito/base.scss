@@ -2314,7 +2314,7 @@ html.js #map .noscript {
     width: calc(100% - 47px);
 }
 
-#form_may_show_name {
+.checkbox-group #form_may_show_name {
     width: auto;
 }
 
@@ -2327,3 +2327,4 @@ label[for="form_may_show_name"] {
     margin: 4rem 0;
     float:right;
 }
+
