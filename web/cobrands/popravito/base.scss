@@ -67,17 +67,9 @@ label[for="message"]{
     opacity: 0;
 }
 
-
 img {
-    //do this otherwise IE will just not display
-    //any img without a height defined
+//do this otherwise IE will just not display any img without a height defined
     height:auto;
-    max-width: 100%;
-  }
-
-  // So that map popups display correctly
-  #popup img {
-    max-width: none;
 }
 
 .visually-hidden {
@@ -2194,11 +2186,16 @@ html.js #map .noscript {
 .dz-default.dz-message:before {
     content: "";
     position: absolute;
-    left: 10px;
+    width: 30px;
+    height: 20px;
     top: 0;
     bottom: 0;
-    width: 20px;
     background: url('/cobrands/popravito/images/ic-camera.svg') no-repeat center;
+    left: 1.2rem;
+}
+
+.dz-default.dz-message span {
+    margin-left: 1rem;
 }
 
 .description-container .dz-default.dz-message {
