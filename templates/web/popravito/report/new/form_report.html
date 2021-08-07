@@ -61,6 +61,8 @@
         <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]" class="summarise-title">[% loc('Photo') %]</span>
     </label>
 
+    [% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
+
   [% IF field_errors.photo %]
     <p class='form-error'>[% field_errors.photo %]</p>
   [% END %]
@@ -79,8 +81,6 @@
         <input type="file" name="photo3" id="form_photo3">
     </div>
 [% END %]
-
-[% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
 
 [% IF partial_token %]
     <input type="hidden" name="partial" value="[% partial_token.token %]">

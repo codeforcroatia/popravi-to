@@ -1292,6 +1292,7 @@ img {
     margin-left: 0;
     border-bottom: 1px solid #DAD6D3;
     padding-bottom: 1rem;
+    width: 100%;
 }
 
 .updates-content .page-text-light :not(.issue-date) {
@@ -2274,4 +2275,14 @@ html.js #map .noscript {
     justify-content: center;
     font-weight: 600;
     margin-bottom: 3rem;
+}
+
+#problem_form .description_tips {
+    font-size: 0.875rem;
+    margin: 0 0 2rem 0;
+    display: inline;
+}
+
+#problem_form .description_tips .do, #problem_form .description_tips .dont {
+    padding: 0;
 }
