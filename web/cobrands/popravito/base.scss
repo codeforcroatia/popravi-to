@@ -2047,6 +2047,23 @@ html.js #map .noscript {
     padding-left: 0;
 }
 
+// A wrapper that's put around .update-imgs if there are more than 1 in a row
+.update-img-set {
+    text-align: center;
+    margin: 0 0 1em;
+
+    .update-img {
+        float: none;
+        display: inline-block;
+        margin: 0;
+        width: 31%;
+    }
+
+    .update-img + .update-img {
+        margin: flip(0 0 0 0.5em, 0 0.5em 0 0);
+    }
+}
+
 .update-img {
     a {
         display: block;
@@ -2072,6 +2089,15 @@ html.js #map .noscript {
         &:hover span {
         opacity: 1;
         }
+    }
+}
+
+.item-list__item--expandable__actions {
+    clear: both; // clear floated .update-img images
+    @include flex-container();
+  
+    & > * {
+        @include flex(1); // Force equal width children
     }
 }
 
