@@ -1,0 +1,35 @@
+[% INCLUDE 'header.html', bodyclass = 'fullwidthpage', title = loc('Create a report') %]
+
+<div class="confirmation-header confirmation-header--inbox modal-container">
+    <section class="modal register-container">
+        <form class="button-link">
+            <button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button>
+        </form>
+        <picture class="report-successful-logo">
+            <source srcset="./images/report-successful.png">
+            <img src="./images/report-successful.png" alt="">
+        </picture>
+        <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
+
+        <p class="page-text-left-aligned">
+        [% IF email_type == 'problem' %]
+            [% loc("Click the link in our confirmation email to publish your problem.") %]
+        [% ELSIF email_type == 'update' %]
+            [% loc("Click the link in our confirmation email to publish your update.") %]
+        [% ELSIF email_type == 'alert' %]
+            [% loc("Click the link in our confirmation email to activate your alert.") %]
+        [% END %]
+        </p>
+
+        [% TRY %][% INCLUDE '_email_sent_extra.html' %][% CATCH file %][% END %]
+
+        <p>
+            [% loc("Can&rsquo;t find our email? Check your spam folder&nbsp;&ndash; that&rsquo;s the solution 99% of the time.") %]
+        </p>
+        <form class="button-link">
+            <button formaction="/" class="button register-button register-button-two" tabindex="0" aria-label="ok">OK</button>
+        </form>
+    </section>
+</div>
+
+[% INCLUDE 'footer.html' %]
