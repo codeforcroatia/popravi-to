@@ -2315,6 +2315,14 @@ html.js #map .noscript {
     width: calc(100% - 47px);
 }
 
+#form_sign_in_yes input[type="checkbox"], #form_sign_in_no input[type="checkbox"] {
+    width: auto;
+}
+
+#form_sign_in_yes input[type="submit"], #form_sign_in_no input[type="submit"] {
+    width: auto;
+}
+
 .checkbox-group #form_may_show_name {
     width: auto;
 }
