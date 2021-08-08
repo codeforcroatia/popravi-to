@@ -715,10 +715,8 @@ img {
 
 #side-form .continue-container-two {
     display: flex;
-}
-
-#side-form .primary-button {
-    display: none;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #side-form .continue-container-two .primary-button {
@@ -2343,4 +2341,24 @@ label[for="form_may_show_name"] {
 
 .above-form {
     display: none;
+}
+
+#side-form {
+    margin: 1.5rem;
+}
+
+#side-form .dropdowns {
+    margin: 1.5rem 0;
+}
+
+.rap-notes-trigger {
+    display: none;
+}
+
+#mapForm #map_box {
+    display: none;
+}
+
+#mapForm {
+    margin: 1.5rem;
 }

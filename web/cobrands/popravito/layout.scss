@@ -1023,3 +1023,15 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .above-form {
     display: block;
 }
+
+#side-form {
+    margin: 0;
+}
+
+#side-form .primary-button {
+    display: none;
+}
+
+#mapForm #map_box {
+    display: none;
+}
