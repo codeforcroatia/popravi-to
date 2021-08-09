@@ -225,6 +225,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
+    margin: 0;
 }
 
 .misc-logo {
@@ -271,19 +272,19 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     display: flex;
     justify-content: space-between;
     padding: 0;
+    height: 100vh;
 
     @media only screen and (max-width: 1200px){
         margin: 1.7rem 3rem;
     }
 }
 
-.map {
-    border-radius: 20px;
+/*.map { 
     width: auto;
     vertical-align: initial;
     position: inherit;
 }
-
+*/
 .instructions-container {
     margin-right: 3.5rem;
 }
@@ -344,8 +345,19 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin: 2.5rem 0;
 }
 
+.dropdowns select {
+    width: 100%;
+}
+
 .report-title-input {
     margin-bottom: 0;
+    display: block;
+    width: calc(100% - 47px);
+}
+
+.report-problem-textarea {
+    display: block;
+    width: calc(100% - 65px);
 }
 
 .primary-button-two {
@@ -945,8 +957,8 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .report-details-container #map_box {
     position: relative;
-    width: 50rem;
-    height: 35rem;
+    width: 550px;
+    height: 500px;
     top: 0;
 }
 
@@ -981,3 +993,42 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .description-container .dz-default.dz-message {
     width: 100%;
 }
+
+.instructions-container .location-link {
+    color: #746AB6;
+    margin-bottom: 3rem;
+    display: flex !important;
+    margin-left: 0;
+}
+
+#side-form {
+    max-width: 35%;
+    margin-right: 3.5rem;
+}
+
+.report-section #map_box {
+    width: 65%;
+    height: auto;
+    position: relative;
+}
+
+.problem-header .update-img, .item-list .update-img {
+    width: auto;
+}
+
+#side-form #map_box {
+    display: block;
+}
+
+.above-form {
+    display: block;
+}
+
+#side-form {
+    margin: 0;
+}
+
+#side-form .primary-button {
+    display: none;
+}
+

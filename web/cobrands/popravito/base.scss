@@ -67,6 +67,11 @@ label[for="message"]{
     opacity: 0;
 }
 
+img {
+//do this otherwise IE will just not display any img without a height defined
+    height:auto;
+}
+
 .visually-hidden {
     border: 0;
     clip: rect(0, 0, 0, 0);
@@ -223,7 +228,7 @@ label[for="message"]{
 }
 
 .location-link {
-    display: flex !important;
+    display: flex;
     margin: 1.5rem 0 0 2rem;
 }
 
@@ -670,6 +675,7 @@ label[for="message"]{
     background-color: transparent;
     color: black;
     display: flex;
+    align-items: center;
     padding: 0.75rem 2rem;
     margin: 1.8rem;
 }
@@ -688,17 +694,33 @@ label[for="message"]{
     margin: 0 0 2rem 0;
 }
 
+.summarise-title {
+    display: flex;
+    font-weight: 700;
+    margin-top: 3rem;
+}
+
 .continue-container-two {
     background-color: white;
     width: 100%;
-    display: flex;
     justify-content: space-evenly;
     bottom: 0;
     position: absolute;
+    display: none;
 
     @media only screen and (max-height: 840px) {
         bottom: auto;
     }
+}
+
+#side-form .continue-container-two {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#side-form .continue-container-two .primary-button {
+    display: flex;
 }
 
 .details-button {
@@ -1260,6 +1282,7 @@ label[for="message"]{
     margin-left: 0;
     border-bottom: 1px solid #DAD6D3;
     padding-bottom: 1rem;
+    width: 100%;
 }
 
 .updates-content .page-text-light :not(.issue-date) {
@@ -2011,11 +2034,6 @@ html.js #map .noscript {
     top: 44px;
 }
 
-.js .hidden-js {
-    display: none;
-    visibility: hidden;
-}
-
 .moderate-edit {
     display: none; // gets shown by javascript
 }
@@ -2033,22 +2051,55 @@ html.js #map .noscript {
     padding-left: 0;
 }
 
-.update-img a span {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: block;
-    width: 20px;
-    height: 0;
-    padding-top: 20px;
-    opacity: 0.5;
-    overflow: hidden;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: 16px 16px;
-    background-image: url(/cobrands/fixmystreet/images/magnify.png);
-    background-image: url(/cobrands/fixmystreet/images/magnify.svg),none;
+// A wrapper that's put around .update-imgs if there are more than 1 in a row
+.update-img-set {
+    text-align: center;
+    margin: 0 0 1em;
+
+    .update-img {
+        float: none;
+        display: inline-block;
+        margin: 0;
+        width: 31%;
+    }
+
+    .update-img + .update-img {
+        margin: flip(0 0 0 0.5em, 0 0.5em 0 0);
+    }
+}
+
+.update-img {
+    a {
+        display: block;
+        position: relative;
+
+        span {
+        position: absolute;
+        top: 0;
+        #{$right}: 0;
+        display: block;
+        width: 20px;
+        height: 0;
+        padding-top: 20px;
+        opacity: 0.5;
+        overflow: hidden;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 16px 16px;
+        @include svg-background-image('/cobrands/fixmystreet/images/magnify');
+        }
+
+        &:hover span {
+        opacity: 1;
+        }
+    }
+}
+
+.problem-header .update-img, .item-list .update-img {
+    float: right;
+    margin: 0.3em 0 0.5em 1em;
+    width: auto;
 }
 
 .report-details-container .item-list__update-text {
@@ -2127,6 +2178,20 @@ html.js #map .noscript {
     margin-top: 1rem;
 }
 
+.dz-default.dz-message {
+    position: relative;
+}
+
+.dz-default.dz-message:before {
+    content: "";
+    width: 30px;
+    background: url('/cobrands/popravito/images/ic-camera.svg') no-repeat center;
+}
+
+.dz-default.dz-message span {
+    margin-left: 1rem;
+}
+
 .description-container .dz-default.dz-message {
     background-color: transparent;
     border: 1px solid #DAD6D3;
@@ -2147,6 +2212,7 @@ html.js #map .noscript {
 .checkbox-group {
     display: flex;
     width: auto;
+    align-items: center;
 }
 
 .update-form-div input[type=checkbox]{
@@ -2171,4 +2237,120 @@ html.js #map .noscript {
 
 .moderate-display a {
     text-decoration: underline;
+}
+
+// hide anything with this class if js is working
+.js .hidden-js {
+    display: none;
+    visibility: hidden;
+  }
+  
+// hide anything with this class if js is NOT working
+.no-js .hidden-nojs {
+    display: none !important;
+    visibility: hidden;
+}
+
+.js-hide-if-public-category {
+    display: none;
+}
+
+#side-form fieldset {
+    border: none;
+    padding: 0;
+}
+
+#side-form .change_location {
+    display: none;
+}
+
+#side-form #js-top-message {
+    display: none;
+}
+
+#side-form #report-a-problem-sidebar {
+    display: none;
+}
+
+#problem_form .dz-default.dz-message {
+    background-color: transparent;
+    border: 1px solid #DAD6D3;
+    border-radius: 15px;
+    padding: 1rem 1.7rem;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 3rem;
+}
+
+#problem_form .description_tips {
+    font-size: 0.875rem;
+    margin: 0 0 2rem 0;
+    display: inline;
+}
+
+#problem_form .description_tips .do, #problem_form .description_tips .dont {
+    padding: 0;
+}
+
+#problem_form .form-section-preview p {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+#problem_form h2 {
+    font-family: $headings-font;
+    font-size: 2rem;
+}
+
+#form_sign_in_yes label, #form_sign_in_no label {
+    display: block;
+    margin: 1rem 0;
+}
+
+#form_sign_in_yes input, #form_sign_in_no input {
+    width: calc(100% - 47px);
+}
+
+#form_sign_in_yes input[type="checkbox"], #form_sign_in_no input[type="checkbox"] {
+    width: auto;
+}
+
+#form_sign_in_yes input[type="submit"], #form_sign_in_no input[type="submit"] {
+    width: auto;
+}
+
+.checkbox-group #form_may_show_name {
+    width: auto;
+}
+
+label[for="form_may_show_name"] {
+    font-weight: 600;
+    font-size: 0.872rem;
+}
+
+#form_sign_in_yes #submitUpdate, #form_sign_in_no #submitUpdate {
+    margin: 4rem 0;
+    float:right;
+}
+
+#side-form #map_box {
+    display: none;
+}
+
+.above-form {
+    display: none;
+}
+
+#side-form {
+    margin: 1.5rem;
+}
+
+#side-form .dropdowns {
+    margin: 1.5rem 0;
+}
+
+.rap-notes-trigger {
+    display: none;
 }

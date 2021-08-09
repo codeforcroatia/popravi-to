@@ -30,15 +30,18 @@
     PROCESS "report/photo-js.html";
     PROCESS "maps/${map.type}.html";
 
+    # Only used by Zurich
+    TRY; sidebar_html = PROCESS 'report/new/sidebar.html' js = 1 report.used_map = 1; CATCH file; END;
+
     SET bodyclass = 'mappage';
     SET rss = [ tprintf(loc('Recent local problems, %s', "%s is the site name"), site_name), rss_url ];
     SET extra_js = [];
     INCLUDE 'header.html',
         title  => loc('Viewing a location')
         robots => 'noindex,nofollow';
+
     allow_creation = !c.cobrand.only_authed_can_create || (c.user && c.user.from_body);
 %]
-
 
     <main>
         [% IF allow_creation %]
@@ -77,32 +80,31 @@
                 [% END %]
 
                 <div class="continue-container">
-                    <button class="button primary-button" tabindex="0" aria-label="continue to next step">Nastavi<span class="arrow-right"></span></button>
-                </div> 
-                
-                [% IF allow_creation %]
+                    <button class="button primary-button" tabindex="0" aria-label="continue to next step" id="skip-this-step">[% loc('Continue') %]<span class="arrow-right"></span></button>
+                </div>                       
+            </div> 
+
+            [% IF allow_creation %]
                     <div style="display:none" id="side-form">
-                        <a href="#" class="js-back problem-back problem-back--top">[% loc('Back') %]</a>
                     [% INCLUDE "report/new/fill_in_details_form.html"
                         js = 1,
                         report.used_map = 1
                         report.name = c.user.name
                     %]
                     </div>
-                [% END %]
-            </div> 
+            [% END %]
 
-            <div class="map">
-                [% map_html | safe %]
-            </div>
+            [% map_html | safe %]
         </div>
         
         [% IF allow_creation %]
         </form>
         [% END %]
     </main>
+
+    [% INCLUDE 'footer.html' %]
+
     <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
 
-    [% PROCESS 'common_scripts.html' %]
 </body>
 </html>
