@@ -5,8 +5,13 @@
 
     <div class="editdetails hidden-js js-new-report-user-shown">
         <div class="hidden-nojs form-section-preview">
-            <h2 class="center form-section-heading">[% loc('About the problem') %]</h2>
-            <p>
+            <div class="reportsteps">
+                <div class="reportstep"></div>
+                <div class="reportstep"></div>
+                <div class="reportstepactive"></div>
+            </div>
+            <h2 class="center form-section-heading" id="displaynone">[% loc('About the problem') %]</h2>
+            <p id="displaynone">
                 <strong class="js-form-section-preview" data-source="#form_title"></strong>
                 <span class="js-form-section-preview" data-source="#form_detail"></span>
             </p>

@@ -24,7 +24,18 @@ $col_big_numbers: #ccc;
 
 $col_click_map: $bluey;
 
+@font-face {
+  font-family: 'DarkerGrotesque-Bold';
+  src: url("fonts/DarkerGrotesque-Bold") format("ttf");
+}
+
+@font-face {
+  font-family: 'DarkerGrotesque-SemiBold';
+  src: url("fonts/DarkerGrotesque-SemiBold") format("ttf");
+}
 //Fonts
-$heading-font: DarkerGrotesque-Bold, Arial, Helvetica, sans-serif;
-$bold-font: DarkerGrotesque-SemiBold, Arial, Helvetica, sans-serif;
+$primary-bold: DarkerGrotesque-Bold, Arial, Helvetica, sans-serif;
+$primary-semi: DarkerGrotesque-SemiBold, Arial, Helvetica, sans-serif;
+
+$primary-color: #1D1C1C;
 

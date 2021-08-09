@@ -1,5 +1,11 @@
-.nav-menu--main a.report-a-problem-btn {
-  //background-color: #1D1C1C !important;
+//body {
+//  font-family: 'open-sans' !important;
+//}
+
+.nav-menu--main .report-a-problem-btn {
+  background-color: #1D1C1C !important;
+  color: #FFFFFF !important;
+  border-radius: 1.25em !important;
 }
 .nav-menu--main li:hover {
   background-color: #1D1C1C !important;
@@ -11,7 +17,7 @@
 }
 
 .nav-menu--main a.report-a-problem-btn {
-  background-color: unset !important;
+  //background-color: unset !important;
 }
 @import "../sass/h5bp";
 @import "./_colours";
@@ -76,15 +82,6 @@
       }
 
     }
-    //.report-a-problem-btn {
-    //  &:hover,
-    //  &:active,
-    //  &:focus {
-    //    color: #ffffff !important;
-    //    background-color: #1D1C1C !important;
-    //    border-radius: 40px;
-    //  }
-    //}
   }
 }
 
@@ -265,7 +262,7 @@
   }
 }
 
-#front-main-container {
+#front-main-container-flex {
   position: relative;
 }
 
@@ -273,7 +270,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-bottom: 346px;
+  padding-bottom: 540px;
   h1 {
     font-family: DarkerGrotesque-Bold;
     font-style: normal;
@@ -291,6 +288,35 @@
 
 // Homepage image
 
+#geolocate_homepage {
+  display: inline-block !important;
+  text-decoration: none;
+  text-underline: none !important;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  a {
+    color: #746AB6 !important;
+    text-decoration: none;
+  }
+}
+#geolocate_homepage::before {
+  display: inline-block;
+  @include svg-background-image("/cobrands/popravito/images/icon_location_purple");
+  content: '';
+  width: 20px;
+  height: 20px;
+  margin: 2px 4px 0 0;
+}
+
+.frontpage .fullwidthpage {
+  .item-list__item .item-list--reports__item  {
+    a {
+      img {
+        display: none;
+      }
+    }
+  }
+}
 #homepage_header {
   background-image: url("images/homepage_header.png");
   background-repeat: no-repeat;
@@ -359,9 +385,12 @@
             "left3 right";
     row-gap: normal;
     column-gap: normal;
+    margin-bottom: 60px;
 
     h1 {
       grid-area: left1;
+      font-family: $primary-bold !important;
+      font-weight: 800;
     }
 
     .alert1 {
@@ -403,7 +432,7 @@
 
 
 #alertlabel {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 20px;
     line-height: 32px;
     color: #1D1C1C;
@@ -414,6 +443,13 @@
   .form-control {
     background: #FFFFFF;
     border-radius: 16px;
+    :placeholder-shown {
+      display: inline-block;
+      @include svg-background-image("/cobrands/popravito/images/icon_location");
+      content: '';
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .entersub {
@@ -424,6 +460,27 @@
   }
 }
 
+#alerts {
+  font-family: $primary-bold !important;
+  font-weight: 700;
+}
+.alerts__nearby-activity__photos {
+  display: none;
+}
+
+// ---- All Repots Page ----
+.dashboard {
+  .nav-menu {
+    > a[href='/reports'] {
+      border: 2px solid #000000 !important;
+    }
+  }
+}
+
+.dashboard-header {
+  display: none;
+}
+
 .dashboard-item {
   .labelled-line-chart {
     display: grid;
@@ -431,10 +488,12 @@
             'span1 span2'
             'dashboard dashboard';
     span[data-datasetindex='0'] {
+      font-family: $primary-bold !important;
       grid-area: span1;
       position: relative;
       top: 0 !important;
       left: 0 !important;
+      margin-bottom: 20px;
       &:before {
         //display: block;
         //back
@@ -443,10 +502,12 @@
       }
     }
     span[data-datasetindex='1'] {
+      font-family: $primary-bold !important;
       grid-area: span2;
       position: relative;
       top: 0 !important;
       left: 0 !important;
+      margin-bottom: 20px;
     }
 
     div,canvas {
@@ -461,6 +522,9 @@
 .dashboard-search {
   background-color: #E5E1FE;
   border-radius: 16px;
+  h2 {
+    font-family: $primary-bold !important;
+  }
 }
 
 .autocomplete__wrapper {
@@ -482,6 +546,7 @@
 
 .dashboard-subheading {
   border-bottom: 2px solid #000000;
+  font-family: $primary-bold !important;
 }
 
 .dashboard-ranking-table {
@@ -543,10 +608,59 @@
 }
 
 // Report problem page
+.click-the-map {
+  font-size: 16px;
+  line-height: 24px;
+  color: #1D1C1C;
+}
+
+.reportsteps {
+  display: flex;
+  justify-content: space-between;
+  width: 68px;
+  margin-bottom: 15px;
+}
+
+.reportstep {
+  @include svg-background-image("/cobrands/popravito/images/reportstep");
+  display: inline-block;
+  content: '';
+  width: 8px;
+  height: 8px;
+}
+
+.reportstepactive {
+  @include svg-background-image("/cobrands/popravito/images/reportstepactive");
+  display: inline-block;
+  width: 20px !important;
+  height: 8px;
+}
+
+
+.form-section-heading {
+  font-family: $primary-semi;
+}
 .report-a-problem-sidebar {
   overflow: hidden;
-  //background-color: #fff;
-  //z-index: -2;
+}
+
+#arrow-right {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: #1D1C1C;
+  :hover {
+    text-decoration: none;
+    color: #1D1C1C;
+  }
+}
+
+#arrow-right:after {
+  content: '';
+  display: inline-block;
+  @include svg-background-image("/cobrands/popravito/images/arrow-right");
+  width: 24px;
+  height: 24px;
 }
 
 #map_box {
@@ -623,9 +737,6 @@
   margin: auto;
 }
 
-//#title-hint {
-//  margin-bottom: 15px;
-//}
 
 #form_title, #form_detail, .dropzone {
   margin-bottom: 40px;
@@ -776,7 +887,8 @@ input[name='sign_in_by_password'], .green-btn  {
 }
 .mymappage {
   #map_box {
-    right: 23px !important;
+    //right: 23px !important;
+    left: 100em !important;
   }
 
   .with-actions #map_sidebar {
@@ -784,7 +896,7 @@ input[name='sign_in_by_password'], .green-btn  {
   }
 
   #map_sidebar {
-    width: 82em !important;
+    width: 96% !important;
 
     #side-inspect {
       background: none !important;
@@ -909,13 +1021,25 @@ input[name='sign_in_by_password'], .green-btn  {
     border-bottom: 1px solid #DAD6D3;
   }
 }
+// ---- To display none smth ----
+#displaynone {
+  display: none;
+}
 
 .big-green-banner {
   color: #1D1C1C !important;
+  font-family: $primary-semi;
 }
 .grid {
   display: grid;
 }
+
+#alert_email_button {
+  border-radius: 40px;
+  background: #149770;
+  color: #fff !important;
+}
+
 
 @media (max-width: 768px) {
   .nav-wrapper {
@@ -1015,6 +1139,7 @@ input[name='sign_in_by_password'], .green-btn  {
       #alertform {
         margin: auto !important;
       }
+
     }
   }
   // ---- Profile ----
@@ -1093,6 +1218,9 @@ input[name='sign_in_by_password'], .green-btn  {
 
 }
 @media (min-width: 768px) {
+  #front-main-container-flex {
+    position: relative;
+  }
   .mobile-nav {
     display: none !important;
   }
@@ -1100,4 +1228,11 @@ input[name='sign_in_by_password'], .green-btn  {
   .hamburger {
     display: none !important;
   }
+
+  #homepage_header {
+    background-image: url("images/homepage_header.png");
+
+  }
 }
+
+

@@ -81,5 +81,5 @@ window.onload = function () {
 
     };
 
-    const mapPageId = document.getElementsByClassName('mappage');
+
 }

@@ -7,6 +7,7 @@ scripts = [];
 
 scripts.push(
     start _ "/js/translation_strings." _ lang_code _ ".js?" _ Math.int( date.now / 3600 ),
+version('/cobrands/popravito/bodyclass.js'),
 );
 
 IF bodyclass.match('frontpage');
