@@ -198,7 +198,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 }
 
 .faq-body {
-    overflow: auto;
+    overflow: hidden;
 
     ::-webkit-scrollbar {
         display: none;
@@ -464,6 +464,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .central-section-two-col {
     display: flex;
+    overflow: auto;
 }
 
 .two-col-left {
