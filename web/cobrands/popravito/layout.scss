@@ -197,12 +197,20 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     display: initial;
 }
 
-.faq-footer {
-    display: none;
+.faq-body {
+    overflow: auto;
 
-    @media only screen and (max-height: 880px) {
-        margin-top: 30rem;
+    ::-webkit-scrollbar {
+        display: none;
     }
+}
+
+.faq-footer {
+    margin-top: auto;
+
+    /*@media only screen and (max-height: 880px) {
+        margin-top: 30rem;
+    }*/
 }
 
 .profil-footer {
