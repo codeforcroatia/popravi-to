@@ -464,7 +464,10 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .central-section-two-col {
     display: flex;
-    overflow: auto;
+}
+
+.faq-central-section {
+    overflow: auto
 }
 
 .two-col-left {
