@@ -27,11 +27,12 @@
                                 [% c.user.email OR '-' %]
                             </p>  
                             [% IF NOT c.user.email %]
-                                <a href="/auth/change_email">[% loc('Add') %]</a>
+                                <button class="edit-button" tabindex="0" aria-label="add" onclick="location.href='/auth/change_email'" type="button"></button>
                             [% ELSIF c.user.email_verified %]
-                            <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_email'" type="button"></button>
+                                <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_email'" type="button"></button>
                             [% ELSE %]
                                 <a href="/auth/verify/email">[% loc('Verify') %]</a>
+                                <button class="edit-button" tabindex="0" aria-label="verify" onclick="location.href='/auth/verify/email'" type="button"></button>
                                 <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_email'" type="button"></button>
                             [% END %]                   
                         </div>
@@ -41,12 +42,12 @@
                                 [% c.user.phone_display OR '-' %]
                             </p> 
                             [% IF NOT c.user.phone %]
-                                <a class="add-verify-link" href="/auth/change_phone">[% loc('Add') %]</a>
+                                <button class="edit-button" tabindex="0" aria-label="add" onclick="location.href='/auth/change_phone'" type="button"></button>
                             [% ELSIF c.user.phone_verified %]
-                            <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
+                                <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
                             [% ELSE %]
                             [% IF c.cobrand.sms_authentication %]
-                                <a class="add-verify-link" href="/auth/verify/phone">[% loc('Verify') %]</a>
+                                <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/verify/phone'" type="button"></button>
                             [% END %]
                             <button class="edit-button" tabindex="0" aria-label="edit" onclick="location.href='/auth/change_phone'" type="button"></button>
                             [% END %]                     
