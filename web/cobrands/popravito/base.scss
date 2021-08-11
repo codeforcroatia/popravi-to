@@ -258,10 +258,11 @@ img {
     content: counter(inst);
     background-color: #F6F2EF;
     color: $col_big_numbers;
-    padding: 0.313rem 1.25rem;
+    padding: 0.5rem 1.2rem;
     font-family: $headings-font;
     font-weight: 800;
     font-size: 2.25rem;
+    line-height: 2.375rem;
     margin-right: 1.75rem;
     border-radius: 50%;
 }
@@ -460,6 +461,10 @@ img {
 
 .misc-link-2 {
     text-decoration: underline;
+}
+
+.confirmation-header {
+    text-align: center;
 }
 
 .close-button {
