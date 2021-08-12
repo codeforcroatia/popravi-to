@@ -118,6 +118,7 @@ img {
     margin-top: 62px;
     position: fixed;
     right: 0;
+    top: 0;
     z-index: 4;
     background-color: white;
     padding: 0 1.5rem 0 1.5rem;
@@ -463,7 +464,7 @@ img {
     text-decoration: underline;
 }
 
-.confirmation-header {
+.confirmation-header-signout {
     text-align: center;
 }
 
