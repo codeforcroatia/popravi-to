@@ -12,53 +12,53 @@
 
 <main>
 
-        [% IF report.used_map %]
+    [% IF report.used_map %]
 
-        <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
-            [% IF c.req.params.map_override %]
-                <input type="hidden" name="map_override" value="[% c.req.params.map_override | html %]">
-            [% END %]
-
-        [% ELSE %]
-
-        <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
-            <input type="hidden" name="skipped" value="1">
-
+    <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
+        [% IF c.req.params.map_override %]
+            <input type="hidden" name="map_override" value="[% c.req.params.map_override | html %]">
         [% END %]
 
-            <input type="hidden" name="token" value="[% csrf_token %]">
-            <input type="hidden" name="pc" value="[% pc | html %]">
-            <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
-            <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
+    [% ELSE %]
 
-        [% IF report.used_map %]
-            <div class="report-section" id="map_sidebar">
-                <div class="instructions-container" id="side-form">
-        [% ELSE %]
-            <div class="report-section" id="map_sidebar">
-                <div class="instructions-container" id="skipped-map">
-        [% END %]
-                    <div class="progress-bar">
-                        <div class="bar2"></div>
-                    </div> 
+    <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
+        <input type="hidden" name="skipped" value="1">
 
-                    <div id="report-a-problem-main">
-                    [% IF login_success %]
-                        [% PROCESS 'report/new/login_success_form.html' %]
-                    [% ELSIF oauth_need_email %]
-                        [% PROCESS 'report/new/oauth_email_form.html' %]
-                    [% ELSE %]
-                        [% PROCESS 'report/new/fill_in_details_form.html' %]
-                    [% END %]
-                    </div>
+    [% END %]
 
-                </div>
+        <input type="hidden" name="token" value="[% csrf_token %]">
+        <input type="hidden" name="pc" value="[% pc | html %]">
+        <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
+        <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
 
-                [% map_html | safe %]
+    [% IF report.used_map %]
+        <div class="report-section no-pin-report" id="map_sidebar">
+            <div class="instructions-container" id="side-form">
+    [% ELSE %]
+        <div class="report-section no-pin-report" id="map_sidebar">
+            <div class="instructions-container" id="skipped-map">
+    [% END %]
+                <div class="progress-bar">
+                    <div class="bar2"></div>
+                </div> 
+
+                <div id="report-a-problem-main">
+                [% IF login_success %]
+                    [% PROCESS 'report/new/login_success_form.html' %]
+                [% ELSIF oauth_need_email %]
+                    [% PROCESS 'report/new/oauth_email_form.html' %]
+                [% ELSE %]
+                    [% PROCESS 'report/new/fill_in_details_form.html' %]
+                [% END %]
                 </div>
 
             </div>
-        </form>
+
+            [% map_html | safe %]
+            </div>
+
+        </div>
+    </form>
 </main>
 
     [% INCLUDE 'footer.html' %]
