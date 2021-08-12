@@ -2,11 +2,11 @@
 
 [% scripts.push(
     version('/cobrands/popravito/menu.js'),
-) %]
-
-[% IF bodyclass.match('mappage');
+)
+IF bodyclass.match('mappage');
     scripts.push(
         version('/cobrands/fixmystreet/assets.js'),
         version('/cobrands/fixmystreet/fixmystreet.js')
     );
-END %]
+END 
+%]
