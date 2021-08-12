@@ -2261,6 +2261,11 @@ html.js #map .noscript {
 #side-form fieldset {
     border: none;
     padding: 0;
+    margin: 1.5rem;
+}
+
+#side-form h1 {
+    margin: 1.5rem;
 }
 
 #side-form .change_location {
@@ -2344,10 +2349,6 @@ label[for="form_may_show_name"] {
 
 .above-form {
     display: none;
-}
-
-#side-form {
-    margin: 1.5rem;
 }
 
 #side-form .dropdowns {
