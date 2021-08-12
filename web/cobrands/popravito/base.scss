@@ -118,6 +118,7 @@ img {
     margin-top: 62px;
     position: fixed;
     right: 0;
+    top: 0;
     z-index: 4;
     background-color: white;
     padding: 0 1.5rem 0 1.5rem;
@@ -203,13 +204,11 @@ img {
 }
 
 .search-button {
-    border: none;
     border-radius: 50%;
     background: $orange;
     background-image: url('/cobrands/popravito/images/icon-chevron-right.svg');
     background-repeat: no-repeat;
     background-position: center;
-    padding: 1.6rem;
     margin-left: 0.5rem;
     width: 62px;
     height: 62px;
@@ -260,10 +259,11 @@ img {
     content: counter(inst);
     background-color: #F6F2EF;
     color: $col_big_numbers;
-    padding: 0.313rem 1.25rem;
+    padding: 0.5rem 1.2rem;
     font-family: $headings-font;
     font-weight: 800;
     font-size: 2.25rem;
+    line-height: 2.375rem;
     margin-right: 1.75rem;
     border-radius: 50%;
 }
@@ -462,6 +462,10 @@ img {
 
 .misc-link-2 {
     text-decoration: underline;
+}
+
+.confirmation-header-signout {
+    text-align: center;
 }
 
 .close-button {
@@ -2258,6 +2262,11 @@ html.js #map .noscript {
 #side-form fieldset {
     border: none;
     padding: 0;
+    margin: 1.5rem;
+}
+
+#side-form h1 {
+    margin: 1.5rem;
 }
 
 #side-form .change_location {
@@ -2310,7 +2319,7 @@ html.js #map .noscript {
 }
 
 #form_sign_in_yes input, #form_sign_in_no input {
-    width: calc(100% - 47px);
+    width: calc(100% - 80px);
 }
 
 #form_sign_in_yes input[type="checkbox"], #form_sign_in_no input[type="checkbox"] {
@@ -2343,14 +2352,30 @@ label[for="form_may_show_name"] {
     display: none;
 }
 
-#side-form {
-    margin: 1.5rem;
-}
-
 #side-form .dropdowns {
     margin: 1.5rem 0;
 }
 
 .rap-notes-trigger {
+    display: none;
+}
+
+#side-form .primary-button {
+    display: none;
+}
+
+#problem_form .continue-container-two {
+    position: initial;
+}
+
+.report-problem-textarea {
+    width: calc(100% - 80px);
+}
+
+.report-title-input {
+    width: calc(100% - 47px);
+}
+
+.no-pin-report #map_box {
     display: none;
 }

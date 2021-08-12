@@ -412,6 +412,10 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     width: 100%;
 }
 
+.report-successful-logo img {
+    padding: 0;
+}
+
 /* contact page */
 
 .contact-info {
@@ -1036,11 +1040,22 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     display: block;
 }
 
-#side-form {
-    margin: 0;
-}
-
 #side-form .primary-button {
     display: none;
 }
 
+#report-a-problem-main {
+    margin: 0;
+}
+
+#side-form fieldset {
+    margin: 0;
+}
+
+#side-form h1 {
+    margin: 0;
+}
+
+.no-pin-report #map_box {
+    display: block;
+}
