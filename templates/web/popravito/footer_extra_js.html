@@ -1,7 +1,7 @@
 [% PROCESS 'footer_extra_js_base.html' highways=1 cobrand_js=1 validation=1 roadworks=1  %]
 
 [% scripts.push(
-    version('/cobrands/popravito/menu.js')
+    version('/cobrands/popravito/menu.js'),
 ) %]
 
 [% IF bodyclass.match('mappage');
