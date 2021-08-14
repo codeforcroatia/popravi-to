@@ -6,6 +6,7 @@ const toggleInfoModals = function(){
     for (let [index, modal] of modalButtonArray){
 
         const toggleModal = () => {
+            console.log(infoModals[index])
             infoModals[index].classList.toggle('show-info-modal')
         }
 
