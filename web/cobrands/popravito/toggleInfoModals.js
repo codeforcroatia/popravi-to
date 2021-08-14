@@ -7,6 +7,7 @@ const toggleInfoModals = function(){
 
         const toggleModal = () => {
             infoModals[index].style.display = 'block'
+            console.log('clicked', modal)
         }
 
         modal.addEventListener("click", toggleModal);
