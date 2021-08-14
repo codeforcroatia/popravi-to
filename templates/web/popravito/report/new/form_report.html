@@ -58,7 +58,7 @@
 [% IF c.cobrand.allow_photo_upload %]
     <input type="hidden" name="upload_fileid" value="[% upload_fileid %]">
     <label for="form_photo">
-        <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]" class="summarise-title">[% loc('Photo') %]</span>
+        <span data-singular="[% loc('Photo') %]" data-plural="[% loc('Photos') %]" class="summarise-title">[% loc('Photo') %] <span class="details-button" tabindex="0" aria-label="details"></span></span>
     </label>
 
     [% TRY %][% PROCESS 'report/new/after_photo.html' %][% CATCH file %][% END %]
