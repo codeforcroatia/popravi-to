@@ -6,7 +6,7 @@ const toggleInfoModals = function(){
     for (let [index, modal] of modalButtonArray){
 
         const toggleModal = () => {
-            infoModals[index].setAttribute('style', 'display: block !important;');
+            infoModals[index].classList.toggle('show-info-modal')
         }
 
         modal.addEventListener("click", toggleModal);
