@@ -1,18 +1,14 @@
 const toggleInfoModals = function(){
     const modalButton = document.querySelectorAll('.details-button')
-    const modalButtonArray = Array.from(modalButton).entries();
+        modalButtonArray = Array.from(modalButton).entries();
+        infoModals = document.querySelectorAll('#report-a-problem-sidebar')
 
-    const openInfoModal = () => {
-       /* for (let [index, modal] of modalButton) {
-            const toggleModal => () {
-              modals[index].classList.toggle("show-modal");
-            };
-            trigger.addEventListener("click", toggleModal);
-            closeButtons[index].addEventListener("click", toggleModal);
+    for (let [index, modal] of modalButtonArray){
+
+        const toggleModal = () => {
+            modals[index].style.display = 'block'
         }
-       */
-      console.log(modalButton)
-    }
 
-    modalButton.addEventListener('click', openInfoModal)
+        modal.addEventListener("click", toggleModal);
+    }
 }()
