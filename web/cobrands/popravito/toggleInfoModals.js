@@ -1,7 +1,7 @@
 const toggleInfoModals = function(){
     const modalButton = document.querySelectorAll('.details-button')
         modalButtonArray = Array.from(modalButton).entries();
-        infoModals = document.querySelectorAll('#report-a-problem-sidebar')
+        infoModals = document.querySelectorAll('#reportDetails')
 
     for (let [index, modal] of modalButtonArray){
 

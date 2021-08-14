@@ -38,7 +38,7 @@
 [% DEFAULT form_detail_label = loc('Explain what’s wrong') %]
 <label for="form_detail" class="summarise-title">[% form_detail_label %]<span class="details-button" tabindex="0" aria-label="details"></span></label>
 
-<div class="modal info-modal visually-hidden">
+<div class="modal info-modal visually-hidden" id="reportDetails">
     <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
     <h2 class="page-title">Opis problema</h2>
     <p class="page-text-left-aligned">
