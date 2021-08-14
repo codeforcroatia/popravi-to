@@ -6,7 +6,7 @@ const toggleInfoModals = function(){
     for (let [index, modal] of modalButtonArray){
 
         const toggleModal = () => {
-            modals[index].style.display = 'block'
+            infoModals[index].style.display = 'block'
         }
 
         modal.addEventListener("click", toggleModal);
