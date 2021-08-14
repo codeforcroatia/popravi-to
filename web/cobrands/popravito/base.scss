@@ -2384,13 +2384,13 @@ label[for="form_may_show_name"] {
     display: flex;
 }
 
-.show-info-modal {
-    display: block !important;
-}
-
 .info-modal {
     margin: auto;
     max-width: 100%;
     border-radius: 15px;
     padding: 3rem 2.5rem;
+}
+
+.show-info-modal {
+    display: block !important;
 }

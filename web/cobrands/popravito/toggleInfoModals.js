@@ -6,6 +6,7 @@ const toggleInfoModals = function(){
     for (let [index, modal] of modalTriggers){
         modal.addEventListener("click", function(){
             infoModals[index].classList.toggle('show-info-modal')
+            infoModals[index].classList.toggle('visually-hidden')
         });
     }
 }()
