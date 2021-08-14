@@ -1,6 +1,6 @@
 const toggleInfoModals = function(){
     const modalButton = document.getElementsByClassName('details-button')
-        infoModals = document.getElementsByClassname('info-modal')
+        infoModals = document.getElementsByClassName('info-modal')
 
     for (let [index, modal] of modalButton){
         modal.addEventListener("click", function(){
