@@ -20,7 +20,6 @@
         <div id="js-top-message" class="page-text-left-aligned">
             [% PROCESS 'report/new/top_message.html' %]
         </div>
-        <button class="button register-button">Ok</button>
         
         [% IF report.used_map && partial_token %]
             <p id="unknown">[% loc('Please note your report has <strong>not yet been sent</strong>. Choose a category and add further information below, then submit.') %]</p>
@@ -32,6 +31,7 @@
         [% sidebar_html | safe %]
 
         [% INCLUDE 'errors.html' %]
+        <button class="button register-button">Ok</button>
     </div>
 </div>
 
