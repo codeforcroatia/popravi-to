@@ -15,6 +15,7 @@ const toggleUpdateForm = function(){
         updateForm.classList.remove('visually-hidden')
         toggleUpdateButton.classList.add('visually-hidden')
 
+        hideMap()
     }
 
     const hideMap = () => {
@@ -35,5 +36,3 @@ const toggleUpdateForm = function(){
     mqlMobile.addEventListener('change', hideMap)
     submitForm.addEventListener('click', closeUpdateForm)
 }()
-
-toggleUpdateForm.hideMap()
