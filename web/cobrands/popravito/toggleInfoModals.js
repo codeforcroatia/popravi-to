@@ -14,8 +14,8 @@ const toggleInfoModals = function(){
 
     for (let [index, button] of closeTriggers){
         button.addEventListener('click', function(){
-            button.parentNode.parentNode.classList.toggle('show-info-modal')
-            button.parentNode.parentNode.classList.toggle('visually-hidden')
+            button.parentElement.parentElement.classList.toggle('show-info-modal')
+            button.parentElement.parentElement.classList.toggle('visually-hidden')
         })
     }
 }()
