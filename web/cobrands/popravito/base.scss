@@ -252,14 +252,14 @@ img {
 
 .report-step {
     counter-increment: inst;
-    padding-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .report-step::before {
     content: counter(inst);
     background-color: #F6F2EF;
     color: $col_big_numbers;
-    padding: 0.5rem 1.4rem 0.7rem 1.4rem;
+    padding: 0.3rem 1.4rem 0.7rem 1.4rem;
     font-family: $headings-font;
     font-weight: 800;
     font-size: 2.25rem;
@@ -2407,4 +2407,8 @@ label[for="form_may_show_name"] {
 
 .sidebar-notes .plain-list {
     list-style-type: disc;
+}
+
+.info-modal #report-a-problem-sidebar {
+    display: initial;
 }
