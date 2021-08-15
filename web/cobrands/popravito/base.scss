@@ -2277,10 +2277,6 @@ html.js #map .noscript {
     display: none;
 }
 
-#side-form #report-a-problem-sidebar {
-    display: none !important;
-}
-
 #problem_form .dz-default.dz-message {
     background-color: transparent;
     border: 1px solid #DAD6D3;
@@ -2403,4 +2399,8 @@ label[for="form_may_show_name"] {
     display: flex;
     margin-top: 3rem;
     font-weight: 700;
+}
+
+.sidebar-notes .plain-list {
+    list-style-type: disc;
 }
