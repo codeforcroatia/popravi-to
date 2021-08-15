@@ -287,12 +287,6 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     }
 }
 
-/*.map { 
-    width: auto;
-    vertical-align: initial;
-    position: inherit;
-}
-*/
 .instructions-container {
     margin-right: 3.5rem;
 }
@@ -1058,4 +1052,18 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .no-pin-report #map_box {
     display: block;
+}
+
+.info-modal {
+    box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    margin: 0;
+}
+
+.info-modal .page-title {
+    margin-top: 0;
 }

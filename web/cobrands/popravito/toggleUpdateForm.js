@@ -15,6 +15,7 @@ const toggleUpdateForm = function(){
         updateForm.classList.remove('visually-hidden')
         toggleUpdateButton.classList.add('visually-hidden')
 
+        hideMap()
     }
 
     const hideMap = () => {

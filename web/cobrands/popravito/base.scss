@@ -252,14 +252,14 @@ img {
 
 .report-step {
     counter-increment: inst;
-    padding-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .report-step::before {
     content: counter(inst);
     background-color: #F6F2EF;
     color: $col_big_numbers;
-    padding: 0.5rem 1.2rem;
+    padding: 0.3rem 1.4rem 0.7rem 1.4rem;
     font-family: $headings-font;
     font-weight: 800;
     font-size: 2.25rem;
@@ -2277,10 +2277,6 @@ html.js #map .noscript {
     display: none;
 }
 
-#side-form #report-a-problem-sidebar {
-    display: none;
-}
-
 #problem_form .dz-default.dz-message {
     background-color: transparent;
     border: 1px solid #DAD6D3;
@@ -2378,4 +2374,41 @@ label[for="form_may_show_name"] {
 
 .no-pin-report #map_box {
     display: none;
+}
+
+.report-maintitle {
+    display: flex;
+}
+
+.info-modal {
+    margin: auto;
+    max-width: 100%;
+    border-radius: 15px;
+    padding: 3rem 2.5rem;
+}
+
+.info-modal .page-title {
+    margin-top: 4rem;
+}
+
+.info-modal .page-text-left-aligned {
+    margin-bottom: 3rem;
+}
+
+.show-info-modal {
+    display: block;
+}
+
+.photo-title {
+    display: flex;
+    margin-top: 3rem;
+    font-weight: 700;
+}
+
+.sidebar-notes .plain-list {
+    list-style-type: disc;
+}
+
+.info-modal #report-a-problem-sidebar {
+    display: initial !important;
 }
