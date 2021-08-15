@@ -2394,3 +2394,11 @@ label[for="form_may_show_name"] {
 .show-info-modal {
     display: block !important;
 }
+
+.photo-title {
+    display: flex;
+}
+
+.photo-title .details-button {
+    margin-top: 0;
+}
