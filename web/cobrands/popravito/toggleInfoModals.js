@@ -1,6 +1,6 @@
 const toggleInfoModals = function(){
     const modalButton = document.getElementsByClassName('details-button')
-        infoModals = document.getElementsByClassName('info-modal')
+        infoModals = document.getElementsByClassName('info-container')
         modalTriggers = Array.from(modalButton).entries();
 
     for (let [index, modal] of modalTriggers){
