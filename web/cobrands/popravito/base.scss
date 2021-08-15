@@ -2391,14 +2391,16 @@ label[for="form_may_show_name"] {
     padding: 3rem 2.5rem;
 }
 
+.info-modal .page-title {
+    margin-top: 4rem;
+}
+
 .show-info-modal {
-    display: block !important;
+    display: block;
 }
 
 .photo-title {
     display: flex;
-}
-
-.photo-title .details-button {
-    margin-top: 0;
+    margin-top: 3rem;
+    font-weight: 700;
 }

@@ -13,25 +13,27 @@
 
 [% TRY %][% INCLUDE 'report/new/roads_message.html' %][% CATCH file %][% END %]
 
-<div class="modal info-modal visually-hidden">
-    <div class="js-new-report-user-hidden">
-        <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
-        <h2 class="page-title">Opis problema</h2>
-        <div id="js-top-message" class="page-text-left-aligned">
-            [% PROCESS 'report/new/top_message.html' %]
+<div class="modal-container">
+    <div class="modal info-modal visually-hidden">
+        <div class="js-new-report-user-hidden">
+            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
+            <h2 class="page-title">Opis problema</h2>
+            <div id="js-top-message" class="page-text-left-aligned">
+                [% PROCESS 'report/new/top_message.html' %]
+            </div>
+            
+            [% IF report.used_map && partial_token %]
+                <p id="unknown">[% loc('Please note your report has <strong>not yet been sent</strong>. Choose a category and add further information below, then submit.') %]</p>
+            [% END %]
+            [% IF oauth_failure %]
+                <p class="form-error">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
+            [% END %]
+    
+            [% sidebar_html | safe %]
+    
+            [% INCLUDE 'errors.html' %]
+            <button class="button register-button">Ok</button>
         </div>
-        
-        [% IF report.used_map && partial_token %]
-            <p id="unknown">[% loc('Please note your report has <strong>not yet been sent</strong>. Choose a category and add further information below, then submit.') %]</p>
-        [% END %]
-        [% IF oauth_failure %]
-            <p class="form-error">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
-        [% END %]
-
-        [% sidebar_html | safe %]
-
-        [% INCLUDE 'errors.html' %]
-        <button class="button register-button">Ok</button>
     </div>
 </div>
 
