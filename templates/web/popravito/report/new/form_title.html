@@ -8,8 +8,8 @@
 [% END %]
 <input class="form-control report-title-input" type="text" value="[% report.title | html %]" name="title" id="form_title" aria-describedby="title-hint"[% field_required %] autocomplete="off" placeholder="[% loc('Problem title') %]">
 
-<div class="modal-container">
-    <div class="modal info-modal visually-hidden">
+<div class="modal-container visually-hidden">
+    <div class="modal info-modal">
         <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         <h2 class="page-title">Naziv problema</h2>
         <p class="page-text-left-aligned">
