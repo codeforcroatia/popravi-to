@@ -16,7 +16,7 @@
 <div class="modal-container info-container visually-hidden">
     <div class="modal info-modal">
         <div class="js-new-report-user-hidden">
-            <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
+            <button class="close-button close-info-modal" tabindex="0" aria-label="close form"></button>
             <h2 class="page-title">Opis problema</h2>
             <div id="js-top-message" class="page-text-left-aligned">
                 [% PROCESS 'report/new/top_message.html' %]
@@ -32,7 +32,7 @@
             [% sidebar_html | safe %]
     
             [% INCLUDE 'errors.html' %]
-            <button class="button register-button">Ok</button>
+            <button class="button register-button close-info-modal">Ok</button>
         </div>
     </div>
 </div>
