@@ -35,3 +35,5 @@ const toggleUpdateForm = function(){
     mqlMobile.addEventListener('change', hideMap)
     submitForm.addEventListener('click', closeUpdateForm)
 }()
+
+toggleUpdateForm.hideMap()
