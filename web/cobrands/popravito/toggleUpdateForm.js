@@ -8,7 +8,7 @@ const toggleUpdateForm = function(){
         updatesContainer = document.querySelector('.updates-content')
 
     const openUpdateForm = () => {
-        
+
         hideMap()
 
         problemHeader.classList.add('visually-hidden')
@@ -34,6 +34,6 @@ const toggleUpdateForm = function(){
     }
 
     toggleUpdateButton.addEventListener('click', openUpdateForm)
-    mqlMobile.addEventListener('change', hideMap)
+    //mqlMobile.addEventListener('change', hideMap)
     submitForm.addEventListener('click', closeUpdateForm)
 }()
