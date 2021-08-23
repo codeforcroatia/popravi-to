@@ -21,7 +21,7 @@
 
     [% ELSE %]
 
-    <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
+    <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate form-nomap">
         <input type="hidden" name="skipped" value="1">
 
     [% END %]
