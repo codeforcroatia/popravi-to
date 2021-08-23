@@ -2408,3 +2408,11 @@ label[for="form_may_show_name"] {
 .info-modal #report-a-problem-sidebar {
     display: initial !important;
 }
+
+.back-button {
+    display: none;
+}
+
+.report-section .back-button {
+    display: block;
+}
