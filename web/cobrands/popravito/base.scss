@@ -253,26 +253,16 @@ img {
 .report-step {
     display: flex;
     align-items: center;
+    margin: 1rem 0 1rem 0;
 }
 
 .step-num-img {
     margin-right: 1.2rem;
 }
 
-/*
-.report-step::before {
-    content: counter(inst);
-    background-color: #F6F2EF;
-    color: $col_big_numbers;
-    padding: 0.3rem 1.4rem 0.7rem 1.4rem;
-    font-family: $headings-font;
-    font-weight: 800;
-    font-size: 2.25rem;
-    line-height: 2.375rem;
-    margin-right: 1.75rem;
-    border-radius: 50%;
+.step-num-img img {
+    width: 48px;
 }
-*/
 
 .report-steps {
     display: block;
@@ -284,7 +274,7 @@ img {
     font-size: 4rem;
     margin: 0;
 }
-*
+
 .report-stat-detail {
     display: flex;
     justify-content: center;;
