@@ -402,10 +402,6 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     background-color: rgba(0,0,0,0.4); 
 }
 
-.register-button {
-    width: auto;
-}
-
 .register-button-two {
     position: initial;
     margin-bottom: 0;
@@ -1072,4 +1068,8 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .info-modal .page-title {
     margin-top: 0;
+}
+
+.report-section .register-button {
+    width: auto;
 }
