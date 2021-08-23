@@ -250,12 +250,16 @@ img {
     list-style-type: none;
 }
 
-/*
 .report-step {
-    counter-increment: inst;
-    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
 }
 
+.step-num-img {
+    margin-right: 1.2rem;
+}
+
+/*
 .report-step::before {
     content: counter(inst);
     background-color: #F6F2EF;
