@@ -8,6 +8,8 @@ const toggleUpdateForm = function(){
         updatesContainer = document.querySelector('.updates-content')
 
     const openUpdateForm = () => {
+        
+        hideMap()
 
         problemHeader.classList.add('visually-hidden')
         updatesContainer.classList.add('visually-hidden')
@@ -15,7 +17,6 @@ const toggleUpdateForm = function(){
         updateForm.classList.remove('visually-hidden')
         toggleUpdateButton.classList.add('visually-hidden')
 
-        hideMap()
     }
 
     const hideMap = () => {
