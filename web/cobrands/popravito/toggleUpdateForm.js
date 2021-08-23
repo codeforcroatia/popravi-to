@@ -12,11 +12,10 @@ const toggleUpdateForm = function(){
         hideMap()
 
         problemHeader.classList.add('visually-hidden')
-        updatesContainer.classList.add('visually-hidden')
         
         updateForm.classList.remove('visually-hidden')
         toggleUpdateButton.classList.add('visually-hidden')
-
+        updatesContainer.classList.add('visually-hidden')
     }
 
     const hideMap = () => {
