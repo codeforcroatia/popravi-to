@@ -251,21 +251,17 @@ img {
 }
 
 .report-step {
-    counter-increment: inst;
-    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
-.report-step::before {
-    content: counter(inst);
-    background-color: #F6F2EF;
-    color: $col_big_numbers;
-    padding: 0.3rem 1.4rem 0.7rem 1.4rem;
-    font-family: $headings-font;
-    font-weight: 800;
-    font-size: 2.25rem;
-    line-height: 2.375rem;
-    margin-right: 1.75rem;
-    border-radius: 50%;
+.step-num-img {
+    margin-right: 1.2rem;
+}
+
+.step-num-img img {
+    width: 48px;
 }
 
 .report-steps {
@@ -2411,4 +2407,32 @@ label[for="form_may_show_name"] {
 
 .info-modal #report-a-problem-sidebar {
     display: initial !important;
+}
+
+.back-button {
+    display: none;
+}
+
+.report-section .back-button {
+    display: block;
+}
+
+.report-section .arrow-left {
+    display: inline-block;
+}
+
+.report-section .form-section-preview {
+    display: none;
+}
+
+.no-pin-report .form-section-preview {
+    display: initial;
+}
+
+.img-gallery-container .update-img-set {
+    display: flex;
+}
+
+.img-gallery-container img {
+    width: 150px;
 }

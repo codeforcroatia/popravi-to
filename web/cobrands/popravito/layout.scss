@@ -120,6 +120,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 .report-steps-section-two {
     justify-content: space-between;
 }
+
 .report-steps {
     //display: flex;
     //flex-flow: column wrap;
@@ -128,6 +129,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     -moz-column-count: 2;
     -webkit-column-count: 2;
     column-count: 2;
+    padding-top: 0.8rem;
 
     @media only screen and (max-width: 1038px){
         padding-top: 1.6rem;
@@ -1066,4 +1068,8 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
 
 .info-modal .page-title {
     margin-top: 0;
+}
+
+.report-section .register-button {
+    width: auto;
 }
