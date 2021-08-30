@@ -227,6 +227,20 @@
   background-color: #1D1C1C;
 }
 
+#icon_info:before {
+  display: inline-block;
+  content: '';
+  background-image: url("images/icon_info.svg");
+
+  //@include svg-background-image("/cobrands/popravito/images/icon_info");
+  width: 20px !important;
+  height: 20px !important;
+}
+
+#form_summarise {
+  margin: 0 !important;
+}
+
 .reportproblem{
   color: #1D1C1C !important;
   margin-top: 40px;

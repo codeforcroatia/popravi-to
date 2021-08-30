@@ -38,13 +38,12 @@
     <div id="map_sidebar">
         <div id="skipped-map">
   [% END %]
-
+            <div class="reportsteps">
+                <div class="reportstep"></div>
+                <div class="reportstepactive"></div>
+                <div class="reportstep"></div>
+            </div>
             <div id="report-a-problem-main">
-                <div class="reportsteps">
-                    <div class="reportstep"></div>
-                    <div class="reportstepactive"></div>
-                    <div class="reportstep"></div>
-                </div>
               [% IF login_success %]
                 [% PROCESS 'report/new/login_success_form.html' %]
               [% ELSIF oauth_need_email %]
