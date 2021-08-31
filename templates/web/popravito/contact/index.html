@@ -1,139 +1,76 @@
-[% pre_container_extra = PROCESS 'around/postcode_form.html' %]
-[% SET bodyclass = 'frontpage fullwidthpage' %]
-[% INCLUDE 'header.html', title = '', inline_css = 1 %]
+[% extra_js = [
+    version('/js/contact.js')
+] -%]
+[% INCLUDE 'header.html',
+    title = loc('Contact Us')
+    robots = 'noindex,nofollow'
+    bodyclass = 'twothirdswidthpage'
+%]
 
-<main>
-    <section class="central-content">
-        <div class="mobile-hero-images">
-            <picture class="hero-image">
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-left.svg">
-                <img src="#" alt="">
-            </picture>
-            <picture class="hero-image">
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-right.svg">
-                <img src="#" alt="">
-            </picture>
+<!-- [% INCLUDE 'about/_sidebar.html' %] -->
+
+<div class="contact-section">
+    <section class="contact-us">
+        <h1 class="page-title">Kontaktiraj nas</h1>
+        <p class="page-text-left-aligned">Ako imaš pitanje u vezi Popravi.to projekta odgovor možda možeš pronaći u našoj <a class="misc-link-2" href="" tabindex="0" aria-label="FAQ">FAQ sekciji</a>. <br><br> Nemoj koristiti ovu formu za prijavu problema jer poruka neće biti proslijeđena odgovarajućoj samoupravi nadležnoj za problem. Za prijavu problema odi na naslovnu stranicu i slijedi upute.</p>
+        <div class="contact-info">
+            <p class="page-text-left-aligned page-text-misc"><span class="email-span-icon"></span>EMAIL ADRESA</p>
+            <a class="page-text-left-aligned" href="" tabindex="0" aria-label="email address">support@fixmystreet.com</a>
         </div>
-
-        [% INCLUDE 'around/postcode_form.html' %]
-
-        <div class="container">
-            <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
-                        
-                [% IF error %]
-                    <p class="form-error main-page-form-err">[% error %]</p>
-                [% END %]
-
-            </div>
+        <div class="contact-info">
+            <p class="page-text-left-aligned page-text-misc"><span class="address-span-icon"></span>ADRESA</p>
+            <p class="page-text-left-aligned" tabindex="0" aria-label="address">mySociety<br>483 Green Lanes<br>London, N134BS</p>
         </div>
-
-    </section>             
-    <section class="report-steps-section">
-        <h1 class="report-title">[% loc('How to report a problem') %]</h1>
-        <ol class="report-steps">
-            <li class="report-step" aria-label="upisi ulicu" tabindex="0">
-                <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_1_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_1_num.svg" alt="">
-                </picture>
-               <span>[% loc('Enter a nearby street name and area') %]</span>
-            </li>
-            <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">
-                <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_2_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_2_num.svg" alt="">
-                </picture>
-                <span>[% loc('Locate the problem on a map of the area') %]</span>
-            </li>
-            <li class="report-step" aria-label="opisi problem" tabindex="0">
-                <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_3_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_3_num.svg" alt="">
-                </picture>
-                <span>[% loc('Enter details of the problem') %]</span>
-            </li>
-            <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">
-                <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_4_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_4_num.svg" alt="">
-                </picture>
-               <span>[% loc('We send it to the council on your behalf') %]</span>
-            </li>
-        </ol>
     </section>
-    <section class="report-steps-section report-steps-section-two">
-        <h1 class="report-title">[% loc('Problems in total') %]</h1>
+    <hr class="page-divider-1">
+    <section class="contact-message">
+        <h2 class="page-subtitle">Pošalji poruku našem timu</h2>
+        <form class="form-misc" method="post" action="/contact/submit">
+            <input type="radio" name="contact" value="help-with-website" id="help-with-website" tabindex="0" aria-label="help with website" checked>
+            <label for="help-with-website">Trebam pomoć pri korištenju stranice</label><br>
+            <input type="radio" name="contact" value="feedback" id="feedback" tabindex="0" aria-label="feedback">
+            <label for="feedback">Želim ostaviti feedback na stranicu</label><br>  
+            <input type="radio" name="contact" value="comment" id="comment" tabindex="0" aria-label="question or comment">
+            <label for="question or comment">Radim u jedinici lokalne samouprave i imam pitanje/komentar</label><br>       
+            <input type="radio" name="contact" value="report-problem" id="report-problem" tabindex="0" aria-label="report problem">
+            <label for="report-problem">Želim prijaviti problem</label><br> 
+            <input type="radio" name="contact" value="problem-not-fixed" id="problem-not-fixed" tabindex="0" aria-label="problem not fixed">
+            <label for="problem-not-fixed">Moj prijavljeni problem nije popravljen</label><br> 
+            <br>  
+            <hr class="page-divider">
+            <br>
 
-        [% USE Number.Format %]
-
-        [%
-            stats = c.cobrand.front_stats_data();
-
-            new_text =
-                stats.recency == '1 week'
-                ? nget(
-                    "<big>%s</big> report in past week",
-                    "<big>%s</big> reports in past week",
-                    stats.new
-                )
-                : nget(
-                    "<big>%s</big> report recently",
-                    "<big>%s</big> reports recently",
-                    stats.new
-                );
-            
-        IF stats.completed.defined;
-            completed_text = nget(
-                "<big>%s</big> completed in past month",
-                "<big>%s</big> completed in past month",
-                stats.completed
-            );
-            completed_n = stats.completed | format_number;
-        END;
-
-        IF stats.fixed.defined;
-            fixed_text = nget(
-                "<big>%s</big> fixed in past month",
-                "<big>%s</big> fixed in past month",
-                stats.fixed
-            );
-            fixed_n = stats.fixed | format_number;
-        END;
-            
-            updates_text = nget(
-                "<big>%s</big> update on reports",
-                "<big>%s</big> updates on reports",
-                stats.updates
-            );
-
-            new_n = stats.new | format_number;
-            updates_n = stats.updates | format_number;
-        %]
-
-        <ul class="report-statistics">
-            <li class="report-stat-item">
-                <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
-                <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
-            </li>
-            <li class="report-stat-item">
-                <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
-                <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>[% loc('UPDATED') %]</p>
-            </li>
-            [% IF fixed_text %]
-                <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
-                    <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>[% loc('FIXED') %]</p>
-                </li>
+            <label for="name">[% loc('Your name') %]</label><br>
+            [% IF field_errors.name %]
+                <div class="form-error">[% field_errors.name %]</div>
             [% END %]
-        </ul>
+            <input class="report-title-input" tabindex="0" aria-label="name" type="text" id="name" name="name" placeholder="Ime i prezime"><br>
+
+            <label for="email">[% loc('Your email') %]</label><br>
+            [% IF field_errors.em %]
+                <div class="form-error">[% field_errors.em %]</div>
+            [% END %]
+            <input class="report-title-input" tabindex="0" aria-label="email" type="email" id="email" name="email" placeholder="Email adresa"><br>
+
+            <label for="phone">[% loc('Your phone number') %]</label><br>
+            <input class="report-title-input" tabindex="0" aria-label="phone" type="tel" id="phone" name="phone" placeholder="Broj telefona (opcionalno)"><br>
+
+            <label class="report-label" for="message">[% loc('Message') %]</label>
+            [% IF field_errors.message %]
+                <div class="form-error">[% field_errors.message %]</div>
+            [% END %]
+            <textarea class="report-textarea" name="message" rows="6" cols="40" tabindex="0" id="report-label" aria-label="write message">[% message | html %]</textarea>
+
+            [% IF NOT problem AND NOT update %]
+                <p class="page-text-left-aligned">[% loc('If you are contacting us about a specific report or update please include a link to the report in the message.') %]</p>
+            [% END %]
+
+
+            <button class="button primary-button" tabindex="0" aria-label="submit" type="submit">[% loc('Send') %]</button>
+
+          </form>
     </section>
-</main>
-
-[% INCLUDE 'footer.html' pagefooter = 'yes' %]
-
-<script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
-
-</body>
-</html>
+</div>
 
 
+[% INCLUDE 'footer.html' %]
