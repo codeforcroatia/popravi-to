@@ -1,0 +1,24 @@
+Subject: Questionnaire about your [% site_name %] report: '[% report.title %]'
+
+Hello [% report.name %],
+
+[% created %] ago, you reported a problem using [% site_name %].
+
+The details of that report are at the end of this email.
+
+To keep [% site_name %] up to date and relevant, we'd appreciate it
+if you could follow the link below and fill in our short questionnaire
+updating the status of your problem:
+
+    [% url %]
+
+[% signature %]
+
+Your report was as follows:
+
+[% report.title %]
+
+[% report.detail %]
+
+This email was sent automatically, from an unmonitored email account - so
+please do not reply to it.
