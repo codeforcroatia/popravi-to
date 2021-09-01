@@ -26,16 +26,9 @@
     <section class="contact-message">
         <h2 class="page-subtitle">Pošalji poruku našem timu</h2>
         <form class="form-misc" method="post" action="/contact/submit">
-            <input type="radio" name="contact" value="help-with-website" id="help-with-website" tabindex="0" aria-label="help with website" checked>
-            <label for="help-with-website">Trebam pomoć pri korištenju stranice</label><br>
-            <input type="radio" name="contact" value="feedback" id="feedback" tabindex="0" aria-label="feedback">
-            <label for="feedback">Želim ostaviti feedback na stranicu</label><br>  
-            <input type="radio" name="contact" value="comment" id="comment" tabindex="0" aria-label="question or comment">
-            <label for="question or comment">Radim u jedinici lokalne samouprave i imam pitanje/komentar</label><br>       
-            <input type="radio" name="contact" value="report-problem" id="report-problem" tabindex="0" aria-label="report problem">
-            <label for="report-problem">Želim prijaviti problem</label><br> 
-            <input type="radio" name="contact" value="problem-not-fixed" id="problem-not-fixed" tabindex="0" aria-label="problem not fixed">
-            <label for="problem-not-fixed">Moj prijavljeni problem nije popravljen</label><br> 
+            
+            [% INCLUDE 'contact/who.html' %]
+
             <br>  
             <hr class="page-divider">
             <br>
@@ -44,7 +37,7 @@
             [% IF field_errors.name %]
                 <div class="form-error">[% field_errors.name %]</div>
             [% END %]
-            <input class="report-title-input" tabindex="0" aria-label="name" type="text" id="name" name="name" placeholder="Ime i prezime"><br>
+            <input class="report-title-input required" tabindex="0" aria-label="name" type="text" id="name" name="name" placeholder="Ime i prezime"><br>
 
             <label for="email">[% loc('Your email') %]</label><br>
             [% IF field_errors.em %]
@@ -73,4 +66,4 @@
 </div>
 
 
-[% INCLUDE 'footer.html' %]
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]
