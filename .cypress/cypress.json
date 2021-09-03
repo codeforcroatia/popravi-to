@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://fixmystreet.localhost:3001",
-  "projectId": "y8vvs1",
+  "projectId": "6jh9b4",
   "blacklistHosts": ["gaze.mysociety.org", "*.openstreetmap.org", "portal.roadworks.org", "tilma.mysociety.org", "tilma.staging.mysociety.org", "isharemaps.bathnes.gov.uk"],
   "env": {
      "postcode": "BS10 5EE"
