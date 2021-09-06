@@ -7,17 +7,17 @@
     bodyclass = 'twothirdswidthpage'
 %]
 
-[% IF c.cobrand.moniker == 'fixmystreet' %]
+<!-- [% IF c.cobrand.moniker == 'fixmystreet' %]
 <h1>FixMyStreet technical support</h1>
 [% ELSIF rejecting_report %]
 <h1>[% loc('Reject report') %]</h1>
 [% ELSE %]
 <h1>[% loc('Contact the team') %]</h1>
-[% END %]
+[% END %] -->
 
 <div class="contact-section">
   <section class="contact-us">
-    h1 class="page-title">Kontaktiraj nas</h1>
+    <h1 class="page-title">Kontaktiraj nas</h1>
         <p class="page-text-left-aligned">Ako imaš pitanje u vezi Popravi.to projekta odgovor možda možeš pronaći u našoj <a class="misc-link-2" href="" tabindex="0" aria-label="FAQ">FAQ sekciji</a>. <br><br> Nemoj koristiti ovu formu za prijavu problema jer poruka neće biti proslijeđena odgovarajućoj samoupravi nadležnoj za problem. Za prijavu problema odi na naslovnu stranicu i slijedi upute.</p>
         <div class="contact-info">
             <p class="page-text-left-aligned page-text-misc"><span class="email-span-icon"></span>EMAIL ADRESA</p>
@@ -32,11 +32,11 @@
     <section class="contact-message">
       <h2 class="page-subtitle">Pošalji poruku našem timu</h2>
       <form class="form-misc" method="post" action="/contact/submit" class="validate">
-        <input type="hidden" name="token" value="[% csrf_token %]">
-        <input type="hidden" name="s" value="[% s %]">
+        <!-- <input type="hidden" name="token" value="[% csrf_token %]">
+        <input type="hidden" name="s" value="[% s %]"> -->
         <fieldset>
             [% INCLUDE 'errors.html' %]
-    
+<!--     
             [% IF update %]
     
                 <p>
@@ -92,9 +92,20 @@
     
                 [% INCLUDE 'contact/blurb.html' %]
     
-            [% END %]
+            [% END %] -->
     
             [% INCLUDE 'contact/who.html' %]
+
+            <input type="radio" name="contact" value="help-with-website" id="help-with-website" tabindex="0" aria-label="help with website" checked>
+            <label for="help-with-website">Trebam pomoć pri korištenju stranice</label><br>
+            <input type="radio" name="contact" value="feedback" id="feedback" tabindex="0" aria-label="feedback">
+            <label for="feedback">Želim ostaviti feedback na stranicu</label><br>  
+            <input type="radio" name="contact" value="comment" id="comment" tabindex="0" aria-label="question or comment">
+            <label for="question or comment">Radim u jedinici lokalne samouprave i imam pitanje/komentar</label><br>       
+            <input type="radio" name="contact" value="report-problem" id="report-problem" tabindex="0" aria-label="report problem">
+            <label for="report-problem">Želim prijaviti problem</label><br> 
+            <input type="radio" name="contact" value="problem-not-fixed" id="problem-not-fixed" tabindex="0" aria-label="problem not fixed">
+            <label for="problem-not-fixed">Moj prijavljeni problem nije popravljen</label><br> 
 
             <br>  
             <hr class="page-divider">
@@ -105,18 +116,18 @@
                 [% IF field_errors.name %]
                 <div class="form-error">[% field_errors.name %]</div>
                 [% END %]
-                <input type="text" class="form-control required report-title-input" name="name" id="form_name" value="[% form_name | html %]" size="30">
+                <input type="text" class="form-control required report-title-input" name="name" id="form_name" value="[% form_name | html %]" size="30" placeholder="Ime i prezime">
     
                 <label for="form_email">[% loc('Your email') %]</label>
                 [% IF field_errors.em %]
                 <div class="form-error">[% field_errors.em %]</div>
                 [% END %]
-                <input type="text" class="form-control required email report-title-input" name="em" id="form_email" value="[% em | html %]" size="30">
+                <input type="text" class="form-control required email report-title-input" name="em" id="form_email" value="[% em | html %]" size="30" placeholder="Email adresa">
     
                 <div class="form-group">
                 <label for="form_phone">[% loc('Your phone number') %]</label>
                 <span class="required-text required-text--optional">optional</span>
-                <input type="text" class="form-control extra.phone report-title-input" name="extra.phone" id="form_phone" value="" size="30">
+                <input type="text" class="form-control extra.phone report-title-input" name="extra.phone" id="form_phone" value="" size="30" placeholder="Broj telefona (opcionalno)">
                 </div>
     
                 <label for="form_subject">[% loc('Subject') %]</label>
@@ -155,7 +166,7 @@
             <button class="button primary-button" tabindex="0" aria-label="submit" type="submit">[% loc('Send') %]</button>
     
         </fieldset>
-    </form>
+        </form>
     </section>
 </div>
 
