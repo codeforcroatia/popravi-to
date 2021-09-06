@@ -1,0 +1,239 @@
+@import './header.css';
+@import './main.css';
+@import './footer.css';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  background-color: #FFFFFF;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1 {
+  font-size: 64px;
+  font-family: 'Darker Grotesque', sans-serif;
+  z-index: 99999999;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.container {
+  margin: 40px 120px;
+}
+
+.thank-you h3{
+  text-align: center;
+  font-size: 40px;
+  font-weight: normal;
+}
+
+
+@media (max-width: 550px) {
+  .container {
+    margin: 10px;
+  }
+
+  .main-banner {
+    display: flex;
+    justify-content: center;
+  }
+
+  .banner {
+    display: none;
+  }
+
+  h1 {
+    font-size: 60px;
+    text-align: center;
+  }
+
+  main {
+    height: 600px;
+  }
+
+  .main-banner {
+    margin-bottom: 200px;
+  }
+
+  .header {
+    margin-bottom: 42px;
+  }
+
+  .main-announcement p {
+    text-align: center;
+  }
+
+  .input {
+    width: 300px;
+  }
+
+  .footer {
+    /* height: 700px; */
+    display: block;
+    padding: 10px;
+  }
+
+  .footer.container {
+    display: block;
+  }
+
+  .about.item p {
+    padding: 0;
+  }
+
+  .made-by {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .socials {
+    margin: 40px 0 20px 0;
+    text-align: center;
+  }
+
+  .social-icons li:last-child {
+    padding-right: 0px;
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .container {
+    margin: 20px;
+  }
+
+  .footer {
+    padding: 40px 30px 0 30px;
+  }
+}

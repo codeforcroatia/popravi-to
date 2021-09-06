@@ -1,0 +1,112 @@
+main {
+  min-height: 1000px;
+}
+
+.main-banner {
+  display: flex;
+  margin-bottom: 250px;
+}
+
+.main-form {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-form h3 {
+  margin-bottom: 48px;
+}
+
+.main-form small {
+  line-height: 2;
+  font-size: 12px;
+  width: 1000px;
+  margin-top: 200px;
+  margin-bottom: 100px;
+}
+
+.info-section {
+  margin: 100px 0;
+}
+
+.main-announcement p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 70px;
+}
+
+.banner {
+  position: relative;
+  flex: 1;
+}
+
+.pot-svg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  top: 100px;
+}
+
+.leafs-svg {
+  position: absolute;
+  z-index: 2;
+  top: -203px;
+  right: -78px;
+}
+
+form {
+  display: flex;
+  align-items: center
+}
+
+.input {
+  height: 64px;
+  width: 400px;
+  background-color: hsla(26, 28%, 95%, 1);
+  border-radius: 16px;
+  border-color: transparent;
+  padding-left: 20px;
+  font-size: 16px;
+  outline-offset: 4px;
+}
+
+.btn-red {
+  border-radius: 50%;
+  height: 62px;
+  width: 62px;
+  font-size: 24px;
+  border: none;
+  background-color: hsla(18, 90%, 51%, 1);
+  color: white;
+  margin-left: 16px;
+  cursor: pointer;
+  transition: all 0.6s;
+  outline-offset: 4px;
+}
+
+.btn-red:hover {
+  background-color: rgb(199, 69, 14);
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.underline {
+  background-image: linear-gradient(120deg, #F8C46C 0%, #F8C46C 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.2em;
+  background-position: 0 88%;
+  transition: background-size 0.25s ease-in;
+  font-size: 18px;
+  color: white;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+.underline:hover {
+  background-size: 100% 88%;
+}

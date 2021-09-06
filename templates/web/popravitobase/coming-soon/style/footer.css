@@ -1,0 +1,79 @@
+.footer {
+  background-color: #1D1C1C;
+  color: white;
+  min-height: 314px;
+  display: flex;
+  flex: 1;
+  padding-top: 55px;
+  padding: 40px 120px 0 120px;
+}
+
+.item {
+  flex-basis: 100%;
+}
+
+.made-by {
+  display: flex;
+  flex-direction: column;
+}
+
+.about {
+  flex-basis: 200%;
+}
+
+.about p {
+  margin-top: 20px;
+  line-height: 2;
+  padding-right: 119px;
+}
+
+.logo-fix-my-street {
+  width: 136px;
+}
+
+.logo-code-for-cr {
+  width: 72px;
+}
+
+.footer-fix-my-street {
+  margin-bottom: 42px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-fix-my-street img {
+  margin-top: 20px;
+}
+
+.footer-code-for-cr {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-code-for-cr img {
+  margin-top: 20px;
+}
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons li {
+  display: inline;
+  height: 32px;
+  padding-right: 16px;
+}
+
+.social-icons li:last-child {
+  padding-right: 0px;
+}
+
+.social-icons a {
+  font-size: 32px;
+  margin-top: 32px;
+  color: white;
+}
+
+.social-icons a:hover {
+  color: gray;
+}
