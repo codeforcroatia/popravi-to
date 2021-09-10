@@ -40,6 +40,12 @@ jobs:
         commonlib/bin/gettext-makemo FixMyStreet
         echo "$(npm bin)" >> $GITHUB_PATH
 
+    - name: Initialize Cypress tests
+      run: |
+        npx cypress run --record --key ${CYPRESS_RECORD_KEY}
+      env:
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        
     - name: Run Cypress tests
       run: |
         bin/browser-tests run ${CYPRESS_RECORD_KEY:+--record}
