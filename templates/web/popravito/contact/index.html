@@ -112,29 +112,29 @@
             <br>
     
             [% IF NOT rejecting_report %]
-                <!-- <label for="form_name">[% loc('Your name') %]</label> -->
+                <label for="form_name"></label>
                 [% IF field_errors.name %]
                 <div class="form-error">[% field_errors.name %]</div>
                 [% END %]
                 <input type="text" class="form-control required report-title-input" name="name" id="form_name" value="[% form_name | html %]" size="30" placeholder="Ime i prezime">
     
-                <!-- <label for="form_email">[% loc('Your email') %]</label> -->
+                <label for="form_email"></label>
                 [% IF field_errors.em %]
                 <div class="form-error">[% field_errors.em %]</div>
                 [% END %]
                 <input type="text" class="form-control required email report-title-input" name="em" id="form_email" value="[% em | html %]" size="30" placeholder="Email adresa">
     
                 <div class="form-group">
-                <!-- <label for="form_phone">[% loc('Your phone number') %]</label> -->
-                <span class="required-text required-text--optional">optional</span>
+                <label for="form_phone"></label>
+                <!-- <span class="required-text required-text--optional">optional</span> -->
                 <input type="text" class="form-control extra.phone report-title-input" name="extra.phone" id="form_phone" value="" size="30" placeholder="Broj telefona (opcionalno)">
                 </div>
     
-                <!-- <label for="form_subject">[% loc('Subject') %]</label>
+               <label for="form_subject"></label>
                 [% IF field_errors.subject %]
                 <div class="form-error">[% field_errors.subject %]</div>
                 [% END %]
-                <input type="text" class="form-control required report-title-input" name="subject" id="form_subject" value="[% subject | html %]" size="30"> -->
+                <input type="text" class="form-control required report-title-input" name="subject" id="form_subject" value="[% subject | html %]" size="30" placeholder="Naslov">
             [% ELSE %]
                 <input type="hidden" name="name" value="[% c.user.name | html %]" />
                 <input type="hidden" name="em" value="[% c.user.email | html %]" />
