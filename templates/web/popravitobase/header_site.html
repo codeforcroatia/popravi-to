@@ -1,8 +1,8 @@
 <header id="site-header" role="banner">
   <div class="container clearfix">
     <div class="logo">
-      <a href="/">
-        <span id="site-logo">Popravito</span>
+      <a href="[% c.cobrand.base_url IF admin %]/">
+        <span id="site-logo">[% site_name %]</span>
       </a>
     </div>
     <div class="top-row-extras">
@@ -16,11 +16,14 @@
   </div>
 </header>
 <nav class="mobile-nav">
-    <a href="/report">Report a problem</a>
-    <a href="/my">My Account</a>
-    <a href="/auth">Sign In</a>
-    <a href="/reports">All reports</a>
-    <a href="/alert">Local alerts</a>
-    <a href="/contact">Contact Us</a>
-    <a href="/faq">Help</a>
+    <a href="/report">[% loc('Report a problem') %]</a>
+    [%~ IF c.user_exists ~%]
+        [%~ INCLUDE navitem uri='/my' label=loc('Your account') ~%]
+    [%~ ELSE ~%]
+        [%~ INCLUDE navitem uri='/auth' label=loc('Sign in') ~%]
+    [%~ END ~%]
+    <a href="/reports">[% loc('All reports') %]</a>
+    <a href="/alert">[% loc('Local alerts') %]</a>
+    <a href="/contact">[% loc('Contact us') %]</a>
+    <a href="/faq">[% loc('Help') %]</a>
 </nav>
