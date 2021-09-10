@@ -32,8 +32,8 @@
     <section class="contact-message">
       <h2 class="page-subtitle">Pošalji poruku našem timu</h2>
       <form class="form-misc" method="post" action="/contact/submit" class="validate">
-        <!-- <input type="hidden" name="token" value="[% csrf_token %]">
-        <input type="hidden" name="s" value="[% s %]"> -->
+        <input type="hidden" name="token" value="[% csrf_token %]">
+        <input type="hidden" name="s" value="[% s %]">
         <fieldset>
             [% INCLUDE 'errors.html' %]
 <!--     
