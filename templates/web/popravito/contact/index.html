@@ -112,45 +112,45 @@
             <br>
     
             [% IF NOT rejecting_report %]
-                <label for="form_name">[% loc('Your name') %]</label>
+                <!-- <label for="form_name">[% loc('Your name') %]</label> -->
                 [% IF field_errors.name %]
                 <div class="form-error">[% field_errors.name %]</div>
                 [% END %]
                 <input type="text" class="form-control required report-title-input" name="name" id="form_name" value="[% form_name | html %]" size="30" placeholder="Ime i prezime">
     
-                <label for="form_email">[% loc('Your email') %]</label>
+                <!-- <label for="form_email">[% loc('Your email') %]</label> -->
                 [% IF field_errors.em %]
                 <div class="form-error">[% field_errors.em %]</div>
                 [% END %]
                 <input type="text" class="form-control required email report-title-input" name="em" id="form_email" value="[% em | html %]" size="30" placeholder="Email adresa">
     
                 <div class="form-group">
-                <label for="form_phone">[% loc('Your phone number') %]</label>
+                <!-- <label for="form_phone">[% loc('Your phone number') %]</label> -->
                 <span class="required-text required-text--optional">optional</span>
                 <input type="text" class="form-control extra.phone report-title-input" name="extra.phone" id="form_phone" value="" size="30" placeholder="Broj telefona (opcionalno)">
                 </div>
     
-                <label for="form_subject">[% loc('Subject') %]</label>
+                <!-- <label for="form_subject">[% loc('Subject') %]</label>
                 [% IF field_errors.subject %]
                 <div class="form-error">[% field_errors.subject %]</div>
                 [% END %]
-                <input type="text" class="form-control required report-title-input" name="subject" id="form_subject" value="[% subject | html %]" size="30">
+                <input type="text" class="form-control required report-title-input" name="subject" id="form_subject" value="[% subject | html %]" size="30"> -->
             [% ELSE %]
                 <input type="hidden" name="name" value="[% c.user.name | html %]" />
                 <input type="hidden" name="em" value="[% c.user.email | html %]" />
-                <input type="hidden" name="subject" value="[% loc("Report rejected") %]" />
+                <!-- <input type="hidden" name="subject" value="[% loc("Report rejected") %]" /> -->
                 <input type="hidden" name="reject" value="1" />
             [% END %]
     
             [% IF rejecting_report %]
                 <label for="form_message">[% loc('Rejection reason') %]</label>
             [% ELSE %]
-                <label for="form_message">[% loc('Message') %]</label>
+                <!-- <label for="form_message">[% loc('Message') %]</label> -->
             [% END %]
             [% IF field_errors.message %]
               <div class="form-error">[% field_errors.message %]</div>
             [% END %]
-            <textarea class="form-control required" name="message" id="form_message" rows="7" cols="50">[% message | html %]</textarea>
+            <textarea class="form-control required" name="message" id="form_message" rows="7" cols="50" placeholder="Napisi poruku">[% message | html %]</textarea>
     
             [% IF rejecting_report %]
                 <div class="form-group">
