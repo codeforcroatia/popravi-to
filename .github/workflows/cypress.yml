@@ -37,7 +37,6 @@ jobs:
         sudo apt install -y gettext
         npm install cypress@3.8.3
         vendor/bin/carton install --deployment
-        commonlib/bin/gettext-makemo FixMyStreet
         echo "$(npm bin)" >> $GITHUB_PATH
 
     - name: Initialize Cypress tests
