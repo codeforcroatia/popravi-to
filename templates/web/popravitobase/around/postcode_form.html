@@ -1,9 +1,7 @@
 <div id="front-main">
     <div id="front-main-container">
-        [% IF possible_location_matches %]
-          <div id="front-main-container-flex_possible_location_matches">
-        [% ELSE %]
-          <div id="front-main-container-flex">
+        <div id="front-main-container-flex">
+        [% UNLESS possible_location_matches %]
             [% INCLUDE 'around/intro.html' %]
         [% END %]
 
@@ -42,9 +40,7 @@
         [% UNLESS possible_location_matches OR location_error_pc_lookup %]
             [% INCLUDE 'around/_postcode_form_post.html' %]
         [% END %]
-        [% UNLESS possible_location_matches %]
-            <div id="homepage_header"></div>
-        [% END %]
+        <div id="homepage_header"></div>
         </div>
     <div id="line"></div>
     </div>
