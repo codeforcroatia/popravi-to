@@ -1091,6 +1091,10 @@ fieldset {
     flex: 1;
 }
 
+.dashboard-main {
+    height: 500px;
+}
+
 .dashboard-canvas {
     position: relative;
     flex: 1;
@@ -1098,4 +1102,26 @@ fieldset {
 
 .canvas-position {
     position: absolute;
+}
+
+.labelled-sparkline {
+    display: flex;
+    justify-content: center;
+
+    .strong {
+        font-size: 2.2rem;
+        color: #1D1C1C;
+    }
+}
+
+.reports-seven-days-label {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: gray;
+    width: fit-content;
+    padding: 4px 16px;
+    background-color: #FAFAFA;
+    margin-bottom: 1.5rem;
+    padding: 2rem 5rem 2rem 5rem;
 }
