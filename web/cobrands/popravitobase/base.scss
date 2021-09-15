@@ -1,3 +1,12 @@
+// Custom Staging banner:
+.popup__content {
+/*   background-color: #F25410; */
+  background-color: #cc3300;
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
+
 //body {
 //  font-family: 'open-sans' !important;
 //}
@@ -44,7 +53,7 @@
     max-height: 40px;
     max-width: 147px;
   }
-  @include svg-background-image("/cobrands/popravito/images/popravi-logo-horizontal");
+  @include svg-background-image("/cobrands/popravitobase/images/popravi-logo-horizontal");
   background-repeat: no-repeat;
   background-size: 170px 60px;
   height: 60px;
@@ -120,7 +129,7 @@
 }
 
 #footer-logo {
-  @include svg-background-image("/cobrands/popravito/images/popravi-logo-horizontalwhite");
+  @include svg-background-image("/cobrands/popravitobase/images/popravi-logo-horizontalwhite");
   height: 30px;
   width: 124px;
   margin-bottom: 24px;
@@ -143,14 +152,14 @@
 
 #fixmystreet-logo {
   display: inline-block;
-  @include svg-background-image("/cobrands/popravito/images/fixmystreet");
+  @include svg-background-image("/cobrands/popravitobase/images/fixmystreet");
   width: 134px;
   height: 26px;
 }
 
 #croatia-logo {
   display: inline-block;
-  @include svg-background-image("/cobrands/popravito/images/codeforcroatia");
+  @include svg-background-image("/cobrands/popravitobase/images/codeforcroatia");
   width: 72px;
   height: 50px;
 }
@@ -166,13 +175,13 @@
     width: 32px;
   }
   &_github {
-    @include svg-background-image("/cobrands/popravito/images/github");
+    @include svg-background-image("/cobrands/popravitobase/images/github");
   }
   &_twitter {
-    @include svg-background-image("/cobrands/popravito/images/twitter");
+    @include svg-background-image("/cobrands/popravitobase/images/twitter");
   }
   &_facebook {
-    @include svg-background-image("/cobrands/popravito/images/facebook");
+    @include svg-background-image("/cobrands/popravitobase/images/facebook");
   }
 }
 #flex {
@@ -232,7 +241,7 @@
   content: '';
   background-image: url("images/icon_info.svg");
 
-  //@include svg-background-image("/cobrands/popravito/images/icon_info");
+  //@include svg-background-image("/cobrands/popravitobase/images/icon_info");
   width: 20px !important;
   height: 20px !important;
 }
@@ -315,7 +324,7 @@
 }
 #geolocate_homepage::before {
   display: inline-block;
-  @include svg-background-image("/cobrands/popravito/images/icon_location_purple");
+  @include svg-background-image("/cobrands/popravitobase/images/icon_location_purple");
   content: '';
   width: 20px;
   height: 20px;
@@ -370,7 +379,7 @@
 
 #front-main a:before {
   display: inline-block;
-  @include svg-background-image("/cobrands/popravito/images/icon_location");
+  @include svg-background-image("/cobrands/popravitobase/images/icon_location");
   content: '';
   width: 20px;
   height: 20px;
@@ -437,7 +446,7 @@
   }
   #geolocate_link::before {
     display: inline-block;
-    @include svg-background-image("/cobrands/popravito/images/icon_location");
+    @include svg-background-image("/cobrands/popravitobase/images/icon_location");
     content: '';
     width: 20px;
     height: 20px;
@@ -459,7 +468,7 @@
     border-radius: 16px;
     :placeholder-shown {
       display: inline-block;
-      @include svg-background-image("/cobrands/popravito/images/icon_location");
+      @include svg-background-image("/cobrands/popravitobase/images/icon_location");
       content: '';
       width: 20px;
       height: 20px;
@@ -512,7 +521,7 @@
         //display: block;
         //back
         background-image: url("images/orange-square-md.svg");
-        //@include svg-background-image("/cobrands/popravito/images/orange-square-md") !important;
+        //@include svg-background-image("/cobrands/popravitobase/images/orange-square-md") !important;
       }
     }
     span[data-datasetindex='1'] {
@@ -594,7 +603,7 @@
       color: #1D1C1C !important;
     }
     strong:before{
-      //@include svg-background-image("/cobrands/popravito/images/");
+      //@include svg-background-image("/cobrands/popravitobase/images/");
       content:'';
       display: inline-block;
       width: 12px;
@@ -636,7 +645,7 @@
 }
 
 .reportstep {
-  @include svg-background-image("/cobrands/popravito/images/reportstep");
+  @include svg-background-image("/cobrands/popravitobase/images/reportstep");
   display: inline-block;
   content: '';
   width: 8px;
@@ -644,7 +653,7 @@
 }
 
 .reportstepactive {
-  @include svg-background-image("/cobrands/popravito/images/reportstepactive");
+  @include svg-background-image("/cobrands/popravitobase/images/reportstepactive");
   display: inline-block;
   width: 20px !important;
   height: 8px;
@@ -672,7 +681,7 @@
 #arrow-right:after {
   content: '';
   display: inline-block;
-  @include svg-background-image("/cobrands/popravito/images/arrow-right");
+  @include svg-background-image("/cobrands/popravitobase/images/arrow-right");
   width: 24px;
   height: 24px;
 }
@@ -709,7 +718,7 @@
     line-height: 24px;
   }
   &__search {
-    @include svg-background-image("/cobrands/popravito/images/icon_location");
+    @include svg-background-image("/cobrands/popravitobase/images/icon_location");
     font-size: 14px;
     line-height: 20px;
     color: #746AB6;
@@ -787,7 +796,7 @@
 
     button:before {
       content: '';
-      @include svg-background-image("/cobrands/popravito/images/arrow_back");
+      @include svg-background-image("/cobrands/popravitobase/images/arrow_back");
       width: 24px;
       height: 24px;
       display: inline-block;
@@ -981,7 +990,7 @@ input[name='sign_in_by_password'], .green-btn  {
     grid-area: nav;
 
     &-menu {
-      @include svg-background-image("/cobrands/popravito/images/profile_menu");
+      @include svg-background-image("/cobrands/popravitobase/images/profile_menu");
       background-repeat: no-repeat;
       background-size: 24px 24px;
       height: 24px;
@@ -993,7 +1002,7 @@ input[name='sign_in_by_password'], .green-btn  {
     }
 
     &-map {
-      @include svg-background-image("/cobrands/popravito/images/profile_map");
+      @include svg-background-image("/cobrands/popravitobase/images/profile_map");
       color: pink;
       background-repeat: no-repeat;
       background-size: 24px 24px;
@@ -1248,5 +1257,3 @@ input[name='sign_in_by_password'], .green-btn  {
 
   }
 }
-
-

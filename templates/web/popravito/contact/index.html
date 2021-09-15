@@ -36,13 +36,13 @@
         <input type="hidden" name="s" value="[% s %]">
         <fieldset>
             [% INCLUDE 'errors.html' %]
-<!--     
+<!--
             [% IF update %]
-    
+
                 <p>
                 [% loc('You are reporting the following update for being abusive, containing personal information, or similar:') %]
                 </p>
-    
+
                 <blockquote>
                     <cite>
                         [% IF update.anonymous %]
@@ -51,15 +51,15 @@
                             [% tprintf( loc('Update below added by %s at %s'), update.name, prettify_dt( update.confirmed ) ) | html %]
                         [% END %]
                     </cite>
-    
+
                     <p>
                         [%~ update.text | html ~%]
                     </p>
-    
+
                 </blockquote>
                 <input type="hidden" name="update_id" value="[% update.id %]">
                 <input type="hidden" name="id" value="[% update.problem_id %]">
-    
+
             [% ELSIF problem %]
                 [% IF moderation_complaint %]
                 <input type="hidden" name="m" value="[% moderation_complaint %]">
@@ -69,10 +69,10 @@
                 [% ELSE %]
                 [% INCLUDE 'contact/unsuitable-text.html' %]
                 [% END %]
-    
+
                 <blockquote>
                     <h2>[% problem.title_safe | html %]</h2>
-    
+
                     <cite>
                         [% IF problem.anonymous %]
                             [% tprintf( loc('Reported anonymously at %s'), prettify_dt( problem.confirmed ) ) %]
@@ -80,56 +80,57 @@
                             [% tprintf( loc('Reported by %s at %s'), problem.name, prettify_dt( problem.confirmed ) ) | html %]
                         [% END %]
                     </cite>
-    
+
                     <p>
                         [%~ problem.detail | html ~%]
                     </p>
-    
+
                 </blockquote>
                 <input type="hidden" name="id" value="[% problem.id %]">
-    
+
             [% ELSE %]
-    
+
                 [% INCLUDE 'contact/blurb.html' %]
-    
+
             [% END %] -->
-    
+
             [% INCLUDE 'contact/who.html' %]
+
 
             <input type="radio" name="contact" value="help-with-website" id="help-with-website" tabindex="0" aria-label="help with website" checked>
             <label for="help-with-website">Trebam pomoć pri korištenju stranice</label><br>
             <input type="radio" name="contact" value="feedback" id="feedback" tabindex="0" aria-label="feedback">
-            <label for="feedback">Želim ostaviti feedback na stranicu</label><br>  
+            <label for="feedback">Želim ostaviti feedback na stranicu</label><br>
             <input type="radio" name="contact" value="comment" id="comment" tabindex="0" aria-label="question or comment">
-            <label for="question or comment">Radim u jedinici lokalne samouprave i imam pitanje/komentar</label><br>       
+            <label for="question or comment">Radim u jedinici lokalne samouprave i imam pitanje/komentar</label><br>
             <input type="radio" name="contact" value="report-problem" id="report-problem" tabindex="0" aria-label="report problem">
-            <label for="report-problem">Želim prijaviti problem</label><br> 
+            <label for="report-problem">Želim prijaviti problem</label><br>
             <input type="radio" name="contact" value="problem-not-fixed" id="problem-not-fixed" tabindex="0" aria-label="problem not fixed">
-            <label for="problem-not-fixed">Moj prijavljeni problem nije popravljen</label><br> 
+            <label for="problem-not-fixed">Moj prijavljeni problem nije popravljen</label><br>
 
-            <br>  
+            <br>
             <hr class="page-divider">
             <br>
-    
+
             [% IF NOT rejecting_report %]
                 <label for="form_name"></label>
                 [% IF field_errors.name %]
                 <div class="form-error">[% field_errors.name %]</div>
                 [% END %]
                 <input type="text" class="form-control required report-title-input" name="name" id="form_name" value="[% form_name | html %]" size="30" placeholder="Ime i prezime">
-    
+
                 <label for="form_email"></label>
                 [% IF field_errors.em %]
                 <div class="form-error">[% field_errors.em %]</div>
                 [% END %]
                 <input type="text" class="form-control required email report-title-input" name="em" id="form_email" value="[% em | html %]" size="30" placeholder="Email adresa">
-    
+
                 <div class="form-group">
                 <label for="form_phone"></label>
                 <!-- <span class="required-text required-text--optional">optional</span> -->
                 <input type="text" class="form-control extra.phone report-title-input" name="extra.phone" id="form_phone" value="" size="30" placeholder="Broj telefona (opcionalno)">
                 </div>
-    
+
                <label for="form_subject"></label>
                 [% IF field_errors.subject %]
                 <div class="form-error">[% field_errors.subject %]</div>
@@ -141,7 +142,7 @@
                 <!-- <input type="hidden" name="subject" value="[% loc("Report rejected") %]" /> -->
                 <input type="hidden" name="reject" value="1" />
             [% END %]
-    
+
             [% IF rejecting_report %]
                 <label for="form_message">[% loc('Rejection reason') %]</label>
             [% ELSE %]
@@ -151,20 +152,20 @@
               <div class="form-error">[% field_errors.message %]</div>
             [% END %]
             <textarea class="form-control required" name="message" id="form_message" rows="7" cols="50" placeholder="Napisi poruku">[% message | html %]</textarea>
-    
+
             [% IF rejecting_report %]
                 <div class="form-group">
                 <label for="form_service_area">[% loc('Service area for re-allocation') %]</label>
                 <input type="text" class="form-control extra.service_area" name="extra.service_area" id="form_service_area" value="" size="30">
                 </div>
             [% END %]
-    
+
             [% IF NOT problem AND NOT update %]
             <p>[% loc('If you are contacting us about a specific report or update please include a link to the report in the message.') %]</p>
             [% END %]
-    
+
             <button class="button primary-button" tabindex="0" aria-label="submit" type="submit">[% loc('Send') %]</button>
-    
+
         </fieldset>
         </form>
     </section>
