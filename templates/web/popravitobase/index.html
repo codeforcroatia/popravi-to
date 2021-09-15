@@ -1,0 +1,5 @@
+[% IF c.config.STAGING_SITE AND c.user_exists ~%]
+[% INCLUDE 'index2.html' %]
+[% ELSE %]
+[% INCLUDE 'coming-soon/index.html' %]
+[% END %]
