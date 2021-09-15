@@ -1085,3 +1085,17 @@ fieldset {
     align-items: center;
     text-align: center;
 }
+
+.dashboard-row-grid {
+    display: flex;
+    flex: 1;
+}
+
+.dashboard-canvas {
+    position: relative;
+    flex: 1;
+}
+
+.canvas-position {
+    position: absolute;
+}
