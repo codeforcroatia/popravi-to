@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
     [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
 
@@ -15,7 +15,7 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    
+
     [% title = loc('Sign in or create an account') %]
 
 </head>
@@ -23,8 +23,8 @@
     <section class="register-container">
         <div>
             <picture class="logo misc-logo">
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+                <source media="(max-width: 768px)" srcset="/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <img src="/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
             </picture>
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
@@ -57,13 +57,13 @@
             [% END %]
 
             <input type="text" class="credentials-input form-control required" id="username" name="username" autocomplete="username" value="[% username | html %]" placeholder="[% loc('Email address')%]" tabindex="0" aria-label="email"
-            
+
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
-            
+
             <div class="password-container">
                 <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
-                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="[% loc('Password')%]" tabindex="0" aria-label="password">  
-                <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>    
+                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="[% loc('Password')%]" tabindex="0" aria-label="password">
+                <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>
             </div>
             <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">[% loc('Forgotten your password?') %]</a>
             <div class="form-bottom-part">
@@ -73,6 +73,6 @@
         </form>
     </section>
 
-    <script src="[% c.cobrand.base_url %]/cobrands/popravito/enableFormButton.js"></script>
+    <script src="/cobrands/popravito/enableFormButton.js"></script>
 </body>
 </html>
