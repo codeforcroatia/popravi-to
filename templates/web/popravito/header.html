@@ -114,15 +114,6 @@
 [% TRY %][% PROCESS 'set_body_class.html' %][% CATCH file %][% END %]
 
 <body>
-    <noscript>
-      <div class="popup popup--popup popup--standard" role="alert" id="standard-popup">
-          <div class="row">
-              <div class="popup__content">
-                  <strong>Javascript je isključen -</strong> za pravilan rad ove internetske stranice odobrite Javascript u vašem internetskom pregledniku.
-              </div>
-          </div>
-      </div>
-    </noscript>
     [% INCLUDE 'debug_header.html' %]
     <header class="header">
         <a href="[% c.cobrand.base_url IF admin %]/" id="site-logo" class="logo">
