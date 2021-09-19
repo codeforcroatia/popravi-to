@@ -1086,9 +1086,17 @@ fieldset {
     text-align: center;
 }
 
+
+// REPORTS
+
+.main-reports {
+ padding: 2.5rem;   
+}
+
 .dashboard-row-grid {
     display: flex;
     flex: 1;
+    margin: 2.5rem 0;
 }
 
 .dashboard-main {
@@ -1130,7 +1138,6 @@ fieldset {
     display: flex;
     justify-content: center;
     width: 80%;
-    justify-content: center;
     margin: auto;
 }
 
