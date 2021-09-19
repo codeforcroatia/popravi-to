@@ -766,7 +766,7 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     width: 60%;
 }
 
-.notification-search-button-text, .notificaton-search-button-arrow {
+.notification-search-button-text, .notification-search-button-arrow {
     display: none;
 }
 
@@ -1093,11 +1093,33 @@ fieldset {
 
 .dashboard-main {
     height: 500px;
+    margin-top: 4rem;
 }
 
 .dashboard-canvas {
     position: relative;
     flex: 1;
+    margin-right: 2rem;
+    justify-content: space-between;
+    border-top: 2px solid black;
+    border-bottom: 0;
+}
+
+.dashboard-history {
+    border-top: 2px solid black;
+    max-width: 30%;
+    border-bottom: 0;
+}
+
+.dashboard-reports-smaller {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6rem;
+}
+
+.dashboard-item-reports-smaller {
+    border-top: 2px solid black;
+    border-bottom: 0;
 }
 
 .canvas-position {
@@ -1107,14 +1129,12 @@ fieldset {
 .labelled-sparkline {
     display: flex;
     justify-content: center;
-
-    .strong {
-        font-size: 2.2rem;
-        color: #1D1C1C;
-    }
+    width: 80%;
+    justify-content: center;
+    margin: auto;
 }
 
-.reports-seven-days-label {
+.label .reports-seven-days-label {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -1124,6 +1144,11 @@ fieldset {
     background-color: #FAFAFA;
     margin-bottom: 1.5rem;
     padding: 2rem 5rem 2rem 5rem;
+
+    strong {
+        font-size: 2.2rem;
+        color: #1D1C1C;
+    }
 }
 
 .dashboard-search {
