@@ -12,6 +12,15 @@ $right: right;
     background-image: url("#{$path}.svg"), none;
 }
 
+// Custom Staging banner:
+.popup__content {
+/*   background-color: #F25410; */
+  background-color: #cc3300;
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
+
 body {
     font-family: $body-font;
     margin: 0;
@@ -37,7 +46,7 @@ a:hover {
 }
 
 button:hover {
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 input, textarea {
@@ -629,7 +638,7 @@ img {
 }
 
 .bar4 {
-    width: 100%; 
+    width: 100%;
 }
 
 .dropdowns {
@@ -654,7 +663,7 @@ img {
     color: $col_big_numbers;
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none; 
+    appearance: none;
     background-image: url('/cobrands/popravito/images/ic-dropdown-down.svg');
     background-repeat: no-repeat;
     background-position: right;
@@ -917,7 +926,7 @@ img {
     opacity: 0.1;
     border: 1px solid #000000;
     margin: 3rem 0 3rem 0;
-}   
+}
 
 
 .page-divider-2 {
@@ -1076,7 +1085,7 @@ img {
     position: fixed;
     opacity: 0;
   }
-  
+
 .tab-label {
     font-size: 1.5rem;
     cursor: pointer;
@@ -1086,12 +1095,12 @@ img {
     margin: 0;
     background-color: #F6F2EF;
 }
-  
+
 .panel {
     display: none;
     width: 100%;
   }
-  
+
 .radiotab:checked + .tab-label + .panel {
     display: block;
 }
@@ -1146,7 +1155,7 @@ img {
 
 .filter-icon:active {
     background: url('/cobrands/popravito/images/ic_filter_orange.svg') no-repeat center;
-}   
+}
 
 .sort-form {
     margin: 0 2rem;
@@ -1299,7 +1308,7 @@ img {
 
 .change-info-fieldset {
     border: none;
-    padding: 0; 
+    padding: 0;
 }
 
 .change-info-fieldset .primary-button {
@@ -1960,7 +1969,7 @@ div .olMap {
 html.js #map .noscript {
     display: none;
 }
- 
+
 #fms_pan_zoom {
     top: 0.5em;
     #{$right}: 0.5em;
@@ -2037,7 +2046,7 @@ html.js #map .noscript {
 .moderate-edit {
     display: none; // gets shown by javascript
 }
-  
+
 .show-moderation {
     .moderate-edit {
         display: block;
@@ -2244,7 +2253,7 @@ html.js #map .noscript {
     display: none;
     visibility: hidden;
   }
-  
+
 // hide anything with this class if js is NOT working
 .no-js .hidden-nojs {
     display: none !important;

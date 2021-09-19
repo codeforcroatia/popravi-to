@@ -49,10 +49,10 @@
         <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm" enctype="multipart/form-data" class="validate" novalidate>
             <input type="hidden" name="token" value="[% csrf_token %]">
             <input type="hidden" name="pc" value="[% pc | html %]">
-        
+
             <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
             <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
-        
+
             [% IF c.get_param('filter_group') %]
                 <input type="hidden" name="filter_group" id="filter_group" value="[% c.get_param('filter_group') | html %]">
             [% END %]
@@ -81,8 +81,8 @@
 
                 <div class="continue-container">
                     <button class="button primary-button" tabindex="0" aria-label="continue to next step" id="skip-this-step">[% loc('Continue') %]<span class="arrow-right"></span></button>
-                </div>                       
-            </div> 
+                </div>
+            </div>
 
             [% IF allow_creation %]
                     <div style="display:none" id="side-form">
@@ -99,7 +99,7 @@
 
             [% map_html | safe %]
         </div>
-        
+
         [% IF allow_creation %]
         </form>
         [% END %]
@@ -107,8 +107,8 @@
 
     [% INCLUDE 'footer.html' %]
 
-    <script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
-    <script src="[% c.cobrand.base_url %]/cobrands/popravito/toggleInfoModals.js"></script>
+    <script src="/cobrands/popravito/menu.js"></script>
+    <script src="/cobrands/popravito/toggleInfoModals.js"></script>
 
 </body>
 </html>

@@ -51,8 +51,8 @@
   [% END %]
 
     <picture class="fix-icon-detail">
-            <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/fix-icon.png">
-            <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/fix-icon.png" alt="">
+            <source srcset="/cobrands/popravito/images/fix-icon.png">
+            <img src="/cobrands/popravito/images/fix-icon.png" alt="">
     </picture>
   [% IF can_moderate_title %]
     <h1 class="moderate-display report-title">[% problem.title | html %]</h1>
@@ -103,7 +103,7 @@
       <p class="page-text-misc">[% loc('Photos') %]</p>
         [% INCLUDE 'report/photo.html' object=problem %]
       <br>
-    </div> 
+    </div>
 
   [% IF can_moderate %]
     <p class="moderate-edit">

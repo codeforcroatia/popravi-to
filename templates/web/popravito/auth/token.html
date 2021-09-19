@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
     [% SET base_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/base.css') %]
     [% SET layout_css = version('/cobrands/' _ c.cobrand.asset_moniker _ '/layout.css') %]
 
@@ -34,8 +34,8 @@
     <section class="register-container">
         <div>
             <picture class="logo misc-logo">
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg">
-                <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+                <source media="(max-width: 768px)" srcset="/cobrands/popravito/images/popravi-logo-mobile.svg">
+                <img src="/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
             </picture>
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
@@ -50,9 +50,9 @@
 
             <h1 class="page-title">[% loc("Nearly done! Now check your email&hellip;") %]</h1>
             <p class="page-text page-text-left-aligned">[% loc("Click the link in our confirmation email to sign in.") %]</p>
-        
+
         [% END %]
-  
+
         <p class="page-text page-text-left-aligned">[% loc("Can&rsquo;t find our email? Check your spam folder&nbsp;&ndash; that&rsquo;s the solution 99% of the time.") %]</p>
         <form class="credentials-form">
             <div class="form-bottom-part">

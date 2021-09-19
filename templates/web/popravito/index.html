@@ -6,11 +6,11 @@
     <section class="central-content">
         <div class="mobile-hero-images">
             <picture class="hero-image">
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-left.svg">
+                <source media="(max-width: 768px)" srcset="/cobrands/popravito/images/hero-mobile-left.svg">
                 <img src="#" alt="">
             </picture>
             <picture class="hero-image">
-                <source media="(max-width: 768px)" srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/hero-mobile-right.svg">
+                <source media="(max-width: 768px)" srcset="/cobrands/popravito/images/hero-mobile-right.svg">
                 <img src="#" alt="">
             </picture>
         </div>
@@ -19,7 +19,7 @@
 
         <div class="container">
             <div class="content[% " $mainclass" | html IF mainclass %]" role="main">
-                        
+
                 [% IF error %]
                     <p class="form-error main-page-form-err">[% error %]</p>
                 [% END %]
@@ -27,35 +27,35 @@
             </div>
         </div>
 
-    </section>             
+    </section>
     <section class="report-steps-section">
         <h1 class="report-title">[% loc('How to report a problem') %]</h1>
         <ol class="report-steps">
             <li class="report-step" aria-label="upisi ulicu" tabindex="0">
                 <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_1_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_1_num.svg" alt="">
+                    <source srcset="/cobrands/popravito/images/step_1_num.svg">
+                    <img src="/cobrands/popravito/images/step_1_num.svg" alt="">
                 </picture>
                <span>[% loc('Enter a nearby street name and area') %]</span>
             </li>
             <li class="report-step" aria-label="lociraj problem na mapi" tabindex="0">
                 <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_2_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_2_num.svg" alt="">
+                    <source srcset="/cobrands/popravito/images/step_2_num.svg">
+                    <img src="/cobrands/popravito/images/step_2_num.svg" alt="">
                 </picture>
                 <span>[% loc('Locate the problem on a map of the area') %]</span>
             </li>
             <li class="report-step" aria-label="opisi problem" tabindex="0">
                 <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_3_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_3_num.svg" alt="">
+                    <source srcset="/cobrands/popravito/images/step_3_num.svg">
+                    <img src="/cobrands/popravito/images/step_3_num.svg" alt="">
                 </picture>
                 <span>[% loc('Enter details of the problem') %]</span>
             </li>
             <li class="report-step" aria-label="prijavu saljemo nadleznoj upravi" tabindex="0">
                 <picture class="step-num-img">
-                    <source srcset="[% c.cobrand.base_url %]/cobrands/popravito/images/step_4_num.svg">
-                    <img src="[% c.cobrand.base_url %]/cobrands/popravito/images/step_4_num.svg" alt="">
+                    <source srcset="/cobrands/popravito/images/step_4_num.svg">
+                    <img src="/cobrands/popravito/images/step_4_num.svg" alt="">
                 </picture>
                <span>[% loc('We send it to the council on your behalf') %]</span>
             </li>
@@ -81,7 +81,7 @@
                     "<big>%s</big> reports recently",
                     stats.new
                 );
-            
+
         IF stats.completed.defined;
             completed_text = nget(
                 "<big>%s</big> completed in past month",
@@ -99,7 +99,7 @@
             );
             fixed_n = stats.fixed | format_number;
         END;
-            
+
             updates_text = nget(
                 "<big>%s</big> update on reports",
                 "<big>%s</big> updates on reports",
@@ -131,9 +131,7 @@
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]
 
-<script src="[% c.cobrand.base_url %]/cobrands/popravito/menu.js"></script>
+<script src="/cobrands/popravito/menu.js"></script>
 
 </body>
 </html>
-
-
