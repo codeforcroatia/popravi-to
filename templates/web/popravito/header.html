@@ -135,8 +135,8 @@
                 </li>
             [%~ END %]
             <ul class="menu-list [% ul_class %]" [% " id='" _ ul_id _ "'" IF ul_id %]>
-                <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
-                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li>
+                <!-- <li class="menu-item"><a href="/reports" tabindex="0" aria-label="all reports">[%- loc('All reports') -%]</a></li>
+                <li class="menu-item"><a href="/alert" tabindex="0" aria-label="notifications">[%- loc('Local alerts') -%]</a></li> -->
                 <li class="menu-item"><a href="/faq" tabindex="0" aria-label="help">[%- loc('Help') -%]</a></li>
 
                 [%~ IF c.user_exists ~%]
