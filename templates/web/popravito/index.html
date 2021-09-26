@@ -121,16 +121,16 @@
 
         <ul class="report-statistics">
             <li class="report-stat-item">
-                <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %] [% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) ) %]</p>
+                <p class="report-stat-num" tabindex="0">[% tprintf( decode(last_seven_reported) ) %]</p>
                 <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
             </li>
             <li class="report-stat-item">
-                <p class="report-stat-num" tabindex="0">[% tprintf( decode(updates_n) ) %]</p>
+                <p class="report-stat-num" tabindex="0">[% tprintf( decode(last_seven_updated) ) %]</p>
                 <p class="report-stat-detail"><span class="report-mark report-two" aria-hidden="true"></span>[% loc('UPDATED') %]</p>
             </li>
             [% IF fixed_text %]
                 <li class="report-stat-item">
-                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(fixed_n) ) %]</p>
+                    <p class="report-stat-num" tabindex="0">[% tprintf( decode(last_seven_fixed) ) %]</p>
                     <p class="report-stat-detail"><span class="report-mark report-three" aria-hidden="true"></span>[% loc('FIXED') %]</p>
                 </li>
             [% END %]
