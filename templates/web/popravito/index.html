@@ -82,7 +82,7 @@
                     stats.new
                 );
 
-        IF stats.completed.defined;
+        IF stats.completed;
             completed_text = nget(
                 "<big>%s</big> completed in past month",
                 "<big>%s</big> completed in past month",
@@ -91,7 +91,7 @@
             completed_n = stats.completed | format_number;
         END;
 
-        IF stats.fixed.defined;
+        IF stats.fixed;
             fixed_text = nget(
                 "<big>%s</big> fixed in past month",
                 "<big>%s</big> fixed in past month",
