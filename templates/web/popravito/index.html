@@ -67,9 +67,19 @@
         [% USE Number.Format %]
 
         [%
+            problems_reported = problems_total | format_number;
+            problems_fixed = fixed_total | format_number;
+            problems_updated = updated_total | format_number;
+            last_seven_reported = last_seven_days.problems_total | format_number;
+            last_seven_updated = last_seven_days.updated_total | format_number;
+            last_seven_fixed = last_seven_days.fixed_total | format_number;
+        -%]
+
+        [%
             stats = c.cobrand.front_stats_data();
 
             new_text =
+                stats.recency == '1 week'
                 ? nget(
                     "<big>%s</big> report in past week",
                     "<big>%s</big> reports in past week",
@@ -81,7 +91,7 @@
                     stats.new
                 );
 
-        IF stats.completed;
+        IF stats.completed.defined;
             completed_text = nget(
                 "<big>%s</big> completed in past month",
                 "<big>%s</big> completed in past month",
@@ -90,7 +100,7 @@
             completed_n = stats.completed | format_number;
         END;
 
-        IF stats.fixed;
+        IF stats.fixed.defined;
             fixed_text = nget(
                 "<big>%s</big> fixed in past month",
                 "<big>%s</big> fixed in past month",
@@ -111,7 +121,7 @@
 
         <ul class="report-statistics">
             <li class="report-stat-item">
-                <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %]</p>
+                <p class="report-stat-num" tabindex="0">[% tprintf( decode(new_n) ) %] [% tprintf( decode(problems_reported) ) %]</p>
                 <p class="report-stat-detail"><span class="report-mark report-one" aria-hidden="true"></span>[% loc('REPORTED') %]</p>
             </li>
             <li class="report-stat-item">
