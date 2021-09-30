@@ -1100,7 +1100,7 @@ fieldset {
 }
 
 .dashboard-main {
-    height: 500px;
+    min-height: 500px;
     margin-top: 4rem;
 }
 
@@ -1187,4 +1187,22 @@ fieldset {
 
 .main-reports {
     padding: 0 2.5rem;
+}
+
+.dashboard-ranking-table {
+    margin-top: 3rem;
+    width: 100%;
+    border-collapse: collapse;
+
+    tbody  {
+        tr {
+            border-bottom: 1px solid #DAD6D3;
+            line-height: 35px;
+        }
+
+        tr:last-child td {
+            text-align: right;
+        }
+
+    }
 }
