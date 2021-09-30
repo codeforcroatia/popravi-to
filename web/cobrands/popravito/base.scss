@@ -32,6 +32,14 @@ ul {
     list-style-type: none;
 }
 
+.with-bullets {
+// add bullets to unordered lists where required
+    list-style:circle;
+    margin-left: 30px;
+    margin-top: -2rem;
+    margin-bottom: 2.5rem;
+}
+
 a {
     text-decoration: none;
     color: inherit;
