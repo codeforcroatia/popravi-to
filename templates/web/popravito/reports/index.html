@@ -72,17 +72,29 @@
         <div class="dashboard-sparklines">
             <div>
                 <div class="labelled-sparkline">
-                    <span class="label reports-seven-days-label" data-datasetindex="0"><strong style="color: #F4A140;">[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]</span>
+                    <span 
+                      class="label reports-seven-days-label" 
+                      data-datasetindex="0">
+                    <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
+                  </span>
                 </div>
             </div>
             <div>
                 <div class="labelled-sparkline">
-                    <span class="label reports-seven-days-label" data-datasetindex="0"><strong style="color: #4FADED;">[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]</span>
+                    <span 
+                      class="label reports-seven-days-label" 
+                      data-datasetindex="0">
+                    <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
+                  </span>
                 </div>
             </div>
             <div>
                 <div class="labelled-sparkline">
-                    <span class="label reports-seven-days-label" data-datasetindex="0"><strong style="color: #62B356;">[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]</span>
+                    <span 
+                      class="label reports-seven-days-label" 
+                      data-datasetindex="0">
+                    <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
+                  </span>
                 </div>
             </div>
         </div>
