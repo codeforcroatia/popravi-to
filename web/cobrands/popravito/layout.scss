@@ -1132,31 +1132,40 @@ fieldset {
 
 .canvas-position {
     position: absolute;
+    max-width: 723px;
+    max-height: 361px;
 }
 
-.labelled-sparkline {
-    display: flex;
-    justify-content: center;
-    width: 80%;
-    margin: auto;
-}
+.dashboard-sparklines {
 
-.label .reports-seven-days-label {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    background-color: gray;
-    width: fit-content;
-    padding: 4px 16px;
-    background-color: #FAFAFA;
-    margin-bottom: 1.5rem;
-    padding: 2rem 5rem 2rem 5rem;
-
-    strong {
-        font-size: 2.2rem;
-        color: #1D1C1C;
+    .labelled-sparkline {
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        margin: auto;
+  
+        .label {
+            // display: flex;
+            // flex-direction: column;
+            text-align: center;
+            background-color: gray;
+            width: fit-content;
+            padding: 4px 16px;
+            background-color: #FAFAFA;
+            margin-bottom: 1.5rem;
+            padding: 2rem 5rem 2rem 5rem;
+            text-transform: uppercase;
+        
+            strong {
+                font-size: 2.2rem;
+                color: #1D1C1C;
+                display: block;
+                margin-bottom: 1rem;
+            }
+  
+        }
     }
-}
+  } 
 
 .dashboard-search {
     display: flex;
