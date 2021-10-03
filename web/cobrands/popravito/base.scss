@@ -32,7 +32,7 @@ ul {
     list-style-type: none;
 }
 
-.with-bullets *:not(.two-col-left){
+.with-bullets {
 // add bullets to unordered lists where required
     list-style:circle;
     margin-left: 30px;
