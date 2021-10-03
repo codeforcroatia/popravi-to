@@ -40,8 +40,8 @@ ul {
     margin-bottom: 2.5rem;
 }
 
-.two-col-left *:not(.with-bullets){
-    padding: 0 0 0 0;
+.with-bullets.two-col-left.first-child{
+    padding: 0 1.5rem 0 1.5rem;
 }
 
 a {
