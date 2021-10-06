@@ -1185,6 +1185,20 @@ fieldset {
     }
 }
 
+.dashboard-search__submit {
+    input[type=submit] {
+        background: url(/cobrands/popravito/images/icon-chevron-right.svg) no-repeat center;
+        background-color: black;
+        border-radius: 50%;
+        margin-top: 0;
+        height: 53px;
+        width: 53px;
+        cursor: pointer;
+        margin-left: 2rem;
+        padding: 0;
+    }
+}
+
 .main-reports {
     padding: 0 2.5rem;
 }
@@ -1200,9 +1214,36 @@ fieldset {
             line-height: 35px;
         }
 
-        tr:last-child td {
+        tr td:last-child {
             text-align: right;
         }
 
     }
+
+    tfoot {
+        color: #149770;
+    }
+}
+
+.labelled-line-chart {
+    
+    .label-container {
+        display: flex;
+        text-align: right;
+
+        .label {
+            display: flex;
+            flex-direction: column;
+            text-align: revert;
+            text-transform: uppercase;
+
+            .strong {
+                font-size: 2.2rem;
+                color: #1D1C1C;
+                display: block;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
 }

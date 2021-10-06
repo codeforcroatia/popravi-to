@@ -26,7 +26,7 @@
     <form class="dashboard-search">
         <h2>[% loc('Show reports in your area') %]</h2>
       [% IF body %]
-        <label for="ward">[% loc('Pick your ward') %]</label>
+        <!-- <label for="ward">[% loc('Pick your ward') %]</label> -->
         <div class="dashboard-search__input">
             <select id="ward" name="ward" class="js-autocomplete">
                 <option value="">[% loc('Pick your ward') %]</option>
@@ -49,7 +49,7 @@
         </div>
       [% END %]
         <div class="dashboard-search__submit">
-            <input type="submit" value="[% loc('Go') %]">
+            <input type="submit" >
         </div>
     </form>
   </div>
@@ -63,8 +63,10 @@
                   data-values-reports="[[% problems_reported_by_period.join(',') %]]"
                   data-values-fixed="[[% problems_fixed_by_period.join(',') %]]"
                   ></canvas>
-              <span class="label" data-datasetindex="0"><strong style="color: #F4A140">[% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) _ '</strong>') %]</span>
-              <span class="label" data-datasetindex="1"><strong style="color: #62B356">[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", problems_fixed_by_period.last), decode(problems_fixed) _ '</strong>') %]</span>
+              <div class="label-container">
+                <span class="label" data-datasetindex="0"><strong style="color: #F4A140">[% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) _ '</strong>') %]</span>
+                <span class="label" data-datasetindex="1"><strong style="color: #62B356">[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", problems_fixed_by_period.last), decode(problems_fixed) _ '</strong>') %]</span>
+              </div>
           </div>
       </div>
       <div class="dashboard-item dashboard-item--6 dashboard-history">
