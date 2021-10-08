@@ -14,9 +14,12 @@
 
 [% UNLESS c.user_exists %]
 <p class="hidden-nojs js-new-report-sign-in-hidden">
-  <button class="button primary-button-two back-button js-new-report-show-sign-in" tabindex="0" aria-label="sign in">[% loc('Back') %] <span class="arrow-right"></span></button>
+  <p class="form-section-description js-new-report-sign-in-hidden" id="sign_in">
+      Ukoliko ste već registrirani, prijavite se za jednostavnije prijavljivanje problema.
+  </p>
+  <button class="button primary-button-two back-button js-new-report-show-sign-in" tabindex="0" aria-label="sign in">[% loc('Sign in') %] <span class="arrow-right"></span></button>
 </p>
-<!-- Sign in text link (that is replaced with button):
+<!-- Requirement #100, sign in text link (that is replaced with button)
 <p class="hidden-nojs js-new-report-sign-in-hidden">
     <a class="js-new-report-show-sign-in" href="#">[% loc('Or sign in with password to prefill this information.') %]</a>
 </p>
