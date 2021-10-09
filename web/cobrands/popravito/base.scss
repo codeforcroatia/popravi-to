@@ -547,6 +547,12 @@ img {
 }
 
 .form-error {
+    background-color: #FFF3F3;
+    color: red;
+    font-size: 0.8rem;
+}
+
+.form-error-message {
     background-color: white;
     color: red;
     font-size: 0.8rem;
