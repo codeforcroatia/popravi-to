@@ -277,6 +277,15 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     align-self: center;
 }
 
+.arrow-left {
+    background: url('/cobrands/popravito/images/ic-arrow-left.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-right: 0.6rem;
+    align-self: center;
+}
+
 .report-section {
     margin: 2.7rem 7.5rem;
     display: flex;
@@ -1222,6 +1231,10 @@ fieldset {
 
     tfoot {
         color: #149770;
+        
+        tr td:last-child {
+            text-align: right;
+        }
     }
 }
 
@@ -1229,7 +1242,13 @@ fieldset {
     
     .label-container {
         display: flex;
+        flex-direction: column;
         text-align: right;
+        justify-content: end;
+
+        .label:first-child {
+            margin-bottom: 2rem;
+        }
 
         .label {
             display: flex;
@@ -1237,7 +1256,7 @@ fieldset {
             text-align: revert;
             text-transform: uppercase;
 
-            .strong {
+            strong {
                 font-size: 2.2rem;
                 color: #1D1C1C;
                 display: block;
