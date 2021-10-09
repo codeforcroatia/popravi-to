@@ -8,7 +8,7 @@
   [% INCLUDE 'admin/response_templates_select.html' for='form_update' %]
 [% END %]
 [% IF field_errors.update %]
-    <div class='form-error'>[% field_errors.update %]</div>
+    <div class='form-error-message'>[% field_errors.update %]</div>
 [% END %]
 <textarea rows="7" cols="30" name="update" class="report-textarea" id="form_update" required placeholder="[% loc('New description') %]">[% update.text | html %]</textarea>
 

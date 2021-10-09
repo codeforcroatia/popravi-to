@@ -53,7 +53,7 @@
             <label class="n visually-hidden" for="username">[% username_label %]</label>
 
             [% IF loc_username_error %]
-              <div class="form-error">[% loc_username_error %]</div>
+              <div class="form-error-message">[% loc_username_error %]</div>
             [% END %]
 
             <input type="text" class="credentials-input form-control required" id="username" name="username" autocomplete="username" value="[% username | html %]" placeholder="[% loc('Email address')%]" tabindex="0" aria-label="email"
