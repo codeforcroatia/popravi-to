@@ -767,6 +767,29 @@ img {
     display: flex;
 }
 
+.continue-container {
+    background-color: white;
+    width: 100%;
+    justify-content: space-evenly;
+    bottom: 0;
+    position: absolute;
+    display: none;
+
+    @media only screen and (max-height: 840px) {
+        bottom: auto;
+    }
+}
+
+#side-form .continue-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#side-form .continue-container .primary-button {
+    display: flex;
+}
+
 .details-button {
     background: url('/cobrands/popravito/images/ic_indicator_info.svg') no-repeat center;
     width: 10px;
