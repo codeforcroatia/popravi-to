@@ -100,6 +100,18 @@ img {
     width: 0.063rem;
 }
 
+/* base cobrand legacy */
+.visuallyhidden {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 0.063rem;
+    margin: -0.063rem;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 0.063rem;
+}
+
 /* header */
 
 .header {
