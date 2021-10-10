@@ -109,6 +109,8 @@
         <link rel="prefetch" href="[% version('/vendor/dropzone.min.js') %]">
         <link rel="prefetch" href="[% version('/vendor/fancybox/jquery.fancybox-1.3.4.pack.js') %]">
     [% END %]
+
+    [% TRY %][% PROCESS 'header_extra.html' %][% CATCH file %][% END %]
 </head>
 
 [% TRY %][% PROCESS 'set_body_class.html' %][% CATCH file %][% END %]
