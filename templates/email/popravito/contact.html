@@ -16,7 +16,7 @@ INCLUDE '_email_top.html';
 											<tr>
 												<td class="padding" style="text-align: left;">
 													<p class="sub-header" style=" font-weight: 600;font-size: [% header_text_size %]; color: #1D1C1C; padding: 0px; margin: 0px;">
-                            Kontaktirani ste putem internetske stranice
+                            Kontakt putem internetske stranice
 												  </p>
 												  <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
                             Korisnik je putem [% site_name %] poslao sljedeću poruku koja treba vašu pažnju.
@@ -44,13 +44,13 @@ INCLUDE '_email_top.html';
 												  </p>
 												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding: 0px; text-transform: uppercase;">
 													Ime&nbsp;i&nbsp;prezime:&nbsp;
-                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px; text-transform: none;">
                             [% name %]
                           </span>
 												</p>
 												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
 													Email:&nbsp;
-                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px; text-transform: none;">
                             <a href="mailto:[% em | html %]">[% em | html %]</a>
                           </span>
 												</p>
@@ -60,13 +60,13 @@ INCLUDE '_email_top.html';
 												</p>
 												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
 													Korisnik:&nbsp;
-                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px; text-transform: none;">
                             <a href="[% user_admin_url | html %]">Uredite korisnika</a>
                           </span>
 												</p>
 												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
 													Prijave korisnika:&nbsp;
-                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px; text-transform: none;">
 														[%~ IF user_latest_report_admin_url %]
                             <a href="[% user_latest_report_admin_url | html %]">Uredite posljednju prijavu</a>&nbsp;|
 														[%~ END %]
@@ -79,6 +79,15 @@ INCLUDE '_email_top.html';
 						</table>
 <!--  LOWER BODY END  -->
 
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="border-bottom: 2px solid #DAD6D3;">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+
 <!--  START MIDDLE BODY -->
 	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
 	 						<tr>
@@ -90,8 +99,8 @@ INCLUDE '_email_top.html';
 	 						</tr>
 	 						<tr>
 	 							<td class="padding">
-	 								<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
-	 									[% message | html | html_para | replace('<p>', '<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">') %]
+									<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin: 0px;">
+	 									[% message | html | html_para | replace('<p>', '<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin: 0px;">') %]
 	 								</p>
 	 							</td>
 	 						</tr>
@@ -109,7 +118,7 @@ INCLUDE '_email_top.html';
 							[%~ IF user_agent %]
 	 						<tr>
 	 							<td class="padding">
-									<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin: 0px;">
+									<p class="para" style="text-align: left; font-weight: 400;font-size: 12px;color: #675F58; line-height: 16px;">
 										User Agent: [% user_agent | html %]
 									</p>
 	 							</td>
