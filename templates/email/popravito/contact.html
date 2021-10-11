@@ -1,0 +1,129 @@
+[%
+
+subject_html = subject | html;
+name = form_name | html;
+email_summary = "“" _ subject_html _ "” – Poruka od " _ name _ " putem " _ host;
+email_footer = "Poslano putem " _ host _ ", IP " _ ip;
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style=" font-weight: 600;font-size: [% header_text_size %]; color: #1D1C1C; padding: 0px; margin: 0px;">
+                            Kontaktirani ste putem internetske stranice
+												  </p>
+												  <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
+                            Korisnik je putem [% site_name %] poslao sljedeću poruku koja treba vašu pažnju.
+                          </p>
+										    </td>
+								      </tr>
+						</table>
+<!--  UPPER BODY END  -->
+
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="border-bottom: 2px solid #DAD6D3;">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+
+<!--  START LOWER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style=" font-weight: 700;font-size: 16px; color: #1D1C1C; padding-bottom: 10px; margin: 0px; line-height: 24px;">
+                            Podaci o podnositelju
+												  </p>
+												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding: 0px; text-transform: uppercase;">
+													Ime&nbsp;i&nbsp;prezime:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            [% name %]
+                          </span>
+												</p>
+												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
+													Email:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            <a href="mailto:[% em | html %]">[% em | html %]</a>
+                          </span>
+												</p>
+                        [%~ IF report.user.phone %]
+                        <p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
+													Telefon:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            [% report.user.phone | html %]
+                          </span>
+												</p>
+                        [%~ END %]
+												[%~ IF user_admin_url %]
+												<p class="sub-header" style=" font-weight: 700;font-size: 16px; color: #1D1C1C; padding-bottom: 10px; margin: 0px; line-height: 24px;">
+													Administracija
+												</p>
+												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
+													Korisnik:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            <a href="[% user_admin_url | html %]">Uredite korisnika</a>
+                          </span>
+												</p>
+												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
+													Prijave korisnika:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+														[%~ IF user_latest_report_admin_url %]
+                            <a href="[% user_latest_report_admin_url | html %]">Uredite posljednju prijavu</a>&nbsp;|
+														[%~ END %]
+														<a href="[% user_reports_admin_url | html %]">Prikaži sve prijave</a>
+                          </span>
+												</p>
+												[%~ END %]
+										</td>
+								</tr>
+						</table>
+<!--  LOWER BODY END  -->
+
+<!--  START MIDDLE BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td class="two-columns">
+	 								<p class="sub-header" style=" font-weight: 700;font-size: 16px; color: #1D1C1C; padding: 15px; margin: 0px; line-height: 24px; text-align: left;">
+                    [% subject | html %]
+									</p>
+	 							</td>
+	 						</tr>
+	 						<tr>
+	 							<td class="padding">
+	 								<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
+	 									[% message | html | html_para | replace('<p>', '<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">') %]
+	 								</p>
+	 							</td>
+	 						</tr>
+							[%~ IF complaint %]
+							<tr>
+	 							<td class="padding">
+	 								<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
+	 									[% complaint | html %]
+										- <a href="[% problem_url %]">Report</a>
+								    - <a href="[% admin_url %]">Admin</a>
+	 								</p>
+	 							</td>
+	 						</tr>
+						  [%~ END %]
+							[%~ IF user_agent %]
+	 						<tr>
+	 							<td class="padding">
+									<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin: 0px;">
+										User Agent: [% user_agent | html %]
+									</p>
+	 							</td>
+	 						</tr>
+							[%~ END %]
+	 					</table>
+<!-- MIDDLE BODY END  -->
+
+[% INCLUDE '_email_bottom.html' %]

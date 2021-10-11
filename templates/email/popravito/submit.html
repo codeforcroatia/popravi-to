@@ -1,0 +1,184 @@
+[%
+
+email_summary = "Novi problem na vašem području prijavio je građanin putem " _ site_name _ " portala.";
+email_footer = "Ako postoji primjerenija email adresa za poruke poput " _ category_footer _ ", javite nam. Time ćete pomoći u poboljšavanju procesa prijave problema. Otvoreni smo također i za sve vaše komentare.";
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style=" font-weight: 600;font-size: [% header_text_size %]; color: #1D1C1C; padding: 0px; margin: 0px;">
+                            Novi problem u vašem području
+												  </p>
+												  <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
+                            Korisnik je putem [% site_name %] podnio sljedeću prijavu lokalnog problema koji treba vašu pažnju.
+                          </p>
+										</td>
+								</tr>
+
+						</table>
+
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
+							<tr>
+									<td class="button" style="border-bottom: 2px solid #DAD6D3; padding-bottom: 40px;" >
+											<a class="btn" href="[% url %]">Detalji prijave</a>
+									</td>
+								</tr>
+						</table>
+<!--  UPPER BODY END  -->
+
+<!--  START MIDDLE BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td class="two-columns">
+	 								<p class="sub-header" style=" font-weight: 700;font-size: 16px; color: #1D1C1C; padding: 15px; margin: 0px; line-height: 24px; text-align: left;">
+                    [% report.title | html %]
+									</p>
+
+	 								<table class="column">
+	 									<tr>
+	 										<td>
+
+	 											<table>
+	 												<tr>
+	 													<td class="padding">
+	 														<a class="map" href=""><img src="https://i.ibb.co/CB2VTjx/Group-669.png" alt="map" width="200" style="max-width: 200px; padding: 0px; margin: 0px;"></a>
+	 													</td>
+	 												</tr>
+	 											</table>
+
+	 										</td>
+	 									</tr>
+	 								</table>
+
+	 								<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table class="content" style="margin-left: -70px;">
+	 												<tr>
+	 													<td style="text-align: left; padding: 0px; margin: 0px;">
+															<p style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 5px; text-transform: uppercase;">
+																referentni broj
+																<br>
+																<span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px; text-transform: uppercase;">
+																FMS-9
+																</span>
+															</p>
+														  <p style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 5px; text-transform: uppercase;">
+																Kategorija
+																<br>
+															<span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+																[% report.category | html %]
+															</span>
+															</p>
+															<p style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 5px; text-transform: uppercase;">
+																Lokacija
+																<br>
+																<span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+																[% IF closest_address %][% closest_address | trim | replace("\n\n", ", ") %]<br>[% END %]
+                                (<a href="[% osm_url %]" title="Otvori lokaciju na OpenStreetMap karti">
+                                  <span style="color: #F20D36;">[%~ report.latitude %],&nbsp;[% report.longitude ~%]</span>
+                                </a>)
+															  </span>
+															</p>
+                              [% IF report.get_extra_fields %]
+                                [%~ FOR field IN report.get_extra_fields %][% IF field.value %]
+                                <p style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 5px; text-transform: uppercase;">
+                                  [% field.description %]
+                                  <br>
+                                <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                                  [% field.value %]
+                                </span>
+                                </p>
+                                  [% IF NOT loop.last %][% END %]
+                                  [%~ END %][% END %]
+                              [% END %]
+	 													</td>
+	 												</tr>
+	 											</table>
+
+	 										</td>
+	 									</tr>
+	 								</table>
+
+	 							</td>
+	 						</tr>
+	 						<tr>
+	 							<td class="padding">
+	 								<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
+	 									[% report.detail | html %]
+	 								</p>
+	 							</td>
+	 						</tr>
+	 						<tr>
+	 							<td class="padding">
+	 								<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding: 0px; text-transform: uppercase; margin: 0px;">
+	 									Fotografije
+	 								</p>
+	 								<p class="para">
+	 								<img class="img-list"src= "https://i.ibb.co/4F6VFMm/Rectangle-1153.png" width="40" style="max-width: 40px; width: 40px; margin-right: 10px;">
+	 								<img class="img-list" src= "https://i.ibb.co/NSSJpsC/Rectangle-1154.png" width="40" style="max-width: 40px; width: 40px; margin-right: 10px;">
+	 								<img class="img-list" src= "https://i.ibb.co/4F6VFMm/Rectangle-1153.png" width="40" style="max-width: 40px; width: 40px;">
+	 								</p>
+	 							</td>
+	 						</tr>
+	 					</table>
+<!-- MIDDLE BODY END  -->
+
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="border-bottom: 2px solid #DAD6D3;">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+
+<!--  START LOWER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style=" font-weight: 700;font-size: 16px; color: #1D1C1C; padding-bottom: 10px; margin: 0px; line-height: 24PX;">
+                            Podnositelj prijave
+												  </p>
+												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding: 0px; text-transform: uppercase;">
+													Ime&nbsp;i&nbsp;prezime:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            [% report.name | html %]
+                          </span>
+												</p>
+												<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
+													Email:&nbsp;
+                          [%~ IF report.user.email ~%]
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            [% report.user.email | html %]
+                          </span>
+                          [%~ ELSE ~%]
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            Email adresa nije dostupna, samo broj telefona
+                          </span>
+                          [%~ END ~%]
+												</p>
+                        [%~ IF report.user.phone %]
+                        <p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding-bottom: 10px; text-transform: uppercase;">
+													Telefon:&nbsp;
+                          <span style="text-align: left; font-weight: 400;font-size: 14px;color: #1D1C1C; line-height: 22px; padding: 0px;">
+                            [% report.user.phone | html %]
+                          </span>
+												</p>
+                        [%~ END %]
+												<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin: 0px;">
+				 									Vaš odgovor na ovaj email bit će poslan direktno na [% report.name | html %], korisnika koji je prijavio problem.
+				 								</p>
+										</td>
+								</tr>
+						</table>
+<!--  LOWER BODY END  -->
+
+[% INCLUDE '_email_bottom.html' %]

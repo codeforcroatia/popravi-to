@@ -1,0 +1,38 @@
+[%
+    # The cobrand might come to us a variety of ways
+    # Alert sets cobrand directly, questionnaire/submit have it in report, otherwise web
+    cobrand = cobrand.moniker OR report.cobrand OR c.cobrand.moniker;
+
+    IF cobrand == 'fixmystreet';
+        SET img_dir = 'fixmystreet.com';
+    ELSE;
+        SET img_dir = cobrand;
+    END -%]
+[% IF NOT for_rss ~%]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+[% END ~%]
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>[% rss_title | safe %]</title>
+
+[%~ # Styles here will be applied by everything except Gmail %]
+[% INCLUDE '_email_style.html' %]
+
+</head>
+<body>
+	 <center class="wrapper">
+	 	<div class="webkit">
+	 		<table class="outer" align="center">
+
+<!--  START  HEADER LOGO -->
+			<table class="logo"width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px;">
+				<tr>
+					<td style="border-bottom: 2px solid #DAD6D3; padding: 15px;">
+						<img src="[% INCLUDE '_email_logo_base64.txt' %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;">
+					</td>
+				</tr>
+			</table>
+<!--  HEADER LOGO END  -->
