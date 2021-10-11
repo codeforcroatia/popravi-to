@@ -29,7 +29,7 @@
         <!-- <label for="ward">[% loc('Pick your ward') %]</label> -->
         <div class="dashboard-search__input">
             <select id="ward" name="ward" class="js-autocomplete">
-                <option value="">[% loc('Pick your ward') %]</option>
+                <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your ward') %]</option>
               [% FOR child IN children.values.sort('name') %]
                 <option>[% child.name | html ~%]</option>
               [% END %]
@@ -39,7 +39,7 @@
         <!-- <label for="body">[% loc('Pick your council') %]</label> -->
         <div class="dashboard-search__input">
             <select id="body" name="body" class="js-autocomplete">
-                <option value="">[% loc('Pick your council') %]</option>
+                <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your council') %]</option>
               [% FOR b IN bodies # Not body as 'body' may be on stash %]
                 <option value="[% b.id %]">[% b.name | html ~%]
                     [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
