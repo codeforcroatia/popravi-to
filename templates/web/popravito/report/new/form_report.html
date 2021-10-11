@@ -5,7 +5,7 @@
 [% INCLUDE 'report/new/form_after_heading.html' %]
 
 [% IF field_errors.bodies %]
-    <p class='form-error'>[% field_errors.bodies %]</p>
+    <p class='form-error-message'>[% field_errors.bodies %]</p>
 [% END %]
 
 [% PROCESS 'report/new/form_public_councils_text.html' %]
@@ -60,7 +60,7 @@
 [% END %]
 
 [% IF field_errors.detail %]
-    <p class='form-error'>[% field_errors.detail %]</p>
+    <p class='form-error-message'>[% field_errors.detail %]</p>
 [% END %]
 
     <textarea class="form-control report-problem-textarea" rows="7" cols="26" name="detail" id="form_detail" placeholder="[% loc('Describe the problem') %]" [% IF form_detail_placeholder %]aria-describedby="detail-hint"[% END %][% field_required %]>[% report.detail | html %]</textarea>
@@ -89,7 +89,7 @@
     </div>
 
   [% IF field_errors.photo %]
-    <p class='form-error'>[% field_errors.photo %]</p>
+    <p class='form-error-message'>[% field_errors.photo %]</p>
   [% END %]
 
     <div id="form_photos">

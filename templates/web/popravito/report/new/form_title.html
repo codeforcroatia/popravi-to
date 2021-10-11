@@ -4,7 +4,7 @@
 <label for="form_title" class="summarise-title">[% form_title %] <span class="details-button" tabindex="0" aria-label="details"></span></label>
 <p class="form-hint report-details-small" id="title-hint">[% contact_title_hint OR form_title_placeholder %]</p>
 [% IF field_errors.title %]
-    <p class='form-error'>[% field_errors.title %]</p>
+    <p class='form-error-message'>[% field_errors.title %]</p>
 [% END %]
 <input class="form-control report-title-input" type="text" value="[% report.title | html %]" name="title" id="form_title" aria-describedby="title-hint"[% field_required %] autocomplete="off" placeholder="[% loc('Problem title') %]">
 
