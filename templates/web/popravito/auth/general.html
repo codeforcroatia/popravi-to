@@ -60,69 +60,19 @@
 
             [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
 
-            .
-            [% IF oauth_need_email %]
-              <div class="password-container">
-              [% INCLUDE form_sign_in_no %]
-                <input type="hidden" name="oauth_need_email" value="1">
-              [% ELSE %]
-                [% INCLUDE form_sign_in_yes %]
-                [% INCLUDE form_sign_in_no %]
-              [% END %]
-            <!-- </div>
+            <div class="password-container">
+                <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
+                <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="[% loc('Password')%]" tabindex="0" aria-label="password">
+                <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>
+            </div>
             <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">[% loc('Forgotten your password?') %]</a>
             <div class="form-bottom-part">
                 <input class="button register-button disabled-button" type="submit" aria-label="register" tabindex="0" value="[% loc('Sign in') %]" name="sign_in_by_password" id="signInButton">
                 <span class="page-text">[% loc('No account?') %] <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">[% loc('Create an account') %]</a></span>
-            </div> -->
+            </div>
         </form>
     </section>
 
     <script src="/cobrands/popravito/enableFormButton.js"></script>
 </body>
 </html>
-
-[% BLOCK form_sign_in_yes %]
-
-    <p class="hidden-nojs js-sign-in-password-hide">
-      <input class="button register-button disabled-button js-sign-in-password-btn" type="submit" aria-label="register" tabindex="0" value="[% loc('Sign in with a password') %]" name="sign_in_by_password" id="signInButton">
-    </p>
-    <div class="password-container hidden-js js-sign-in-password">
-      <label for="password_sign_in" class="visually-hidden">[% loc('Your password') %]</label>
-      <input type="password" class="credentials-input form-control required" name="password_sign_in" id="password_sign_in" value="" autocomplete="current-password" placeholder="[% loc('Password')%]" tabindex="0" aria-label="password">
-      <button class="reveal-pass" aria-label="reveal password" tabindex="0"></button>
-      <a class="misc-link" href="/auth/forgot" tabindex="0" aria-label="login">[% loc('Forgotten your password?') %]</a>
-      <div class="form-bottom-part">
-          <input class="button register-button disabled-button" type="submit" aria-label="register" tabindex="0" value="[% loc('Sign in') %]" name="sign_in_by_password" id="signInButton">
-          <span class="page-text">[% loc('No account?') %] <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">[% loc('Create an account') %]</a></span>
-      </div>
-
-<!--
-    <p class="hidden-nojs js-sign-in-password-hide">
-        <input class="btn btn--primary btn--block js-sign-in-password-btn" type="submit" name="sign_in_by_password" value="[% loc('Sign in with a password') %]">
-    </p>
-    <div class="hidden-js js-sign-in-password">
-        <label for="password_sign_in">[% loc('Your password') %]</label>
-
-        <div class="form-txt-submit-box">
-            <input type="password" name="password_sign_in" class="form-control" id="password_sign_in" value="" autocomplete="current-password">
-            <input class="green-btn" type="submit" name="sign_in_by_password" value="[% loc('Sign in') %]">
-        </div>
-
-        <p>
-            <a href="/auth/forgot">[% loc('Forgotten your password?') %]</a>
-        </p>
-    </div>
-  -->
-[% END %]
-
-[% BLOCK form_sign_in_no %]
-    <input class="button register-button disabled-button fake-link" type="submit" name="sign_in_by_code" aria-label="register" tabindex="0" value="
-      [%~ IF c.config.SMS_AUTHENTICATION %]
-        [%~ loc('Email me a link or text me a code to sign in') %]
-      [%~ ELSE %]
-        [%~ loc('Email me a link to sign in') %]
-      [%~ END ~%]
-    " name="sign_in_by_password" id="signInButton">
-  </div>
-[% END %]
