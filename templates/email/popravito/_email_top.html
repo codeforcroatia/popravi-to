@@ -3,7 +3,7 @@
     # Alert sets cobrand directly, questionnaire/submit have it in report, otherwise web
     cobrand = cobrand.moniker OR report.cobrand OR c.cobrand.moniker;
 
-    SET img_dir = 'popravito';
+    SET img_dir = cobrand;
 -%]
 [% IF NOT for_rss ~%]
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -53,8 +53,7 @@
               [%~ END ~%]
 
             [%~ ELSE ~%]
-              <img src="[% inline_image('web/cobrands/' _ img_dir _ '/images/' _ logo_file ) %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
-              <!-- <img src="[% INCLUDE '_email_logo_base64.txt' %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/> -->
+              <img src="[% INCLUDE '_email_logo_base64.txt' %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
             [%~ END %]
 
 					</td>
