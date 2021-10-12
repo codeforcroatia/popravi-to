@@ -10,7 +10,6 @@ email_footer = site_name;
     <xsl:template match="/">
         [% PROCESS '_email_top.html' for_rss=1 rss_title='<xsl:value-of select="$title"/> XML Feed' %]
 
-<!--
         <th style="[% td_style %][% rss_meta_style %]">
             <p>
             Ovo je RSS kanal za [% site_name %]. RSS izvori vam omogućuju da pratite posljednje novosti na internetskoj stranici.
@@ -33,7 +32,6 @@ email_footer = site_name;
             <h1 style="[% h1_style %]"><xsl:value-of select="$title"/></h1>
             <xsl:apply-templates select="rss/channel/item"/>
         </th>
--->
 
         [% PROCESS '_email_bottom.html' %]
 
