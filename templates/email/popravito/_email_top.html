@@ -17,10 +17,8 @@
   [% END ~%]
 	<title>[% rss_title | safe %]</title>
 
-[% IF NOT for_rss ~%]
 [%~ # Styles here will be applied by everything except Gmail %]
 [% INCLUDE '_email_style.html' %]
-[% END ~%]
 
 </head>
 <body>
