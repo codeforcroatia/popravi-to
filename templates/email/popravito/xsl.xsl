@@ -10,28 +10,48 @@ email_footer = site_name;
     <xsl:template match="/">
         [% PROCESS '_email_top.html' for_rss=1 rss_title='<xsl:value-of select="$title"/> XML Feed' %]
 
-        <th style="[% td_style %][% rss_meta_style %]">
-            <p>
-            Ovo je RSS kanal za [% site_name %]. RSS izvori vam omogućuju da pratite posljednje novosti na internetskoj stranici.
-            <a href="https://hr.wikipedia.org/wiki/RSS">Saznajte više o RSS-u.</a>
-            </p>
-            <p>
-            Da biste se pretplatili na RSS kanal, kopirajte ovaj link u vaš RSS čitač:
-            <input type="text" style="[% text_input_style %]" onClick="this.setSelectionRange(0, this.value.length)">
-                <xsl:attribute name="value">
-                    <xsl:value-of select="$uri"/>
-                </xsl:attribute>
-            </input>
-            </p>
-        </th>
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+              <tr>
+                <td class="padding">
+                  <p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
+                    Ovo je RSS kanal za [% site_name %]. RSS izvori vam omogućuju da pratite posljednje novosti na internetskoj stranici.
+                    <a href="https://hr.wikipedia.org/wiki/RSS">Saznajte više o RSS-u.</a>
+                  </p>
+                  <p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
+                    Da biste se pretplatili na RSS kanal, kopirajte ovaj link u vaš RSS čitač:
+                    <input type="text" class="form-control" onClick="this.setSelectionRange(0, this.value.length)">
+                      <xsl:attribute name="value">
+                          <xsl:value-of select="$uri"/>
+                      </xsl:attribute>
+                    </input>
+                  </p>
+                </td>
+              </tr>
+						</table>
+<!--  UPPER BODY END  -->
 
-    </tr>
-    <tr>
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="border-bottom: 2px solid #DAD6D3;">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
 
-        <th style="[% td_style %][% only_column_style %]">
-            <h1 style="[% h1_style %]"><xsl:value-of select="$title"/></h1>
-            <xsl:apply-templates select="rss/channel/item"/>
-        </th>
+<!--  START RSS CONTENT -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style=" font-weight: 600;font-size: [% header_text_size %]; color: #1D1C1C; padding: 0px; margin: 0px;">
+                            <xsl:value-of select="$title"/>
+												  </p>
+												  <xsl:apply-templates select="rss/channel/item"/>
+										    </td>
+								      </tr>
+						</table>
+<!--  RSS CONTENT END  -->
 
         [% PROCESS '_email_bottom.html' %]
 
