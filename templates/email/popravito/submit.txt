@@ -1,0 +1,47 @@
+Subject: Novi problem u vašem području - [% report.title %]
+
+Poštovani [% bodies_name %],
+
+[% missing %][% multiple %]Korisnik je putem [% site_name %] podnio sljedeću prijavu lokalnog problema koji treba vašu pažnju.
+
+[% fuzzy %], ili ažurirajte status problema putem linka:
+
+    [% url %]
+
+[% has_photo %]----------
+
+PODNOSITELJ PRIJAVE
+
+Ime i prezime: [% report.name %]
+
+Email: [% report.user.email OR "Nije poznato" %]
+
+Telefon: [% report.user.phone OR "Nije poznato" %]
+
+
+DETALJI PRIJAVE
+
+Kategorija: [% report.category %]
+
+Predmet: [% report.title %]
+
+Opis: [% report.detail %]
+
+[% FOR field IN report.get_extra_fields %][% IF field.value ~%]
+[% field.description %]: [% field.value %]
+
+[% END %][% END ~%]
+
+Geografska širina: [% report.latitude %]
+
+Geografska dužina: [% report.longitude %]
+
+Otvorite lokaciju na OpenStreetMap karti: [% osm_url %]
+
+[% closest_address %]----------
+
+Vaš odgovor na ovaj email bit će poslan direktno na [% report.name %], korisnika koji je prijavio problem.
+
+[% signature %]
+
+Ako postoji primjerenija email adresa za poruke u vezi [% category_footer %], javite nam. Time ćete pomoći u poboljšavanju procesa prijave problema. Otvoreni smo također i za sve vaše komentare.

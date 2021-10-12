@@ -1,7 +1,7 @@
 [%
 
 email_summary = "Novi problem na vašem području prijavio je građanin putem " _ site_name _ " portala.";
-email_footer = "Ako postoji primjerenija email adresa za poruke poput " _ category_footer _ ", javite nam. Time ćete pomoći u poboljšavanju procesa prijave problema. Otvoreni smo također i za sve vaše komentare.";
+email_footer = "Ako postoji primjerenija email adresa za poruke u vezi " _ category_footer _ ", javite nam. Time ćete pomoći u poboljšavanju procesa prijave problema. Otvoreni smo također i za sve vaše komentare.";
 
 PROCESS '_email_settings.html';
 
@@ -17,7 +17,7 @@ INCLUDE '_email_top.html';
                             Novi problem u vašem području
 												  </p>
 												  <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
-                            Korisnik je putem [% site_name %] podnio sljedeću prijavu lokalnog problema koji treba vašu pažnju.
+                            [% missing %][% multiple %]Korisnik je putem [% site_name %] podnio sljedeću prijavu lokalnog problema koji treba vašu pažnju.
                           </p>
 										</td>
 								</tr>
@@ -48,7 +48,9 @@ INCLUDE '_email_top.html';
 	 											<table>
 	 												<tr>
 	 													<td class="padding">
-	 														<a class="map" href=""><img src="https://i.ibb.co/CB2VTjx/Group-669.png" alt="map" width="200" style="max-width: 200px; padding: 0px; margin: 0px;"></a>
+															[% IF url %]
+	 														<a class="map" href="[% url %]"><img src="[% inline_image(report.static_map, 'map.jpeg') %]" alt="map" width="200" style="max-width: 200px; padding: 0px; margin: 0px;"></a>
+															[% END %]
 	 													</td>
 	 												</tr>
 	 											</table>
@@ -116,18 +118,18 @@ INCLUDE '_email_top.html';
 	 								</p>
 	 							</td>
 	 						</tr>
+							[%~ IF object.photo %]
 	 						<tr>
 	 							<td class="padding">
 	 								<p class="para" style="text-align: left; font-weight: 600;font-size: 12px;color: #675F58; line-height: 16px; padding: 0px; text-transform: uppercase; margin: 0px;">
-	 									Fotografije
+	 									Fotografija
 	 								</p>
 	 								<p class="para">
-	 								<img class="img-list"src= "https://i.ibb.co/4F6VFMm/Rectangle-1153.png" width="40" style="max-width: 40px; width: 40px; margin-right: 10px;">
-	 								<img class="img-list" src= "https://i.ibb.co/NSSJpsC/Rectangle-1154.png" width="40" style="max-width: 40px; width: 40px; margin-right: 10px;">
-	 								<img class="img-list" src= "https://i.ibb.co/4F6VFMm/Rectangle-1153.png" width="40" style="max-width: 40px; width: 40px;">
+										  <img class="img-list"src= "[% inline_image(object.get_first_image_fp) %]" width="90" style="max-width: 90px; width: 90px; margin-right: 10px;">
 	 								</p>
 	 							</td>
 	 						</tr>
+							[%~ END %]
 	 					</table>
 <!-- MIDDLE BODY END  -->
 

@@ -1,4 +1,4 @@
-Predmet: [% site_name %] poruka: [% subject %]
+Subject: [% site_name %] poruka - [% subject %]
 
 [% message %]
 
@@ -15,5 +15,5 @@ Predmet: [% site_name %] poruka: [% subject %]
 [%~ END %]
 
 --
-Polsano putem kontakt obrasca putem [% host %].
+Poslano putem kontakt obrasca putem [% host %].
 IP adresa [% ip %], user agent [% user_agent %]
