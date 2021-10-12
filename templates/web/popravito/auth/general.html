@@ -1,4 +1,5 @@
 [% SET bodyclass = 'authpage' %]
+[% USE url('/auth', passwordless='0') %]
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +40,7 @@
             <p class="page-text-small">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
         [% END %]
 
-        [% IF c.req.uri == "http://dev.test.popravi.to/auth?passwordless=0" %]
+        [% IF c.req.uri.path_query == uri %]
         <form action="/auth" method="post" name="general_auth" class="credentials-form validate">
             <input type="hidden" name="r" value="[% c.req.params.r | html %]">
 
@@ -111,7 +112,6 @@
                   [%~ loc('Email me a link to sign in') %]
                 [%~ END ~%]
               " name="sign_in_by_password" id="signInButton">
-                [% USE url('/auth', passwordless='0') %]
                 <span class="page-text"><a class="misc-link js-sign-in-password" href="[% url %]+[% c.req.uri.path_query %]" tabindex="0" aria-label="register">[% loc('Sign in with a password') %]</a> [% loc('or') %] <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">[% loc('Create an account') %]</a></span>
                 <!-- <span class="page-text">[% loc('No account?') %] <a class="misc-link" href="/auth/create" tabindex="0" aria-label="register">[% loc('Create an account') %]</a></span>-->
             </div>
