@@ -39,8 +39,8 @@
             <p class="page-text-small">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
         [% END %]
 
-        <!-- For PRODUCTION: [% IF c.req.uri == 'c.cobrand.base_url/auth?passwordless=0' %] -->
-        [% IF c.req.uri == 'http://dev.test.popravi.to/auth?/auth?passwordless=0' %]
+        <!-- For PRODUCTION: [% IF c.req.uri == "c.cobrand.base_url/auth?passwordless=0" %] -->
+        [% IF c.req.uri == "http://dev.test.popravi.to/auth?/auth?passwordless=0" %]
         <form action="/auth" method="post" name="general_auth" class="credentials-form validate">
             <input type="hidden" name="r" value="[% c.req.params.r | html %]">
 
