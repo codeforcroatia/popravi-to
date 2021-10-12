@@ -45,7 +45,7 @@
 				<tr>
 					<td style="border-bottom: 2px solid #DAD6D3; padding: 15px;">
             [%~ IF file_exists("web/cobrands/${ img_dir }/images/${ logo_file }") ~%]
-            
+
               [%~ IF for_rss ~%]
                 <img src="/cobrands/[% img_dir %]/images/[% logo_file %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
               [%~ ELSE ~%]
@@ -53,7 +53,7 @@
               [%~ END ~%]
 
             [%~ ELSE ~%]
-              <!-- <img src="[% INCLUDE '_email_logo_base64.txt' %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/> -->
+              <img src="[% INCLUDE '_email_logo_base64.txt' %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
             [%~ END %]
 
 					</td>
