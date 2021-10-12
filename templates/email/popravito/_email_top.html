@@ -27,6 +27,20 @@
 	 	<div class="webkit">
 	 		<table class="outer" align="center">
 
+<!--  START  HEADER RIBBON -->
+        [% IF staging AND NOT for_rss %]
+			<table class="logo"width="100%" style="border-spacing: 0; background-color: #F20D36; padding: 0px;margin: 0px;">
+				<tr>
+					<td>
+            <p class="para" style=" font-weight: 600;font-size: 12px;color: #ffffff; line-height: 16px; padding: 0px 15px;">
+              Ovaj email poslan je putem eksperimentalne internetske aplikacije.
+            </p>
+					</td>
+				</tr>
+			</table>
+        [% END %]
+<!--  HEADER RIBBON END  -->
+
 <!--  START  HEADER LOGO -->
 			<table class="logo"width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px;">
 				<tr>
