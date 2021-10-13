@@ -1,4 +1,4 @@
-Subject: [% site_name %] poruka - [% subject %]
+Subject: Kontakt putem weba - [% subject %]
 
 [% message %]
 
