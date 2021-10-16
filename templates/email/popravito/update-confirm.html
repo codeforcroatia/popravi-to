@@ -1,6 +1,6 @@
 [%
 
-email_summary = "Vaša prijava na " _ site_name _ " je moderirana";
+email_summary = "Potvrdite vaše ažuriranje problema na " _ site_name;
 
 PROCESS '_email_settings.html';
 
@@ -13,38 +13,36 @@ INCLUDE '_email_top.html';
 											<tr>
 												<td class="padding" style="text-align: left;">
 													<p class="sub-header" style="[% p_style_sub_header %]">
-                            Vaša prijava je uređena
+                            Potvrdite vaše ažuriranje problema
 												  </p>
-													[% IF types == 'hide' -%]
-													<p class="para" style="[% p_style_normal_body_text %]">
-                            Prijava problema je skrivena sa stranice [% site_name %].
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            Kliknite na poveznicu ispod da biste potvrdili vaše ažuriranje problema na [% site_name %].
                           </p>
-													[% ELSE %]
-													<p class="para" style="[% p_style_normal_body_text %]">
-                            Sljedeći podaci su izmijenjeni: <strong>[% types %]</strong>.
-                          </p>
-													[% END -%]
 										</td>
 								</tr>
 						</table>
 
-						[% IF types == 'hide' -%]
 						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
 							<tr>
 									<td class="button" style="padding-bottom: 40px;" >
-											<a class="btn" href="[% report_uri %]">Otvori moju prijavu</a>
+											<a class="btn" href="[% token_url %]">Da, potvrdi moje ažuriranje</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p class="para" style="[% p_style_small_body_text %]">
+											Imajte na umu da ne šaljemo ažuriranja za [% update.problem.body %]. Ažuriranja služe [% site_name %] korisnicima da raspravljaju, daju podršku ili daju savjete za prijavljeni problem.
+										</p>
 									</td>
 								</tr>
                 <tr>
   	 							<td>
   	 								<p class="para" style="[% p_style_small_body_text %]">
-											Ukoliko smatrate da vašu prijavu problema nije trebalo uređivati, možete kontaktirati moderatore putem <a href="[% report_complain_uri %]">linka za prigovor</a>.
+  	 									Ako više ne želite dodati ovo ažuriranje na problem, ne trebate ništa učiniti te neće doći do objave.
   	 								</p>
   	 							</td>
   	 						</tr>
 						</table>
-						[% END -%]
-
 <!--  UPPER BODY END  -->
 
 <!--  START LINE  -->
@@ -69,7 +67,7 @@ INCLUDE '_email_top.html';
 	 														<p class="sub-header" style="text-align: left; font-weight: 600;font-size: 24px; color: #1D1C1C; padding: 0px; margin: 0px; line-height: 28px;">OOdlagalište starih automobila
 															</p>
 															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
-																[% moderated_data.title | html %]. [% moderated_data.detail | html %]</p>
+																[% update.text | html %]</p>
 	 													</td>
 	 												</tr>
 	 											</table>
@@ -84,7 +82,7 @@ INCLUDE '_email_top.html';
 	 												<tr>
 	 													<td>
 	 														<a class="map" href="[% url %]">
-                                <img src="[% inline_image(report.static_map, 'map.jpeg') %]" alt="map" width="310" style="max-width: 310px; margin-left: 160px;">
+                                <img src="[% inline_image(problem.static_map, 'map.jpeg') %]" alt="map" width="310" style="max-width: 310px; margin-left: 160px;">
                               </a>
 	 													</td>
 	 												</tr>

@@ -1,6 +1,6 @@
 [%
 
-email_summary = "Vaša prijava na " _ site_name _ " je moderirana";
+email_summary = "Vaša prijava je zabilježena na " _ site_name _;
 
 PROCESS '_email_settings.html';
 
@@ -10,41 +10,39 @@ INCLUDE '_email_top.html';
 
 <!--  START UPPER BODY -->
 	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
-											<tr>
-												<td class="padding" style="text-align: left;">
+								<tr>
+										<td class="padding" style="text-align: left;">
 													<p class="sub-header" style="[% p_style_sub_header %]">
-                            Vaša prijava je uređena
+                            Vaša prijava je zabilježena
 												  </p>
-													[% IF types == 'hide' -%]
-													<p class="para" style="[% p_style_normal_body_text %]">
-                            Prijava problema je skrivena sa stranice [% site_name %].
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            Vaša prijava problema za [% report.body %] je zabilježena na [% site_name %].
+														[% IF c.cobrand.is_council && !c.cobrand.owns_problem( report ) %]
+														Molimo vas da imate na umu da [% c.cobrand.council_name %] nije odgovoran za ovu vrstu problema, te će umjesto toga biti poslan na [% report.body %].
+														[% ELSE %]
+														[% TRY %][% INCLUDE '_council_reference.html' problem=report %][% CATCH file %][% END %]
+														[% END %]
                           </p>
-													[% ELSE %]
-													<p class="para" style="[% p_style_normal_body_text %]">
-                            Sljedeći podaci su izmijenjeni: <strong>[% types %]</strong>.
-                          </p>
-													[% END -%]
 										</td>
 								</tr>
 						</table>
 
-						[% IF types == 'hide' -%]
 						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
 							<tr>
 									<td class="button" style="padding-bottom: 40px;" >
-											<a class="btn" href="[% report_uri %]">Otvori moju prijavu</a>
+											<a class="btn" href="[% cobrand.base_url_for_report(report) %][% report.view_url %]">Pogledaj prijavljen problem</a>
 									</td>
 								</tr>
-                <tr>
-  	 							<td>
-  	 								<p class="para" style="[% p_style_small_body_text %]">
-											Ukoliko smatrate da vašu prijavu problema nije trebalo uređivati, možete kontaktirati moderatore putem <a href="[% report_complain_uri %]">linka za prigovor</a>.
-  	 								</p>
-  	 							</td>
-  	 						</tr>
+								[% UNLESS report.non_public %]
+								<tr>
+									<td>
+										<p class="para" style="[% p_style_small_body_text %]">
+											Problem je privatan što znači da nije vidljiv javnosti. Možete ga vidjeti putem linka danog u emailu ili nakon što se ulogirate na [% site_name %] korištenjem ove vaše email adrese koja je vezana na vašu prijavu problema.
+										</p>
+									</td>
+								</tr>
+								[% END %]
 						</table>
-						[% END -%]
-
 <!--  UPPER BODY END  -->
 
 <!--  START LINE  -->
@@ -69,7 +67,7 @@ INCLUDE '_email_top.html';
 	 														<p class="sub-header" style="text-align: left; font-weight: 600;font-size: 24px; color: #1D1C1C; padding: 0px; margin: 0px; line-height: 28px;">OOdlagalište starih automobila
 															</p>
 															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
-																[% moderated_data.title | html %]. [% moderated_data.detail | html %]</p>
+																[% report.title | html %]. [% report.detail | html %]</p>
 	 													</td>
 	 												</tr>
 	 											</table>
@@ -83,7 +81,7 @@ INCLUDE '_email_top.html';
 	 											<table>
 	 												<tr>
 	 													<td>
-	 														<a class="map" href="[% url %]">
+	 														<a class="map" href="[% token_url %]">
                                 <img src="[% inline_image(report.static_map, 'map.jpeg') %]" alt="map" width="310" style="max-width: 310px; margin-left: 160px;">
                               </a>
 	 													</td>

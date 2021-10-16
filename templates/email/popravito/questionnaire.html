@@ -1,6 +1,7 @@
 [%
 
-email_summary = "Vaša prijava na " _ site_name _ " je moderirana";
+title = report.title | html;
+email_summary = "Imate li minutu slobodnog vremena? Recite nam što se dogodilo s vašom prijavom problema ${ title } na " _ site_name _ ".";
 
 PROCESS '_email_settings.html';
 
@@ -13,38 +14,27 @@ INCLUDE '_email_top.html';
 											<tr>
 												<td class="padding" style="text-align: left;">
 													<p class="sub-header" style="[% p_style_sub_header %]">
-                            Vaša prijava je uređena
+                            Je li problem popravljen?
 												  </p>
-													[% IF types == 'hide' -%]
-													<p class="para" style="[% p_style_normal_body_text %]">
-                            Prijava problema je skrivena sa stranice [% site_name %].
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            Prije [% created %], prijavili ste problem putem [% site_name %]. Ažurirane informacije o vašem problemu biti će od velike pomoći prilikom nadzora rješavanja problema.
                           </p>
-													[% ELSE %]
 													<p class="para" style="[% p_style_normal_body_text %]">
-                            Sljedeći podaci su izmijenjeni: <strong>[% types %]</strong>.
+                            Recite nam što se dogodilo s vašim prijavljenim problemom:
                           </p>
-													[% END -%]
 										</td>
 								</tr>
 						</table>
 
-						[% IF types == 'hide' -%]
 						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
 							<tr>
-									<td class="button" style="padding-bottom: 40px;" >
-											<a class="btn" href="[% report_uri %]">Otvori moju prijavu</a>
+									<td class="button" style="border-bottom: 2px solid #DAD6D3; padding-bottom: 40px;" >
+											<a class="btn" href="[% url %]?been_fixed=Yes">Popravljeno</a>
+											<a class="btn2" href="[% url %]?been_fixed=No">Nije popravljeno</a>
+											<a class="btn3" href="[% url %]?been_fixed=Unknown">Ne znam</a>
 									</td>
 								</tr>
-                <tr>
-  	 							<td>
-  	 								<p class="para" style="[% p_style_small_body_text %]">
-											Ukoliko smatrate da vašu prijavu problema nije trebalo uređivati, možete kontaktirati moderatore putem <a href="[% report_complain_uri %]">linka za prigovor</a>.
-  	 								</p>
-  	 							</td>
-  	 						</tr>
 						</table>
-						[% END -%]
-
 <!--  UPPER BODY END  -->
 
 <!--  START LINE  -->
@@ -69,7 +59,7 @@ INCLUDE '_email_top.html';
 	 														<p class="sub-header" style="text-align: left; font-weight: 600;font-size: 24px; color: #1D1C1C; padding: 0px; margin: 0px; line-height: 28px;">OOdlagalište starih automobila
 															</p>
 															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
-																[% moderated_data.title | html %]. [% moderated_data.detail | html %]</p>
+																[% report.title | html %]. [% report.detail | html %]</p>
 	 													</td>
 	 												</tr>
 	 											</table>
