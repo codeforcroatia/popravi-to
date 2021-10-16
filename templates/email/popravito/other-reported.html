@@ -57,6 +57,7 @@ INCLUDE '_email_top.html';
 <!-- END LINE  -->
 
 <!--  START MIDDLE BODY -->
+						<!-- Disabling due to issue with map thumbnail allignment in Gmail
 	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
 	 						<tr>
 	 							<td class="two-columns">
@@ -87,6 +88,34 @@ INCLUDE '_email_top.html';
 	 														<a class="map" href="[% token_url %]">
                                 <img src="[% inline_image(report.static_map, 'map.jpeg') %]" alt="map" width="310" style="max-width: 310px; margin-left: 160px;">
                               </a>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+	 							</td>
+	 						</tr>
+	 					</table>
+						-->
+<!-- MIDDLE BODY END  -->
+
+<!--  START MIDDLE BODY --> <!-- This is replacement until Gmail map thumbnail is fixed -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td>
+	 								<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table class="content" style="max-width: 420px; width: 420px;">
+	 												<tr>
+	 													<td style="text-align: left; padding: 0px; margin: 0px;">
+	 														<p class="sub-header" style="text-align: left; font-weight: 600;font-size: 24px; color: #1D1C1C; padding: 0px; margin: 0px; line-height: 28px;">
+																[% report.title | html %]
+															</p>
+															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
+																[% report.detail | html %]</p>
+															</p>
 	 													</td>
 	 												</tr>
 	 											</table>
