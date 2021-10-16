@@ -13,8 +13,6 @@
     [%~ ' show-moderation' IF show_moderation == 'report' ~%]
     " data-lastupdate="[% problem.lastupdate %]">
 
-
-
   [% IF can_moderate %]
     <form method="post" action="/moderate/report/[% problem.id %]">
         <input type="hidden" name="token" value="[% csrf_token %]">
@@ -40,7 +38,7 @@
     </div>
   [% ELSE %]
 
-    <h1 class="report-title">[% problem.title | html %]  <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></h1>
+    <h1 class="report-title">[% problem.title | html %]</h1>
   [% END %]
 
     <div class="moderate-edit">

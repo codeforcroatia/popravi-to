@@ -1,7 +1,7 @@
 [% can_moderate = NOT update.whenanswered AND update.type != 'moderation' AND (permissions.moderate OR c.user.can_moderate(update, staff = permissions.moderate)) %]
 [% IF loop.first %]
 <section class="updates-content">
-    <p class="page-text-misc">[% loc('Updates') %]</p>
+    <p class="page-text-misc">[% loc('Updates') %] <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></p>
     <ul class="item-list item-list--updates">
 [% END %]
         <li class="item-list__item item-list__item--updates
@@ -28,7 +28,7 @@
             [% ELSIF update.type == 'moderation' %]
                 [% PROCESS 'report/update/moderation.html' %]
             [% ELSE %]
-            [% INCLUDE 'report/photo.html' object=update %]              
+            [% INCLUDE 'report/photo.html' object=update %]
                 <div class="item-list__update-text">
                     <div class="moderate-display page-text-left-aligned text-bold">
                         [% update.text | staff_html_markup(update.extra) %]
@@ -54,7 +54,7 @@
                     <div class="save-discard-container">
                         <input type="submit" class="button primary-button" value="[% loc('Save changes') %]">
                         <input type="button" class="hidden-nojs button discard-button" value="[% loc('Discard changes') %]">
-                    </div>         
+                    </div>
                 </div>
                 </form>
             [% END %]
