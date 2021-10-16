@@ -1,6 +1,6 @@
 Subject: Promjenite vašu [% site_name %] email adresu
 
-Molimo, kliknite na poveznicu ispod da biste potvrdili da želite promjenili email adresu korisničkog računa na [% site_name %].
+Kliknite na poveznicu ispod da biste potvrdili da želite promjenili email adresu korisničkog računa na [% site_name %].
 
 [% c.uri_for_action( 'auth/token', token ) %]
 

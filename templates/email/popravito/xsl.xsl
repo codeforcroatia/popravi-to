@@ -34,7 +34,7 @@ email_footer = site_name;
 <!--  START LINE  -->
 						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
 							<tr>
-								<td style="border-bottom: 2px solid #DAD6D3;">
+								<td style="[% td_style_bottom_border_line %]">
 								</td>
 							</tr>
 						</table>
@@ -44,7 +44,7 @@ email_footer = site_name;
 	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
 											<tr>
 												<td class="padding" style="text-align: left;">
-													<p class="sub-header" style=" font-weight: 600;font-size: [% header_text_size %]; color: #1D1C1C; padding: 0px; margin: 0px;">
+													<p class="sub-header" style="[% p_style_sub_header %]">
                             <xsl:value-of select="$title"/>
 												  </p>
 												  <xsl:apply-templates select="rss/channel/item"/>

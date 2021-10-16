@@ -12,11 +12,11 @@ INCLUDE '_email_top.html';
 	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
 											<tr>
 												<td class="padding" style="text-align: left;">
-													<p class="sub-header" style=" font-weight: 600;font-size: [% header_text_size %]; color: #1D1C1C; padding: 0px; margin: 0px;">
+													<p class="sub-header" style="[% p_style_sub_header %]">
                             Hvala vam što koristite [% site_name %]
 												  </p>
-												  <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
-                            Molimo, kliknite na poveznicu kako biste potvrdili svoju email adresu i prijavili se u [% site_name %].
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            Kliknite na poveznicu kako biste potvrdili svoju email adresu i prijavili se u [% site_name %].
                           </p>
 										</td>
 								</tr>
@@ -25,23 +25,18 @@ INCLUDE '_email_top.html';
 
 						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
 							<tr>
-									<td class="button" style="border-bottom: 2px solid #DAD6D3; padding-bottom: 40px;" >
+									<td class="button" style="padding-bottom: 40px;" >
 											<a class="btn" href="[% c.uri_for_action( 'auth/token', token ) %]">Da, ovo je moja email adresa</a>
 									</td>
-								</tr>
+							</tr>
+							<tr>
+								<td>
+									<p class="para" style="[% p_style_normal_body_text %]">
+										Nakon što to učinite, putem izbornika [% translation_menu_item_your_account %] moći ćete pregledavati i upravljati svim prijavama i ažuriranjima koje ste napisali na [% site_name %].
+									</p>
+								</td>
+							</tr>
 						</table>
 <!--  UPPER BODY END  -->
-
-<!--  START MIDDLE BODY -->
-	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
-	 						<tr>
-	 							<td class="padding">
-	 								<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
-	 									Nakon što to učinite, putem izbornika &rdquo;Vaš profil&rdquo; moći ćete pregledavati i upravljati svim prijavama i ažuriranjima koje ste napisali na [% site_name %].
-	 								</p>
-	 							</td>
-	 						</tr>
-	 					</table>
-<!-- MIDDLE BODY END  -->
 
 [% INCLUDE '_email_bottom.html' %]

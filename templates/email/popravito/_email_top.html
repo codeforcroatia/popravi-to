@@ -43,13 +43,13 @@
 <!--  START  HEADER LOGO -->
 			<table class="logo" width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px;">
 				<tr>
-					<td style="border-bottom: 2px solid #DAD6D3; padding: 15px;">
-            [%~ IF file_exists("web/cobrands/${ img_dir }/images/${ logo_file }") ~%]
+					<td style="[% td_style_bottom_border_line %] padding: 15px;">
+            [%~ IF file_exists("web/cobrands/${ img_dir }/images/${ popravito_logo_file }") ~%]
 
               [%~ IF for_rss ~%]
-                <img src="/cobrands/[% img_dir %]/images/[% logo_file %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
+                <img src="/cobrands/[% img_dir %]/images/[% popravito_logo_file %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
               [%~ ELSE ~%]
-                <img src="[% inline_image('web/cobrands/' _ img_dir _ '/images/' _ logo_file ) %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
+                <img src="[% inline_image('web/cobrands/' _ img_dir _ '/images/' _ popravito_logo_file ) %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
               [%~ END ~%]
 
             [%~ ELSE ~%]

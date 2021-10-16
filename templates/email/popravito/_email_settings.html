@@ -1,13 +1,31 @@
+[% # Default variables used at some points. Will be used temporarily. %]
+[% TRY %][% PROCESS '_email_setting_legacy.html' %][% CATCH file %][% END %]
+
 [%
 
 # Popravito design variables.
 
 # The default colours.
-color_gray = "#F7F7F7"
+popravito_color_white_smoke = "#F7F7F7"
+popravito_color_white = "#ffffff"
+popravito_color_coffee_bag = "#DAD6D3"
+popravito_color_maire_black = "#1D1C1C"
 
-logo_file = "popravito-logo-email.png"
-header_text_size = "32px"
-bg_color = color_gray
+# Resources
+popravito_logo_file = "popravito-logo-email.png"
+
+# Popravito style and class mapping
+popravito_bg_color = popravito_color_white_smoke
+popravito_line_color = popravito_color_coffee_bag
+
+popravito_sub_header_text_size = "32px"
+
+td_style_bottom_border_line = "border-bottom: 2px solid $popravito_line_color;"
+
+p_style_sub_header = "font-weight: 600; font-size: $popravito_sub_header_text_size; color: $popravito_color_maire_black; padding: 0px; margin: 0px;"
+p_style_normal_body_text = "font-weight: 400; font-size: 16px; color: #1D1C1C; line-height: 24px;"
+p_style_small_body_text = "text-align: left; font-weight: 400; font-size: 14px; color: #675F58; line-height: 22px; padding: 0px; margin: 0px;"
+p_style_small_print_footer = "text-align: left; font-weight: 400; font-size: 12px; color: #675F58; line-height: 16px;"
 
 %]
 
@@ -18,10 +36,14 @@ bg_color = color_gray
 
 # Variables used inside the email templates.
 
-%]
+# Translations
+translation_menu_item_your_account = "&rdquo;Vaš profil&rdquo;"
 
-[% # Default variables used at some points. Will be used temporarily. %]
-[% TRY %][% PROCESS '_email_setting_legacy.html' %][% CATCH file %][% END %]
+# Static links
+popravito_url_forum = "https://diskurs.codeforcroatia.org/c/open-source/popravito/31"
+popravito_url_all_reports = "https://popravi.to/reports"
+
+%]
 
 [% # Handy point at which your cobrand can override any of the constructed variables before they are sent to the templates. %]
 [% TRY %][% PROCESS '_email_setting_overrides.html' %][% CATCH file %][% END %]

@@ -1,0 +1,9 @@
+Subject: Potvrdite vašu prijavu na [% site_name %]
+
+Molimo, otvorite sljedeću poveznicu kako biste pogledali i potvrdili vašu prijavu problema na [% site_name %] putem [% report.service %].
+
+[% token_url %]
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

@@ -16,7 +16,7 @@ INCLUDE '_email_top.html';
                             Promjenite vašu email&nbsp;adresu
 												  </p>
 												  <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
-                            Kliknite na poveznicu ispod da biste potvrdili da želite promjenili email adresu korisničkog računa na [% site_name %].
+                            Molimo, kliknite na poveznicu ispod da biste potvrdili da želite promjenili email adresu korisničkog računa na [% site_name %].
                           </p>
 										</td>
 								</tr>
@@ -25,18 +25,23 @@ INCLUDE '_email_top.html';
 
 						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
 							<tr>
-									<td class="button" style="padding-bottom: 40px;" >
+									<td class="button" style="border-bottom: 2px solid [% popravito_line_color %]; padding-bottom: 40px;" >
 											<a class="btn" href="[% c.uri_for_action( 'auth/token', token ) %]">Promjeni adresu korisničkog računa</a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<p class="para" style="[% p_style_normal_body_text %]">
-											Ako više ne želite promjeniti adresu vašeg [% site_name %] korisničkog računa ili vi niste izradili ovaj zahtjev, ne trebate ništa učiniti te neće doći do promjene.
-										</p>
 									</td>
 								</tr>
 						</table>
 <!--  UPPER BODY END  -->
+
+<!--  START MIDDLE BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td class="padding">
+	 								<p class="para" style="text-align: left; font-weight: 400;font-size: 14px;color: #675F58; line-height: 22px; padding: 0px; margin: 0px;">
+	 									Ako više ne želite promjeniti adresu vašeg [% site_name %] korisničkog računa ili vi niste izradili ovaj zahtjev, ne trebate ništa učiniti te neće doći do promjene.
+	 								</p>
+	 							</td>
+	 						</tr>
+	 					</table>
+<!-- MIDDLE BODY END  -->
 
 [% INCLUDE '_email_bottom.html' %]

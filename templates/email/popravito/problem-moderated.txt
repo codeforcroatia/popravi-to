@@ -1,0 +1,25 @@
+Subject: Vaša prijava na [% site_name %] je moderirana
+
+Vaša prijava je uređena. [% IF types == 'hide' -%]Prijava problema je skrivena sa stranice [% site_name %].[% ELSE %]
+
+Sljedeći podaci su izmijenjeni:
+
+	[% types %]
+
+[% END -%]
+
+Prijavili ste sljedeći problem:
+
+[% moderated_data.title %]
+[% moderated_data.detail %]
+
+[% UNLESS types == 'hide' %]
+Otvori moju prijavu:
+[% report_uri %]
+[% END %]
+
+Ukoliko smatrate da vašu prijavu problema nije trebalo uređivati, možete kontaktirati moderatore putem [% report_complain_uri %].
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

@@ -1,0 +1,107 @@
+[%
+
+email_summary = "Potvrdite vašu prijavu na " _ site_name _ " da bismo je dostavili za ${ report.body }";
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style="[% p_style_sub_header %]">
+                            Potvrdite vašu prijavu
+												  </p>
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            Kliknite na poveznicu ispod da biste potvrdili da želite poslati prijavu problema izrađenu na [% site_name %] za [% report.body %].
+														[% IF c.cobrand.is_council && !c.cobrand.owns_problem( report ) %]
+														Molimo vas da imate na umu da [% c.cobrand.council_name %] nije odgovoran za ovu vrstu problema, te će umjesto toga biti poslano na [% report.body %].
+														[% END %]
+                          </p>
+										</td>
+								</tr>
+						</table>
+
+						[% TRY %][% INCLUDE '_problem-confirm_extra.html' %][% CATCH file %][% END %]
+
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
+							<tr>
+									<td class="button" style="padding-bottom: 40px;" >
+											<a class="btn" href="[% token_url %]">Da, pošalji moju prijavu</a>
+									</td>
+								</tr>
+								[% UNLESS report.non_public %]
+								<tr>
+									<td>
+										<p class="para" style="[% p_style_small_body_text %]">
+											Nakon potvrde vaša prijava problema biti će poslana nadležnom uredu a ujedno i objavljena na [% site_name %] internetskoj stranici.
+										</p>
+									</td>
+								</tr>
+								[% END %]
+                <tr>
+  	 							<td>
+  	 								<p class="para" style="[% p_style_small_body_text %]">
+  	 									Ako više ne želite prijaviti ovaj problem, ne trebate ništa učiniti te neće doći do objave.
+  	 								</p>
+  	 							</td>
+  	 						</tr>
+						</table>
+
+						[% TRY %][% INCLUDE '_problem-confirm_footer.html' %][% CATCH file %][% END %]
+<!--  UPPER BODY END  -->
+
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="[% td_style_bottom_border_line %]">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+
+<!--  START MIDDLE BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td class="two-columns">
+	 								<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table class="content" style="max-width: 420px; width: 420px;">
+	 												<tr>
+	 													<td style="text-align: left; padding: 0px; margin: 0px;">
+	 														<p class="sub-header" style="text-align: left; font-weight: 600;font-size: 24px; color: #1D1C1C; padding: 0px; margin: 0px; line-height: 28px;">OOdlagalište starih automobila
+															</p>
+															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
+																[% report.title | html %]. [% report.detail | html %]</p>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+
+	 							<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table>
+	 												<tr>
+	 													<td>
+	 														<a class="map" href="[% url %]">
+                                <img src="[% inline_image(report.static_map, 'map.jpeg') %]" alt="map" width="310" style="max-width: 310px; margin-left: 160px;">
+                              </a>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+	 							</td>
+	 						</tr>
+	 					</table>
+<!-- MIDDLE BODY END  -->
+
+[% INCLUDE '_email_bottom.html' %]

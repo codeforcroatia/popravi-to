@@ -1,0 +1,16 @@
+Subject: Potvrdite vašu prijavu na [% site_name %]
+
+Kliknite na poveznicu ispod da biste potvrdili da želite da vaša prijava problema bude vidljiva na [% site_name %], iako što neće biti poslana nadležnom uredu:
+
+[% token_url %]
+
+Prijavili ste sljedeći problem:
+
+[% report.title %]
+[% report.detail %]
+
+Ako više ne želite prijaviti ovaj problem, ne trebate ništa učiniti te neće doći do objave.
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

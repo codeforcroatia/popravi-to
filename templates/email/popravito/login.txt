@@ -1,6 +1,6 @@
 Subject: Vaš [% site_name %] korisnički račun
 
-Molimo, kliknite na poveznicu kako biste potvrdili svoju email adresu i prijavili se u [% site_name %].
+Kliknite na poveznicu kako biste potvrdili svoju email adresu i prijavili se u [% site_name %].
 
 [% c.uri_for_action( 'auth/token', token ) %]
 
