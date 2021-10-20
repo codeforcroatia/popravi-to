@@ -1,0 +1,25 @@
+Subject: Potvrdite vašu prijavu na [% site_name %]
+
+Kliknite na poveznicu ispod da biste potvrdili da želite poslati prijavu problema izrađenu na [% site_name %] za [% report.body %].
+[% IF c.cobrand.is_council && !c.cobrand.owns_problem( report ) %]
+Molimo vas da imate na umu da [% c.cobrand.council_name %] nije odgovoran za ovu vrstu problema, te će umjesto toga biti poslano na [% report.body %].
+[% END %]
+
+[% token_url %]
+
+[% UNLESS report.non_public %]
+Nakon potvrde vaša prijava problema biti će poslana nadležnom uredu a ujedno i objavljena na [% site_name %] internetskoj stranici.
+[% END %]
+
+[% TRY %][% INCLUDE '_problem-confirm_extra.txt' %][% CATCH file %][% END %]
+
+Prijavili ste sljedeći problem:
+
+[% report.title %]
+[% report.detail %]
+
+Ako više ne želite prijaviti ovaj problem, ne trebate ništa učiniti te neće doći do objave.
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

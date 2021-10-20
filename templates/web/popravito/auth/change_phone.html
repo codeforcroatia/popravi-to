@@ -28,7 +28,7 @@ END
         <fieldset class="change-info-fieldset">
         [% loc_username_error = INCLUDE 'auth/_username_error.html' default='phone' %]
         [% IF loc_username_error  %]
-        <div class="form-error">[% loc_username_error %]</div>
+        <div class="form-error-message">[% loc_username_error %]</div>
         [% END %]
 
         <div class="form-field">

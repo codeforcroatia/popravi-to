@@ -268,12 +268,21 @@ $primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
     margin: 0;
 }
 
-.arrow-right {
+.arrow-right-white {
     background: url('/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
     width: 15px;
     height: 15px;
     display: block;
     margin-left: 0.6rem;
+    align-self: center;
+}
+
+.arrow-left {
+    background: url('/cobrands/popravito/images/ic-arrow-left.svg') no-repeat center;
+    width: 15px;
+    height: 15px;
+    display: block;
+    margin-right: 0.6rem;
     align-self: center;
 }
 
@@ -1090,7 +1099,7 @@ fieldset {
 // REPORTS
 
 .main-reports {
- padding: 2.5rem;   
+ padding: 2.5rem;
 }
 
 .dashboard-row-grid {
@@ -1143,7 +1152,7 @@ fieldset {
         justify-content: center;
         width: 80%;
         margin: auto;
-  
+
         .label {
             // display: flex;
             // flex-direction: column;
@@ -1155,21 +1164,21 @@ fieldset {
             margin-bottom: 1.5rem;
             padding: 2rem 5rem 2rem 5rem;
             text-transform: uppercase;
-        
+
             strong {
                 font-size: 2.2rem;
                 color: #1D1C1C;
                 display: block;
                 margin-bottom: 1rem;
             }
-  
+
         }
     }
-  } 
+  }
 
 .dashboard-search {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     background-color: #E5E1FE;
     padding: 1rem 10rem;
@@ -1182,6 +1191,20 @@ fieldset {
     .dashboard-search__input {
         flex: 1;
         text-align: center;
+    }
+}
+
+.dashboard-search__submit {
+    input[type=submit] {
+        background: url(/cobrands/popravito/images/icon-chevron-right.svg) no-repeat center;
+        background-color: black;
+        border-radius: 50%;
+        margin-top: 0;
+        height: 53px;
+        width: 53px;
+        cursor: pointer;
+        margin-left: 2rem;
+        padding: 0;
     }
 }
 
@@ -1200,9 +1223,46 @@ fieldset {
             line-height: 35px;
         }
 
-        tr:last-child td {
+        tr td:last-child {
             text-align: right;
         }
 
     }
+
+    tfoot {
+        color: #149770;
+
+        tr td:last-child {
+            text-align: right;
+        }
+    }
+}
+
+.labelled-line-chart {
+
+    .label-container {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        justify-content: end;
+
+        .label:first-child {
+            margin-bottom: 2rem;
+        }
+
+        .label {
+            display: flex;
+            flex-direction: column;
+            text-align: revert;
+            text-transform: uppercase;
+
+            strong {
+                font-size: 2.2rem;
+                color: #1D1C1C;
+                display: block;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
 }

@@ -1,0 +1,24 @@
+Subject: Vaša prijava je zabilježena - [% report.title %]
+
+Vaša prijava problema za [% report.body %] je zabilježena na [% site_name %].
+
+[% IF c.cobrand.is_council && !c.cobrand.owns_problem( report ) %]
+Molimo vas da imate na umu da [% c.cobrand.council_name %] nije odgovoran za ovu vrstu problema, te će umjesto toga biti poslano na [% report.body %].
+[% END %]
+
+Prijavu možete vidjeti na linku:
+
+[% cobrand.base_url_for_report(report) %][% report.view_url %]
+
+[% UNLESS report.non_public %]
+Problem je privatan što znači da nije vidljiv javnosti. Možete ga vidjeti putem linka danog u emailu ili nakon što se ulogirate na [% site_name %] korištenjem ove vaše email adrese koja je vezana na vašu prijavu problema.
+[% END %]
+
+Prijavili ste sljedeći problem:
+
+[% report.title %]
+[% report.detail %]
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

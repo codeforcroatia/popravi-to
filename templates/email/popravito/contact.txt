@@ -1,0 +1,19 @@
+Subject: Kontakt putem weba - [% subject %]
+
+[% message %]
+
+[% IF complaint %]
+[ [% complaint %] - [% problem_url %] - [% admin_url %] ]
+[% END %]
+
+[%~ IF user_admin_url %]
+[ Uredite korisnika: [% user_admin_url %] ]
+[%~ IF user_latest_report_admin_url %]
+[ Uredite posljednju prijavu: [% user_latest_report_admin_url %] ]
+[%~ END %]
+[ Prikaži sve prijave: [% user_reports_admin_url %] ]
+[%~ END %]
+
+--
+Poslano putem kontakt obrasca putem [% host %].
+IP adresa [% ip %], user agent [% user_agent %]

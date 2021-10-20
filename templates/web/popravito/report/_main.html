@@ -4,41 +4,14 @@
     can_moderate_title = c.user.can_moderate_title(problem, can_moderate)
 %]
 
+
+
 <a href="[% c.uri_for( '/around', { lat => latitude, lon => longitude } ) %]"
     class="problem-back js-back-to-report-list visually-hidden">[% loc('Back to all reports') %]</a>
-
-[% INCLUDE 'report/banner.html' %]
 
 <div class="problem-header clearfix
     [%~ ' show-moderation' IF show_moderation == 'report' ~%]
     " data-lastupdate="[% problem.lastupdate %]">
-
-[% IF permissions.planned_reports %]
-<form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
-    <input type="hidden" name="id" value="[% problem.id %]">
-    <input type="hidden" name="token" value="[% csrf_token %]">
-    <input type="hidden" name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE %]shortlist-add[% END %]" value="1">
-    <p><input
-        type="submit"
-        id="shortlist-report"
-        data-label-remove="[% loc('Remove from shortlist') %]"
-        data-label-add="[% loc('Add to shortlist') %]"
-        data-value-remove="[% loc('Shortlisted') %]"
-        data-value-add="[% loc('Shortlist') %]"
-        data-class-remove="btn--shortlisted"
-        data-class-add="btn--shortlist"
-    [%~ IF c.user.is_planned_report(problem) ~%]
-        value="[% loc('Shortlisted') %]"
-        aria-label="[% loc('Remove from shortlist') %]"
-        class="button primary-button"
-    [%~ ELSE ~%]
-        value="[% loc('Shortlist') %]"
-        aria-label="[% loc('Add to shortlist') %]"
-        class="button primary-button"
-    [%~ END ~%]
-    ></p>
-</form>
-[% END %]
 
   [% IF can_moderate %]
     <form method="post" action="/moderate/report/[% problem.id %]">
@@ -47,13 +20,11 @@
   [% END %]
 
   [% FOR error IN moderate_errors %]
-    <p class="form-error js-moderation-error">[% error | safe %]</p>
+    <p class="form-error-message js-moderation-error">[% error | safe %]</p>
   [% END %]
 
-    <picture class="fix-icon-detail">
-            <source srcset="/cobrands/popravito/images/fix-icon.png">
-            <img src="/cobrands/popravito/images/fix-icon.png" alt="">
-    </picture>
+  [% INCLUDE 'report/banner.html' %]
+
   [% IF can_moderate_title %]
     <h1 class="moderate-display report-title">[% problem.title | html %]</h1>
     <div class="moderate-edit">
@@ -67,7 +38,7 @@
     </div>
   [% ELSE %]
 
-    <h1 class="report-title">[% problem.title | html %]  <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></h1>
+    <h1 class="report-title">[% problem.title | html %]</h1>
   [% END %]
 
     <div class="moderate-edit">
@@ -141,9 +112,41 @@
   [% IF can_moderate OR permissions.planned_reports %]
     <div class="moderate-display segmented-control" role="menu">
       [% IF can_moderate %]
+      <form class="button-link">
+          <button formaction="/report/[% problem.id %]/moderate" class="button" tabindex="0" aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</button>
+      </form>
+        <!--
         <a class="js-moderate btn" role="menuitem" href="/report/[% problem.id %]/moderate"
             aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>
+        -->
       [% END %]
+      [% IF permissions.planned_reports %]
+      <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
+          <input type="hidden" name="id" value="[% problem.id %]">
+          <input type="hidden" name="token" value="[% csrf_token %]">
+          <input type="hidden" name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE %]shortlist-add[% END %]" value="1">
+          <p><input
+              type="submit"
+              id="shortlist-report"
+              data-label-remove="[% loc('Remove from shortlist') %]"
+              data-label-add="[% loc('Add to shortlist') %]"
+              data-value-remove="[% loc('Shortlisted') %]"
+              data-value-add="[% loc('Shortlist') %]"
+              data-class-remove="btn--shortlisted"
+              data-class-add="btn--shortlist"
+          [%~ IF c.user.is_planned_report(problem) ~%]
+              value="[% loc('Shortlisted') %]"
+              aria-label="[% loc('Remove from shortlist') %]"
+              class="button primary-button"
+          [%~ ELSE ~%]
+              value="[% loc('Shortlist') %]"
+              aria-label="[% loc('Add to shortlist') %]"
+              class="button primary-button"
+          [%~ END ~%]
+          ></p>
+      </form>
+      [% END %]
+      <!--
       [% IF permissions.planned_reports %]
           [%~ IF c.user.is_planned_report(problem) ~%]
             <label class="btn btn--shortlisted" for="shortlist-report" role="menuitem" aria-label="[% loc('Remove from shortlist') %]">[% loc('Shortlisted') %]</label>
@@ -151,6 +154,7 @@
             <label class="btn btn--shortlist" for="shortlist-report" role="menuitem" aria-label="[% loc('Add to shortlist') %]">[% loc('Shortlist') %]</label>
           [%~ END ~%]
       [% END %]
+      -->
     </div>
   [% END %]
 

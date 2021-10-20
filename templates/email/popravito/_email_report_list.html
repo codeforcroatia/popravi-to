@@ -1,0 +1,28 @@
+[% FOR report IN data %]
+<!--  START BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style="[% p_style_list_title %]">
+                            [%~ report.title | html ~%]
+											  	</p>
+                          [% report.detail | html_para | replace('<p>', '<br>') %]
+                            [% report.detail | html_para | replace('</p>', '') %]
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            [% cobrand.prettify_dt( report.confirmed ) %].
+                            [% report.nearest %]
+                          </p>
+										</td>
+								</tr>
+						</table>
+<!--  BODY END  -->
+
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="[% td_style_bottom_border_line %]">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+[% END %]
