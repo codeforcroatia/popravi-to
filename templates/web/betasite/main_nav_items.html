@@ -1,8 +1,6 @@
 [% INCLUDE 'navigation/_report.html' %]
 
 [%~ IF c.user_exists ~%]
-    <li><a href="https://forms.gle/vNLv2kCCpNvTkJqaA" target="_blank">Prijavi bug</a></li>
-    <!-- <li><a href="https://forms.gle/vNLv2kCCpNvTkJqaA" target="_blank">Ocijeni app</a></li> -->
     [%~ INCLUDE navitem uri='/my' label=loc('Your account') ~%]
 [%~ ELSE ~%]
     [%~ INCLUDE navitem uri='/auth' label=loc('Sign in') ~%]
