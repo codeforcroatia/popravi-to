@@ -1266,3 +1266,12 @@ fieldset {
     }
 
 }
+
+
+// error fields
+
+.form-error *:not(input) {
+    background-color: white;
+    color: red;
+    font-size: 0.8rem;
+  }
