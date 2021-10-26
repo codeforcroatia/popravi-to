@@ -570,6 +570,12 @@ img {
     font-size: 0.8rem;
 }
 
+.form-error *:not(input) {
+    background-color: white;
+    color: red;
+    font-size: 0.8rem;
+  }
+
 .page-text-instructions {
     margin-bottom: 2rem;
 }
