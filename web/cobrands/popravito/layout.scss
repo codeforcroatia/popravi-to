@@ -1267,11 +1267,8 @@ fieldset {
 
 }
 
-
-// error fields
-
-.form-error *:not(input) {
-    background-color: white;
-    color: red;
-    font-size: 0.8rem;
-  }
+.main-alert {
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+}
