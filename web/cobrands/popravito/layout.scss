@@ -1271,4 +1271,13 @@ fieldset {
     padding: 2.5rem;
     display: flex;
     justify-content: space-between;
+
+    form {
+        padding: 1rem 4rem;
+    }
+}
+
+.input-alert {
+    display: flex;
+    margin-top: 2rem;
 }
