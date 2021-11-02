@@ -109,6 +109,19 @@
             new_n = stats.new | format_number;
             updates_n = stats.updates | format_number;
         %]
+        [%
+        IF new_n == '';
+            SET new_n = '0';
+        END;
+
+        IF updates_n == '';
+            SET updates_n = '0';
+        END;
+
+        IF fixed_n == '';
+            SET fixed_n = '0';
+        END;
+        %]
 
         <ul class="report-statistics">
             <li class="report-stat-item">
