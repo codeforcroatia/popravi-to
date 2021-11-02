@@ -1,0 +1,20 @@
+<!-- report/banner.html start -->
+[% USE date %]
+
+[% IF problem.is_open AND date.now - problem.lastupdate.epoch > 8 * 7 * 24 * 60 * 60 %]
+    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-unknown-gray.png' ~%]
+[% ELSIF problem.is_in_progress %]
+    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-in-progress-violet.png' ~%]
+[% END %]
+[% IF problem.is_fixed %]
+    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-fixed-green.png' ~%]
+[% END %]
+[% IF problem.is_closed %]
+    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-closed-green.png' ~%]
+[% END %]
+
+<picture class="fix-icon-detail">
+        <source srcset="[% wrench_icon_url %]">
+        <img src="[% wrench_icon_url %]" alt="">
+</picture>
+<!-- report/banner.html end -->

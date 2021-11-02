@@ -1,0 +1,16 @@
+[% INCLUDE 'header.html', title = loc('Sign out'), bodyclass = 'fullwidthpage' %]
+
+<main>
+    <div class="confirmation-header-signout">
+    <h1 class="page-title">[% loc('You have been signed out') %]</h1>
+    <p>[% tprintf( loc('Please feel free to <a href="%s" class="misc-link-2">sign in again</a>, or go back to the <a href="/" class="misc-link-2">front page</a>.'), c.uri_for('/auth') ) %]</p>
+    </div>
+
+    [% INCLUDE next_steps.html utm_content='signed out' %]
+</main>
+
+    [% INCLUDE 'footer.html' %]
+
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/menu.js"></script>
+</body>
+</html>

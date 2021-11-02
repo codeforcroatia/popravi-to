@@ -1,0 +1,114 @@
+[%
+
+    rss_alt   = loc('RSS feed');
+    rss_title = loc('RSS feed of recent local problems');
+
+    rss_url
+        = pc
+        ? c.uri_for( "/rss/pc", pc )
+        : c.uri_for( "/rss/l/$latitude,$longitude" );
+
+    email_url = c.uri_for(
+        '/alert/list',
+        {
+            lat  => latitude,
+            lon  => longitude,
+            feed => "local:$latitude:$longitude",
+        }
+    );
+
+    url_skip = c.uri_for(
+        '/report/new',
+        {
+            pc         => pc
+            latitude   => latitude,
+            longitude  => longitude,
+            skipped    => 1,
+        }
+    );
+
+    PROCESS "report/photo-js.html";
+    PROCESS "maps/${map.type}.html";
+
+    # Only used by Zurich
+    TRY; sidebar_html = PROCESS 'report/new/sidebar.html' js = 1 report.used_map = 1; CATCH file; END;
+
+    SET bodyclass = 'mappage';
+    SET rss = [ tprintf(loc('Recent local problems, %s', "%s is the site name"), site_name), rss_url ];
+    SET extra_js = [];
+    INCLUDE 'header.html',
+        title  => loc('Viewing a location')
+        robots => 'noindex,nofollow';
+
+    allow_creation = !c.cobrand.only_authed_can_create || (c.user && c.user.from_body);
+%]
+
+    <main>
+        [% IF allow_creation %]
+
+        <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm" enctype="multipart/form-data" class="validate" novalidate>
+            <input type="hidden" name="token" value="[% csrf_token %]">
+            <input type="hidden" name="pc" value="[% pc | html %]">
+
+            <input type="hidden" name="latitude" id="fixmystreet.latitude" value="[% latitude | html %]">
+            <input type="hidden" name="longitude" id="fixmystreet.longitude" value="[% longitude | html %]">
+
+            [% IF c.get_param('filter_group') %]
+                <input type="hidden" name="filter_group" id="filter_group" value="[% c.get_param('filter_group') | html %]">
+            [% END %]
+
+        [% END %]
+
+        <div class="report-section" id="map_sidebar">
+            <div class="instructions-container" id="side">
+                <div class="progress-bar">
+                    <div class="bar"></div>
+                  </div>
+                <h1 class="page-title-smaller">[% loc('Place pin on map') %]</h1>
+
+                [%~ SET link_params = {
+                    geolocate = 1
+                };
+                    IF c.get_param('filter_category'); link_params.filter_category = c.get_param('filter_category'); END;
+                    IF c.get_param('filter_group'); link_params.filter_group = c.get_param('filter_group'); END;
+                %]
+
+                [% IF allow_creation %]
+                    <p class="page-text page-text-left-aligned">[% loc( 'Click the map or drag the pin to adjust the location') %]</p>
+                    <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon-purple"></span>[% loc('Use my current location') %]</a>
+                    [% TRY %][% INCLUDE 'around/extra_text.html' %][% CATCH file %][% END %]
+                [% END %]
+
+                <div class="continue-container">
+                    <button class="button primary-button" tabindex="0" aria-label="continue to next step" id="skip-this-step">[% loc('Continue') %]<span class="arrow-right"></span></button>
+                </div>
+            </div>
+
+            [% IF allow_creation %]
+                    <div style="display:none" id="side-form">
+                        <div class="progress-bar">
+                            <div class="bar2"></div>
+                          </div>
+                    [% INCLUDE "report/new/fill_in_details_form.html"
+                        js = 1,
+                        report.used_map = 1
+                        report.name = c.user.name
+                    %]
+                    </div>
+            [% END %]
+
+            [% map_html | safe %]
+        </div>
+
+        [% IF allow_creation %]
+        </form>
+        [% END %]
+    </main>
+
+    [% INCLUDE 'footer.html' %]
+
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/menu.js"></script>
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/toggleInfoModals.js"></script>
+
+</body>
+</html>

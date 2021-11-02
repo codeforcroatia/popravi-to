@@ -1,0 +1,21 @@
+[% DEFAULT form_title = loc('Summarise the problem') %]
+[% DEFAULT form_title_placeholder = loc('e.g. ‘10 inch pothole on Example St, near post box’') %]
+
+<label for="form_title" class="summarise-title">[% form_title %] <span class="details-button" tabindex="0" aria-label="details"></span></label>
+<p class="form-hint report-details-small" id="title-hint">[% contact_title_hint OR form_title_placeholder %]</p>
+[% IF field_errors.title %]
+    <p class='form-error-message'>[% field_errors.title %]</p>
+[% END %]
+<input class="form-control report-title-input" type="text" value="[% report.title | html %]" name="title" id="form_title" aria-describedby="title-hint"[% field_required %] autocomplete="off" placeholder="[% loc('Problem title') %]">
+
+<div class="modal-container info-container visually-hidden">
+    <div class="modal info-modal">
+        <button class="close-button close-info-modal" tabindex="0" aria-label="close form"></button>
+        <h2 class="page-title">[% form_title %]</h2>
+        <p class="page-text-left-aligned">
+            Opišite problem sa što više korisnih detalja kako bi olakšali rješavanje problema. Precizno opišite lokaciju, vrstu problema te koliko je dugo prisutan.
+            Npr. “od 1.3.2021. ne radi ulična svjetiljka na uglu Selske i Ozaljske ulice”
+        </p>
+        <button class="button register-button close-info-modal">Ok</button>
+    </div>
+</div>

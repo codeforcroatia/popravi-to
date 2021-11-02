@@ -1,0 +1,15 @@
+[% SET bodyclass = 'frontpage fullwidthpage aroundpage' ~%]
+[% INCLUDE 'header.html', title = loc('Reporting a problem') %]
+
+    <main>
+        <div class="error-multiple-section">
+            [% INCLUDE 'around/postcode_form.html' %]
+            [% INCLUDE 'around/_main.html' %]
+        </div>
+    </main>
+
+    [% INCLUDE 'footer.html' %]
+
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/menu.js"></script>
+</body>
+</html>
