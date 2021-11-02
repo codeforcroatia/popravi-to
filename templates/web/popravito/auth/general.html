@@ -24,8 +24,8 @@
     <section class="register-container">
         <div>
             <picture class="logo misc-logo">
-                <source media="(max-width: 768px)" srcset="/cobrands/popravito/images/popravi-logo-mobile.svg">
-                <img src="/cobrands/popravito/images/popravi-logo-mobile.svg" alt="[% site_name %]">
+                <source media="(max-width: 768px)" srcset="/cobrands/[% c.cobrand.asset_moniker %]/images/popravi-logo-mobile.svg">
+                <img src="/cobrands/[% c.cobrand.asset_moniker %]/images/popravi-logo-mobile.svg" alt="[% site_name %]">
             </picture>
             <form><button formaction="/" class="close-button" tabindex="0" aria-label="close form"></button></form>
         </div>
@@ -120,6 +120,6 @@
         [% END %]
     </section>
 
-    <script src="/cobrands/popravito/enableFormButton.js"></script>
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/enableFormButton.js"></script>
 </body>
 </html>

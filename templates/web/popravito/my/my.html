@@ -102,8 +102,8 @@
                         [% IF ! has_content %]
                         <div class="no-reports">
                             <picture class="empty-data-icon">
-                                <source srcset="/cobrands/popravito/images/undraw_No_data_re_kwbl-1.svg">
-                                <img src="/cobrands/popravito/images/undraw_No_data_re_kwbl-1.svg" alt="">
+                                <source srcset="/cobrands/[% c.cobrand.asset_moniker %]/images/undraw_No_data_re_kwbl-1.svg">
+                                <img src="/cobrands/[% c.cobrand.asset_moniker %]/images/undraw_No_data_re_kwbl-1.svg" alt="">
                             </picture>
                             <p class="page-text">[% loc('You haven&rsquo;t created any reports yet.') %]</p>
                             <button class="button primary-button" tabindex="0" aria-label="report issue" onclick="location.href='/_report'" type="button">[% loc('Report a problem now') %]</button>
@@ -180,7 +180,7 @@
 
     [% INCLUDE 'footer.html' %]
 
-    <script src="/cobrands/popravito/menu.js"></script>
-    <script src="/cobrands/popravito/toggleFiltersAndView.js"></script>
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/menu.js"></script>
+    <script src="/cobrands/[% c.cobrand.asset_moniker %]/toggleFiltersAndView.js"></script>
 </body>
 </html>
