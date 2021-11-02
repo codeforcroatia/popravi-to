@@ -7,7 +7,7 @@ scripts = [];
 
 scripts.push(
     start _ "/js/translation_strings." _ lang_code _ ".js?" _ Math.int( date.now / 3600 ),
-version('/cobrands/'${ cobrand_dir }'/bodyclass.js'),
+version('/cobrands/' _ cobrand _ '/bodyclass.js'),
 );
 
 IF bodyclass.match('frontpage');
@@ -16,7 +16,7 @@ IF bodyclass.match('frontpage');
         version('/js/geolocation.js'),
         version('/js/loading-attribute-polyfill.js'),
         version('/js/loading-attribute-polyfill.js'),
-        version('/cobrands/'cobrand_dir'/hamburger.js'),
+        version('/cobrands/' _ cobrand _ '/hamburger.js'),
     );
 ELSIF bodyclass.match('alertpage');
     scripts.push(
