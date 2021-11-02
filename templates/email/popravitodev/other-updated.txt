@@ -1,0 +1,15 @@
+Subject: Vaše ažuriranje je zabilježeno na [% site_name %]
+
+Vaše ažuriranje problema za [% report.body %] je zabilježena na [% site_name %]:
+
+[% cobrand.base_url_for_report(problem) %][% update.url %]
+
+[% TRY %][% INCLUDE '_council_reference.txt' %][% CATCH file %][% END %]
+
+Vaše ažuriranje:
+
+[% update.text %]
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

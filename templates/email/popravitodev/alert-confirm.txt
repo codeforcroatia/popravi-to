@@ -1,0 +1,13 @@
+Subject: Potvrdite vaše email postavke na [% site_name %]
+
+Kliknite na poveznicu ispod da biste potvrdili da želite zaprimati obavijesti o problemima na izabranom području od [% site_name %]:
+
+   [% token_url %]
+
+time potvrđujete da želite zaprimati obavijest na email kada netko na [% site_name %] napravi novu prijavu problema na području koje ste izabrali.
+
+Email obavijesti o lokalnim problemima je besplatna [% site_name %] usluga.
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

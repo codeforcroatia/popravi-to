@@ -1,0 +1,18 @@
+Subject: Nove prijave na [% site_name %]
+
+Ove nove prijave su dodane na [% site_name %] unutar vašeg odabranog područja:
+
+[% INCLUDE '_email_report_list.txt' %]
+
+[% signature %]
+
+
+Odjava?
+
+Prijavili ste se za primanje email obavijesti kada netko prijavi novi problem na [% site_name %] za područje [% area_name %]. Ovo je besplatna [% site_name %] usluga.
+
+Odjavite se ako ne želite primati obavijesti o novim prijavama problema za ovo područje:
+
+[% unsubscribe_url %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

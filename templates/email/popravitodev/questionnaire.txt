@@ -1,0 +1,17 @@
+Subject: Upitnik za '[% report.title %]' na [% site_name %]
+
+Prije [% created %], prijavili ste problem putem [% site_name %]. Ažurirane informacije o vašem problemu biti će od velike pomoći prilikom nadzora rješavanja problema.
+
+Recite nam što se dogodilo s vašim prijavljenim problemom:
+
+    [% url %]
+
+
+Problem koji ste prijavili:
+
+[% report.title %]
+[% report.detail %]
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.
