@@ -4,6 +4,8 @@
     cobrand = cobrand.moniker OR report.cobrand OR c.cobrand.moniker;
 
     SET img_dir = cobrand;
+
+    SET hide_staging_banner = c.config.STAGING_FLAGS.hide_staging_banner;
 -%]
 [% IF NOT for_rss ~%]
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -27,7 +29,7 @@
 	 		<table class="outer" align="center">
 
 <!--  START  HEADER RIBBON -->
-        [% IF staging AND NOT for_rss %]
+        [% IF staging AND hide_staging_banner AND NOT for_rss %]
 			<table class="logo" width="100%" style="border-spacing: 0; background-color: #F20D36; padding: 0px;margin: 0px;">
 				<tr>
 					<td>
