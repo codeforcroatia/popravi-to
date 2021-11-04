@@ -4,7 +4,7 @@ Poštovani [% bodies_name %],
 
 [% missing %][% multiple %]Korisnik je putem [% site_name %] podnio sljedeću prijavu lokalnog problema koji treba vašu pažnju.
 
-[% fuzzy %], ili ažurirajte status problema putem linka:
+Da biste vidjeli kartu precizne lokacije ovog problema ili da ažurirate status problema, kliknite na link:
 
     [% url %]
 
