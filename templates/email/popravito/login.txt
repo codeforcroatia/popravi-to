@@ -4,7 +4,7 @@ Kliknite na poveznicu kako biste potvrdili svoju email adresu i prijavili se u [
 
 [% c.uri_for_action( 'auth/token', token ) %]
 
-akon što to učinite, putem izbornika &rdquo;Vaš profil&rdquo; moći ćete pregledavati i upravljati svim prijavama i ažuriranjima koja ste unijeli na [% site_name %].
+Nakon što to učinite, putem izbornika &rdquo;Vaš profil&rdquo; moći ćete pregledavati i upravljati svim prijavama i ažuriranjima koja ste unijeli na [% site_name %].
 
 [% signature %]
 
