@@ -3,6 +3,9 @@
 [% INCLUDE 'header.html', title = '', inline_css = 1 %]
 
 [% USE Number.Format -%]
+[% extra_js = [
+    version('/js/dashboard.js')
+] -%]
 [%
     problems_reported = problems_reported_by_period.last | format_number;
     problems_fixed = problems_fixed_by_period.last | format_number;
