@@ -21,6 +21,8 @@ Telefon: [% report.user.phone OR "Nije poznato" %]
 
 DETALJI PRIJAVE
 
+Referentni broj: #[% report.id %]
+
 Kategorija: [% report.category %]
 
 Predmet: [% report.title %]
