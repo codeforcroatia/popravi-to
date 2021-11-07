@@ -1,3 +1,8 @@
+[% IF displaytype.match('frontpage') %]
+
+  [% INCLUDE 'reports/_frontpage_stats.html' %]
+
+[% ELSE %]
 [% USE Number.Format -%]
 [% extra_js = [
     version('/vendor/chart.min.js'),
@@ -165,3 +170,4 @@
 </main>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]
+[% END %]
