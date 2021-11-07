@@ -11,7 +11,6 @@
 [%
     problems_reported = problems_reported_by_period.last | format_number;
     problems_fixed = problems_fixed_by_period.last | format_number;
-    problems_updated = problems_updated_by_period.last | format_number;
     last_seven_reported = last_seven_days.problems_total | format_number;
     last_seven_updated = last_seven_days.updated_total | format_number;
     last_seven_fixed = last_seven_days.fixed_total | format_number;

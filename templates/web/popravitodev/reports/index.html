@@ -13,12 +13,24 @@
     other_categories_formatted = other_categories | format_number;
 -%]
 [% INCLUDE 'header.html', title = loc('Dashboard'), bodyclass => 'dashboard fullwidthpage' %]
-<!-- 
+<!--
 <div class="dashboard-header">
     <h1>[% loc('Dashboard') %]
     [% IF body %] – [% body.name %] [% END %]
     </h1>
 </div> -->
+
+<!--
+  Last 7 days:
+  <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
+
+  All time:
+  <strong>[% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", problems_fixed_by_period.last), decode(problems_fixed) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", problems_updated_by_period.last), decode(problems_updated) _ '</strong>') %]
+-->
 
 <main class="main-reports">
 
@@ -74,8 +86,8 @@
         <div class="dashboard-sparklines">
             <div>
                 <div class="labelled-sparkline">
-                    <span 
-                      class="label reports-seven-days-label" 
+                    <span
+                      class="label reports-seven-days-label"
                       data-datasetindex="0">
                     <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
                   </span>
@@ -83,8 +95,8 @@
             </div>
             <div>
                 <div class="labelled-sparkline">
-                    <span 
-                      class="label reports-seven-days-label" 
+                    <span
+                      class="label reports-seven-days-label"
                       data-datasetindex="0">
                     <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
                   </span>
@@ -92,8 +104,8 @@
             </div>
             <div>
                 <div class="labelled-sparkline">
-                    <span 
-                      class="label reports-seven-days-label" 
+                    <span
+                      class="label reports-seven-days-label"
                       data-datasetindex="0">
                     <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
                   </span>
