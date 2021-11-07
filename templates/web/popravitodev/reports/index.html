@@ -1,5 +1,8 @@
 [% IF displaytype.match('frontpage') %]
 
+  [% PROCESS 'reports/_frontpage_stats.html' %]
+
+  <!-- test 2 -->
   [% USE Number.Format -%]
   [%
       problems_reported = problems_reported_by_period.last | format_number;
