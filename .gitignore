@@ -48,6 +48,10 @@ docker-compose.override.yml
 # Ignore theme develop directory used in docker (root directory)
 /popravito/
 
+# Ignote temporary or backup files
+*.temp
+*.bak
+
 # JS coverage
 /.nyc_output
 /coverage
