@@ -67,29 +67,32 @@
         <h2>[% loc('Show reports in your area') %]</h2>
       [% IF body %]
         <!-- <label for="ward">[% loc('Pick your ward') %]</label> -->
-        <div class="dashboard-search__input">
-            <select id="ward" name="ward" class="js-autocomplete">
-                <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your ward') %]</option>
-              [% FOR child IN children.values.sort('name') %]
-                <option>[% child.name | html ~%]</option>
-              [% END %]
-            </select>
-        </div>
-      [% ELSE %]
-        <!-- <label for="body">[% loc('Pick your council') %]</label> -->
-        <div class="dashboard-search__input">
-            <select id="body" name="body" class="js-autocomplete">
-                <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your council') %]</option>
-              [% FOR b IN bodies # Not body as 'body' may be on stash %]
-                <option value="[% b.id %]">[% b.name | html ~%]
-                    [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
-                </option>
-              [% END %]
-            </select>
-        </div>
-      [% END %]
-        <div class="dashboard-search__submit">
-            <input type="submit" value="">
+        <div class="dashboard-search-wrapper">
+          <div class="dashboard-search__input">
+              <select id="ward" name="ward" class="js-autocomplete">
+                  <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your ward') %]</option>
+                [% FOR child IN children.values.sort('name') %]
+                  <option>[% child.name | html ~%]</option>
+                [% END %]
+              </select>
+          </div>
+          <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+        [% ELSE %]
+          <!-- <label for="body">[% loc('Pick your council') %]</label> -->
+          <div class="dashboard-search__input">
+              <select id="body" name="body" class="js-autocomplete">
+                  <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your council') %]</option>
+                [% FOR b IN bodies # Not body as 'body' may be on stash %]
+                  <option value="[% b.id %]">[% b.name | html ~%]
+                      [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
+                  </option>
+                [% END %]
+              </select>
+          </div>
+        [% END %]
+          <div class="dashboard-search__submit">
+              <input type="submit" value="">
+          </div>
         </div>
     </form>
   </div>
