@@ -1274,9 +1274,13 @@ fieldset {
 }
 
 .main-alert {
-    padding: 2.5rem;
+    padding: 0 7.5rem;
     display: flex;
     justify-content: space-between;
+
+    .main-alert-text {
+        width: 45%;
+    }
 
     form {
         padding: 1rem 4rem;
