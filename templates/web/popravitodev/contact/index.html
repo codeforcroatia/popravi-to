@@ -1,10 +1,5 @@
-[% extra_js = [
-    version('/js/contact.js')
-] -%]
-[% INCLUDE 'header.html',
-    title = loc('Contact Us')
-    robots = 'noindex,nofollow'
-    bodyclass = 'twothirdswidthpage'
+[% extra_js = [ version('/js/contact.js') ] -%] [% INCLUDE 'header.html', title
+= loc('Contact Us') robots = 'noindex,nofollow' bodyclass = 'twothirdswidthpage'
 %]
 
 <!-- [% IF c.cobrand.moniker == 'fixmystreet' %]
@@ -16,27 +11,53 @@
 [% END %] -->
 
 <div class="contact-section">
-  <section class="contact-us">
-    <h1 class="page-title">Kontaktiraj nas</h1>
-        <p class="page-text-left-aligned">Ako imaš pitanje u vezi Popravi.to projekta odgovor možda možeš pronaći u našoj <a class="misc-link-2" href="" tabindex="0" aria-label="FAQ">FAQ sekciji</a>. <br><br> Nemoj koristiti ovu formu za prijavu problema jer poruka neće biti proslijeđena odgovarajućoj samoupravi nadležnoj za problem. Za prijavu problema odi na naslovnu stranicu i slijedi upute.</p>
-        <div class="contact-info">
-            <p class="page-text-left-aligned page-text-misc"><span class="email-span-icon"></span>EMAIL ADRESA</p>
-            <a class="page-text-left-aligned" href="" tabindex="0" aria-label="email address">support@fixmystreet.com</a>
-        </div>
-        <div class="contact-info">
-            <p class="page-text-left-aligned page-text-misc"><span class="address-span-icon"></span>ADRESA</p>
-            <p class="page-text-left-aligned" tabindex="0" aria-label="address">mySociety<br>483 Green Lanes<br>London, N134BS</p>
-        </div>
-    </section>
-    <hr class="page-divider-1">
-    <section class="contact-message">
-      <h2 class="page-subtitle">Pošalji poruku našem timu</h2>
-      <form class="form-misc" method="post" action="/contact/submit" class="validate">
-        <input type="hidden" name="token" value="[% csrf_token %]">
-        <input type="hidden" name="s" value="[% s %]">
-        <fieldset>
-            [% INCLUDE 'errors.html' %]
-<!--
+	<section class="contact-us">
+		<h1 class="page-title">Kontaktiraj nas</h1>
+		<p class="page-text-left-aligned">
+			Ako imaš pitanje u vezi Popravi.to projekta odgovor možda možeš pronaći u
+			našoj
+			<a class="misc-link-2" href="" tabindex="0" aria-label="FAQ"
+				>FAQ sekciji</a
+			>. <br /><br />
+			Nemoj koristiti ovu formu za prijavu problema jer poruka neće biti
+			proslijeđena odgovarajućoj samoupravi nadležnoj za problem. Za prijavu
+			problema odi na naslovnu stranicu i slijedi upute.
+		</p>
+		<div class="contact-info">
+			<p class="page-text-left-aligned page-text-misc">
+				<span class="email-span-icon"></span>EMAIL ADRESA
+			</p>
+			<a
+				class="page-text-left-aligned"
+				href=""
+				tabindex="0"
+				aria-label="email address"
+				>support@fixmystreet.com</a
+			>
+		</div>
+		<div class="contact-info">
+			<p class="page-text-left-aligned page-text-misc">
+				<span class="address-span-icon"></span>ADRESA
+			</p>
+			<p class="page-text-left-aligned" tabindex="0" aria-label="address">
+				mySociety<br />483 Green Lanes<br />London, N134BS
+			</p>
+		</div>
+	</section>
+	<hr class="page-divider-1" />
+	<section class="contact-message">
+		<h2 class="page-subtitle">Pošalji poruku našem timu</h2>
+		<form
+			class="form-misc"
+			method="post"
+			action="/contact/submit"
+			class="validate"
+		>
+			<input type="hidden" name="token" value="[% csrf_token %]" />
+			<input type="hidden" name="s" value="[% s %]" />
+			<fieldset>
+				[% INCLUDE 'errors.html' %]
+				<!--
             [% IF update %]
 
                 <p>
@@ -94,83 +115,177 @@
 
             [% END %] -->
 
-            [% INCLUDE 'contact/who.html' %]
+				[% INCLUDE 'contact/who.html' %]
 
+				<input
+					type="radio"
+					name="contact"
+					value="help-with-website"
+					id="help-with-website"
+					tabindex="0"
+					aria-label="help with website"
+					checked
+				/>
+				<label for="help-with-website"
+					>Trebam pomoć pri korištenju stranice</label
+				><br />
+				<input
+					type="radio"
+					name="contact"
+					value="feedback"
+					id="feedback"
+					tabindex="0"
+					aria-label="feedback"
+				/>
+				<label for="feedback">Želim ostaviti feedback na stranicu</label><br />
+				<input
+					type="radio"
+					name="contact"
+					value="comment"
+					id="comment"
+					tabindex="0"
+					aria-label="question or comment"
+				/>
+				<label for="question or comment"
+					>Radim u jedinici lokalne samouprave i imam pitanje/komentar</label
+				><br />
+				<input
+					type="radio"
+					name="contact"
+					value="report-problem"
+					id="report-problem"
+					tabindex="0"
+					aria-label="report problem"
+				/>
+				<label for="report-problem">Želim prijaviti problem</label><br />
+				<input
+					type="radio"
+					name="contact"
+					value="problem-not-fixed"
+					id="problem-not-fixed"
+					tabindex="0"
+					aria-label="problem not fixed"
+				/>
+				<label for="problem-not-fixed"
+					>Moj prijavljeni problem nije popravljen</label
+				><br />
 
-            <input type="radio" name="contact" value="help-with-website" id="help-with-website" tabindex="0" aria-label="help with website" checked>
-            <label for="help-with-website">Trebam pomoć pri korištenju stranice</label><br>
-            <input type="radio" name="contact" value="feedback" id="feedback" tabindex="0" aria-label="feedback">
-            <label for="feedback">Želim ostaviti feedback na stranicu</label><br>
-            <input type="radio" name="contact" value="comment" id="comment" tabindex="0" aria-label="question or comment">
-            <label for="question or comment">Radim u jedinici lokalne samouprave i imam pitanje/komentar</label><br>
-            <input type="radio" name="contact" value="report-problem" id="report-problem" tabindex="0" aria-label="report problem">
-            <label for="report-problem">Želim prijaviti problem</label><br>
-            <input type="radio" name="contact" value="problem-not-fixed" id="problem-not-fixed" tabindex="0" aria-label="problem not fixed">
-            <label for="problem-not-fixed">Moj prijavljeni problem nije popravljen</label><br>
+				<br />
+				<hr class="page-divider" />
+				<br />
 
-            <br>
-            <hr class="page-divider">
-            <br>
+				[% IF NOT rejecting_report %]
+				<label for="form_name"></label>
+				[% IF field_errors.name %]
+				<div class="form-error">[% field_errors.name %]</div>
+				[% END %]
+				<input
+					type="text"
+					class="form-control required report-title-input"
+					name="name"
+					id="form_name"
+					value="[% form_name | html %]"
+					size="30"
+					placeholder="Ime i prezime"
+				/>
 
-            [% IF NOT rejecting_report %]
-                <label for="form_name"></label>
-                [% IF field_errors.name %]
-                <div class="form-error">[% field_errors.name %]</div>
-                [% END %]
-                <input type="text" class="form-control required report-title-input" name="name" id="form_name" value="[% form_name | html %]" size="30" placeholder="Ime i prezime">
+				<label for="form_email"></label>
+				[% IF field_errors.em %]
+				<div class="form-error">[% field_errors.em %]</div>
+				[% END %]
+				<input
+					type="text"
+					class="form-control required email report-title-input"
+					name="em"
+					id="form_email"
+					value="[% em | html %]"
+					size="30"
+					placeholder="Email adresa"
+				/>
 
-                <label for="form_email"></label>
-                [% IF field_errors.em %]
-                <div class="form-error">[% field_errors.em %]</div>
-                [% END %]
-                <input type="text" class="form-control required email report-title-input" name="em" id="form_email" value="[% em | html %]" size="30" placeholder="Email adresa">
+				<div class="form-group">
+					<label for="form_phone"></label>
+					<!-- <span class="required-text required-text--optional">optional</span> -->
+					<input
+						type="text"
+						class="form-control extra.phone report-title-input"
+						name="extra.phone"
+						id="form_phone"
+						value=""
+						size="30"
+						placeholder="Broj telefona (opcionalno)"
+					/>
+				</div>
 
-                <div class="form-group">
-                <label for="form_phone"></label>
-                <!-- <span class="required-text required-text--optional">optional</span> -->
-                <input type="text" class="form-control extra.phone report-title-input" name="extra.phone" id="form_phone" value="" size="30" placeholder="Broj telefona (opcionalno)">
-                </div>
+				<label for="form_subject"></label>
+				[% IF field_errors.subject %]
+				<div class="form-error">[% field_errors.subject %]</div>
+				[% END %]
+				<input
+					type="text"
+					class="form-control required report-title-input"
+					name="subject"
+					id="form_subject"
+					value="[% subject | html %]"
+					size="30"
+					placeholder="Naslov"
+				/>
+				[% ELSE %]
+				<input type="hidden" name="name" value="[% c.user.name | html %]" />
+				<input type="hidden" name="em" value="[% c.user.email | html %]" />
+				<!-- <input type="hidden" name="subject" value="[% loc("Report rejected") %]" /> -->
+				<input type="hidden" name="reject" value="1" />
+				[% END %] [% IF rejecting_report %]
+				<label for="form_message">[% loc('Rejection reason') %]</label>
+				[% ELSE %]
+				<!-- <label for="form_message">[% loc('Message') %]</label> -->
+				[% END %] [% IF field_errors.message %]
+				<div class="form-error">[% field_errors.message %]</div>
+				[% END %]
+				<textarea
+					class="form-control required"
+					name="message"
+					id="form_message"
+					rows="7"
+					cols="50"
+					placeholder="Napisi poruku"
+				>
+[% message | html %]</textarea
+				>
 
-               <label for="form_subject"></label>
-                [% IF field_errors.subject %]
-                <div class="form-error">[% field_errors.subject %]</div>
-                [% END %]
-                <input type="text" class="form-control required report-title-input" name="subject" id="form_subject" value="[% subject | html %]" size="30" placeholder="Naslov">
-            [% ELSE %]
-                <input type="hidden" name="name" value="[% c.user.name | html %]" />
-                <input type="hidden" name="em" value="[% c.user.email | html %]" />
-                <!-- <input type="hidden" name="subject" value="[% loc("Report rejected") %]" /> -->
-                <input type="hidden" name="reject" value="1" />
-            [% END %]
+				[% IF rejecting_report %]
+				<div class="form-group">
+					<label for="form_service_area"
+						>[% loc('Service area for re-allocation') %]</label
+					>
+					<input
+						type="text"
+						class="form-control extra.service_area"
+						name="extra.service_area"
+						id="form_service_area"
+						value=""
+						size="30"
+					/>
+				</div>
+				[% END %] [% IF NOT problem AND NOT update %]
+				<p>
+					[% loc('If you are contacting us about a specific report or update
+					please include a link to the report in the message.') %]
+				</p>
+				[% END %]
 
-            [% IF rejecting_report %]
-                <label for="form_message">[% loc('Rejection reason') %]</label>
-            [% ELSE %]
-                <!-- <label for="form_message">[% loc('Message') %]</label> -->
-            [% END %]
-            [% IF field_errors.message %]
-              <div class="form-error">[% field_errors.message %]</div>
-            [% END %]
-            <textarea class="form-control required" name="message" id="form_message" rows="7" cols="50" placeholder="Napisi poruku">[% message | html %]</textarea>
-
-            [% IF rejecting_report %]
-                <div class="form-group">
-                <label for="form_service_area">[% loc('Service area for re-allocation') %]</label>
-                <input type="text" class="form-control extra.service_area" name="extra.service_area" id="form_service_area" value="" size="30">
-                </div>
-            [% END %]
-
-            [% IF NOT problem AND NOT update %]
-            <p>[% loc('If you are contacting us about a specific report or update please include a link to the report in the message.') %]</p>
-            [% END %]
-
-            <button class="button primary-button" tabindex="0" aria-label="submit" type="submit">[% loc('Send') %]</button>
-
-        </fieldset>
-        </form>
-    </section>
+				<button
+					class="button primary-button"
+					tabindex="0"
+					aria-label="submit"
+					type="submit"
+				>
+					[% loc('Send') %]
+				</button>
+			</fieldset>
+		</form>
+	</section>
 </div>
 
-[% TRY %][% INCLUDE 'contact/address.html' %][% CATCH file %][% END %]
-
-[% INCLUDE 'footer.html' pagefooter = 'yes' %]
+[% TRY %][% INCLUDE 'contact/address.html' %][% CATCH file %][% END %] [%
+INCLUDE 'footer.html' pagefooter = 'yes' %]
