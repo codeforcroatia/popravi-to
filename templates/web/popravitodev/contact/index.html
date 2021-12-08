@@ -48,9 +48,9 @@
 	<section class="contact-message">
 		<h2 class="page-subtitle">Pošalji poruku našem timu</h2>
 		<form
-			class="form-misc"
 			method="post"
 			action="/contact/submit"
+			class="form-misc"
 			class="validate"
 		>
 			<input type="hidden" name="token" value="[% csrf_token %]" />
@@ -82,7 +82,6 @@
 					[% loc('You are complaining that this problem report was unnecessarily
 					moderated:') %]
 				</p>
-				[% ELSIF rejecting_report %] [% INCLUDE 'contact/rejecting-text.html' %]
 				[% ELSE %] [% INCLUDE 'contact/unsuitable-text.html' %] [% END %]
 
 				<blockquote>
@@ -159,7 +158,88 @@
 				<hr class="page-divider" />
 				<br />
 
-				[% IF NOT rejecting_report %]
+				<label for="form_name">[% loc('Your name') %]</label>
+				[% IF field_errors.name %]
+				<div class="form-error">[% field_errors.name %]</div>
+				[% END %]
+				<input
+					type="text"
+					class="form-control required"
+					name="name"
+					id="form_name"
+					value="[% form_name | html %]"
+					size="30"
+				/>
+
+				<label for="form_email">[% loc('Your email') %]</label>
+				[% IF field_errors.em %]
+				<div class="form-error">[% field_errors.em %]</div>
+				[% END %]
+				<input
+					type="text"
+					class="form-control required email"
+					name="em"
+					id="form_email"
+					value="[% em | html %]"
+					size="30"
+				/>
+
+				<div class="form-group">
+					<label for="form_phone">[% loc('Your phone number') %]</label>
+					<span class="required-text required-text--optional"
+						>[% loc('optional') %]</span
+					>
+					<input
+						type="text"
+						class="form-control extra.phone"
+						name="extra.phone"
+						id="form_phone"
+						value=""
+						size="30"
+					/>
+				</div>
+
+				<label for="form_subject">[% loc('Subject') %]</label>
+				[% IF field_errors.subject %]
+				<div class="form-error">[% field_errors.subject %]</div>
+				[% END %]
+				<input
+					type="text"
+					class="form-control required"
+					name="subject"
+					id="form_subject"
+					value="[% subject | html %]"
+					size="30"
+				/>
+
+				<label for="form_message">[% loc('Message') %]</label>
+				[% IF field_errors.message %]
+				<div class="form-error">[% field_errors.message %]</div>
+				[% END %]
+				<textarea
+					class="form-control required"
+					name="message"
+					id="form_message"
+					rows="7"
+					cols="50"
+				>
+		[% message | html %]</textarea
+				>
+
+				[% IF NOT problem AND NOT update %]
+				<p>
+					[% loc('If you are contacting us about a specific report or update
+					please include a link to the report in the message.') %]
+				</p>
+				[% END %]
+
+				<input
+					class="final-submit green-btn"
+					type="submit"
+					value="[% loc('Send') %]"
+				/>
+
+				<!-- [% IF NOT rejecting_report %]
 				<label for="form_name"></label>
 				[% IF field_errors.name %]
 				<div class="form-error">[% field_errors.name %]</div>
@@ -191,7 +271,7 @@
 				<div class="form-group">
 					<label for="form_phone"></label>
 					<!-- <span class="required-text required-text--optional">optional</span> -->
-					<input
+				<!-- <input
 						type="text"
 						class="form-control extra.phone report-title-input"
 						name="extra.phone"
@@ -200,13 +280,13 @@
 						size="30"
 						placeholder="Broj telefona (opcionalno)"
 					/>
-				</div>
+				</div> -->
 
-				<label for="form_subject"></label>
+				<!-- <label for="form_subject"></label>
 				[% IF field_errors.subject %]
 				<div class="form-error">[% field_errors.subject %]</div>
-				[% END %]
-				<input
+				[% END %] -->
+				<!-- <input
 					type="text"
 					class="form-control required report-title-input"
 					name="subject"
@@ -217,14 +297,14 @@
 				/>
 				[% ELSE %]
 				<input type="hidden" name="name" value="[% c.user.name | html %]" />
-				<input type="hidden" name="em" value="[% c.user.email | html %]" />
+				<input type="hidden" name="em" value="[% c.user.email | html %]" /> -->
 				<!-- <input type="hidden" name="subject" value="[% loc("Report rejected") %]" /> -->
-				<input type="hidden" name="reject" value="1" />
+				<!-- <input type="hidden" name="reject" value="1" />
 				[% END %] [% IF rejecting_report %]
 				<label for="form_message">[% loc('Rejection reason') %]</label>
-				[% ELSE %]
+				[% ELSE %] -->
 				<!-- <label for="form_message">[% loc('Message') %]</label> -->
-				[% END %] [% IF field_errors.message %]
+				<!-- [% END %] [% IF field_errors.message %]
 				<div class="form-error">[% field_errors.message %]</div>
 				[% END %]
 				<textarea
@@ -234,10 +314,9 @@
 					rows="7"
 					cols="50"
 					placeholder="Napisi poruku"
-				>
-[% message | html %]</textarea
-				>
-
+				> -->
+				<!-- [% message | html %]</textarea >
+<!-- 
 				[% IF rejecting_report %]
 				<div class="form-group">
 					<label for="form_service_area"
@@ -266,7 +345,7 @@
 					type="submit"
 				>
 					[% loc('Send') %]
-				</button>
+				</button> -->
 			</fieldset>
 		</form>
 	</section>
