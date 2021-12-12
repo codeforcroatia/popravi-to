@@ -10,7 +10,7 @@
 [% ELSIF problem.is_closed %]
     [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-closed-green.png' ~%]
 [% ELSE %]
-    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/cobrands/popravito/images/fix-icon.png' ~%]
+    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/fix-icon.png' ~%]
 [% END %]
 
 <picture class="fix-icon-detail">
