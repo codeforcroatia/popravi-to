@@ -1,0 +1,26 @@
+[% USE Number.Format -%]
+[% extra_js = [
+    version('/vendor/chart.min.js'),
+    version('/vendor/accessible-autocomplete.min.js'),
+    version('/js/dashboard.js')
+] -%]
+[%
+    problems_reported = problems_reported_by_period.last | format_number;
+    problems_fixed = problems_fixed_by_period.last | format_number;
+    last_seven_reported = last_seven_days.problems_total | format_number;
+    last_seven_updated = last_seven_days.updated_total | format_number;
+    last_seven_fixed = last_seven_days.fixed_total | format_number;
+    other_categories_formatted = other_categories | format_number;
+-%]
+
+<!--
+  Last 7 days:
+  <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
+
+  All time:
+  <strong>[% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", problems_fixed_by_period.last), decode(problems_fixed) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", problems_updated_by_period.last), decode(problems_updated) _ '</strong>') %]
+-->

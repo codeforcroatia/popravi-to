@@ -5,12 +5,12 @@
     [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-unknown-gray.png' ~%]
 [% ELSIF problem.is_in_progress %]
     [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-in-progress-violet.png' ~%]
-[% END %]
-[% IF problem.is_fixed %]
+[% ELSIF problem.is_fixed %]
     [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-fixed-green.png' ~%]
-[% END %]
-[% IF problem.is_closed %]
+[% ELSIF problem.is_closed %]
     [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/wrench-icon-hr-closed-green.png' ~%]
+[% ELSE %]
+    [% SET wrench_icon_url = '/cobrands/' _ c.cobrand.asset_moniker _ '/images/fix-icon.png' ~%]
 [% END %]
 
 <picture class="fix-icon-detail">

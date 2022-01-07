@@ -1,3 +1,31 @@
+[% IF displaytype.match('frontpage') %]
+
+  [% PROCESS 'reports/_frontpage_stats.html' %]
+
+  <!-- test 2 -->
+  [% USE Number.Format -%]
+  [%
+      problems_reported = problems_reported_by_period.last | format_number;
+      problems_fixed = problems_fixed_by_period.last | format_number;
+      last_seven_reported = last_seven_days.problems_total | format_number;
+      last_seven_updated = last_seven_days.updated_total | format_number;
+      last_seven_fixed = last_seven_days.fixed_total | format_number;
+      other_categories_formatted = other_categories | format_number;
+  -%]
+
+  <!--
+    Last 7 days:
+    <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
+    <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
+    <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
+
+    All time:
+    <strong>[% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) _ '</strong>') %]
+    <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", problems_fixed_by_period.last), decode(problems_fixed) _ '</strong>') %]
+    <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", problems_updated_by_period.last), decode(problems_updated) _ '</strong>') %]
+  -->
+
+[% ELSE %]
 [% USE Number.Format -%]
 [% extra_js = [
     version('/vendor/chart.min.js'),
@@ -13,12 +41,24 @@
     other_categories_formatted = other_categories | format_number;
 -%]
 [% INCLUDE 'header.html', title = loc('Dashboard'), bodyclass => 'dashboard fullwidthpage' %]
-<!-- 
+<!--
 <div class="dashboard-header">
     <h1>[% loc('Dashboard') %]
     [% IF body %] – [% body.name %] [% END %]
     </h1>
 </div> -->
+
+<!--
+  Last 7 days:
+  <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
+
+  All time:
+  <strong>[% tprintf(nget("%s problem reported", "%s problems reported", problems_reported_by_period.last), decode(problems_reported) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", problems_fixed_by_period.last), decode(problems_fixed) _ '</strong>') %]
+  <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", problems_updated_by_period.last), decode(problems_updated) _ '</strong>') %]
+-->
 
 <main class="main-reports">
 
@@ -27,29 +67,32 @@
         <h2>[% loc('Show reports in your area') %]</h2>
       [% IF body %]
         <!-- <label for="ward">[% loc('Pick your ward') %]</label> -->
-        <div class="dashboard-search__input">
-            <select id="ward" name="ward" class="js-autocomplete">
-                <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your ward') %]</option>
-              [% FOR child IN children.values.sort('name') %]
-                <option>[% child.name | html ~%]</option>
-              [% END %]
-            </select>
-        </div>
-      [% ELSE %]
-        <!-- <label for="body">[% loc('Pick your council') %]</label> -->
-        <div class="dashboard-search__input">
-            <select id="body" name="body" class="js-autocomplete">
-                <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your council') %]</option>
-              [% FOR b IN bodies # Not body as 'body' may be on stash %]
-                <option value="[% b.id %]">[% b.name | html ~%]
-                    [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
-                </option>
-              [% END %]
-            </select>
-        </div>
-      [% END %]
-        <div class="dashboard-search__submit">
-            <input type="submit" value="">
+        <div class="dashboard-search-wrapper">
+          <div class="dashboard-search__input">
+              <select id="ward" name="ward" class="js-autocomplete">
+                  <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your ward') %]</option>
+                [% FOR child IN children.values.sort('name') %]
+                  <option>[% child.name | html ~%]</option>
+                [% END %]
+              </select>
+          </div>
+          <a class="location-link" href="[% c.uri_for('/around', link_params) | html %]" id="geolocate_link" tabindex="0" aria-label="use my location"><span class="location-icon"></span>[% loc('Use my current location') %]</a>
+        [% ELSE %]
+          <!-- <label for="body">[% loc('Pick your council') %]</label> -->
+          <div class="dashboard-search__input">
+              <select id="body" name="body" class="js-autocomplete">
+                  <option value="Upiši naziv ulice ili mjesto">[% loc('Pick your council') %]</option>
+                [% FOR b IN bodies # Not body as 'body' may be on stash %]
+                  <option value="[% b.id %]">[% b.name | html ~%]
+                      [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
+                  </option>
+                [% END %]
+              </select>
+          </div>
+        [% END %]
+          <div class="dashboard-search__submit">
+              <input type="submit" value="">
+          </div>
         </div>
     </form>
   </div>
@@ -74,8 +117,8 @@
         <div class="dashboard-sparklines">
             <div>
                 <div class="labelled-sparkline">
-                    <span 
-                      class="label reports-seven-days-label" 
+                    <span
+                      class="label reports-seven-days-label"
                       data-datasetindex="0">
                     <strong>[% tprintf(nget("%s problem reported", "%s problems reported", last_seven_days.problems_total), decode(last_seven_reported) _ '</strong>') %]
                   </span>
@@ -83,8 +126,8 @@
             </div>
             <div>
                 <div class="labelled-sparkline">
-                    <span 
-                      class="label reports-seven-days-label" 
+                    <span
+                      class="label reports-seven-days-label"
                       data-datasetindex="0">
                     <strong>[% tprintf(nget("%s update on problems", "%s updates on problems", last_seven_days.updated_total), decode(last_seven_updated) _ '</strong>') %]
                   </span>
@@ -92,8 +135,8 @@
             </div>
             <div>
                 <div class="labelled-sparkline">
-                    <span 
-                      class="label reports-seven-days-label" 
+                    <span
+                      class="label reports-seven-days-label"
                       data-datasetindex="0">
                     <strong>[% tprintf(nget("%s problem marked as fixed", "%s problems marked as fixed", last_seven_days.fixed_total), decode(last_seven_fixed) _ '</strong>') %]
                   </span>
@@ -153,3 +196,4 @@
 </main>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]
+[% END %]
