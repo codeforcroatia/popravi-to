@@ -15,7 +15,7 @@ sub country {
 sub languages { [ 'hr,Croatian,hr_HR' ] }
 sub language_override { 'hr' }
 
-sub send_questionnaires { 0 }
+sub send_questionnaires { 1 }
 
 # Is also adding language parameter
 sub disambiguate_location {
@@ -79,7 +79,7 @@ sub remove_redundant_areas {
 #         return 1;
 #
 #     } elsif ($council =~ /,/) {
-# 
+#
 #         # Some kommunes have the same name, use the fylke name to work out which.
 #         my ($kommune, $fylke) = split /\s*,\s*/, $council;
 #         my $area_types = $c->cobrand->area_types;
