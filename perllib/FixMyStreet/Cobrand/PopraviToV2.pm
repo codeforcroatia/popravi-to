@@ -33,7 +33,7 @@ sub disambiguate_location {
 sub area_types {
     my $self = shift;
     return $self->next::method() if FixMyStreet->staging_flag('skip_checks');
-    [ 'NKO', 'NFY', 'NRA' ];
+    [ 'O02', 'O06', 'O07' ];
 }
 
 sub geocode_postcode {
