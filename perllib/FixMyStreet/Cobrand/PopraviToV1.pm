@@ -1,4 +1,4 @@
-package FixMyStreet::Cobrand::PopraviTo;
+package FixMyStreet::Cobrand::PopraviToV1;
 use base 'FixMyStreet::Cobrand::Default';
 
 use strict;
