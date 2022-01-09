@@ -17,11 +17,6 @@ sub language_override { 'hr' }
 
 sub send_questionnaires { 0 }
 
-sub enter_postcode_text {
-    my ( $self ) = @_;
-    return _('Enter a nearby postcode, or street name and area');
-}
-
 # Is also adding language parameter
 sub disambiguate_location {
     return {
@@ -36,29 +31,9 @@ sub area_types {
     [ 'O02', 'O06', 'O07' ];
 }
 
-sub geocode_postcode {
-    my ( $self, $s ) = @_;
-
-    if ($s =~ /^\d{4}$/) {
-        my $location = mySociety::MaPit::call('postcode', $s);
-        if ($location->{error}) {
-            return {
-                error => $location->{code} =~ /^4/
-                    ? _('That postcode was not recognised, sorry.')
-                    : $location->{error}
-            };
-        }
-        return {
-            latitude  => $location->{wgs84_lat},
-            longitude => $location->{wgs84_lon},
-        };
-    }
-    return {};
-}
-
 sub geocoded_string_check {
     my ( $self, $s ) = @_;
-    return 1 if $s =~ /, Norge/;
+    return 1 if $s =~ /, Hrvatska/;
     return 0;
 }
 
@@ -75,11 +50,11 @@ sub guess_road_operator {
     my $highway = $inforef->{highway} || "unknown";
     my $refs    = $inforef->{ref}     || "unknown";
 
-    return "Statens vegvesen"
+    return "Hrvatske autoceste"
         if $highway eq "trunk" || $highway eq "primary";
 
     for my $ref (split(/;/, $refs)) {
-        return "Statens vegvesen"
+        return "Hrvatske autoceste"
             if $ref =~ m/E ?\d+/ || $ref =~ m/Fv\d+/i;
     }
     return '';
@@ -90,25 +65,8 @@ sub remove_redundant_areas {
     my $all_areas = shift;
 
     # Oslo is both a kommune and a fylke, we only want to show it once
-    delete $all_areas->{301}
-        if $all_areas->{3};
-}
-
-sub short_name {
-    my $self = shift;
-    my ($area, $info) = @_;
-
-    my $name = $area->{name} || $area->name;
-
-    if ($name =~ /^(Os|Nes|V\xe5ler|Sande|B\xf8|Her\xf8y)$/) {
-        my $parent = $info->{$area->{parent_area}}->{name};
-        return URI::Escape::uri_escape_utf8("$name, $parent");
-    }
-
-    $name =~ s/ & / and /;
-    $name = URI::Escape::uri_escape_utf8($name);
-    $name =~ s/%20/+/g;
-    return $name;
+    #delete $all_areas->{301}
+    #    if $all_areas->{3};
 }
 
 sub council_rss_alert_options {
@@ -119,7 +77,7 @@ sub council_rss_alert_options {
     my ( @options, @reported_to_options, $fylke, $kommune );
 
     foreach ( values %$all_councils ) {
-        if ( $_->{type} eq 'NKO' ) {
+        if ( $_->{type} eq 'O08' ) {
             $kommune = $_;
         }
         else {
@@ -127,7 +85,9 @@ sub council_rss_alert_options {
         }
     }
 
+    # Municipality (Kommune)
     my $body_kommune = FixMyStreet::DB->resultset('Body')->for_areas($kommune->{id})->first;
+    # County (Fylke)
     my $body_fylke = FixMyStreet::DB->resultset('Body')->for_areas($fylke->{id})->first;
 
     if ( $fylke->{id} == 3 ) {    # Oslo
