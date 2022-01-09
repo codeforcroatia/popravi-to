@@ -1,0 +1,19 @@
+Subject: Vaš korisnički račun na [% site_name %] biti će deaktiviran
+
+Pozdrav [% user.name %],
+
+Nismo vas vidjeli na [% site_name %] već neko vrijeme pa smo vas odlučili kontaktirati.
+Vaš korisnički račun neaktivan je [% email_from %][% nget('month', 'months', email_from) %] te radi zaštite vaših prava automatski uklanjamo korisničke račune koji su neaktivni nakon [% anonymize_from %][% nget('month', 'months', anonymize_from) %].
+Ako želite zadržati vaš korisnički račun, ulogirajte se na portal te ćete ga tako zadržati aktivnim:
+
+[% url %]
+
+Hvala vam što koristite [% site_name %]!
+
+- Ako trebate pomoć pri korištenju [% site_name %] portala, ili savjete i trikove kako napraviti uspješne prijave problema, pogledajte [% site_name %] forum.
+
+- Želite malo inspiracije? Pogledajte prijave drugih građana koji koriste [% site_name %] za poboljšanje svog mjesta.
+
+[% INCLUDE 'signature.txt' %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

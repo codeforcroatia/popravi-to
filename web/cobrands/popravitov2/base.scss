@@ -1,0 +1,16 @@
+@import "../sass/h5bp";
+@import "./_colours";
+@import "../sass/mixins";
+
+@import "../sass/base";
+
+#site-logo {
+    background: transparent url('images/site-logo.png') 0 50% no-repeat;
+}
+
+.nav-menu--mysoc {
+  a {
+    color: $primary_text;
+    background-color: $primary;
+  }
+}

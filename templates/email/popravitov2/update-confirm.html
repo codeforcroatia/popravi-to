@@ -1,0 +1,123 @@
+[%
+
+email_summary = "Potvrdite vaše ažuriranje problema na " _ site_name;
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style="[% p_style_sub_header %]">
+                            Potvrdite vaše ažuriranje problema
+												  </p>
+												  <p class="para" style="[% p_style_normal_body_text %]">
+                            Kliknite na poveznicu ispod da biste potvrdili vaše ažuriranje problema na [% site_name %].
+                          </p>
+										</td>
+								</tr>
+						</table>
+
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px; text-align: left; margin-top: -10px;">
+							<tr>
+									<td class="button" style="padding-bottom: 40px;" >
+											<a class="btn" href="[% token_url %]">Da, potvrdi moje ažuriranje</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p class="para" style="[% p_style_small_body_text %]">
+											Imajte na umu da ne šaljemo ažuriranja za [% update.problem.body %]. Ažuriranja služe [% site_name %] korisnicima da raspravljaju, daju podršku ili daju savjete za prijavljeni problem.
+										</p>
+									</td>
+								</tr>
+                <tr>
+  	 							<td>
+  	 								<p class="para" style="[% p_style_small_body_text %]">
+  	 									Ako više ne želite dodati ovo ažuriranje na problem, ne trebate ništa učiniti te neće doći do objave.
+  	 								</p>
+  	 							</td>
+  	 						</tr>
+						</table>
+<!--  UPPER BODY END  -->
+
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="[% td_style_bottom_border_line %]">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+
+<!--  START MIDDLE BODY -->
+						<!-- Disabling due to issue with map thumbnail allignment in Gmail
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td class="two-columns">
+	 								<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table class="content" style="max-width: 420px; width: 420px;">
+	 												<tr>
+	 													<td style="text-align: left; padding: 0px; margin: 0px;">
+															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
+																[% update.text | html %]
+															</p>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+
+	 							<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table>
+	 												<tr>
+	 													<td>
+	 														<a class="map" href="[% url %]">
+                                <img src="[% inline_image(problem.static_map, 'map.jpeg') %]" alt="map" width="310" style="max-width: 310px; margin-left: 160px;">
+                              </a>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+	 							</td>
+	 						</tr>
+	 					</table>
+						-->
+<!-- MIDDLE BODY END  -->
+
+<!--  START MIDDLE BODY --> <!-- This is replacement until Gmail map thumbnail is fixed -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td>
+	 								<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table class="content" style="">
+	 												<tr>
+	 													<td style="text-align: left; padding: 0px; margin: 0px;">
+															<p class="para" style="[% p_style_small_body_text %]">
+																[% update.text | html %]
+															</p>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+	 							</td>
+	 						</tr>
+	 					</table>
+<!-- MIDDLE BODY END  -->
+
+[% INCLUDE '_email_bottom.html' %]

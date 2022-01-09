@@ -1,0 +1,17 @@
+Subject: Potvrdite vaše ažuriranje problema na [% site_name %]
+
+Kliknite na poveznicu ispod da biste potvrdili vaše ažuriranje problema na [% site_name %]:
+
+[% token_url %]
+
+Imajte na umu da ne šaljemo ažuriranja za [% update.problem.body %]. Ažuriranja služe [% site_name %] korisnicima da raspravljaju, daju podršku ili daju savjete za prijavljeni problem.
+
+Ako više ne želite dodati ovo ažuriranje na problem, ne trebate ništa učiniti te neće doći do objave.
+
+Vaše ažuriranje:
+
+[% update.text %]
+
+[% signature %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

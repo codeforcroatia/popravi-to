@@ -1,0 +1,28 @@
+Subject: Nova [% site_name %] ažuriranja za '[% report.title %]'
+
+Ova nova ažuriranja za problem '[% report.title %]' dodana su na [% site_name %]:
+
+[% INCLUDE '_email_comment_list.txt' %]
+
+[% state_message %]
+
+Ako želite pogledati ili odgovoriti na ova ažuriranja, posjetite seljedeću poveznicu:
+
+    [% problem_url %]
+
+[% TRY %][% INCLUDE '_council_reference_alert_update.txt' problem=report %][% CATCH file %][% END %]
+
+[% signature %]
+
+
+[% IF unsubscribe_url %]
+Odjava?
+
+Prijavili ste se za primanje email obavijesti kada netko ostavi novo ažuriranje za problem '[% report.title %]'. Ovo je besplatna [% site_name %] usluga.
+
+Odjavite se ako ne želite primati obavijesti o novim promjenama za taj problem:
+
+[% unsubscribe_url %]
+[% END %]
+
+Ovaj mail je poslan automatski, nemojte slati odgovor.

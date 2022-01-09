@@ -1,0 +1,91 @@
+[%
+
+title = report.title | html;
+email_summary = "Nova ažuriranja za “" _ title _ "”";
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style="[% p_style_sub_header %]">
+                            Nova ažuriranja problema
+												  </p>
+										</td>
+								</tr>
+						</table>
+<!--  UPPER BODY END  -->
+
+<!--  START MIDDLE BODY --> <!-- This is replacement until Gmail map thumbnail is fixed -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+	 						<tr>
+	 							<td>
+	 								<table class="column">
+	 									<tr>
+	 										<td class="padding">
+	 											<table class="content" style="">
+	 												<tr>
+	 													<td style="text-align: left; padding: 0px; margin: 0px;">
+	 														<p class="sub-header" style="text-align: left; font-weight: 600;font-size: 24px; color: #1D1C1C; padding: 0px; margin: 0px; line-height: 28px;">
+																[% report.title | html %]
+															</p>
+															<p class="para" style="text-align: left; font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px; padding: 0px; margin-top: 20px;">
+																[% report.detail | html %]
+															</p>
+	 													</td>
+	 												</tr>
+	 											</table>
+	 										</td>
+	 									</tr>
+	 								</table>
+									[% TRY %][% INCLUDE '_council_reference_alert_update.html' problem=report p_style=secondary_p_style %][% CATCH file %][% END %]
+	 							</td>
+	 						</tr>
+	 					</table>
+<!-- MIDDLE BODY END  -->
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+                          <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
+                            Ova nova ažuriranja za problem <a href="[% problem_url %]">[% title %]</a> dodana su na [% site_name %]:
+                          </p>
+										    </td>
+								     </tr>
+						</table>
+<!--  UPPER BODY END  -->
+
+[%~ INCLUDE '_email_comment_list.html' %]
+
+[% IF unsubscribe_url %]
+<!--  START LINE  -->
+						<table width="100%" style="border-spacing: 0; background-color: #ffffff;padding: 10px 15px;">
+							<tr>
+								<td style="[% td_style_bottom_border_line %]">
+								</td>
+							</tr>
+						</table>
+<!-- END LINE  -->
+
+<!--  START  SMALL PRINT  -->
+			<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+			<tr>
+				<td class="padding">
+					<p class="para" style="text-align: left; font-weight: 400;font-size: 12px;color: #F25410; line-height: 16px;">
+            <a href="[% unsubscribe_url %]">
+              Odjavite se ako ne želite primati obavijesti o novim ažuriranjima za ovaj problem.
+            </a>
+          </p>
+				</td>
+			</tr>
+			</table>
+<!-- END SMALL PRINT  -->
+[% END %]
+
+[% INCLUDE '_email_bottom.html' %]

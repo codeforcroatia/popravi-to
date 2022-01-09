@@ -1,0 +1,64 @@
+[%
+    # The cobrand might come to us a variety of ways
+    # Alert sets cobrand directly, questionnaire/submit have it in report, otherwise web
+    cobrand = cobrand.moniker OR report.cobrand OR c.cobrand.moniker;
+
+    SET img_dir = cobrand;
+
+    SET hide_staging_banner = c.config.STAGING_FLAGS.hide_staging_banner;
+-%]
+[% IF NOT for_rss ~%]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+[% END ~%]
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  [% IF NOT for_rss ~%]
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  [% END ~%]
+	<title>[% rss_title | safe %]</title>
+
+[%~ # Styles here will be applied by everything except Gmail %]
+[% INCLUDE '_email_style.html' %]
+
+</head>
+<body>
+	 <center class="wrapper">
+	 	<div class="webkit">
+	 		<table class="outer" align="center">
+
+<!--  START  HEADER RIBBON -->
+        [% IF staging AND NOT hide_staging_banner AND NOT for_rss %]
+			<table class="logo" width="100%" style="border-spacing: 0; background-color: #F20D36; padding: 0px;margin: 0px;">
+				<tr>
+					<td>
+            <p class="para" style="font-weight: 600;font-size: 12px;color: #ffffff; line-height: 16px; padding: 0px 15px;">
+              Ovaj email poslan je putem eksperimentalne internetske aplikacije.
+            </p>
+					</td>
+				</tr>
+			</table>
+        [% END %]
+<!--  HEADER RIBBON END  -->
+
+<!--  START  HEADER LOGO -->
+			<table class="logo" width="100%" style="border-spacing: 0; background-color: #ffffff; padding: 15px;">
+				<tr>
+					<td style="[% td_style_bottom_border_line %] padding: 15px;">
+            [%~ IF file_exists("web/cobrands/${ img_dir }/images/${ popravito_logo_file }") ~%]
+
+              [%~ IF for_rss ~%]
+                <img src="/cobrands/[% img_dir %]/images/[% popravito_logo_file %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
+              [%~ ELSE ~%]
+                <img src="[% inline_image('web/cobrands/' _ img_dir _ '/images/' _ popravito_logo_file ) %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
+              [%~ END ~%]
+
+            [%~ ELSE ~%]
+              <img src="[% INCLUDE '_email_logo_base64.txt' %]" title="Logo" alt="[% site_name %]" width="150" style="max-width: 150px;"/>
+            [%~ END %]
+
+					</td>
+				</tr>
+			</table>
+<!--  HEADER LOGO END  -->

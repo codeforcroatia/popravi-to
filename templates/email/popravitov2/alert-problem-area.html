@@ -1,0 +1,42 @@
+[%
+
+email_summary = "Novi problemi na području " _ area_name;
+
+PROCESS '_email_settings.html';
+
+INCLUDE '_email_top.html';
+
+%]
+
+<!--  START UPPER BODY -->
+	 					<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+											<tr>
+												<td class="padding" style="text-align: left;">
+													<p class="sub-header" style="[% p_style_sub_header %]">
+                            Nove prijave problema
+												  </p>
+                          <p class="para" style=" font-weight: 400;font-size: 16px;color: #1D1C1C; line-height: 24px;">
+                            Ove nove prijave su dodane na [% site_name %] za područje '[% area_name %]':
+                          </p>
+										</td>
+								</tr>
+						</table>
+<!--  UPPER BODY END  -->
+
+[%~ INCLUDE '_email_report_list.html' %]
+
+<!--  START  SMALL PRINT  -->
+			<table width="100%" style="border-spacing: 0; background-color: #ffffff;">
+			<tr>
+				<td class="padding">
+					<p class="para" style="text-align: left; font-weight: 400;font-size: 12px;color: #F25410; line-height: 16px;">
+            <a href="[% unsubscribe_url %]">
+              Odjavite se ako ne želite primati obavijesti o novim prijavama problema za ovo područje.
+            </a>
+          </p>
+				</td>
+			</tr>
+			</table>
+<!-- END SMALL PRINT  -->
+
+[% INCLUDE '_email_bottom.html' %]
