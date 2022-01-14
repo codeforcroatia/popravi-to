@@ -17,6 +17,14 @@ sub language_override { 'hr' }
 
 sub send_questionnaires { 1 }
 
+sub pin_colour {
+    my ( $self, $p, $context ) = @_;
+    return 'grey' if $p->state eq 'not responsible' || !$self->owns_problem( $p );
+    return 'green' if $p->is_fixed || $p->is_closed;
+    return 'yellow' if $p->is_in_progress;
+    return 'red';
+}
+
 # Is also adding language parameter
 sub disambiguate_location {
     return {
