@@ -40,7 +40,8 @@ Geografska dužina: [% report.longitude %]
 
 Otvorite lokaciju na OpenStreetMap karti: [% osm_url %]
 
-[% closest_address %]----------
+[% closest_address %]
+[% IF closest_address %]Najbliža adresa:[% closest_address | trim | replace("\n\n", ", ") | replace("Informacija o najbližoj cesti može biti netočna ili irelevantna u slučaju da je problem u blizini više prometnica ili u neposrednoj blizini neimenovane ceste u OpenStreetMap.", "") %][% END %]----------
 
 Vaš odgovor na ovaj email bit će poslan direktno na [% report.name %], korisnika koji je prijavio problem.
 
