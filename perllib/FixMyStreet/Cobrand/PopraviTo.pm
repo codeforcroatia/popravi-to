@@ -17,10 +17,12 @@ sub language_override { 'hr' }
 
 sub send_questionnaires { 1 }
 
+# The pin is green is it's fixed or closed, yellow if it's in progress (not in a
+# confirmed state), and red otherwise.
 sub pin_colour {
     my ( $self, $p, $context ) = @_;
-    return 'grey' if $p->state eq 'not responsible' || !$self->owns_problem( $p );
-    return 'green' if $p->is_fixed || $p->is_closed;
+    return 'green' if $p->is_closed;
+    return 'green' if $p->is_fixed;
     return 'yellow' if $p->is_in_progress;
     return 'red';
 }
