@@ -31,7 +31,6 @@ sub open311_config {
     my ($self, $row, $h, $params) = @_;
 
     $params->{multi_photos} = 1;
-    $params->{extended_description} = 'popravito';
 }
 
 # Is also adding language parameter
