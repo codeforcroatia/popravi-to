@@ -27,12 +27,6 @@ sub pin_colour {
     return 'red';
 }
 
-sub open311_config {
-    my ($self, $row, $h, $params) = @_;
-
-    $params->{multi_photos} = 1;
-}
-
 # Is also adding language parameter
 sub disambiguate_location {
     return {
