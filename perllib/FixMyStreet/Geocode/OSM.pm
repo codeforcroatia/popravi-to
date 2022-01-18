@@ -167,5 +167,28 @@ sub closest_road_text {
     return $str;
 }
 
-1;
+sub closest_road_text_custom {
+    my ( $cobrand, $latitude, $longitude ) = @_;
+    my $str = '';
+    my $osmtags = get_nearest_road_tags( $cobrand, $latitude, $longitude );
+    if ($osmtags) {
+        my ($name, $ref) = ('','');
+        $name =  $osmtags->{name} if exists $osmtags->{name};
+        $ref = " ($osmtags->{ref})" if exists $osmtags->{ref};
+        if ($name || $ref) {
+            $str .= sprintf(_("Nearest named road to the pin placed on the map (automatically generated using OpenStreetMap): %s%s"),
+                            $name, $ref) . "\n\n";
 
+            if (my $operator = $osmtags->{operator}) {
+                $str .= sprintf(_("Road operator for this named road (from OpenStreetMap): %s"),
+                                $operator) . "\n\n";
+            } elsif ($operator = $osmtags->{operatorguess}) {
+                $str .= sprintf(_("Road operator for this named road (derived from road reference number and type): %s"),
+                                $operator) . "\n\n";
+            }
+        }
+    }
+    return $str;
+}
+
+1;
