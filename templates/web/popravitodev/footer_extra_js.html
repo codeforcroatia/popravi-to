@@ -2,8 +2,8 @@
 
 [% IF bodyclass.match('mappage');
     scripts.push(
-        version('/cobrands/popravitodev/assets.js'),
+        version('/cobrands/[% c.cobrand.asset_moniker %]/assets.js'),
         version('/cobrands/fixmystreet/fixmystreet.js')
     );
-    scripts.push( version('/cobrands/popravitodev/validationRules.js') );
+    scripts.push( version('/cobrands/[% c.cobrand.asset_moniker %]/validationRules.js') );
 END %]
