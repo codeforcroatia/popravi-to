@@ -408,10 +408,20 @@ img {
 	height: 32px;
 	width: 32px;
 }
+.linkedin-link {
+	background: url("/cobrands/popravito/images/linkedin-logo-icon.svg") no-repeat center;
+	display: inline-block;
+	height: 32px;
+	width: 32px;
+}
 
 .socials {
 	display: flex;
 	padding: 0;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 50%;
+	line-height: 3rem;
 }
 
 .fixmystreet-logo img {
