@@ -422,6 +422,11 @@ img {
 	justify-content: center;
 	width: 50%;
 	line-height: 3rem;
+	@media only screen and (min-width:150px) and (max-width: 1050px) {
+		display:flex;
+		justify-content: left;
+		width: 150%;
+	}
 }
 
 .fixmystreet-logo img {
