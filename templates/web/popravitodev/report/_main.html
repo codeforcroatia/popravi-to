@@ -29,12 +29,12 @@
     <h1 class="moderate-display report-title">[% problem.title | html %]</h1>
     <div class="moderate-edit">
       [% IF problem.title != original.title %]
-      <label>
-        <input type="checkbox" name="problem_revert_title" class="revert-title" [% " checked" IF c.req.params.problem_revert_title %]>
-        [% loc('Revert to original title') %]
-      </label>
+        <label>
+            <input type="checkbox" name="problem_revert_title" class="revert-title" [% " checked" IF c.req.params.problem_revert_title %]>
+            [% loc('Revert to original title') %]
+        </label>
       [% END %]
-      <h1 class="report-title"><input class="form-control" type="text" name="problem_title" value="[% (c.req.params.problem_title || problem.title) | html %]" data-original-value="[% original.title | html %]"></h1>
+        <h1 class="report-title"><input class="form-control" type="text" name="problem_title" value="[% (c.req.params.problem_title || problem.title) | html %]" data-original-value="[% original.title | html %]"></h1>
     </div>
   [% ELSE %]
 
@@ -105,16 +105,15 @@
     <div class="moderate-edit">
         <p>
            <label>
-              <input type="checkbox" class="hide-document" name="problem_hide" [% 'checked' IF 
-problem.hidden OR c.req.params.problem_hide %]>
+              <input type="checkbox" class="hide-document" name="problem_hide" [% 'checked' IF problem.hidden OR c.req.params.problem_hide %]>
                 [% loc('Hide entire report') %]
             </label>
         </p>
         <p>
             <label for="moderation_reason">[% loc('Describe why you are moderating this') %]</label>
             <input type="text" class="form-control" name="moderation_reason" value="[% (c.req.params.moderation_reason || '') | html %]">
-       </p>
-       <p class="save-discard-container">
+        </p>
+        <p class="save-discard-container">
             <input type="submit" class="button primary-button" value="[% loc('Save changes') %]">
             <input type="button" class="button discard-button" value="[% loc('Discard changes') %]">
         </p>
@@ -163,8 +162,7 @@ problem.hidden OR c.req.params.problem_hide %]>
       <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
           <input type="hidden" name="id" value="[% problem.id %]">
           <input type="hidden" name="token" value="[% csrf_token %]">
-          <input type="hidden" name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE 
-%]shortlist-add[% END %]" value="1">
+          <input type="hidden" name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE %]shortlist-add[% END %]" value="1">
           <p><input
               type="submit"
               id="shortlist-report"
