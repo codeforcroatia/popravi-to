@@ -1,22 +1,23 @@
 [%
-USE date;
-can_moderate = permissions.moderate OR c.user.can_moderate(problem, staff = permissions.moderate)
-can_moderate_title = c.user.can_moderate_title(problem, can_moderate)
+    USE date;
+    can_moderate = permissions.moderate OR c.user.can_moderate(problem, staff = permissions.moderate)
+    can_moderate_title = c.user.can_moderate_title(problem, can_moderate)
 %]
 
 
+
 <a href="[% c.uri_for( '/around', { lat => latitude, lon => longitude } ) %]"
-  class="problem-back js-back-to-report-list visually-hidden">[% loc('Back to all reports') %]</a>
+   class="problem-back js-back-to-report-list visually-hidden">[% loc('Back to all reports') %]</a>
 
 <div class="problem-header clearfix
-[%~ ' show-moderation' IF show_moderation == 'report' ~%]
-" data-lastupdate="[% problem.lastupdate %]">
+  [%~ ' show-moderation' IF show_moderation == 'report' ~%]
+  " data-lastupdate="[% problem.lastupdate %]">
 
   [% IF can_moderate %]
-  <form method="post" action="/moderate/report/[% problem.id %]">
-    <input type="hidden" name="token" value="[% csrf_token %]">
-    <input type="hidden" name="form_started" value="[% date.now %]">
-    [% END %]
+   <form method="post" action="/moderate/report/[% problem.id %]">
+      <input type="hidden" name="token" value="[% csrf_token %]">
+      <input type="hidden" name="form_started" value="[% date.now %]">
+  [% END %]
 
     [% FOR error IN moderate_errors %]
     <p class="form-error-message js-moderation-error">[% error | safe %]</p>
@@ -78,12 +79,12 @@ tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[
     </div>
 
     [% IF anonymized ~%]
-    <p class="form-success">[% anonymized %]</p>
+      <p class="form-success">[% anonymized %]</p>
     [% END ~%]
 
     [% INCLUDE 'report/_main_sent_info.html' %]
     [% mlog = problem.latest_moderation_log_entry(); IF mlog %]
-    <p>[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</p>
+      <p>[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</p>
     [% END %]
 
     [% INCLUDE 'report/_support.html' %]
@@ -92,7 +93,7 @@ tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[
 
     <div class="img-gallery-container">
       <p class="page-text-misc">[% loc('Photos') %]</p>
-      [% INCLUDE 'report/photo.html' object=problem %]
+       [% INCLUDE 'report/photo.html' object=problem %]
       <br>
     </div>
 
@@ -130,7 +131,7 @@ tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[
     [% END %]
 
     [% IF can_moderate %]
-  </form>
+   </form>
   [% END %]
 
   [% IF can_moderate OR permissions.planned_reports %]
