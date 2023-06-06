@@ -13,9 +13,9 @@
 <main>
     <div class="report-details-container">
         [% map_html | safe %]
-         </div>
+        </div>
 
-         <div id="map_sidebar">
+        <div id="map_sidebar">
 
         [% IF two_column_sidebar %]
         <div class="two_column_sidebar">
@@ -55,7 +55,7 @@
             [% ELSIF problem.extra.closed_updates %]
                 <p>[% loc('This report is now closed to updates.') %]
                 [% tprintf(loc('You can <a href="%s">make a new report in the same location</a>.'),
-                            c.uri_for( '/report/new', { longitude => longitude, latitude => latitude } )
+                        c.uri_for( '/report/new', { longitude => longitude, latitude => latitude } )
                     ) %]
                 </p>
             [% ELSIF problem.cobrand_data == 'noise' %]
@@ -82,7 +82,5 @@
 
 <script src="/cobrands/[% c.cobrand.asset_moniker %]/menu.js"></script>
 <script src="/cobrands/[% c.cobrand.asset_moniker %]/toggleUpdateForm.js"></script>
-
 </body>
-
 </html>
