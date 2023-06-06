@@ -7,16 +7,16 @@
 
 
 <a href="[% c.uri_for( '/around', { lat => latitude, lon => longitude } ) %]"
-   class="problem-back js-back-to-report-list visually-hidden">[% loc('Back to all reports') %]</a>
+    class="problem-back js-back-to-report-list visually-hidden">[% loc('Back to all reports') %]</a>
 
 <div class="problem-header clearfix
-  [%~ ' show-moderation' IF show_moderation == 'report' ~%]
-  " data-lastupdate="[% problem.lastupdate %]">
+    [%~ ' show-moderation' IF show_moderation == 'report' ~%]
+    " data-lastupdate="[% problem.lastupdate %]">
 
   [% IF can_moderate %]
-   <form method="post" action="/moderate/report/[% problem.id %]">
-      <input type="hidden" name="token" value="[% csrf_token %]">
-      <input type="hidden" name="form_started" value="[% date.now %]">
+    <form method="post" action="/moderate/report/[% problem.id %]">
+        <input type="hidden" name="token" value="[% csrf_token %]">
+        <input type="hidden" name="form_started" value="[% date.now %]">
   [% END %]
 
     [% FOR error IN moderate_errors %]
@@ -79,12 +79,12 @@ tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[
     </div>
 
     [% IF anonymized ~%]
-      <p class="form-success">[% anonymized %]</p>
+        <p class="form-success">[% anonymized %]</p>
     [% END ~%]
 
     [% INCLUDE 'report/_main_sent_info.html' %]
     [% mlog = problem.latest_moderation_log_entry(); IF mlog %]
-      <p>[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</p>
+        <p>[% tprintf(loc('Moderated by %s at %s'), mlog.admin_user, prettify_dt(mlog.whenedited)) %]</p>
     [% END %]
 
     [% INCLUDE 'report/_support.html' %]
@@ -93,7 +93,7 @@ tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[
 
     <div class="img-gallery-container">
       <p class="page-text-misc">[% loc('Photos') %]</p>
-       [% INCLUDE 'report/photo.html' object=problem %]
+        [% INCLUDE 'report/photo.html' object=problem %]
       <br>
     </div>
 
@@ -131,7 +131,7 @@ tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[
     [% END %]
 
     [% IF can_moderate %]
-   </form>
+    </form>
   [% END %]
 
   [% IF can_moderate OR permissions.planned_reports %]
@@ -169,26 +169,30 @@ aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>-->
 
       [% IF permissions.planned_reports %]
       <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
-        <input type="hidden" name="id" value="[% problem.id %]">
-        <input type="hidden" name="token" value="[% csrf_token %]">
-        <input type="hidden"
-          name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE %]shortlist-add[% END %]" value="1">
-        <p><input type="submit" id="shortlist-report"
-            data-label-remove="[% loc('Remove from shortlist') %]"
-            data-label-add="[% loc('Add to shortlist') %]"
-            data-value-remove="[% loc('Shortlisted') %]"
-            data-value-add="[% loc('Shortlist') %]"
-             data-class-remove="btn--shortlisted"
+          <input type="hidden" name="id" value="[% problem.id %]">
+          <input type="hidden" name="token" value="[% csrf_token %]">
+          <input type="hidden"
+          name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE 
+          %]shortlist-add[% END %]" value="1">
+        <p><input 
+              type="submit" 
+              id="shortlist-report"
+              data-label-remove="[% loc('Remove from shortlist') %]"
+              data-label-add="[% loc('Add to shortlist') %]"
+              data-value-remove="[% loc('Shortlisted') %]"
+              data-value-add="[% loc('Shortlist') %]"
+              data-class-remove="btn--shortlisted"
               data-class-add="btn--shortlist"
-            [%~ IF c.user.is_planned_report(problem) ~%]
+          [%~ IF c.user.is_planned_report(problem) ~%]
              value="[% loc('Shortlisted') %]"
-            aria-label="[% loc('Remove from shortlist') %]"
+             aria-label="[% loc('Remove from shortlist') %]"
              class="button primary-button" 
-             [%~ ELSE ~%]
-            value="[% loc('Shortlist') %]"
-             aria-label="[% loc('Add to shortlist') %]"
+          [%~ ELSE ~%]
+              value="[% loc('Shortlist') %]"
+              aria-label="[% loc('Add to shortlist') %]"
               class="button primary-button" 
-            [%~ END ~%]></p>
+          [%~ END ~%]
+          ></p>
       </form>
       [% END %]
       <!--[% IF permissions.planned_reports %]
@@ -201,11 +205,14 @@ aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>-->
     </div>
     [% END %]
 
-    [% IF permissions.planned_reports AND problem.shortlisted_user AND NOT c.user.is_planned_report(problem) %]
+      [% IF permissions.planned_reports AND problem.shortlisted_user AND NOT 
+    c.user.is_planned_report(problem) %]
     <div class="moderate-display shortlisted-status">
       <h3>[% tprintf(loc('Shortlisted by %s'), problem.shortlisted_user.name) %]</h3>
       <p>[% tprintf(loc('Adding this report to your shortlist will remove it from %s’s shortlist.'),
         problem.shortlisted_user.name) %]</p>
+
+        
     </div>
     [% END %]
 

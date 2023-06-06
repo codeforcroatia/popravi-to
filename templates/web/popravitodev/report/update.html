@@ -4,8 +4,8 @@
     <ul class="item-list item-list--updates">
         [% END %]
         <li class="item-list__item item-list__item--updates
-     [%~ ' show-moderation' IF update.id AND show_moderation == update.id ~%]
-     ">
+             [%~ ' show-moderation' IF update.id AND show_moderation == update.id ~%]
+             ">
             <a name="update_[% update.id %]" class="internal-link-fixed-header"></a>
             [% IF can_moderate; original = update.moderation_original_data OR update %]
             <form method="post" action="/moderate/report/[% problem.id %]/update/[% update.id %]">
@@ -55,7 +55,7 @@
                         <input type="button" class="hidden-nojs button discard-button" value="[% loc('Discard changes') %]">
                     </div>
                 </div>
-              </form>
+                </form>
             [% END %]
         </li>
         [% IF loop.last %]
