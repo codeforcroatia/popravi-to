@@ -1,53 +1,52 @@
 [% can_moderate = NOT update.whenanswered AND update.type != 'moderation' AND (permissions.moderate OR c.user.can_moderate(update, staff = permissions.moderate)) %]
 [% IF loop.first %]
 <section class="updates-content">
-    <p class="page-text-misc">[% loc('Updates') %] <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></p>
     <ul class="item-list item-list--updates">
-[% END %]
+        [% END %]
         <li class="item-list__item item-list__item--updates
-            [%~ ' show-moderation' IF update.id AND show_moderation == update.id ~%]
-            ">
+[%~ ' show-moderation' IF update.id AND show_moderation == update.id ~%]
+">
             <a name="update_[% update.id %]" class="internal-link-fixed-header"></a>
-          [% IF can_moderate; original = update.moderation_original_data OR update %]
+            [% IF can_moderate; original = update.moderation_original_data OR update %]
             <form method="post" action="/moderate/report/[% problem.id %]/update/[% update.id %]">
                 <input type="hidden" name="token" value="[% csrf_token %]">
                 <a role="menuitem" href="/report/[% problem.id %]/moderate/[% update.id %]#update_[% update.id %]"
                     class="btn js-moderate moderate-display">[% loc('Moderate this update') %]</a>
                 <div class="moderate-edit">
                     <label><input type="checkbox" class="hide-document" name="update_hide">
-                    [% loc('Hide update completely?') %]</label>
+                        [% loc('Hide update completely?') %]</label>
                     <label><input type="checkbox" name="update_show_name" [% update.anonymous ? '' : 'checked' %]>
-                    [% loc('Show name publicly?') %]</label>
+                        [% loc('Show name publicly?') %]</label>
                 </div>
-          [% END %]
-            <div class="item-list__update-wrap">
-            [% IF update.whenanswered %]
-                <div class="item-list__update-text">
-                    <p class="meta-2">[% INCLUDE meta_line %]</p>
-                </div>
-            [% ELSIF update.type == 'moderation' %]
-                [% PROCESS 'report/update/moderation.html' %]
-            [% ELSE %]
-            [% INCLUDE 'report/photo.html' object=update %]
-                <div class="item-list__update-text">
-                    <div class="moderate-display page-text-left-aligned text-bold">
-                        [% update.text | staff_html_markup(update.extra) %]
+                [% END %]
+                <div class="item-list__update-wrap">
+                    [% IF update.whenanswered %]
+                    <div class="item-list__update-text">
+                        <p class="meta-2">[% INCLUDE meta_line %]</p>
                     </div>
-                    [% IF can_moderate %]
-                    <div class="moderate-edit">
-                        [% IF update.text != original.text %]
-                        <label><input type="checkbox" name="update_revert_text" class="revert-textarea">
-                        [% loc('Revert to original') %]</label>
-                        [% END %]
+                    [% ELSIF update.type == 'moderation' %]
+                    [% PROCESS 'report/update/moderation.html' %]
+                    [% ELSE %]
+                    [% INCLUDE 'report/photo.html' object=update %]
+                    <div class="item-list__update-text">
+                        <div class="moderate-display page-text-left-aligned text-bold">
+                            [% update.text | staff_html_markup(update.extra) %]
+                        </div>
+                        [% IF can_moderate %]
+                        <div class="moderate-edit">
+                            [% IF update.text != original.text %]
+                            <label><input type="checkbox" name="update_revert_text" class="revert-textarea">
+                                [% loc('Revert to original') %]</label>
+                            [% END %]
                         <textarea class="form-control" name="update_text" data-original-value="[% original.text %]">[% update.text %]</textarea>
+                        </div>
+                        [% END %]
+
+                        [% INCLUDE 'report/_update_state.html' %]
                     </div>
                     [% END %]
-
-                    [% INCLUDE 'report/_update_state.html' %]
                 </div>
-            [% END %]
-            </div>
-            [% IF can_moderate %]
+                [% IF can_moderate %]
                 <div class="moderate-edit">
                     <label for="moderation_reason">[% loc('Describe why you are moderating this') %]</label>
                     <input type="text" class="form-control" name="moderation_reason">
@@ -56,10 +55,10 @@
                         <input type="button" class="hidden-nojs button discard-button" value="[% loc('Discard changes') %]">
                     </div>
                 </div>
-                </form>
+            </form>
             [% END %]
         </li>
-[% IF loop.last %]
+        [% IF loop.last %]
     </ul>
 </section>
 [% END %]

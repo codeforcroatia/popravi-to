@@ -1,79 +1,81 @@
 [%
-    DEFAULT bodyclass = 'mappage';
-    PROCESS "report/photo-js.html";
-    PROCESS "maps/${map.type}.html";
+DEFAULT bodyclass = 'mappage';
+PROCESS "report/photo-js.html";
+PROCESS "maps/${map.type}.html";
 
-    problem_title = tprintf('%s - %s', problem.title_safe, loc('Viewing a problem'));
-    INCLUDE 'header.html'
-        title = problem_title
-        rss = [ tprintf(loc('Updates to this problem, %s', "%s is the site name"), site_name), "/rss/$problem.id" ]
-        robots = 'index, nofollow';
+problem_title = tprintf('%s - %s', problem.title_safe, loc('Viewing a problem'));
+INCLUDE 'header.html'
+title = problem_title
+rss = [ tprintf(loc('Updates to this problem, %s', "%s is the site name"), site_name), "/rss/$problem.id" ]
+robots = 'index, nofollow';
 %]
 
 <main>
     <div class="report-details-container">
         [% map_html | safe %]
-        </div>
+    </div>
 
-        <div id="map_sidebar">
+    <div id="map_sidebar">
 
         [% IF two_column_sidebar %]
         <div class="two_column_sidebar">
-        [% END %]
+            [% END %]
 
-        <section id="side-report" class="report-details">
+            <section id="side-report" class="report-details">
 
-            [% IF login_success %]
-                <p class='form-success'>[% loc('You have successfully signed in; please check and confirm your details are accurate:') %]</p>
+                [% IF login_success %]
+                <p class='form-success'>[% loc('You have successfully signed in; please check and confirm your details
+                    are accurate:') %]</p>
                 [% INCLUDE 'report/update-form.html' %]
                 [% SET shown_form = 1 %]
-            [% ELSIF oauth_failure %]
-                <p class="form-error-message">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
+                [% ELSIF oauth_failure %]
+                <p class="form-error-message">[% loc('Sorry, we could not log you in. Please fill in the form below.')
+                    %]</p>
                 [% INCLUDE 'report/update-form.html' %]
                 [% SET shown_form = 1 %]
-            [% ELSIF oauth_need_email %]
+                [% ELSIF oauth_need_email %]
                 <p class="form-error-message">
                     [% loc('Please note your update has <strong>not yet been posted</strong>.') %]
                     [% loc('We need your email address, please give it below.') %]
                 </p>
                 [% INCLUDE 'report/update-form.html' %]
                 [% SET shown_form = 1 %]
-            [% END %]
+                [% END %]
 
-            [% INCLUDE 'report/_main.html' %]
+                [% INCLUDE 'report/_main.html' %]
 
-            [% IF problem.duplicate_of %]
+                [% IF problem.duplicate_of %]
                 [% INCLUDE 'report/duplicate-no-updates.html' hide_header = 1 %]
-            [% END %]
+                [% END %]
 
-            [% TRY %][% INCLUDE 'report/_message_manager.html' %][% CATCH file %][% END %]
-            [% TRY %][% INCLUDE 'report/sharing.html' %][% CATCH file %][% END %]
-            [% INCLUDE 'report/updates.html' %]
+                [% TRY %][% INCLUDE 'report/_message_manager.html' %][% CATCH file %][% END %]
+                [% TRY %][% INCLUDE 'report/sharing.html' %][% CATCH file %][% END %]
+                [% INCLUDE 'report/updates.html' %]
 
-            [% IF problem.duplicate_of %]
+                [% IF problem.duplicate_of %]
                 [% INCLUDE 'report/duplicate-no-updates.html' %]
-            [% ELSIF problem.extra.closed_updates %]
+                [% ELSIF problem.extra.closed_updates %]
                 <p>[% loc('This report is now closed to updates.') %]
-                [% tprintf(loc('You can <a href="%s">make a new report in the same location</a>.'),
-                        c.uri_for( '/report/new', { longitude => longitude, latitude => latitude } )
+                    [% tprintf(loc('You can <a href="%s">make a new report in the same location</a>.'),
+                    c.uri_for( '/report/new', { longitude => longitude, latitude => latitude } )
                     ) %]
                 </p>
-            [% ELSIF problem.cobrand_data == 'noise' %]
+                [% ELSIF problem.cobrand_data == 'noise' %]
                 <p><a href="/noise/existing">Log a new occurrence against your existing report</a></p>
-            [% ELSIF NOT shown_form  %]
+                [% ELSIF NOT shown_form %]
                 [% PROCESS 'report/update-form-wrapper.html' %]
-            [% END %]
-            [% INCLUDE 'report/display_tools.html' %]
+                [% END %]
+                [% INCLUDE 'report/display_tools.html' %]
 
-        </section>
+            </section>
 
-        [% second_column | safe %]
+            [% second_column | safe %]
 
-        [% IF two_column_sidebar %]
+            [% IF two_column_sidebar %]
         </div>
         [% END %]
 
-        </div>
+    </div>
 
     </div>
 </main>
@@ -82,5 +84,7 @@
 
 <script src="/cobrands/[% c.cobrand.asset_moniker %]/menu.js"></script>
 <script src="/cobrands/[% c.cobrand.asset_moniker %]/toggleUpdateForm.js"></script>
+<script src="/cobrands/[% c.cobrand.asset_moniker %]/reports.js"></script>
 </body>
+
 </html>
