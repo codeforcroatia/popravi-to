@@ -95,7 +95,7 @@
     <p class="moderate-edit">
       [% IF problem.detail != original.detail %]
         <label>
-            <input type="checkbox" name="problem_revert_detail" class="revert-textarea" [% ' checked' IF c.req.params.problem_revert_detail %]>
+            <input type="checkbox" name="problem_revert_detail" class="revert-textarea"[% ' checked' IF c.req.params.problem_revert_detail %]>
             [% loc('Revert to original text') %]
         </label>
       [% END %]
@@ -103,20 +103,21 @@
     </p>
 
     <div class="moderate-edit">
-      <p>
-        <label>
-          <input type="checkbox" class="hide-document" name="problem_hide" [% 'checked' IF problem.hidden OR c.req.params.problem_hide %]>
-          [% loc('Hide entire report') %]
-        </label>
-      </p>
-      <p>
-        <label for="moderation_reason">[% loc('Describe why you are moderating this') %]</label>
-        <input type="text" class="form-control" name="moderation_reason" value="[% (c.req.params.moderation_reason || '') | html %]">
-      </p>
-      <p class="save-discard-container">
-        <input type="submit" class="button primary-button" value="[% loc('Save changes') %]">
-        <input type="button" class="button discard-button" value="[% loc('Discard changes') %]">
-      </p>
+        <p>
+           <label>
+              <input type="checkbox" class="hide-document" name="problem_hide" [% 'checked' IF 
+problem.hidden OR c.req.params.problem_hide %]>
+                [% loc('Hide entire report') %]
+            </label>
+        </p>
+        <p>
+            <label for="moderation_reason">[% loc('Describe why you are moderating this') %]</label>
+            <input type="text" class="form-control" name="moderation_reason" value="[% (c.req.params.moderation_reason || '') | html %]">
+       </p>
+       <p class="save-discard-container">
+            <input type="submit" class="button primary-button" value="[% loc('Save changes') %]">
+            <input type="button" class="button discard-button" value="[% loc('Discard changes') %]">
+        </p>
     </div>
   [% END %]
 
@@ -162,9 +163,10 @@
       <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
           <input type="hidden" name="id" value="[% problem.id %]">
           <input type="hidden" name="token" value="[% csrf_token %]">
-          <input type="hidden" name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE %]shortlist-add[% END %]" value="1">
-        <p><input 
-              type="submit" 
+          <input type="hidden" name="[% IF c.user.is_planned_report(problem) %]shortlist-remove[% ELSE 
+%]shortlist-add[% END %]" value="1">
+          <p><input
+              type="submit"
               id="shortlist-report"
               data-label-remove="[% loc('Remove from shortlist') %]"
               data-label-add="[% loc('Add to shortlist') %]"
@@ -194,14 +196,14 @@
       [% END %]
       -->
     </div>
-    [% END %]
+  [% END %]
 
-      [% IF permissions.planned_reports AND problem.shortlisted_user AND NOT c.user.is_planned_report(problem) %]
+  [% IF permissions.planned_reports AND problem.shortlisted_user AND NOT c.user.is_planned_report(problem) %]
     <div class="moderate-display shortlisted-status">
       <h3>[% tprintf(loc('Shortlisted by %s'), problem.shortlisted_user.name) %]</h3>
       <p>[% tprintf(loc('Adding this report to your shortlist will remove it from %s’s shortlist.'), problem.shortlisted_user.name) %]</p>
     </div>
-    [% END %]
+  [% END %]
 
-    [% TRY %][% PROCESS 'report/_main_after.html' %][% CATCH file %][% END %]
-  </div>
+  [% TRY %][% PROCESS 'report/_main_after.html' %][% CATCH file %][% END %]
+</div>

@@ -18,7 +18,7 @@
                     <label><input type="checkbox" name="update_show_name" [% update.anonymous ? '' : 'checked' %]>
                     [% loc('Show name publicly?') %]</label>
                 </div>
-           [% END %]
+          [% END %]
             <div class="item-list__update-wrap">
             [% IF update.whenanswered %]
                 <div class="item-list__update-text">
@@ -44,9 +44,9 @@
 
                     [% INCLUDE 'report/_update_state.html' %]
                 </div>
-                [% END %]
-                </div>
-                [% IF can_moderate %]
+            [% END %]
+            </div>
+            [% IF can_moderate %]
                 <div class="moderate-edit">
                     <label for="moderation_reason">[% loc('Describe why you are moderating this') %]</label>
                     <input type="text" class="form-control" name="moderation_reason">
