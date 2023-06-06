@@ -184,9 +184,9 @@ aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>-->
               data-class-remove="btn--shortlisted"
               data-class-add="btn--shortlist"
           [%~ IF c.user.is_planned_report(problem) ~%]
-             value="[% loc('Shortlisted') %]"
-             aria-label="[% loc('Remove from shortlist') %]"
-             class="button primary-button" 
+              value="[% loc('Shortlisted') %]"
+              aria-label="[% loc('Remove from shortlist') %]"
+              class="button primary-button" 
           [%~ ELSE ~%]
               value="[% loc('Shortlist') %]"
               aria-label="[% loc('Add to shortlist') %]"
@@ -212,7 +212,7 @@ aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>-->
       <p>[% tprintf(loc('Adding this report to your shortlist will remove it from %s’s shortlist.'),
         problem.shortlisted_user.name) %]</p>
 
-        
+
     </div>
     [% END %]
 
