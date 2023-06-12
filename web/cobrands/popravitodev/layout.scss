@@ -1,10 +1,10 @@
 //DESKTOP STYLE
 @import "./_colours";
 
-$cobrand-moniker: 'popravitodev'
+$cobrand-moniker: 'popravitodev';
 $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
-$primary: url('/cobrands/#{$cobrand-moniker}/images/hero-desktop.svg') no-repeat right;
+$primary: url('/cobrands/$cobrand-moniker/images/hero-desktop.svg') no-repeat right;
 
 /* header */
 
