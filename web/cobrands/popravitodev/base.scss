@@ -1,6 +1,7 @@
 //MOBILE STYLE
 @import "./_colours";
 
+$cobrand-moniker: 'popravitodev';
 $body-font: "Open Sans";
 $headings-font: "Darker Grotesque";
 $primary_text: $headings-font;
@@ -184,7 +185,7 @@ img {
 .mobile-menu-button {
 	border: none;
 	background-color: transparent;
-	background: url("/cobrands/popravito/images/ic-menu.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-menu.svg") no-repeat center;
 	width: 24px;
 	height: 24px;
 	position: fixed;
@@ -213,7 +214,7 @@ img {
 }
 
 .search-icon-button {
-	background: url("/cobrands/popravito/images/Search.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/Search.svg") no-repeat center;
 	border: none;
 	background-color: transparent;
 	width: 1.5rem;
@@ -240,7 +241,7 @@ img {
 .search-button {
 	border-radius: 50%;
 	background: $orange;
-	background-image: url("/cobrands/popravito/images/icon-chevron-right.svg");
+	background-image: url("/cobrands/#{$cobrand-moniker}/images/icon-chevron-right.svg");
 	background-repeat: no-repeat;
 	background-position: center;
 	margin-left: 0.5rem;
@@ -253,7 +254,7 @@ img {
 }
 
 .location-icon {
-	background: url("/cobrands/popravito/images/ic-location.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-location.svg") no-repeat center;
 	width: 20px;
 	height: 20px;
 	display: block;
@@ -392,33 +393,33 @@ img {
 }
 
 .github-link {
-	background: url("/cobrands/popravito/images/github.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/github.svg") no-repeat center;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
 }
 
 .twitter-link {
-	background: url("/cobrands/popravito/images/twitter.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/twitter.svg") no-repeat center;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
 }
 
 .facebook-link {
-	background: url("/cobrands/popravito/images/facebook.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/facebook.svg") no-repeat center;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
 }
 
 .linkedin-link {
-	background: url("/cobrands/popravito/images/linkedin-logo-icon.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/linkedin-logo-icon.svg") no-repeat center;
 	display: inline-block;
 	height: 32px;
 	width: 32px;
 }
-		
+
 
 
 .socials {
@@ -517,7 +518,7 @@ img {
 }
 
 .close-button {
-	background: url("/cobrands/popravito/images/ic-close.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-close.svg") no-repeat center;
 	width: 20px;
 	height: 20px;
 	display: block;
@@ -548,7 +549,7 @@ img {
 .reveal-pass {
 	border: 0;
 	background-color: transparent;
-	background: url("/cobrands/popravito/images/ic-show.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-show.svg") no-repeat center;
 	display: block;
 	width: 25px;
 	height: 25px;
@@ -619,7 +620,7 @@ textarea.form-error {
 }
 
 .location-icon-purple {
-	background: url("/cobrands/popravito/images/ic-location-purple.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-location-purple.svg") no-repeat
 		center;
 	width: 20px;
 	height: 20px;
@@ -637,7 +638,7 @@ textarea.form-error {
 }
 
 .arrow-right {
-	background: url("/cobrands/popravito/images/ic-arrow-right.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-arrow-right.svg") no-repeat
 		center;
 	width: 15px;
 	height: 15px;
@@ -729,7 +730,7 @@ textarea.form-error {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	background-image: url("/cobrands/popravito/images/ic-dropdown-down.svg");
+	background-image: url("/cobrands/#{$cobrand-moniker}/images/ic-dropdown-down.svg");
 	background-repeat: no-repeat;
 	background-position: right;
 	background-origin: content-box;
@@ -755,7 +756,7 @@ textarea.form-error {
 }
 
 .arrow-left {
-	background: url("/cobrands/popravito/images/ic-arrow-left.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-arrow-left.svg") no-repeat
 		center;
 	width: 15px;
 	height: 15px;
@@ -765,7 +766,7 @@ textarea.form-error {
 }
 
 .arrow-right-black {
-	background: url("/cobrands/popravito/images/ic-arrow-right-black.svg")
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-arrow-right-black.svg")
 		no-repeat center;
 	width: 15px;
 	height: 15px;
@@ -809,7 +810,7 @@ textarea.form-error {
 }
 
 .details-button {
-	background: url("/cobrands/popravito/images/ic_indicator_info.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic_indicator_info.svg") no-repeat
 		center;
 	width: 10px;
 	height: 10px;
@@ -851,7 +852,7 @@ textarea.form-error {
 }
 
 .camera-icon {
-	background: url("/cobrands/popravito/images/ic-camera.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-camera.svg") no-repeat center;
 	width: 30px;
 	height: 20px;
 	display: block;
@@ -946,7 +947,7 @@ textarea.form-error {
 }
 
 .email-span-icon {
-	background: url("/cobrands/popravito/images/send.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/send.svg") no-repeat center;
 	width: 20px;
 	height: 20px;
 	display: block;
@@ -954,7 +955,7 @@ textarea.form-error {
 }
 
 .address-span-icon {
-	background: url("/cobrands/popravito/images/mail.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/mail.svg") no-repeat center;
 	width: 20px;
 	height: 20px;
 	display: block;
@@ -1040,7 +1041,7 @@ textarea.form-error {
 }
 
 .arrow-down {
-	background: url("/cobrands/popravito/images/ic-dropdown-down.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-dropdown-down.svg") no-repeat
 		center;
 	width: 15px;
 	height: 15px;
@@ -1066,7 +1067,7 @@ textarea.form-error {
 }
 
 .edit-info-icon {
-	background: url("/cobrands/popravito/images/checkbox.svg") no-repeat right;
+	background: url("/cobrands/#{$cobrand-moniker}/images/checkbox.svg") no-repeat right;
 	width: 30px;
 	height: 30px;
 	display: block;
@@ -1091,7 +1092,7 @@ textarea.form-error {
 }
 
 .logout-profile-button {
-	background: url("/cobrands/popravito/images/ic-logout.svg") no-repeat left;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-logout.svg") no-repeat left;
 	width: 20px;
 	height: 20px;
 	display: inline-flex;
@@ -1132,7 +1133,7 @@ textarea.form-error {
 }
 
 .edit-button {
-	background: url("/cobrands/popravito/images/edit.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/edit.svg") no-repeat center;
 	width: 20px;
 	height: 20px;
 	display: block;
@@ -1214,19 +1215,19 @@ textarea.form-error {
 
 .filter-icon {
 	display: block;
-	background: url("/cobrands/popravito/images/ic_filter.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic_filter.svg") no-repeat center;
 	width: 15px;
 	height: 15px;
 	margin-right: 0.5rem;
 }
 
 .filter-icon:hover {
-	background: url("/cobrands/popravito/images/ic_filter_orange.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic_filter_orange.svg") no-repeat
 		center;
 }
 
 .filter-icon:active {
-	background: url("/cobrands/popravito/images/ic_filter_orange.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic_filter_orange.svg") no-repeat
 		center;
 }
 
@@ -1272,13 +1273,13 @@ textarea.form-error {
 }
 
 .list-view-button {
-	background: url("/cobrands/popravito/images/ic-list.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-list.svg") no-repeat center;
 	display: block;
 	width: 40px;
 }
 
 .map-view-button {
-	background: url("/cobrands/popravito/images/ic-map.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-map.svg") no-repeat center;
 	width: 40px;
 	display: block;
 }
@@ -1319,7 +1320,7 @@ textarea.form-error {
 }
 
 .fix-icon {
-	background: url("/cobrands/popravito/images/fix.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/fix.svg") no-repeat center;
 	display: block;
 	width: 30px;
 	height: 30px;
@@ -1449,7 +1450,7 @@ textarea.form-error {
 }
 
 .arrow-down-dropdown {
-	background: url("/cobrands/popravito/images/ic-dropdown-down.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-dropdown-down.svg") no-repeat
 		center;
 	width: 10px;
 	height: 10px;
@@ -1677,7 +1678,7 @@ textarea.form-error {
 }
 
 .rss-icon {
-	background: url("/cobrands/popravito/images/ic-RSS.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-RSS.svg") no-repeat center;
 	width: 16px;
 	height: 16px;
 	display: inline-flex;
@@ -1718,7 +1719,7 @@ textarea.form-error {
 }
 
 .notification-search-button-arrow {
-	background: url("/cobrands/popravito/images/ic-arrow-right.svg") no-repeat
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-arrow-right.svg") no-repeat
 		center;
 	display: inline-block;
 	width: 15px;
@@ -1897,7 +1898,7 @@ textarea.form-error {
 }
 
 .expand-icon {
-	background: url("/cobrands/popravito/images/ic-plus.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-plus.svg") no-repeat center;
 	display: block;
 	width: 15px;
 	height: 15px;
@@ -1926,7 +1927,7 @@ textarea.form-error {
 }
 
 .close-icon {
-	background: url("/cobrands/popravito/images/ic-close.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-close.svg") no-repeat center;
 	display: block;
 	width: 15px;
 	height: 15px;
@@ -2278,7 +2279,7 @@ html.js #map .noscript {
 .dz-default.dz-message:before {
 	content: "";
 	width: 30px;
-	background: url("/cobrands/popravito/images/ic-camera.svg") no-repeat center;
+	background: url("/cobrands/#{$cobrand-moniker}/images/ic-camera.svg") no-repeat center;
 }
 
 .dz-default.dz-message span {
@@ -2561,13 +2562,13 @@ fieldset {
 	left: 0px;
 	height: 50px;
 	}
-	
+
 	.shadow-wrap>ul {
 	display: flex;
 	border: none;
 	width: 100%;
 	}
-	
+
 	#key-tools {
 	list-style-type: none;
 	padding: 0;
@@ -2576,7 +2577,7 @@ fieldset {
 	justify-content: center;
 	display: flex;
 	}
-	
+
 	.report-btn {
 	background-color: #f6f2ef;
 	width: 30%;
@@ -2586,7 +2587,7 @@ fieldset {
 	column-gap: 5px;
 	padding: 5px;
 	}
-	
+
 	#key-tool-report-abuse {
 	background-image: url(/cobrands/fixmystreet/images/report-tools.svg);
 	display: inline-block;
@@ -2599,7 +2600,7 @@ fieldset {
 	position: relative;
 	top: 2px;
 	}
-	
+
 	#key-tool-report-updates-picture {
 	background-image: url(/cobrands/fixmystreet/images/report-tools.svg);
 	display: inline-block;
@@ -2612,7 +2613,7 @@ fieldset {
 	position: relative;
 	top: 0px;
 	}
-	
+
 	#key-tool-problems-nearby {
 	background-image: url(/cobrands/fixmystreet/images/report-tools.svg);
 	display: inline-block;
@@ -2625,51 +2626,50 @@ fieldset {
 	left: -5px;
 	position: relative;
 	}
-	
+
 	label.clickable {
 	position: relative;
 	bottom: 2px;
 	}
-	
+
 	.rss-drop {
 	position: absolute;
 	}
-	
+
 	.green-btn {
 	margin-top: 5px;
 	cursor: pointer;
 	}
-	
+
 	}
-	
+
 	@media only screen and (max-width: 403px) {
 	.shadow-wrap {
 	top: 570px;
 	height: 50px;
 	}
-	
+
 	label.clickable {
 	bottom: -5px;
 	}
-	
+
 	#key-tool-report-abuse {
 	top: 10px;
 	}
-	
+
 	#key-tool-report-updates {
 	position: relative;
 	top: 6px;
 	}
-	
+
 	#key-tool-problems-nearby {
 	left: -20px;
 	}
 	}
-	
+
 	@media only screen and (max-width: 755px) {
-	
+
 	.btn--provide-update {
 	left: 77%;
 	}
 	}
-	

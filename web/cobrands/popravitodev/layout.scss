@@ -272,7 +272,7 @@ margin: 0;
 }
 
 .arrow-right-white {
-background: url('/cobrands/popravito/images/ic-arrow-right.svg') no-repeat center;
+background: url('/cobrands/#{$cobrand-moniker}/images/ic-arrow-right.svg') no-repeat center;
 width: 15px;
 height: 15px;
 display: block;
@@ -281,7 +281,7 @@ align-self: center;
 }
 
 .arrow-left {
-background: url('/cobrands/popravito/images/ic-arrow-left.svg') no-repeat center;
+background: url('/cobrands/#{$cobrand-moniker}/images/ic-arrow-left.svg') no-repeat center;
 width: 15px;
 height: 15px;
 display: block;
@@ -335,25 +335,25 @@ background-color: transparent;
 
 .bar {
 width: auto;
-background: url('/cobrands/popravito/images/progress_1.svg') no-repeat left;
+background: url('/cobrands/#{$cobrand-moniker}/images/progress_1.svg') no-repeat left;
 display: block;
 }
 
 .bar2 {
 width: auto;
-background: url('/cobrands/popravito/images/progress_2.svg') no-repeat left;
+background: url('/cobrands/#{$cobrand-moniker}/images/progress_2.svg') no-repeat left;
 display: block;
 }
 
 .bar3 {
 width: auto;
-background: url('/cobrands/popravito/images/progress_3.svg') no-repeat left;
+background: url('/cobrands/#{$cobrand-moniker}/images/progress_3.svg') no-repeat left;
 display: block;
 }
 
 .bar4 {
 width: auto;
-background: url('/cobrands/popravito/images/progress_4.svg') no-repeat left;
+background: url('/cobrands/#{$cobrand-moniker}/images/progress_4.svg') no-repeat left;
 display: block;
 }
 
@@ -387,7 +387,7 @@ margin: 1.5rem 0 0 0;
 .show-name-public-button {
 border: 0;
 background-color: transparent;
-background: url('/cobrands/popravito/images/name-public.svg') no-repeat center;
+background: url('/cobrands/#{$cobrand-moniker}/images/name-public.svg') no-repeat center;
 display: block;
 width: 193px;
 height: 24px;
@@ -782,7 +782,7 @@ display: none;
 }
 
 .notification-marker-form-link .search-button {
-background: url('/cobrands/popravito/images/icon-chevron-right.svg') no-repeat center;
+background: url('/cobrands/#{$cobrand-moniker}/images/icon-chevron-right.svg') no-repeat center;
 background-color: black;
 width: auto;
 border-radius: 50%;
@@ -1202,7 +1202,7 @@ display: flex;
 
 .dashboard-search__submit {
 input[type=submit] {
-background: url(/cobrands/popravito/images/icon-chevron-right.svg) no-repeat center;
+background: url(/cobrands/#{$cobrand-moniker}/images/icon-chevron-right.svg) no-repeat center;
 background-color: black;
 border-radius: 50%;
 margin-top: 0;
