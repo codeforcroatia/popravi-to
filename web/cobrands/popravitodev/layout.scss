@@ -3,7 +3,7 @@
 
 $body-font: 'Open Sans';
 $headings-font: 'Darker Grotesque';
-$primary: url('/cobrands/popravito/images/hero-desktop.svg') no-repeat right;
+$primary: url('/cobrands/[% c.cobrand.asset_moniker %]/images/hero-desktop.svg') no-repeat right;
 
 /* header */
 
