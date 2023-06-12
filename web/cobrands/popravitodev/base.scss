@@ -63,8 +63,9 @@ textarea {
 	border: $primary_b;
 	border-radius: 16px;
 	background-color: #f6f2ef;
-	padding: 1.2rem 1.2rem 1.2rem 3rem;
+	padding: 1.2rem 2.2rem 1.2rem 3rem;
 }
+
 
 input::placeholder {
 	color: $col_big_numbers;
@@ -149,11 +150,12 @@ img {
 	margin-top: 12px;
 	position: fixed;
 	right: 0;
-	top: 0;
-	z-index: 4;
+	top: 0px;
+	z-index: -1;
 	background-color: white;
 	padding: 0 1.5rem 0 1.5rem;
-	height: 300px;
+	height: 150px;
+	border-radius: 30px;
 }
 
 .menu-item {
@@ -171,7 +173,8 @@ img {
 .report-issue-button {
 	background-color: $grayscale;
 	color: white;
-	margin-left: 2rem;
+	margin-left: 1rem;
+
 }
 
 .button-link {
@@ -186,8 +189,8 @@ img {
 	height: 24px;
 	position: fixed;
 	right: 1.8rem;
-	top: 1.6rem;
 	color: $menu-image;
+	top: 27px;
 }
 
 /* homepage */
@@ -409,9 +412,28 @@ img {
 	width: 32px;
 }
 
+.linkedin-link {
+	background: url("/cobrands/popravito/images/linkedin-logo-icon.svg") no-repeat center;
+	display: inline-block;
+	height: 32px;
+	width: 32px;
+}
+		
+
+
 .socials {
 	display: flex;
 	padding: 0;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 50%;
+	line-height: 3rem;
+
+	@media only screen and (min-width:150px) and (max-width: 1050px) {
+		display:flex;
+		justify-content: left;
+		width: 150%;
+	}
 }
 
 .fixmystreet-logo img {
@@ -919,6 +941,8 @@ textarea.form-error {
 	text-transform: uppercase;
 	display: flex;
 	margin-bottom: 0.7rem;
+	font-weight: bold;
+
 }
 
 .email-span-icon {
@@ -1495,7 +1519,7 @@ textarea.form-error {
 }
 
 .issue-details-container {
-	margin-top: 420px;
+	margin-top: 440px;
 }
 
 .report-details-container-update {
@@ -2192,14 +2216,18 @@ html.js #map .noscript {
 }
 
 .btn--provide-update {
-	border: 1px solid #0e0e0e;
-	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
-	border-radius: 40px;
 	border: none;
 	background-color: transparent;
 	font-family: "Open Sans";
+	color: #F25410;
+	display: flex;
+	font-size: 0.8rem;
+	align-self: center;
+	position: relative;
 	font-weight: 600;
-	font-size: 0.875rem;
+	bottom: 31px;
+	left: 140px;
+	column-gap: 10px;
 }
 
 .inspect-section p {
@@ -2219,7 +2247,7 @@ html.js #map .noscript {
 }
 
 .problem-header .primary-button {
-	margin: 0;
+	margin-top: 25px;
 }
 
 .moderate-edit textarea {
@@ -2523,3 +2551,125 @@ fieldset {
 .main-alert {
 	padding: 1.5rem;
 }
+//#146
+@media only screen and (max-width: 755px) {
+	.shadow-wrap {
+	width: 100%;
+	position: absolute;
+	top: 570px;
+	font-size: 0.75em;
+	left: 0px;
+	height: 50px;
+	}
+	
+	.shadow-wrap>ul {
+	display: flex;
+	border: none;
+	width: 100%;
+	}
+	
+	#key-tools {
+	list-style-type: none;
+	padding: 0;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	justify-content: center;
+	display: flex;
+	}
+	
+	.report-btn {
+	background-color: #f6f2ef;
+	width: 30%;
+	margin: 4px;
+	justify-content: center;
+	display: flex;
+	column-gap: 5px;
+	padding: 5px;
+	}
+	
+	#key-tool-report-abuse {
+	background-image: url(/cobrands/fixmystreet/images/report-tools.svg);
+	display: inline-block;
+	height: 16px;
+	background-size: 112px 16px;
+	width: 16px;
+	background-position: 128px 0px;
+	margin-top: auto;
+	margin-bottom: auto;
+	position: relative;
+	top: 2px;
+	}
+	
+	#key-tool-report-updates-picture {
+	background-image: url(/cobrands/fixmystreet/images/report-tools.svg);
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-size: 112px 15px;
+	background-position: 48px 0;
+	margin-top: auto;
+	margin-bottom: auto;
+	position: relative;
+	top: 0px;
+	}
+	
+	#key-tool-problems-nearby {
+	background-image: url(/cobrands/fixmystreet/images/report-tools.svg);
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-size: 112px 16px;
+	background-position: -16px 0;
+	margin-top: auto;
+	margin-bottom: auto;
+	left: -5px;
+	position: relative;
+	}
+	
+	label.clickable {
+	position: relative;
+	bottom: 2px;
+	}
+	
+	.rss-drop {
+	position: absolute;
+	}
+	
+	.green-btn {
+	margin-top: 5px;
+	cursor: pointer;
+	}
+	
+	}
+	
+	@media only screen and (max-width: 403px) {
+	.shadow-wrap {
+	top: 570px;
+	height: 50px;
+	}
+	
+	label.clickable {
+	bottom: -5px;
+	}
+	
+	#key-tool-report-abuse {
+	top: 10px;
+	}
+	
+	#key-tool-report-updates {
+	position: relative;
+	top: 6px;
+	}
+	
+	#key-tool-problems-nearby {
+	left: -20px;
+	}
+	}
+	
+	@media only screen and (max-width: 755px) {
+	
+	.btn--provide-update {
+	left: 77%;
+	}
+	}
+	

@@ -30,7 +30,7 @@
     <div class="moderate-edit">
       [% IF problem.title != original.title %]
         <label>
-            <input type="checkbox" name="problem_revert_title" class="revert-title"[% " checked" IF c.req.params.problem_revert_title %]>
+            <input type="checkbox" name="problem_revert_title" class="revert-title" [% " checked" IF c.req.params.problem_revert_title %]>
             [% loc('Revert to original title') %]
         </label>
       [% END %]
@@ -38,18 +38,39 @@
     </div>
   [% ELSE %]
 
-    <h1 class="report-title">[% problem.title | html %] <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></h1>
+    <!--<h1 class="report-title">[% problem.title | html %] <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></h1>-->
   [% END %]
 
     <div class="moderate-edit">
-        <label>
-            <input type="checkbox" name="problem_show_name" [% 'checked' IF !problem.anonymous OR c.req.params.problem_show_name %]>
-            [% loc('Show reporter&rsquo;s name') %]
-        </label>
+      <label>
+        <input type="checkbox" name="problem_show_name" [% 'checked' IF !problem.anonymous OR c.req.params.problem_show_name %]>
+        [% loc('Show reporter&rsquo;s name') %]
+      </label>
     </div>
-    <p class="report_meta_info">
-        [% INCLUDE 'report/_report_meta_info.html' %]
-    </p>
+
+    <div class="issue-details-container">
+      <p class="page-text-misc">[% loc('Category') %]</p>
+      <p class="page-text-left-aligned">[% problem.category %]</p>
+      <br>
+      <p class="page-text-misc">[% loc('Subcategory') %]</p>
+      <p class="page-text-left-aligned">[% (problem.subcategory_display OR '-') %]</p>
+      <br>
+      <p class="page-text-misc">[% loc('Description') %]</p>
+      <p class="page-text-left-aligned">[% problem.detail | add_links | html_para %]</p>
+      <br>
+    </div>
+    <div class="applicant-details-container">
+      <p class="page-text-misc">[% loc('Applicant') %]</p>
+      <p class="page-text-left-aligned">[% problem.user.name %]</p>
+      <br>
+
+      <p class="page-text-misc">[% loc('Date') %]</p>
+      <p class="report_meta_info">
+        [% problem.confirmed.strftime('%d.%m.%Y ') %][% loc('in') %][% problem.confirmed.strftime(' %H:%M') %]
+      </p>
+      <br>
+      <p class="page-text-misc">[% loc('Administrative unit') %]</p>
+    </div>
 
     [% IF anonymized ~%]
         <p class="form-success">[% anonymized %]</p>
@@ -62,14 +83,8 @@
 
     [% INCLUDE 'report/_support.html' %]
 
-    <div class="issue-details-container">
-        <p class="page-text-misc">[% loc('Category') %]</p>
-        <p class="page-text-left-aligned">[% problem.category %]</p>
-        <br>
-        <p class="page-text-misc">[% loc('Description') %]</p>
-        <p class="page-text-left-aligned">[% problem.detail | add_links | html_para %]</p>
-        <br>
-    </div>
+    <br>
+
     <div class="img-gallery-container">
       <p class="page-text-misc">[% loc('Photos') %]</p>
         [% INCLUDE 'report/photo.html' object=problem %]
@@ -110,16 +125,39 @@
   [% END %]
 
   [% IF can_moderate OR permissions.planned_reports %]
-    <div class="moderate-display segmented-control" role="menu">
-      [% IF can_moderate %]
-      <form class="button-link">
-          <button formaction="/report/[% problem.id %]/moderate" class="button" tabindex="0" aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</button>
-      </form>
-        <!--
-        <a class="js-moderate btn" role="menuitem" href="/report/[% problem.id %]/moderate"
-            aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>
-        -->
+  <div class="moderate-display segmented-control" role="menu">
+    [% IF can_moderate %]
+    <form class="button-link">
+      <button formaction="/report/[% problem.id %]/moderate" class="button" tabindex="0" aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</button>
+    </form>
+    <!--
+    <a class="js-moderate btn" role="menuitem" href="/report/[% problem.id %]/moderate"
+        aria-label="[% loc('Moderate this report') %]">[% loc('Moderate') %]</a>
+    -->
+    [% END %]
+
+    [% UNLESS c.cobrand.updates_disallowed(problem) %]
+
+    [% IF NOT c.user_exists AND problem.non_public # Came via other-reported token or similar %]
+    <p>[% tprintf(loc('To provide an update, please <a href="%s">sign in</a>.'), '/auth?r=report/' _ problem.id) %]</p>
+    [% ELSE %]
+    [% IF two_column_sidebar %]
+    <p class="page-text-misc">[% loc('Updates') %]</p>
+    <button type="button" class="btn btn--provide-update js-provide-update hidden-nojs"><span
+        class="edit-button"></span><span>[% loc('Update') %]</span></button>
+
+    <div class="hidden-js">
       [% END %]
+      [% INCLUDE 'report/update-form.html' %]
+      [% IF two_column_sidebar %]
+      [% END %]
+
+      [% END %]
+
+      [% ELSE %]
+      [% TRY %][% INCLUDE 'report/_updates_disallowed_message.html' %][% CATCH file %][% END %]
+      [% END %]
+
       [% IF permissions.planned_reports %]
       <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">
           <input type="hidden" name="id" value="[% problem.id %]">

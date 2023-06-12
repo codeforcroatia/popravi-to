@@ -1,7 +1,6 @@
 [% allow_creation = (!c.cobrand.only_authed_can_create || (c.user && c.user.from_body)) AND NOT c.cobrand.updates_disallowed(problem) %]
 [% RETURN IF NOT allow_creation %]
-
-<div id="update_form" class="update-form-div visually-hidden">
+<div id="update_form" class="update-form-div">
   [% IF NOT login_success AND NOT oauth_need_email %]
     [% TRY %]
       [% INCLUDE 'report/_update-form-heading.html' %]
@@ -26,15 +25,15 @@
           [% ELSIF oauth_need_email %]
             <div id="form_sign_in">
                 [% PROCESS "report/form/user_loggedout_by_email.html" object=update type='update' valid_class='validNameU' email_required=1 %]
-                <input type="hidden" name="oauth_need_email" value="1">
-            </div>
+            <input type="hidden" name="oauth_need_email" value="1">
+         </div>
+         [% INCLUDE 'report/update/form_update.html' %]
+        [% ELSE %]
+         <div class="js-new-report-user-hidden">
             [% INCLUDE 'report/update/form_update.html' %]
-          [% ELSE %]
-            <div class="js-new-report-user-hidden">
-                [% INCLUDE 'report/update/form_update.html' %]
-            </div>
-            [% PROCESS "report/update/form_user.html" %]
-          [% END %]
-        </fieldset>
-    </form>
+         </div>
+         [% PROCESS "report/update/form_user.html" %]
+        [% END %]
+      </fieldset>
+   </form>
 </div>

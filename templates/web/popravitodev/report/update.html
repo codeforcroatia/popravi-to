@@ -1,7 +1,6 @@
 [% can_moderate = NOT update.whenanswered AND update.type != 'moderation' AND (permissions.moderate OR c.user.can_moderate(update, staff = permissions.moderate)) %]
 [% IF loop.first %]
 <section class="updates-content">
-    <p class="page-text-misc">[% loc('Updates') %] <button class="update-link button" id="updateReportButton" tabindex="0" aria-label="update report"><span class="edit-button"></span><span>[% loc('Update') %]</span></button></p>
     <ul class="item-list item-list--updates">
 [% END %]
         <li class="item-list__item item-list__item--updates
