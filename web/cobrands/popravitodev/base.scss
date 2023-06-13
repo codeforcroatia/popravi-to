@@ -171,6 +171,27 @@ img {
 	padding-left: 2rem;
 }
 
+.close-mobile-menu {
+    border: none;
+    width: 24px;
+    height: 24px;
+    position: fixed;
+    right: 1.8rem;
+    color: #1D1C1C;
+    top: 27px;
+    background: url("/cobrands/popravito/images/ic-close.svg") no-repeat center;
+
+}
+
+@media only screen and (max-width: 360px) {
+    .mobile-menu-button {
+        right: 30px;
+    }
+    .menu {
+        right: -15px;
+    }
+}
+
 .report-issue-button {
 	background-color: $grayscale;
 	color: white;
@@ -433,7 +454,7 @@ img {
 	@media only screen and (min-width:150px) and (max-width: 1050px) {
 		display:flex;
 		justify-content: left;
-		width: 150%;
+		width: 100%;
 	}
 }
 
