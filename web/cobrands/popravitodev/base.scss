@@ -2573,6 +2573,126 @@ fieldset {
 .main-alert {
 	padding: 1.5rem;
 }
+
+.modal-background {
+	position: fixed;
+	width: 100%;
+	background-color: #606060;
+	opacity: 0.7;
+	height: 100% !important;
+	z-index: 5;
+	top: 0;
+}
+
+.confirmation-header {
+	background-color: white;
+	width: 25%;
+	height: 375px;
+	padding: 65px;
+	border-radius: 35px;
+	z-index: 8;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.confirm-modal-button {
+	background-color: $primary;
+	color: white;
+	width: 375px;
+	height: 56px;
+	margin-top: 40px;
+}
+
+.confirm-button {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	width: 100%;
+}
+
+.confirmation-problem {
+	background-color:white;
+	text-align:center;
+	border-radius: 25px;
+	height: 525px;
+	width: 455px;
+	padding-top: 60px;
+	position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.close-modal-btn {
+	position: absolute;
+	right: 15px;
+	cursor: pointer;
+	right: 25px;
+	top: 10px;
+	border: 2px solid;
+	border-color: white;
+	font-weight: bold;
+}
+
+.text-main {
+	margin-bottom: 0px !important;
+	margin-top: 50px !important;
+}
+
+.text-secondary {
+	margin-top: 0px !important;
+	margin-bottom: 20px !important;
+}
+
+.row {
+	width: 100%;
+}
+
+#confirm-problem h2 {
+	font-family: "Darker Grotesque";
+	font-size: 2rem;
+	width: 90%;
+	margin-bottom: 25px;
+}
+   
+.text-centered {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.confirmation-problem > p {
+	width: 95%;
+	margin: auto;
+}
+
+@media only screen and (max-width: 769px) {
+
+	.mobile-hidden {
+		display: none;
+	}
+
+	.confirmation-problem {
+		position: static;
+		margin: auto;
+		width: 100%;
+	}
+
+	.confirm-modal-button {
+		height: 48px;
+		width:105px;
+	}
+
+	.with-bullets > li:first-child {
+		padding: 0 1.5rem 0 1.5rem;
+	}
+	   
+}
+
 //#146
 @media only screen and (max-width: 755px) {
 	.shadow-wrap {

@@ -115,6 +115,8 @@ sub report_new : Path : Args(0) {
     $c->detach('generate_map') unless $c->forward('check_for_errors');
     $c->forward('save_user_and_report');
     $c->forward('redirect_or_confirm_creation');
+    $c->stash->{show_notification} = 'true';
+    $c->stash->{template} = 'report/new/fill_in_details.html';
 }
 
 # This is for the new phonegap versions of the app. It looks a lot like

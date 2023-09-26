@@ -1,0 +1,50 @@
+<div id="confirm-problem" class="modal">
+    <div class="modal-container">
+      <div class="confirmation-problem">
+        <span class="close-modal-btn" onclick="closeModal()">X</span>
+  
+        <div class="row">
+          <img src="/cobrands/[% c.cobrand.asset_moniker %]/images/report-successful.png">
+        </div>
+  
+        <div class="row">
+          <img src="/cobrands/[% c.cobrand.asset_moniker %]/images/Oval.svg">
+        </div>
+        
+      [% IF c.cobrand.is_council %]
+        [% IF c.cobrand.owns_problem( report ) %]
+          [% TRY %]
+            [% INCLUDE 'tokens/_confirm_problem_council_id.html' %]
+          [% CATCH file %]
+            <h2>Your issue is on its way to the council.</h2>
+            <p>Your reference for this report is [% report.id %], please quote it in any enquiries.</p>
+          [% END %]
+        [% ELSE %]
+            <h2>Thank you for your report.</h2>
+            <p>
+                We don&rsquo;t handle this type of problem, so have passed it on to:
+            </p>
+            <p>
+                <b>[% report.body %]</b>
+            </p>
+            <p>
+                You can follow this problem on <a href="[% c.cobrand.relative_url_for_report( report ) %][% report.url %]">FixMyStreet.com</a>.
+            </p>
+         [% END %]
+    
+      [% ELSE %]
+        <h2 class="text-centered">[% loc('Thank you for reporting this issue') %]!</h2>
+        [% IF report.bodies_str %]
+          <p>[% loc('We will send it to the relevant competent authority and let you know when it is resolved') %].</p>
+        [% END %]
+    
+      [% END %]
+    
+    [% TRY %][% INCLUDE 'tokens/_extras_confirm.html' %][% CATCH file %][% END %]
+  
+      <button class="button confirm-modal-button" onclick="closeModal()" type="button">Ok</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/cobrands/[% c.cobrand.asset_moniker %]/hideConfirmationProblem.js"></script>  
