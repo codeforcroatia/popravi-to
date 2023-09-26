@@ -10,18 +10,22 @@
     INCLUDE 'header.html', title => loc('Reporting a problem');
 %]
 
+[% IF show_notification == 'true' %]
+<main class="mobile-hidden">
+[% ELSE %]
 <main>
+[% END %]
 
     [% IF report.used_map %]
 
-    <form action="[% c.uri_for('/report/new') %]" method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
+    <form method="post" name="mapForm" id="mapForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate">
         [% IF c.req.params.map_override %]
             <input type="hidden" name="map_override" value="[% c.req.params.map_override | html %]">
         [% END %]
 
     [% ELSE %]
 
-    <form action="[% c.uri_for('/report/new') %]" method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate form-nomap">
+    <form method="post" name="mapSkippedForm"[% IF c.cobrand.allow_photo_upload %] enctype="multipart/form-data"[% END %] class="validate form-nomap">
         <input type="hidden" name="skipped" value="1">
 
     [% END %]
@@ -60,6 +64,10 @@
         </div>
     </form>
 </main>
+
+    [% IF show_notification == 'true' %]
+        [% INCLUDE 'tokens/confirm_problem.html' %]
+    [% END %]
 
     [% INCLUDE 'footer.html' %]
 
