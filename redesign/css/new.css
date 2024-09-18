@@ -38,3 +38,5 @@ ul li:hover{
 ul li a{
     text-decoration: none;
 }
+.ham{display: none;}
+
